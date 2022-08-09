@@ -1,0 +1,14 @@
+let documents = {
+        exemplar: 'document',
+        table: 'documents',
+        options: {
+            all: {
+                variables: { documents: { global: { approved_by_me:user.id, ORDER_BY: ['date_created desc'] } } },
+                fetchPolicy: 'cache-only'
+            },
+            one: {
+                fetchPolicy: 'standby'
+            }
+        },
+        select: {
+            all: gql`
