@@ -236,10 +236,8 @@ let TasksAddDialog4 = React.memo((props) => {
     useEffect(() => { form.setFieldsValue(state) }, [state]);
 
     const onChangeDatePicker = (date, dateString) => {
-        // console.log('datep', date, dateString);
     };
 
-    //checkboxgroup select all 
     const CheckboxGroup = Checkbox.Group;
 
     let [popconfirmInModalVisible, setPopconfirmInModalVisible] = useState(false)

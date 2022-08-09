@@ -122,10 +122,8 @@ let ModalUpdate = React.memo(({ GQL, GQL2, UpdateForm, UpdateForm2, ...props }) 
             date: item.date ? item.date : ''
         }
     }) : [];
-    //console.log('commentsdata', dataComments)
 
     const [dataComment, { loading: loadingMutation, error: errorMutation }] = useMutation(insertComment, {
-        //refetchQueries: [{ query: comments, variables: commentVariables }],
         onCompleted: (data) => console.log("Data from mutation", data),
         onError: (error) => console.error("Error creating a post", error)
     });
@@ -138,13 +136,6 @@ let ModalUpdate = React.memo(({ GQL, GQL2, UpdateForm, UpdateForm2, ...props }) 
             setCommentText(all.target.value)
         }
     }
-    /*const lastIndexOf = (array, key) => {
-        for (let i = array.length - 1; i >= 0; i--) {
-            if (array[i].key === key)
-                return i;
-        }
-        return -1;
-    };*/
 
     //----------signatures
     const [step, setStep] = useState();

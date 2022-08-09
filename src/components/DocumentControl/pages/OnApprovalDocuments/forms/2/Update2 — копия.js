@@ -132,26 +132,26 @@ let Update2 = React.memo((props) => {
 
     let Reject = () => {
         if (reasonText == null || reasonText.length == 0) {
-            // setConfirmText('Для отклонения договора нужно указать замечение')
+            // setConfirmText('Для отклонения договора нужно указать замечание')
             message.error('Для отклонения договора нужно указать замечание')
             setRejectVisible(false)
-            console.log("IIIFFFF", reasonText)
+            console.log("IF", reasonText)
         }
         else {
             setConfirmText('Вы уверены что хотите отклонить договор?');
             setRejectVisible(true)
-            console.log("ELSSSEEEEE", reasonText)
+            console.log("ELSE", reasonText)
         }
         console.log("APPROVE reasonText", reasonText)
     }
     let Approve = () => {
         if (reasonText == null || reasonText.length == 0) {
             setConfirmText('Вы уверены что хотите согласовать договор без замечаний?')
-            console.log("IIIFFFF", reasonText)
+            console.log("IF", reasonText)
         }
         else {
             setConfirmText('Вы уверены что хотите согласовать договор?')
-            console.log("ELSSSEEEEE", reasonText)
+            console.log("ELSE", reasonText)
         }
         console.log("APPROVE reasonText", reasonText)
     }
