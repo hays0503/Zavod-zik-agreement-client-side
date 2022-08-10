@@ -13,6 +13,9 @@ import RejectConfirm from './dialogs/RejectConfirm';
 import ReturnStepBackConfirm from './dialogs/ReturnStepBackConfirm';
 import ReturnToSenderConfirm from './dialogs/ReturnToSenderConfirm';
 
+//zip
+import JSZip from "jszip"
+import DonwloadMultipleZip from '../../../../../../core/util/DonwloadMultipleZip'
 //tasks
 import UpdateTask1 from './UpdateTask1'
 import TasksAddDialog from '../../../../dialogs/TasksAddDialog';
@@ -381,6 +384,7 @@ let Update1 = React.memo((props) => {
             </Collapse>
             <Divider type={'horizontal'} />
             {/* <Button onClick={() => { console.log('test') }}>Download Pdf</Button> */}
+            {/* <Button onClick={() => { DonwloadMultipleZip(props?.initialValues?.documents[0].files, 'test2.zip') }}>Download Zip</Button> */}
             <Form.Item
                 className='font-form-header'
                 name="signatures"
