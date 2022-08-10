@@ -37,6 +37,7 @@ let Update1 = React.memo((props) => {
             console.log("RESULT", content)
         }
     }
+    console.log('props PROOOOOOOOOOOOOOOOOPS', props)
     useEffect(() => { props.form.setFieldsValue(state) }, [state]);
     let [routesList, setRoutesList] = useState([{ positionName: 'Тип договора не выбран.' }])
     let [stepCount, setStepCount] = useState({ step: '0' })
