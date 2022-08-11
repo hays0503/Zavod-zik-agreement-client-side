@@ -1,11 +1,9 @@
-﻿import React, { useEffect, useState } from "react"
-import { Card, Row, Col } from "antd"
-import "./TestPrint.css"
-import QRCode from "qrcode"
+﻿import React, { useEffect } from "react";
+import { Card, Row, Col } from "antd";
+
+import "./TestPrint.css";
 
 const TestPrint = React.forwardRef((props, ref) => {
-
-    let [qrCodeState, setQrCodeState] = useState('')
 
     let documentData = {
         documents: [
@@ -24,28 +22,6 @@ const TestPrint = React.forwardRef((props, ref) => {
             }
         ]
     }
-
-    let generateQRCode = async () =>{
-        const opts = {
-            errorCorrectionLevel: "M",
-            type: "image/png",
-            quality: 0.92,
-            margin: 1,
-        };
-
-        // let text = `Лист согласования от: ${props?.printData?.documentData?.documents[0]?.fio}`
-        let text = `Тип договора: Лист согласования на реализацию готовой продукции
-        Наименование ТРУ: ${props?.printData?.documentData?.documents[0]?.title},
-        Поставщик ТРУ: ${props?.printData?.documentData?.documents[0]?.data_one[0]?.supllier},
-        Основание: ${props?.printData?.documentData?.documents[0]?.data_one[0]?.subject},
-        Общая сумма договора: ${props?.printData?.documentData?.documents[0]?.data_one[0]?.price},
-        `
-        let qr = await QRCode.toDataURL(text, opts)
-
-        setQrCodeState(qr)
-    }
-
-    generateQRCode()
 
     return (
         <div ref={ref} style={{ margin: 20 }}>
@@ -115,9 +91,6 @@ const TestPrint = React.forwardRef((props, ref) => {
                         <b>Полученный сторонами оригинал договора получен:</b> _________________
                     </div>
                 </div>
-            </div>
-            <div className="qr-container">
-                <img src={qrCodeState} className="qr-code"/>
             </div>
         </div>
     )

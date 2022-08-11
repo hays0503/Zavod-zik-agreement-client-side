@@ -183,6 +183,7 @@ let Update1 = React.memo((props) => {
 
     useEffect(() => { props.form.setFieldsValue(state) }, [state]);
     useEffect(() => {
+        console.log("Props.initialValues",props.initialValues);
         if (props.initialValues) {
             setState({
                 id: props.initialValues.documents[0].id,
@@ -340,7 +341,8 @@ let Update1 = React.memo((props) => {
             
             <Divider type={'horizontal'} />
 
-            {/* <Form.Item
+            {
+            /* <Form.Item
                 name="files"
                 className='font-form-header'
                 label="Файлы"
@@ -364,7 +366,8 @@ let Update1 = React.memo((props) => {
                         }
                     }}
                 />
-            </Form.Item> */}
+            </Form.Item> */
+            }
 
             <Collapse defaultActiveKey={['2']} onChange={callback}>
                 <Panel header={<b>Прикреплённые файлы</b>} key="2">
@@ -372,7 +375,8 @@ let Update1 = React.memo((props) => {
                         {props?.initialValues?.documents[0].files.map((item) => {
                             return (<>
                                 <Col span={12} className='document-view-wrap'>
-                                    <Link><a data-fileid={item.id} onClick={download}>{item.filename}</a></Link> <Button onClick={() => { OpenDocument(item) }} shape="circle" icon={<EyeOutlined />} /> <br />
+                                    <Link><a data-fileid={item.id} onClick={download}>{item.filename}</a></Link>
+                                    <Button onClick={() => { OpenDocument(item) }} shape="circle" icon={<EyeOutlined />} /> <br />
                                 </Col>
                             </>)
                         })}
