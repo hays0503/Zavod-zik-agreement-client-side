@@ -122,7 +122,7 @@ const TestPrint = React.forwardRef((props, ref) => {
                 <img src={qrCodeState} className="qr-code"/>
             </div>
         </div>
-        {/*Конец Лист Замечаний */}
+        {/*Конец Лист Согласования */}
         
         {/*Начало Лист Замечаний */}
         <div className="page">
