@@ -122,7 +122,7 @@ const TestPrint = React.forwardRef((props, ref) => {
                 <img src={qrCodeState} className="qr-code"/>
             </div>
         </div>
-        {/*Конец Лист Замечаний */}
+        {/*Конец Лист Согласования */}
         
         {/*Начало Лист Замечаний */}
         <div className="page">
@@ -134,8 +134,9 @@ const TestPrint = React.forwardRef((props, ref) => {
                 <div>
                 <ul>{props?.printData?.documentData?.documents[0]?.reason.map((reasonsItem)=>
                     <>
-                    <li>'{reasonsItem.text}'</li>
-                    <li>{reasonsItem.userFio}&nbsp;:&nbsp;&nbsp;{reasonsItem.userPosition}&nbsp;</li>
+                    <li>ФИО: {reasonsItem.userFio}&nbsp;</li>
+                    <li>Должность: {reasonsItem.userPosition}&nbsp;</li>
+                    <li>{reasonsItem.text}&nbsp;</li>
                     <li>&nbsp;</li>
                     </>
                     )}</ul>  
