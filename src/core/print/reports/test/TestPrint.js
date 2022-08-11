@@ -49,6 +49,7 @@ const TestPrint = React.forwardRef((props, ref) => {
     console.log(props?.printData?.documentData?.documents[0].reason);
     return (
         <div ref={ref}>
+        {/*Начало Лист Согласования */}
         <div className="page">
             <div style={{ paddingLeft: '25px', paddingRight: '30px' }}>
                 <div style={{ textAlign: 'center', marginBottom: "10px" }}>
@@ -121,6 +122,9 @@ const TestPrint = React.forwardRef((props, ref) => {
                 <img src={qrCodeState} className="qr-code"/>
             </div>
         </div>
+        {/*Конец Лист Замечаний */}
+        
+        {/*Начало Лист Замечаний */}
         <div className="page">
             <div style={{ paddingLeft: '25px', paddingRight: '30px' }}>
                 <div style={{ textAlign: 'center', marginBottom: "10px" }}>
@@ -131,16 +135,14 @@ const TestPrint = React.forwardRef((props, ref) => {
                 <ul>{props?.printData?.documentData?.documents[0]?.reason.map((reasonsItem)=>
                     <>
                     <li>'{reasonsItem.text}'</li>
-                    <li>{reasonsItem.userFio}&nbsp;&nbsp;:&nbsp;&nbsp;{reasonsItem.userPosition}&nbsp;</li>
+                    <li>{reasonsItem.userFio}&nbsp;:&nbsp;&nbsp;{reasonsItem.userPosition}&nbsp;</li>
+                    <li>&nbsp;</li>
                     </>
                     )}</ul>  
                 </div>
-
-            </div>
-            <div className="qr-container">
-                <img src={qrCodeState} className="qr-code"/>
             </div>
         </div>
+        {/*Конец Лист Замечаний */}
         </div>
     )
 })
