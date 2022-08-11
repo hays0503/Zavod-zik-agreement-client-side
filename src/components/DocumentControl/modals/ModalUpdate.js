@@ -526,7 +526,23 @@ let ModalUpdate = React.memo(({ GQL, GQL2, GQL3, GQL4, GQL5, UpdateForm, UpdateF
             <Button
                 type="primary"
                 disabled={props.selectedRowKeys.length !== 2}
-                onClick={() => { setVisible(true) }}
+                onClick={() => {
+                    if(props.selectedRowKeys[1]==10){
+                        setVisible(true)
+                    }
+                    if(props.selectedRowKeys[1]==24){
+                        setVisible2(true)
+                    }
+                    if(props.selectedRowKeys[1]==26){
+                        setVisible3(true)
+                    }
+                    if(props.selectedRowKeys[1]==27){
+                        setVisible4(true)
+                    }
+                    if(props.selectedRowKeys[1]==29){
+                        setVisible5(true)
+                    }
+                }}
             >
                 <EyeOutlined />Просмотр
             </Button>
@@ -569,13 +585,13 @@ let ModalUpdate = React.memo(({ GQL, GQL2, GQL3, GQL4, GQL5, UpdateForm, UpdateF
                     form={form}
                     onFinish={async (values) => {
                         let variables = {}
-                        // let base64 = []
-                        // if (values?.files?.fileList) {
-                        //     await uploadDocuments(values.files.fileList).then(result => {
-                        //         base64 = result
-                        //     })
-                        // }
-                        // values.docs = base64 ? base64 : []
+                        let base64 = []
+                        if (values?.files?.fileList) {
+                            await uploadDocuments(values.files.fileList).then(result => {
+                                base64 = result
+                            })
+                        }
+                        values.docs = base64 ? base64 : []
                         if (step) { values.step = step }
                         if (status) { values.status_id = status }
                         values.is_read = false
@@ -625,8 +641,14 @@ let ModalUpdate = React.memo(({ GQL, GQL2, GQL3, GQL4, GQL5, UpdateForm, UpdateF
                     modalEnableEditHandler={modalEnableEditHandler}
 
                     form2={form2}
-                    onFinish2={(values) => {
+                    onFinish2={async (values) => {
                         let variables = {};
+                        let base64 = [];
+                        if (values?.files?.fileList) {
+                            await uploadDocuments(values.files.fileList).then(result => {
+                                base64 = result
+                            });
+                        };
                         console.log('values on finish', values);
                         if (step) { values.step = step };
                         if (status) { values.status_id = status };
