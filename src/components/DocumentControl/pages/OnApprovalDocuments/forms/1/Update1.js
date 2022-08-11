@@ -160,6 +160,7 @@ let Update1 = React.memo((props) => {
 
     const [state, setState] = useState({
         log_username: user.username,
+
     });
 
     let OpenDocument = async (item) => {
@@ -318,26 +319,58 @@ let Update1 = React.memo((props) => {
 
             <Divider type={'horizontal'} />
 
-            <div className='form-item-wrap'>
-                <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-                    <Col span={8}><b>Наименование ТРУ: </b></Col> <Col span={16}>{state.title}</Col>
-                </Row>
-            </div>
-            <div className='form-item-wrap'>
-                <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-                    <Col span={8}><b>Поставщик ТРУ: </b></Col> <Col span={16}>{state.supllier}</Col>
-                </Row>
-            </div>
-            <div className='form-item-wrap'>
-                <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-                    <Col span={8}><b>Основание: </b></Col> <Col span={16}>{state.subject}</Col>
-                </Row>
-            </div>
-            <div className='form-item-wrap'>
-                <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-                    <Col span={8}><b>Общая сумма договора: </b></Col> <Col span={16}>{state.price}</Col>
-                </Row>
-            </div>
+            <Form.Item
+                name="title"
+                label='Наименование ТРУ'
+                labelCol={{ span: 24 }}
+                rules={[
+                    {
+                        required: true,
+                        message: 'Необходимо для заполнения!',
+                    },
+                ]}
+            >
+                <Input />
+            </Form.Item>
+            <Form.Item
+                name="supllier"
+                label='Поставщик ТРУ'
+                labelCol={{ span: 24 }}
+                rules={[
+                    {
+                        required: true,
+                        message: 'Необходимо для заполнения!',
+                    },
+                ]}
+            >
+                <Input />
+            </Form.Item>
+            <Form.Item
+                name="subject"
+                label='Основание'
+                labelCol={{ span: 24 }}
+                rules={[
+                    {
+                        required: true,
+                        message: 'Необходимо для заполнения!',
+                    },
+                ]}
+            >
+                <Input />
+            </Form.Item>
+            <Form.Item
+                name="price"
+                label='Общая сумма договора'
+                labelCol={{ span: 24 }}
+                rules={[
+                    {
+                        required: true,
+                        message: 'Необходимо для заполнения!',
+                    },
+                ]}
+            >
+                <Input />
+            </Form.Item>
             
             <Divider type={'horizontal'} />
 
