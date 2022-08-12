@@ -7,6 +7,9 @@ import "antd/dist/antd.css";
 import PrintForm5 from "./PrintForm5"
 
 
+/**
+ * @deprecated Этот код устарел проводится редизайн смотрите в файле {PrintContainer.js}
+ */
 function PrintContainer5(documentData) {
 
     let componentRef = useRef();

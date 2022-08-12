@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Card, Row, Col } from "antd";
+import React, {useState } from "react";
+import {Row} from "antd";
 import "./TestPrint.css";
 import QRCode from "qrcode";
 import { printReasons } from './../../../../../../core/print/reports/test/PrintComponents';
