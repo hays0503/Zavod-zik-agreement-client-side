@@ -48,9 +48,9 @@ let Update1 = React.memo((props) => {
                 username: props.initialValues.documents[0].username,
                 fio: props.initialValues.documents[0].fio,
 
-                price: props.initialValues.documents[0].data_one[0].price,
-                supllier: props.initialValues.documents[0].data_one[0].supllier,
-                subject: props.initialValues.documents[0].data_one[0].subject,
+                price: props.initialValues?.documents[0]?.data_one[0]?.price,
+                supllier: props.initialValues?.documents[0]?.data_one[0]?.supllier,
+                subject: props.initialValues?.documents[0]?.data_one[0]?.subject,
                 
                 date_created: props.initialValues.documents[0].date_created,
                 date_modified: props.initialValues.documents[0].date_modified,
