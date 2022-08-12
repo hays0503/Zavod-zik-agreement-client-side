@@ -1,16 +1,16 @@
 import React, { useRef, useState, useEffect } from "react";
 import { useReactToPrint } from "react-to-print";
 import { Button } from "antd";
-
 import "antd/dist/antd.css";
 
-import PrintForm3 from "./PrintForm3"
-
-
 /**
- * @deprecated Этот код устарел проводится редизайн смотрите в файле {PrintContainer.js}
+ * Создание контейнера для отображение формы на печать
+ * @function Контейнерная функция
+ * @param {object} documentData - Данные для инициализации документа
+ * @param {object} RenderForm - Форма для вывода на печать страницы.
+ * @return Возващает div с вёрсткой
  */
-function PrintContainer3(documentData) {
+function PrintContainer(documentData,RenderForm) {
 
     let componentRef = useRef();
     const [printData, setPrintData] = useState(false);
@@ -48,11 +48,11 @@ function PrintContainer3(documentData) {
     return (
         <div>
             <span style={{ display: "none" }}>
-                <PrintForm3 ref={componentRef} printData={printData} />
+                <RenderForm ref={componentRef} printData={printData} />
             </span>
             <Button onClick={handlePrint}>Печать</Button>
         </div>
     );
 }
 
-export default PrintContainer3;
+export default PrintContainer;

@@ -1,29 +1,11 @@
-﻿import React, { useEffect, useState } from "react"
-import { Card, Row, Col } from "antd"
+﻿import React, {useState } from "react"
+import {Row} from "antd"
 import "./TestPrint.css"
 import QRCode from "qrcode"
 
 const TestPrint = React.forwardRef((props, ref) => {
 
     let [qrCodeState, setQrCodeState] = useState('')
-
-    let documentData = {
-        documents: [
-            {
-                data_one: [
-                    {
-                        document_id: 255,
-                        id: '9',
-                        price: 1212,
-                        subject: 'Form1 N1 subject',
-                        supllier: 'Form1 N1 supllier'
-                    }
-                ],
-                date_created: '2022-04-29 16:39:42',
-                date_modified: '2022-04-29T16:41:04.649069'
-            }
-        ]
-    }
 
     let generateQRCode = async () =>{
         const opts = {
@@ -33,7 +15,6 @@ const TestPrint = React.forwardRef((props, ref) => {
             margin: 1,
         };
 
-        // let text = `Лист согласования от: ${props?.printData?.documentData?.documents[0]?.fio}`
         let text = `Тип договора: Лист согласования на реализацию готовой продукции
         Наименование ТРУ: ${props?.printData?.documentData?.documents[0]?.title},
         Поставщик ТРУ: ${props?.printData?.documentData?.documents[0]?.data_one[0]?.supllier},
