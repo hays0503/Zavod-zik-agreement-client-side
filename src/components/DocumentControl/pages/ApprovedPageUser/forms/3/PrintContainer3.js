@@ -7,15 +7,13 @@ import "antd/dist/antd.css";
 import PrintForm3 from "./PrintForm3"
 
 
-/**
- * @deprecated Этот код устарел проводится редизайн смотрите в файле {PrintContainer.js}
- */
 function PrintContainer3(documentData) {
 
     let componentRef = useRef();
     const [printData, setPrintData] = useState(false);
     const [dataLoaded, setDataLoaded] = useState(false);
     const onBeforeGetContentResolve = useRef();
+    console.log('documentData', documentData)
     const handleOnBeforeGetContent = () => {
         return new Promise((resolve) => {
             setTimeout(() => {
@@ -31,6 +29,10 @@ function PrintContainer3(documentData) {
         content: () => {
             const extra = componentRef.current.cloneNode(true);
             const PrintElem = document.createElement('div');
+            {/*const header =
+                `<div class="page-header"><p>I'm The header</p></div>` +
+                `<div class="page-footer"><p>I'm The Footer</p></div>`;
+            PrintElem.innerHTML = header;*/}
             PrintElem.appendChild(extra);
             return PrintElem;
         },

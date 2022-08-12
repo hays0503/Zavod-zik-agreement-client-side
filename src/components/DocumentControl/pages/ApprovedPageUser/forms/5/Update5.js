@@ -1,14 +1,13 @@
 import {EyeOutlined } from '@ant-design/icons';
-import { Button, Form, Typography, Divider, Row, Col} from 'antd';
+import { Button, Form, Input, Typography, Space, Divider, Row, Col, Steps } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useUser, formatDate } from '../../../../../../core/functions';
-import PrintContainer from '../../PrintConteiner';
-import PrintForm5 from './PrintForm5';
+import PrintContainer5 from './PrintContainer5'
 
 let Update5 = React.memo((props) => {
     let user = useUser();
-    // const price_pattern = /^\d+$/;
-    const {Link } = Typography;
+    const price_pattern = /^\d+$/;
+    const { Title, Link } = Typography;
 
     const [state, setState] = useState({
         log_username: user.username,
@@ -85,19 +84,19 @@ let Update5 = React.memo((props) => {
         })
     }
 
-    // let radioOptions = [
-    //     {label:'Закупки товаров, работ и услуг', value:'1'},
-    //     {label:'Поставка продукции (выполнение работ, оказание услуг) заказчикам',value:'2'},
-    //     {label:'Передача имущества в аренду (бесплатное пользование)',value:'3'},
-    //     {label:'Совместная деятельность',value:'4'},
-    //     {label:'Финансирование (кредитование, обеспечение исполнения обязательств)',value:'5'},
-    //     {label:'Прочие обязательства',value:'6'}
-    // ]
-    // const[radioState, setRadioState] = useState(props?.initialValues5?.documents[0]?.data_custom[0]?.subject);
+    let radioOptions = [
+        {label:'Закупки товаров, работ и услуг', value:'1'},
+        {label:'Поставка продукции (выполнение работ, оказание услуг) заказчикам',value:'2'},
+        {label:'Передача имущества в аренду (бесплатное пользование)',value:'3'},
+        {label:'Совместная деятельность',value:'4'},
+        {label:'Финансирование (кредитование, обеспечение исполнения обязательств)',value:'5'},
+        {label:'Прочие обязательства',value:'6'}
+    ]
+    const[radioState, setRadioState] = useState(props?.initialValues5?.documents[0]?.data_custom[0]?.subject);
 
-    // const RadioOnChange = (radioValue) => {
-    //     setRadioState(radioValue.target.value);
-    // };
+    const RadioOnChange = (radioValue) => {
+        setRadioState(radioValue.target.value);
+    };
 
     return(
         <Form
@@ -134,10 +133,7 @@ let Update5 = React.memo((props) => {
                 {props?.initialValues5?.documents[0].files.map((item) => {
                     return (<>
                         <div className='document-view-wrap'>
-                            <Link>
-                                <a data-fileid={item.id} onClick={download}>{item.filename}</a>
-                            </Link>
-                            <Button onClick={() => { OpenDocument(item) }} shape="circle" icon={<EyeOutlined />}/> <br />
+                            <Link><a data-fileid={item.id} onClick={download}>{item.filename}</a></Link> <Button onClick={() => { OpenDocument(item) }} shape="circle" icon={<EyeOutlined />}/> <br />
                         </div>
                     </>)
                 })}
@@ -230,7 +226,7 @@ let Update5 = React.memo((props) => {
                 hidden={true}
             >
             </Form.Item>
-            <PrintContainer printData={props?.initialValues2?.documents[0]?.id} documentData={props?.initialValues2} RenderForm={PrintForm5} />
+            <PrintContainer5 printData={props?.initialValues5?.documents[0].id} documentData={props?.initialValues5} />
         </Form>
     )
 })

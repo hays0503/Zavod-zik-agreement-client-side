@@ -6,9 +6,6 @@ import "antd/dist/antd.css";
 
 import PrintForm2 from "./PrintForm2"
 
-/**
- * @deprecated Этот код устарел проводится редизайн смотрите в файле {PrintContainer.js}
- */
 function PrintContainer2(documentData) {
 
     let componentRef = useRef();
@@ -30,6 +27,10 @@ function PrintContainer2(documentData) {
         content: () => {
             const extra = componentRef.current.cloneNode(true);
             const PrintElem = document.createElement('div');
+            {/*const header =
+                `<div class="page-header"><p>I'm The header</p></div>` +
+                `<div class="page-footer"><p>I'm The Footer</p></div>`;
+            PrintElem.innerHTML = header;*/}
             PrintElem.appendChild(extra);
             return PrintElem;
         },

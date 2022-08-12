@@ -7,9 +7,6 @@ import "antd/dist/antd.css";
 import PrintForm4 from "./PrintForm4"
 
 
-/**
- * @deprecated Этот код устарел проводится редизайн смотрите в файле {PrintContainer.js}
- */
 function PrintContainer4(documentData) {
 
     let componentRef = useRef();

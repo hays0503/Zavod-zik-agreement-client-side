@@ -2,8 +2,6 @@ import {EyeOutlined } from '@ant-design/icons';
 import { Button, Form, Input, Typography, Space, Divider, Row, Col, Steps } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useUser, formatDate } from '../../../../../../core/functions';
-import PrintContainer from '../../PrintConteiner';
-import PrintForm4 from './PrintForm4';
 import PrintContainer4 from './PrintContainer4';
 
 let Update4 = React.memo((props) => {
@@ -252,8 +250,7 @@ let Update4 = React.memo((props) => {
                 hidden={true}
             >
             </Form.Item>
-            <PrintContainer4 printData={props?.initialValues2?.documents[0]?.id} documentData={props?.initialValues2} />
-            {/* <PrintContainer printData={props?.initialValues2?.documents[0]?.id} documentData={props?.initialValues2} RenderForm={PrintForm4} /> */}
+            <PrintContainer4 printData={props?.initialValues4?.documents[0]?.id} documentData={props?.initialValues4}/>
         </Form>
     )
 })

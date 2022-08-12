@@ -223,7 +223,15 @@ let Update2 = React.memo((props) => {
                         </div>
                     </>)
                 })}
-
+                {/* <Steps labelPlacement="vertical" size="small" current={stepCount.step - 1} className="steps-form-update">
+                    {
+                        routesList.map((item) => {
+                            return (
+                                <Step title={item.positionName} />
+                            )
+                        })
+                    }
+                </Steps> */}
             </Form.Item>
             <Divider type={'horizontal'} />
             <Form.Item
@@ -241,7 +249,29 @@ let Update2 = React.memo((props) => {
                     )
                 })}
             </div>
-
+            {/* <Row>
+                <Col span={24}>
+                    <Divider type={'horizontal'} />
+                    <Button type="primary" htmlType="submit" onClick={props.handleRouteForward2}>
+                        Согласовать
+                    </Button>
+                    <Space>
+                        <Divider type={'vertical'} />
+                        <Button type="primary" htmlType="submit" onClick={props.handleRouteBackward2}>Вернуть на доработку</Button>
+                        <Divider type={'vertical'} />
+                        <Button type="primary" htmlType="submit" onClick={props.handleStatusCancelled}>Отклонить</Button>
+                    </Space>
+                </Col>
+                <Col span={24} className="marginTop">
+                    <Button onClick={props.modalCancelHandler}>
+                        Отменить
+                    </Button>
+                    <Divider type={'vertical'} />
+                    <Button onClick={props.modalEnableEditHandler}>
+                        Редактировать
+                    </Button>
+                </Col>
+            </Row> */}
             <Divider type={'horizontal'} />
             <Form.Item
                 className='font-form-header'
@@ -249,6 +279,8 @@ let Update2 = React.memo((props) => {
                 label="Комментарии"
                 labelCol={{ span: 24 }}
             >
+                {/* <Input.TextArea rows={7} name='comment' onChange={props.HandleCommentOnChange} disabled={props.disabled} />
+                <Button disabled={props.disabled} onClick={props.HandleComment} className="marginTop">Оставить комментарий</Button> */}
                 {props.commentsList.map((item) => {
                     return (
                         <div className='comments'>
@@ -289,7 +321,7 @@ let Update2 = React.memo((props) => {
                 hidden={true}
             >
             </Form.Item>
-            <PrintContainer printData={props?.initialValues2?.documents[0]?.id} documentData={props?.initialValues2} RenderForm={PrintForm2} />
+            <PrintContainer2 printData={props?.initialValues2?.documents[0]?.id} documentData={props?.initialValues2} />
         </Form>
     )
 });
