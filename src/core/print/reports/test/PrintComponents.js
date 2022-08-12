@@ -7,6 +7,7 @@
 export function printReasons(props){
     console.log("Вызов компонента 'PrintComponent")
     console.log("Замечание к документу",props?.reason)
+    if(props?.reason != null && props?.reason != undefined) {
     return  <div className="page">
                 <div style={{ paddingLeft: '25px', paddingRight: '30px' }}>
                     <div style={{ textAlign: 'center', marginBottom: "10px" }}>
@@ -25,5 +26,5 @@ export function printReasons(props){
                     </div>
                 </div>
             </div>
-    
+    }
 }
