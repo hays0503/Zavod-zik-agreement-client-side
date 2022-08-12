@@ -4,8 +4,10 @@ import { Button } from "antd";
 
 import "antd/dist/antd.css";
 
-import TestPrint from "./reports/test/TestPrint"
-import TestPrint2 from "./reports/test/TestPrint2"
+// import TestPrint from "./reports/test/TestPrint"
+// import TestPrint2 from "./reports/test/TestPrint2"
+import TestPrint2 from "./TestPrint2";
+import TestPrint from "./TestPrint";
 
 
 function Print(documentData) {
@@ -60,7 +62,7 @@ function Print(documentData) {
                 </>
                 :''
             }
-            {
+            {/* {
                 (documentData?.documents[0]?.route_id?.id==11)?
                 <>
                 <span style={{ display: "none" }}>
@@ -69,7 +71,7 @@ function Print(documentData) {
                 <Button onClick={handlePrint}>Печать</Button>
                 </>
                 :''
-            }
+            } */}
             
         </div>
     );

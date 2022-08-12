@@ -5,7 +5,7 @@ import { Button } from "antd";
 import "antd/dist/antd.css";
 
 import TestPrint from "./reports/test/TestPrint"
-import TestPrint2 from "./reports/test/TestPrint2"
+// import TestPrint2 from "./reports/test/TestPrint2"
 
 
 function Print(documentData) {

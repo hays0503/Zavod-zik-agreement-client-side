@@ -2,6 +2,7 @@
 import { Card, Row, Col } from "antd"
 import "./TestPrint.css"
 import QRCode from "qrcode"
+import { printReasons } from './PrintComponents';
 
 const TestPrint = React.forwardRef((props, ref) => {
 
@@ -46,7 +47,6 @@ const TestPrint = React.forwardRef((props, ref) => {
     }
 
     generateQRCode()
-    console.log(props?.printData?.documentData?.documents[0].reason);
     return (
         <div ref={ref}>
         {/*Начало Лист Согласования */}
@@ -125,24 +125,7 @@ const TestPrint = React.forwardRef((props, ref) => {
         {/*Конец Лист Согласования */}
         
         {/*Начало Лист Замечаний */}
-        <div className="page">
-            <div style={{ paddingLeft: '25px', paddingRight: '30px' }}>
-                <div style={{ textAlign: 'center', marginBottom: "10px" }}>
-                    <h2><b>Замечания</b></h2>
-                    <b>к договору No_____________ от ____________ 2022г.</b>
-                </div>
-                <div>
-                <ul>{props?.printData?.documentData?.documents[0]?.reason.map((reasonsItem)=>
-                    <>
-                    <li>ФИО: {reasonsItem.userFio}&nbsp;</li>
-                    <li>Должность: {reasonsItem.userPosition}&nbsp;</li>
-                    <li>{reasonsItem.text}&nbsp;</li>
-                    <li>&nbsp;</li>
-                    </>
-                    )}</ul>  
-                </div>
-            </div>
-        </div>
+        {printReasons(props?.printData?.documentData?.documents[0])}
         {/*Конец Лист Замечаний */}
         </div>
     )
