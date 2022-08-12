@@ -1,8 +1,10 @@
 import { EyeOutlined } from '@ant-design/icons';
-import { Button, Form, Input, Typography, Space, Divider, Row, Col, Steps, Checkbox, Radio } from 'antd';
+import { Button, Form, Input, Typography, Space, Divider, Row, Col, Steps, Checkbox, Radio, message } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useUser, formatDate } from '../../../../../../core/functions';
 import PrintContainer2 from './PrintContainer2';
+import UploadFile from '../../../../modals/UploadFile'
+import constants from '../../../../../../config/constants'
 
 const { Title, Link } = Typography;
 const { Step } = Steps;
@@ -165,19 +167,39 @@ let Update2 = React.memo((props) => {
                 </Row>
             </div>
             <Divider type={'horizontal'} />
+            <h3><b>Файлы</b></h3>
+            {props?.initialValues2?.documents[0].files.map((item) => {
+                return (<>
+                    <div className='document-view-wrap'>
+                        <Link><a data-fileid={item.id} onClick={download}>{item.filename}</a></Link> <Button onClick={() => { OpenDocument(item) }} shape="circle" icon={<EyeOutlined />} /> <br />
+                    </div>
+                </>)
+            })}
+            <Divider type={'horizontal'} />
             <Form.Item
                 name="files"
                 className='font-form-header'
-                label="Файлы"
+                label="Загрузите файл согласованного договора"
                 labelCol={{ span: 24 }}
             >
-                {props?.initialValues2?.documents[0].files.map((item) => {
-                    return (<>
-                        <div className='document-view-wrap'>
-                            <Link><a data-fileid={item.id} onClick={download}>{item.filename}</a></Link> <Button onClick={() => { OpenDocument(item) }} shape="circle" icon={<EyeOutlined />} /> <br />
-                        </div>
-                    </>)
-                })}
+                <UploadFile
+                    showUploadList={true}
+                    action={"https://" + constants.host + ":" + constants.port + "/document-control/orders"}
+                    multiple={true}
+                    maxCount={50}
+                    /*accept={".doc,.docx,.xls,.xlsx,.ppt,.pptx,image/*,*.pdf"}*/
+                    onChange={(info) => {
+                        const { status } = info.file;
+                        if (status !== 'uploading') {
+                            console.log('info.file', info.file, info.fileList);
+                        }
+                        if (status === 'done') {
+                            message.success(`${info.file.name} - загружен успешно.`);
+                        } else if (status === 'error') {
+                            message.error(`${info.file.name} - ошибка при загрузке.`);
+                        }
+                    }}
+                />
             </Form.Item>
             <Divider type={'horizontal'} />
             <Form.Item
