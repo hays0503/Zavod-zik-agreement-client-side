@@ -378,6 +378,15 @@ let Update3 = React.memo((props) => {
                         </div>
                     </>)
                 })}
+                <Steps labelPlacement="vertical" size="small" current={stepCount.step - 1} className="steps-form-update">
+                    {
+                        routesList.map((item) => {
+                            return (
+                                <Step title={item.positionName} />
+                            )
+                        })
+                    }
+                </Steps>
             </Form.Item>
             <Row>
                 <Col span={24}>
