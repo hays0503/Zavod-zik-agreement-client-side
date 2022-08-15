@@ -5,7 +5,7 @@ import { Button } from "antd";
 import "antd/dist/antd.css";
 
 import TestPrint from "./reports/test/TestPrint"
-// import TestPrint2 from "./reports/test/TestPrint2"
+import { createPdf } from "./reports/test/pdfConstruct";
 
 
 function Print(documentData) {
@@ -30,10 +30,6 @@ function Print(documentData) {
         content: () => {
             const extra = componentRef.current.cloneNode(true);
             const PrintElem = document.createElement('div');
-            {/*const header =
-                `<div class="page-header"><p>I'm The header</p></div>` +
-                `<div class="page-footer"><p>I'm The Footer</p></div>`;
-            PrintElem.innerHTML = header;*/}
             PrintElem.appendChild(extra);
             return PrintElem;
         },
@@ -54,6 +50,7 @@ function Print(documentData) {
                 <TestPrint ref={componentRef} printData={printData} />
             </span>
             <Button onClick={handlePrint}>Печать</Button>
+            <Button onClick={()=>createPdf()}>pdf</Button>
         </div>
     );
 }
