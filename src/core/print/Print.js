@@ -53,7 +53,7 @@ function Print(documentData) {
             <span style={{ display: "none" }}>
                 <TestPrint ref={componentRef} printData={printData} />
             </span>
-            <Button onClick={handlePrint}>Печать</Button>
+            <Button onClick={handlePrint}>Получить файл согласованного договора</Button>
         </div>
     );
 }

@@ -220,13 +220,13 @@ let Update1 = React.memo((props) => {
                     )
                 })}
             </div>
-            <Row>
+            {/* <Row>
                 <Col span={24}>
                     <Button onClick={props.modalCancelHandler}>
                         Отменить
                     </Button>
                 </Col>
-            </Row>
+            </Row> */}
             <Divider type={'horizontal'} />
             <Form.Item
                 className='font-form-header'
