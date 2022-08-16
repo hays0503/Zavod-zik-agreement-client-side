@@ -118,9 +118,7 @@ const PrintForm2 = React.forwardRef((props, ref) => {
         {/*Конец Лист Согласования */}
 
         {/*Начало Лист Замечаний */}
-            {
-                printReasons(props?.printData?.documentData?.documents[0])
-            }
+            {printReasons(props?.printData?.documentData?.documents[0])}
         {/*Конец Лист Замечаний */}
         </div>
     )
