@@ -390,7 +390,6 @@ let ApprovedPageUser = React.memo((props) => {
         // { title: 'шаг п.', dataIndex: 'route_step', width: '55px' }
     ]);
 
-
     let titleMenu = (tableProps) => {
         return (<TitleMenu
             buttons={[
