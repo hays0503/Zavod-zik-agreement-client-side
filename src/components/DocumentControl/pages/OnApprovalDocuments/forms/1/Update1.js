@@ -345,8 +345,7 @@ let Update1 = React.memo((props) => {
             
             <Divider type={'horizontal'} />
 
-            {
-            /* <Form.Item
+            {/* <Form.Item
                 name="files"
                 className='font-form-header'
                 label="Файлы"
@@ -370,8 +369,7 @@ let Update1 = React.memo((props) => {
                         }
                     }}
                 />
-            </Form.Item> */
-            }
+            </Form.Item> */}
 
             <Collapse defaultActiveKey={['2']} onChange={callback}>
                 <Panel header={<b>Прикреплённые файлы</b>} key="2">

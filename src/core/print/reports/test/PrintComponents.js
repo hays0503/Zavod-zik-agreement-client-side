@@ -26,4 +26,4 @@ export function printReasons(props){
                 </div>
             </div>
     
-}
+}}
