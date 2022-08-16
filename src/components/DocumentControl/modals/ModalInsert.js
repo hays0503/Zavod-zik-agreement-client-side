@@ -233,7 +233,7 @@ let ModalInsert = React.memo(({ GQL, GQL2, GQL3, GQL4, GQL5, Form1, Form2, Form3
                 step: 1,
                 status_id: dataRoutes.document_routes[0].status_in_process
             })
-            setRoutesList(routesMap = (dataRoutes.document_routes[0].routes != undefined )? dataRoutes.document_routes[0].routes.map((item)=>{
+            setRoutesList(routesMap = (dataRoutes.document_routes[0].routes !== undefined )? dataRoutes.document_routes[0].routes.map((item)=>{
                 return{
                     positionName:item.positionName
                 }
@@ -454,9 +454,7 @@ let ModalInsert = React.memo(({ GQL, GQL2, GQL3, GQL4, GQL5, Form1, Form2, Form3
                         values.fio = user.fio;
                         values.positionId = routeData[0].positionId
                         console.log('TEST', variables)
-                        // console.log('TEST', Object.assign(variables,))
                         variables[GQL.exemplar] = values;
-                        // console.log('variables------------------------------',variables)
                         insert({ variables })
                     }}
                 />
