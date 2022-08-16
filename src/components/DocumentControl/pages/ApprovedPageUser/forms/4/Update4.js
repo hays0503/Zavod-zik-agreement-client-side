@@ -163,6 +163,9 @@ let Update4 = React.memo((props) => {
                 })}
             </Form.Item>
             <Divider type={'horizontal'} />
+            <h3><b>Файл согласованного договора</b></h3>
+            <PrintContainer4 printData={props?.initialValues4?.documents[0]?.id} documentData={props?.initialValues4}/>
+            <Divider type={'horizontal'} />
             <Form.Item
                 className='font-form-header'
                 name="signatures"
@@ -250,7 +253,6 @@ let Update4 = React.memo((props) => {
                 hidden={true}
             >
             </Form.Item>
-            <PrintContainer4 printData={props?.initialValues4?.documents[0]?.id} documentData={props?.initialValues4}/>
         </Form>
     )
 })

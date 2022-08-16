@@ -176,6 +176,10 @@ let Update2 = React.memo((props) => {
                 </>)
             })}
             <Divider type={'horizontal'} />
+            <h3><b>Файл согласованного договора</b></h3>
+            <PrintContainer2 printData={props?.initialValues2?.documents[0]?.id} documentData={props?.initialValues2} />
+
+            {/* <Divider type={'horizontal'} />
             <Form.Item
                 name="files"
                 className='font-form-header'
@@ -187,7 +191,7 @@ let Update2 = React.memo((props) => {
                     action={"https://" + constants.host + ":" + constants.port + "/document-control/orders"}
                     multiple={true}
                     maxCount={50}
-                    /*accept={".doc,.docx,.xls,.xlsx,.ppt,.pptx,image/*,*.pdf"}*/
+                    accept={".doc,.docx,.xls,.xlsx,.ppt,.pptx,image/*,*.pdf"}
                     onChange={(info) => {
                         const { status } = info.file;
                         if (status !== 'uploading') {
@@ -200,7 +204,7 @@ let Update2 = React.memo((props) => {
                         }
                     }}
                 />
-            </Form.Item>
+            </Form.Item> */}
             <Divider type={'horizontal'} />
             <Form.Item
                 className='font-form-header'
@@ -321,7 +325,6 @@ let Update2 = React.memo((props) => {
                 hidden={true}
             >
             </Form.Item>
-            <PrintContainer2 printData={props?.initialValues2?.documents[0]?.id} documentData={props?.initialValues2} />
         </Form>
     )
 });

@@ -52,7 +52,7 @@ function PrintContainer5(documentData) {
             <span style={{ display: "none" }}>
                 <PrintForm5 ref={componentRef} printData={printData} />
             </span>
-            <Button onClick={handlePrint}>Печать</Button>
+            <Button onClick={handlePrint}>Получить файл согласованного договора</Button>
         </div>
     );
 }
