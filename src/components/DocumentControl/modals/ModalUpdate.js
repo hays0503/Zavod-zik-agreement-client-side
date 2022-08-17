@@ -5,7 +5,6 @@ import React, { useEffect, useState, useRef } from 'react';
 import { handlerQuery, handlerMutation, useUser } from '../../../core/functions';
 
 import GenericPdfDownloader from "../../../core/util/CanvasToHtml";
-import { async } from './../../../core/print/reports/test/pdfConstruct';
 
 const insertComment = gql`
        mutation insertComment($comment: JSON) {
@@ -585,12 +584,9 @@ let ModalUpdate = React.memo(({ GQL, GQL2, GQL3, GQL4, GQL5, UpdateForm, UpdateF
 
                     form={form}
                     onFinish={async (values) => {
-                        console.log("Обновляю форму номер 1 ")
                         let variables = {}
                         let base64 = []
-                        console.log("values?.files?.fileList",values?.files?.fileList)
                         if (values?.files?.fileList) {
-                            
                             await uploadDocuments(values.files.fileList).then(result => {
                                 base64 = result
                             })
@@ -646,17 +642,13 @@ let ModalUpdate = React.memo(({ GQL, GQL2, GQL3, GQL4, GQL5, UpdateForm, UpdateF
 
                     form2={form2}
                     onFinish2={async (values) => {
-                        console.log("Обновляю форму номер 2 ")
                         let variables = {};
-                        let base64 = []
-                        console.log("values?.files?.fileList",values?.files?.fileList)
+                        let base64 = [];
                         if (values?.files?.fileList) {
-                            
                             await uploadDocuments(values.files.fileList).then(result => {
                                 base64 = result
-                            })
-                        }
-                        values.docs = base64 ? base64 : []
+                            });
+                        };
                         console.log('values on finish', values);
                         if (step) { values.step = step };
                         if (status) { values.status_id = status };
@@ -704,18 +696,8 @@ let ModalUpdate = React.memo(({ GQL, GQL2, GQL3, GQL4, GQL5, UpdateForm, UpdateF
                     modalEnableEditHandler={modalEnableEditHandler}
 
                     form3={form3}
-                    onFinish3={ async (values) => {
-                        console.log("Обновляю форму номер 3 ")
+                    onFinish3={(values) => {
                         let variables = {};
-                        let base64 = []
-                        console.log("values?.files?.fileList",values?.files?.fileList)
-                        if (values?.files?.fileList) {
-                            
-                            await uploadDocuments(values.files.fileList).then(result => {
-                                base64 = result
-                            })
-                        }
-                        values.docs = base64 ? base64 : []
                         console.log('values on finish', values);
                         if (step) { values.step = step };
                         if (status) { values.status_id = status };
@@ -763,17 +745,8 @@ let ModalUpdate = React.memo(({ GQL, GQL2, GQL3, GQL4, GQL5, UpdateForm, UpdateF
                     modalEnableEditHandler={modalEnableEditHandler}
 
                     form4={form4}
-                    onFinish4={async (values) => {
-                        console.log("Обновляю форму номер 4 ")
+                    onFinish4={(values) => {
                         let variables = {};
-                        let base64 = []
-                        console.log("onFinish4.fileList",values?.files?.fileList)
-                        if (values?.files?.fileList) {
-                            await uploadDocuments(values.files.fileList).then(result => {
-                                base64 = result
-                            })
-                        }
-                        values.docs = base64 ? base64 : []
                         console.log('values on finish', values);
                         if (step) { values.step = step };
                         if (status) { values.status_id = status };
@@ -821,18 +794,8 @@ let ModalUpdate = React.memo(({ GQL, GQL2, GQL3, GQL4, GQL5, UpdateForm, UpdateF
                     modalEnableEditHandler={modalEnableEditHandler}
 
                     form5={form5}
-                    onFinish5={ async (values) => {
-                        console.log("Обновляю форму номер 5 ")
+                    onFinish5={(values) => {
                         let variables = {};
-                        let base64 = []
-                        console.log("values?.files?.fileList",values?.files?.fileList)
-                        if (values?.files?.fileList) {
-                            
-                            await uploadDocuments(values.files.fileList).then(result => {
-                                base64 = result
-                            })
-                        }
-                        values.docs = base64 ? base64 : []
                         console.log('values on finish', values);
                         if (step) { values.step = step };
                         if (status) { values.status_id = status };

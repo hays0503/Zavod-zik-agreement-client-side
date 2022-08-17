@@ -10,7 +10,7 @@ import 'antd/dist/antd.css';
 // import '../index.css';
 import { Grid, Dropdown, Menu, Col, Layout, Row, Space, PageHeader, Avatar, Popover, Button } from "antd";
 import React from "react";
-import { useHistory, useLocation } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 // import notification from "./img/notification.png"
 
 const { Header } = Layout;
@@ -21,13 +21,7 @@ let Header1 = React.memo(({ title, user, ...props }) => {
     let history = useHistory();
 
     let { pathname } = useLocation();
-    const text = <span>Title</span>;
-    const content = (
-        <div>
-            <p>Content</p>
-            <p>Content</p>
-        </div>
-    );
+
     return <div>
         <Header className="site-layout-sub-header-background" style={{ padding: 0 }}>
             <Row justify="space-between" align="middle" style={{ paddingLeft: 46 }}>
@@ -46,13 +40,6 @@ let Header1 = React.memo(({ title, user, ...props }) => {
                     <h1 style={{ color: 'white' }}>{title}</h1>
                 </Col> : <></>}
 
-                {/*<Col>
-                    <Popover placement="bottomRight" title={text} content={content} trigger="click">
-                        <span className='notificationDot'></span>
-                        <BellFilled className='notification' />
-                         <Avatar shape="square" size="small" icon={<BellOutlined className='notification'/>} /> 
-                    </Popover>
-                </Col>*/}
                 <Col><Avatar shape="square" size="small" icon={<UserOutlined />} /></Col>
 
                 <Col flex="70px" style={{ marginRight: "30px" }}>
@@ -84,6 +71,7 @@ let Header1 = React.memo(({ title, user, ...props }) => {
                             }} style={{ textAlign: 'center' }}><ReadOutlined />Справка</Menu.Item>}
 
                             <Menu.Item danger onClick={() => { window.location.href = '/account/' }} style={{ textAlign: 'center' }}><UserOutlined />Аккаунт</Menu.Item>
+                            <Menu.Item danger style={{ textAlign: 'center' }}><Link to='./usersManual/Руководство пользователя Согласование Договоров.docx' target="_blank" download><UserOutlined />Руководство</Link></Menu.Item>
                             <Menu.Item danger onClick={() => { window.location.href = '/logout/' }} style={{ textAlign: 'center' }}><LogoutOutlined />Выйти</Menu.Item>
                         </Menu>} placement="bottomCenter" trigger={['click']}>
                             <a className="ant-dropdown-link userName" onClick={e => e.preventDefault()} style={{ fontSize: 21 }}>

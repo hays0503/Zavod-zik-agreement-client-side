@@ -8,7 +8,6 @@ let IndependentSelect = React.memo(({ query, placeholder, clear, ...props }) => 
     useEffect(() => { refetch() }, [])
 
     //make sure below the select value are the same from DB (i.e. int==int, bigint==bigint)
-    
     return (
         <Row justify='space-between'>
             <Col flex='auto'>

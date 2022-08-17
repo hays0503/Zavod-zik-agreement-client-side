@@ -23,7 +23,7 @@ import { setContext } from '@apollo/client/link/context';
 
 import { ConfigProvider, Layout, Row, notification, Button, Tooltip, Col } from 'antd';
 import ru_RU from 'antd/lib/locale/ru_RU';
-import {  Route, Redirect, Switch, BrowserRouter, useLocation, NavLink  } from 'react-router-dom';
+import { Route, Redirect, Switch, BrowserRouter, useLocation, NavLink } from 'react-router-dom';
 import { accessRedirect, useUser } from "./core/functions";
 import Header1 from "./core/Header1";
 import Error404 from "./modules/Error404";
@@ -53,7 +53,7 @@ const wsLink = new WebSocketLink({
 });
 const { Header, Content, Sider } = Layout;
 // errors of above
-const errorLink = onError(({ graphQLErrors, networkError,operation,response }) => {
+const errorLink = onError(({ graphQLErrors, networkError, operation, response }) => {
 	if (graphQLErrors)
 		graphQLErrors.map(({ message, locations, path }) => {
 			console.log(
@@ -138,7 +138,7 @@ const documentSearchP =
 let StartPage = React.memo(() => {
 	let { pathname } = useLocation();
 	const user = useUser();
-	console.log('user',user)
+	console.log('user', user)
 	return (
 		<Layout>
 			<Header1 title={''} user={user} />
@@ -151,8 +151,8 @@ let StartPage = React.memo(() => {
 							margin: 0,
 							minHeight: 280
 						}}>
-						<div style={{ paddingTop: 50}}>
-							<Row justify='center' style={{margin:"0",top:"50%", transform:"translate(0,-50%)",position:"absolute", width:"99%"}}>
+						<div style={{ paddingTop: 50 }}>
+							<Row justify='center' style={{ margin: "0", top: "50%", transform: "translate(0,-50%)", position: "absolute", width: "99%" }}>
 								{user.documentControl.select ?
 									documentControlP
 									: null
@@ -195,7 +195,7 @@ let App = () => {
 			<Route path="/account" component={accessRedirect(Account)} />
 
 			<Route component={Error404} />
-			</Switch>
+		</Switch>
 	)
 };
 
