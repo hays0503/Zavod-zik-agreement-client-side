@@ -1,9 +1,9 @@
-import { EyeOutlined, PlusOutlined } from '@ant-design/icons';
-import { Button, Form, Input, Typography, Space, Divider, Row, Col, Steps, Collapse, Table, message } from 'antd';
+import { EyeOutlined} from '@ant-design/icons';
+import { Button, Form, Input, Typography, Space, Divider, Row, Col, Steps, Collapse, message } from 'antd';
 import React, { useEffect, useState, useRef } from 'react';
-import { useUser, formatDate, handlerQuery } from '../../../../../../core/functions';
+import { useUser, formatDate } from '../../../../../../core/functions';
 import TitleMenu from '../../../../../../core/TitleMenu'
-import { gql, useMutation } from '@apollo/client';
+import { gql} from '@apollo/client';
 import UploadFile from '../../../../modals/UploadFile';
 import constants from "../../../../../../config/constants";
 
@@ -13,9 +13,6 @@ import RejectConfirm from './dialogs/RejectConfirm';
 import ReturnStepBackConfirm from './dialogs/ReturnStepBackConfirm';
 import ReturnToSenderConfirm from './dialogs/ReturnToSenderConfirm';
 
-//zip
-import JSZip from "jszip"
-import DonwloadMultipleZip from '../../../../../../core/util/DonwloadMultipleZip'
 //tasks
 import UpdateTask1 from './UpdateTask1'
 import TasksAddDialog from '../../../../dialogs/TasksAddDialog';
@@ -149,8 +146,9 @@ let Update1 = React.memo((props) => {
     let [stepCount, setStepCount] = useState({ step: '0' })
     const visibleModalUpdate = useState(false);
 
-    const price_pattern = /^\d+$/;
-    const { Title, Link } = Typography;
+    // const price_pattern = /^\d+$/;
+    // const { Title, Link } = Typography;
+    const { Link } = Typography;
 
     const { Step } = Steps;
     const { Panel } = Collapse;
@@ -182,7 +180,7 @@ let Update1 = React.memo((props) => {
             )
         })
         const content = await tmp.json();
-        if (content != undefined) {
+        if (content !== undefined) {
             console.log("RESULT", content)
         }
     }
@@ -224,7 +222,7 @@ let Update1 = React.memo((props) => {
     }, [props.initialValues]);
 
     let download = async (e) => {
-        let id = e.target.dataset.fileid
+        // let id = e.target.dataset.fileid
         await fetch("/get-file", {
             method: "POST",
             body: JSON.stringify({ id: e.target.dataset.fileid }),

@@ -4,6 +4,8 @@ import React, { useEffect, useState } from 'react';
 import { useUser, formatDate } from '../../../../../../core/functions';
 import TitleMenu from '../../../../../../core/TitleMenu'
 import { gql, useMutation } from '@apollo/client'
+import UploadFile from '../../../../modals/UploadFile';
+import constants from "../../../../../../config/constants";
 
 import ApproveConfirm from './dialogs/ApproveConfirm';
 import RejectConfirm from './dialogs/RejectConfirm';
@@ -335,24 +337,52 @@ let Update4 = React.memo((props) => {
                 </Row>
             </div>
             <Divider type={'horizontal'} />
-            <Form.Item
+
+        <Form.Item
                 name="files"
                 className='font-form-header'
-                // label="Файлы"
+                label="Файлы"
                 labelCol={{ span: 24 }}
+                rules={[
+                    {
+                        required: true,
+                        message: 'Необходимо загрузить хотя бы один файл.',
+                    }
+                ]}
             >
-                <Collapse defaultActiveKey={['2']} onChange={callback}>
-                <Panel header={<b>Прикреплённые файлы</b>} key="2">
-                {props?.initialValues4?.documents[0].files.map((item) => {
-                    return (<>
-                        <div className='document-view-wrap'>
-                            <Link><a data-fileid={item.id} onClick={download}>{item.filename}</a></Link> <Button onClick={() => { OpenDocument(item) }} shape="circle" icon={<EyeOutlined />}/> <br />
-                        </div>
-                    </>)
-                })}
-                </Panel>
-                </Collapse>
-            </Form.Item>
+
+                <UploadFile
+                    showUploadList={true}
+                    action={"https://" + constants.host + ":" + constants.port + "/document-control/orders"}
+                    multiple={true}
+                    maxCount={50}
+                    /*accept={".doc,.docx,.xls,.xlsx,.ppt,.pptx,image/*,*.pdf"}*/
+                    onChange={(info) => {
+                        const { status } = info.file;
+                        if (status !== 'uploading') {
+                            console.log('info.file', info.file, info.fileList);
+                        }
+                        if (status === 'done') {
+                            message.success(`${info.file.name} - загружен успешно.`);
+                        } else if (status === 'error') {
+                            message.error(`${info.file.name} - ошибка при загрузке.`);
+                        }
+                    }}
+                />
+        </Form.Item>
+
+        <Collapse defaultActiveKey={['2']} onChange={callback}>
+        <Panel header={<b>Прикреплённые файлы</b>} key="2">
+        {props?.initialValues4?.documents[0].files.map((item) => {
+            return (<>
+                <div className='document-view-wrap'>
+                    <Link><a data-fileid={item.id} onClick={download}>{item.filename}</a></Link> <Button onClick={() => { OpenDocument(item) }} shape="circle" icon={<EyeOutlined />}/> <br />
+                </div>
+            </>)
+        })}
+        </Panel>
+        </Collapse>
+            
             <Divider type={'horizontal'} />
             <Form.Item
                 className='font-form-header'
@@ -375,15 +405,15 @@ let Update4 = React.memo((props) => {
                         </div>
                     </>)
                 })}
-                <Steps labelPlacement="vertical" size="small" current={stepCount.step - 1} className="steps-form-update">
-                    {
-                        routesList.map((item) => {
-                            return (
-                                <Step title={item.positionName} />
-                            )
-                        })
-                    }
-                </Steps>
+            <Steps labelPlacement="vertical" size="small" current={stepCount.step - 1} className="steps-form-update">
+                {
+                    routesList.map((item) => {
+                        return (
+                            <Step title={item.positionName} />
+                        )
+                    })
+                }
+            </Steps>
             </Form.Item>
             <Row>
             <Col span={24}>

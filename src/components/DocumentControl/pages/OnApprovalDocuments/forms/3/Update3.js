@@ -15,6 +15,8 @@ import TasksTableContainer from '../../tableContainers/TasksTableContainer'
 import TasksAddDialog3 from '../../../../dialogs/TasksAddDialog3'
 import TaskModalUpdate from '../../modals/TaskModalUpdate'
 import UpdateTask3 from './UpdateTask3'
+import UploadFile from './../../../../modals/UploadFile';
+import constants from './../../../../../../config/constants';
 
 let Update3 = React.memo((props) => {
 
@@ -341,10 +343,30 @@ let Update3 = React.memo((props) => {
             <Form.Item
                 name="files"
                 className='font-form-header'
-                // label="Файлы"
+                label="Файлы"
                 labelCol={{ span: 24 }}
             >
-                <Collapse defaultActiveKey={['2']} onChange={callback}>
+                <UploadFile
+                    showUploadList={true}
+                    action={"https://" + constants.host + ":" + constants.port + "/document-control/orders"}
+                    multiple={true}
+                    maxCount={50}
+                    /*accept={".doc,.docx,.xls,.xlsx,.ppt,.pptx,image/*,*.pdf"}*/
+                    onChange={(info) => {
+                        const { status } = info.file;
+                        if (status !== 'uploading') {
+                            console.log('info.file', info.file, info.fileList);
+                        }
+                        if (status === 'done') {
+                            message.success(`${info.file.name} - загружен успешно.`);
+                        } else if (status === 'error') {
+                            message.error(`${info.file.name} - ошибка при загрузке.`);
+                        }
+                    }}
+                />
+            </Form.Item>
+            <Divider type={'horizontal'} />
+            <Collapse defaultActiveKey={['2']} onChange={callback}>
                     <Panel header={<b>Прикреплённые файлы</b>} key="2">
                         {props?.initialValues3?.documents[0].files.map((item) => {
                             return (<>
@@ -355,7 +377,6 @@ let Update3 = React.memo((props) => {
                         })}
                     </Panel>
                 </Collapse>
-            </Form.Item>
             <Divider type={'horizontal'} />
             <Form.Item
                 className='font-form-header'

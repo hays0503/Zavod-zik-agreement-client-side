@@ -15,6 +15,8 @@ import TasksTableContainer from '../../tableContainers/TasksTableContainer'
 import TasksAddDialog5 from '../../../../dialogs/TasksAddDialog5'
 import TaskModalUpdate from '../../modals/TaskModalUpdate'
 import UpdateTask5 from './UpdateTask5'
+import UploadFile from './../../../../modals/UploadFile';
+import constants from './../../../../../../config/constants';
 
 
 let Update5 = React.memo((props) => {
@@ -284,7 +286,7 @@ let Update5 = React.memo((props) => {
     };
 
     return (
-        <Form
+    <Form
             form={props.form5}
             name="DocumentsForm5"
             onFinish={onFinish}
@@ -318,7 +320,48 @@ let Update5 = React.memo((props) => {
                     <Col span={16}>{state.subject}</Col>
                 </Row>
             </div>
+
+
+
             <Divider type={'horizontal'} />
+
+{/*///////////////////// Добавить файлы///////////////////////////// */}
+            <Form.Item
+                name="files"
+                className='font-form-header'
+                label="Файлы"
+                labelCol={{ span: 24 }}
+                rules={[
+                    {
+                        required: true,
+                        message: 'Необходимо загрузить хотя бы один файл.',
+                    }
+                ]}
+            >
+                <UploadFile
+                    showUploadList={true}
+                    action={"https://" + constants.host + ":" + constants.port + "/document-control/orders"}
+                    multiple={true}
+                    maxCount={50}
+                    /*accept={".doc,.docx,.xls,.xlsx,.ppt,.pptx,image/*,*.pdf"}*/
+                    onChange={(info) => {
+                        const { status } = info.file;
+                        if (status !== 'uploading') {
+                            console.log('info.file', info.file, info.fileList);
+                        }
+                        if (status === 'done') {
+                            message.success(`${info.file.name} - загружен успешно.`);
+                        } else if (status === 'error') {
+                            message.error(`${info.file.name} - ошибка при загрузке.`);
+                        }
+                    }}
+                />
+            </Form.Item>
+{/*///////////////////// Добавить файлы///////////////////////////// */}
+
+            <Divider type={'horizontal'} />
+
+{/*///////////////////// Прикреплённые файлы//////////////////////// */}
             <Form.Item
                 name="files"
                 className='font-form-header'
@@ -337,7 +380,11 @@ let Update5 = React.memo((props) => {
                     </Panel>
                 </Collapse>
             </Form.Item>
+{/*///////////////////// Прикреплённые файлы//////////////////////// */}
+
             <Divider type={'horizontal'} />
+
+{/*///////////////////// Подписи//////////////////////////////////// */}
             <Form.Item
                 className='font-form-header'
                 name="signatures"
@@ -375,6 +422,11 @@ let Update5 = React.memo((props) => {
                     }
                 </Steps>
             </Form.Item>
+{/*///////////////////// Подписи//////////////////////////////////// */}
+
+            <Divider type={'horizontal'} />
+
+{/*///////////////////// Блок кнопок//////////////////////////////// */}
             <Row>
                 <Col span={24}>
                     <Divider type={'horizontal'} />
@@ -398,16 +450,11 @@ let Update5 = React.memo((props) => {
                     </Button>
                 </Col>
             </Row>
-            <Divider type={'horizontal'} />
-            <Form.Item
-                className='font-form-header'
-                name="reason"
-                label="Замечание"
-                labelCol={{ span: 24 }}
-            >
-            </Form.Item>
+{/*///////////////////// Блок кнопок//////////////////////////////// */}
+
             <Divider type={'horizontal'}/>
 
+{/*///////////////////// Поручения//////////////////////////////// */} 
             <Collapse defaultActiveKey={['1']} onChange={callback}>
                 <Panel header="Созданные мною поручения по данному договору" key="1">
                 <TasksTableContainer
@@ -418,7 +465,18 @@ let Update5 = React.memo((props) => {
                     />
                 </Panel>
             </Collapse>
+{/*///////////////////// Поручения//////////////////////////////// */} 
+
             <Divider type={'horizontal'}/>
+
+{/*///////////////////// Замечание//////////////////////////////// */}            
+            <Form.Item
+                className='font-form-header'
+                name="reason"
+                label="Замечание"
+                labelCol={{ span: 24 }}
+            >
+            </Form.Item>
             <div>
                 <Input
                     disabled={props.disabled}
@@ -431,7 +489,11 @@ let Update5 = React.memo((props) => {
                     )
                 })}
             </div>
+{/*///////////////////// Замечание//////////////////////////////// */} 
+
             <Divider type={'horizontal'} />
+
+{/* ////////////////////Комментарии//////////////////////////////// */}
             <Form.Item
                 className='font-form-header'
                 name="comments"
@@ -455,6 +517,8 @@ let Update5 = React.memo((props) => {
                 })}
 
             </Form.Item>
+{/* ////////////////////Комментарии//////////////////////////////// */}
+
             <Form.Item
                 name="date_created"
                 hidden={true}

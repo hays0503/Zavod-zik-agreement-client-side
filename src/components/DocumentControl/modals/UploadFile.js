@@ -32,11 +32,11 @@ let UploadFile = (props) => {
                             onClick: (() => message.destroy('msgKeyFileTypeError'))
                         });
                     }
-                    return (file.size < 5500000 && file.type === 'image/png' || file.size < 5500000 && file.type === 'image/jpg' || file.size < 5500000 && file.type === 'image/jpeg' ||
-                        file.size < 5500000 && file.type === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' ||
-                        file.size < 5500000 && file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' || file.size < 5500000 && file.type === 'application/pdf' ||
-                        file.size < 5500000 && file.type === 'application/msword' ||
-                        file.size < 5500000 && file.type === 'application/vnd.ms-excel') ? true : Upload.LIST_IGNORE;
+                    return ((file.size < 5500000 && file.type === 'image/png') || (file.size < 5500000 && file.type === 'image/jpg') || (file.size < 5500000 && file.type === 'image/jpeg') ||
+                        (file.size < 5500000 && file.type === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document') ||
+                        (file.size < 5500000 && file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet') || (file.size < 5500000 && file.type === 'application/pdf') ||
+                        (file.size < 5500000 && file.type === 'application/msword') ||
+                        (file.size < 5500000 && file.type === 'application/vnd.ms-excel')) ? true : Upload.LIST_IGNORE;
             }}
         >
             <p className="ant-upload-drag-icon">
