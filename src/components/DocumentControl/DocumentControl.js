@@ -58,6 +58,7 @@ let DocumentControl = (props) => {
             })
         };
     }, [countManager]);
+    
 
     if (pathname === '/document-control/' || pathname === '/document-control') {
         if (user.documentControl.orders.select) {
