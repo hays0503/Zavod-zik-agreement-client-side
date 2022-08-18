@@ -18,6 +18,10 @@ import UpdateTask1 from './UpdateTask1'
 import TasksAddDialog from '../../../../dialogs/TasksAddDialog';
 import TasksTableContainer from '../../tableContainers/TasksTableContainer'
 import TaskModalUpdate from '../../modals/TaskModalUpdate'
+import FragmentFileViewer from './../../../fragments/FragmentFileViewer';
+import { files } from 'jszip';
+import FragmentUploader from './../../../fragments/FragmentUploader';
+import FragmentReasonsViewer from './../../../fragments/FragmentReasonsViewer';
 
 /**
  * Форма для вывода документа по клику "Закуп ТРУ"
@@ -221,24 +225,24 @@ let Update1 = React.memo((props) => {
         }
     }, [props.initialValues]);
 
-    let download = async (e) => {
-        // let id = e.target.dataset.fileid
-        await fetch("/get-file", {
-            method: "POST",
-            body: JSON.stringify({ id: e.target.dataset.fileid }),
-            headers: {
-                "Content-Type": "application/json"
-            }
-        }).then(response => {
-            return response.json()
-        }).then(response => {
-            let result = response.result
-            let link = document.createElement('a')
-            link.href = result.data_file /*result.data_file.slice(result.data_file.indexOf(',')+1) */
-            link.download = result.filename
-            link.click()
-        })
-    }
+    // let download = async (e) => {
+    //     // let id = e.target.dataset.fileid
+    //     await fetch("/get-file", {
+    //         method: "POST",
+    //         body: JSON.stringify({ id: e.target.dataset.fileid }),
+    //         headers: {
+    //             "Content-Type": "application/json"
+    //         }
+    //     }).then(response => {
+    //         return response.json()
+    //     }).then(response => {
+    //         let result = response.result
+    //         let link = document.createElement('a')
+    //         link.href = result.data_file /*result.data_file.slice(result.data_file.indexOf(',')+1) */
+    //         link.download = result.filename
+    //         link.click()
+    //     })
+    // }
 
     let onFinish = (values) => {
         props.onFinish(state);
@@ -328,95 +332,29 @@ let Update1 = React.memo((props) => {
 
             <Divider type={'horizontal'} />
 
-            <Form.Item
-                name="files"
-                className='font-form-header'
-                label="Файлы"
-                labelCol={{ span: 24 }}
-                rules={[
-                    {
-                        required: true,
-                        message: 'Необходимо загрузить хотя бы один файл.',
-                    }
-                ]}
-            >
-                <UploadFile
-                    showUploadList={true}
-                    action={"https://" + constants.host + ":" + constants.port + "/document-control/orders"}
-                    multiple={true}
-                    maxCount={50}
-                    /*accept={".doc,.docx,.xls,.xlsx,.ppt,.pptx,image/*,*.pdf"}*/
-                    onChange={(info) => {
-                        const { status } = info.file;
-                        if (status !== 'uploading') {
-                            console.log('info.file', info.file, info.fileList);
-                        }
-                        if (status === 'done') {
-                            message.success(`${info.file.name} - загружен успешно.`);
-                        } else if (status === 'error') {
-                            message.error(`${info.file.name} - ошибка при загрузке.`);
-                        }
-                    }}
-                />
-            </Form.Item>
-
+            <FragmentUploader/>
 
             <Divider type={'horizontal'} />
 
+           {
+                 props.initialValues!==undefined?
+                <FragmentFileViewer files={props?.initialValues?.documents[0]?.files} userId={user.id}/>:
+                <h1>Загрузка</h1>
+            }
 
-            <Collapse defaultActiveKey={['2']} onChange={callback}>
-                <Panel header={<b>Прикреплённые файлы</b>} key="2">
-                    <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-                        {props?.initialValues?.documents[0].files.map((item) => {
-                            return (<>
-                                <Col span={12} className='document-view-wrap'>
-                                    <Link><a data-fileid={item.id} onClick={download}>{item.filename}</a></Link>
-                                    <Button onClick={() => { OpenDocument(item) }} shape="circle" icon={<EyeOutlined />} /> <br />
-                                </Col>
-                            </>)
-                        })}
-                    </Row>
-                </Panel>
-            </Collapse>
             <Divider type={'horizontal'} />
 
-            <Form.Item
-                className='font-form-header'
-                name="signatures"
-                label="Подписи"
-                labelCol={{ span: 24 }}
-            >
-                {props?.initialValues?.documents[0].signatures.map((item) => {  //remove commentsList
-                    return (<>
-                        <div className='signature-view-wrap'>
-                            <span className='signature-view-position'>
-                                {item.position}
-                            </span>
-                            <span className='signature-view-username'>
-                                {item.fio}
-                            </span>
-                            <span className='signature-view-date'>
-                                {formatDate(item.date_signature)}
-                            </span>
-                        </div>
-                    </>)
-                })}
-                <Steps
-                    labelPlacement="vertical"
-                    size="small"
-                    direction={stepsDirection.current}
-                    responsive={true}
-                    current={stepCount.step - 1}
-                    className="steps-form-update">
-                    {
-                        routesList.map((item) => {
-                            return (
-                                <Step title={item.positionName} />
-                            )
-                        })
-                    }
-                </Steps>
-            </Form.Item>
+            {
+                 props.initialValues!==undefined?
+                <FragmentReasonsViewer
+                 signatures={props?.initialValues?.documents[0]?.signatures}
+                 stepsDirection={stepsDirection.current}
+                 step={stepCount.step - 1}
+                 routesList={routesList}/>:
+                <h1>Загрузка</h1>
+            }
+
+            
             <Row>
                 <Col span={24}>
                     <Divider type={'horizontal'} />

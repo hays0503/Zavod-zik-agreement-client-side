@@ -17,6 +17,7 @@ import TasksTableContainer from '../../tableContainers/TasksTableContainer'
 import TasksAddDialog4 from '../../../../dialogs/TasksAddDialog4'
 import TaskModalUpdate from '../../modals/TaskModalUpdate'
 import UpdateTask4 from './UpdateTask4'
+import FragmentFileViewer from './../../../fragments/FragmentFileViewer';
 
 let Update4 = React.memo((props) => {
 
@@ -337,40 +338,11 @@ let Update4 = React.memo((props) => {
                 </Row>
             </div>
             <Divider type={'horizontal'} />
+{/*///////////////////// Добавить файлы///////////////////////////// */}
 
-        <Form.Item
-                name="files"
-                className='font-form-header'
-                label="Файлы"
-                labelCol={{ span: 24 }}
-                rules={[
-                    {
-                        required: true,
-                        message: 'Необходимо загрузить хотя бы один файл.',
-                    }
-                ]}
-            >
+        {FragmentFileViewer()}
 
-                <UploadFile
-                    showUploadList={true}
-                    action={"https://" + constants.host + ":" + constants.port + "/document-control/orders"}
-                    multiple={true}
-                    maxCount={50}
-                    /*accept={".doc,.docx,.xls,.xlsx,.ppt,.pptx,image/*,*.pdf"}*/
-                    onChange={(info) => {
-                        const { status } = info.file;
-                        if (status !== 'uploading') {
-                            console.log('info.file', info.file, info.fileList);
-                        }
-                        if (status === 'done') {
-                            message.success(`${info.file.name} - загружен успешно.`);
-                        } else if (status === 'error') {
-                            message.error(`${info.file.name} - ошибка при загрузке.`);
-                        }
-                    }}
-                />
-        </Form.Item>
-
+{/*///////////////////// Добавить файлы///////////////////////////// */}
         <Collapse defaultActiveKey={['2']} onChange={callback}>
         <Panel header={<b>Прикреплённые файлы</b>} key="2">
         {props?.initialValues4?.documents[0].files.map((item) => {

@@ -17,6 +17,7 @@ import TaskModalUpdate from '../../modals/TaskModalUpdate'
 import UpdateTask3 from './UpdateTask3'
 import UploadFile from './../../../../modals/UploadFile';
 import constants from './../../../../../../config/constants';
+import FragmentFileViewer from './../../../fragments/FragmentFileViewer';
 
 let Update3 = React.memo((props) => {
 
@@ -340,31 +341,9 @@ let Update3 = React.memo((props) => {
                 </Row>
             </div>
             <Divider type={'horizontal'} />
-            <Form.Item
-                name="files"
-                className='font-form-header'
-                label="Файлы"
-                labelCol={{ span: 24 }}
-            >
-                <UploadFile
-                    showUploadList={true}
-                    action={"https://" + constants.host + ":" + constants.port + "/document-control/orders"}
-                    multiple={true}
-                    maxCount={50}
-                    /*accept={".doc,.docx,.xls,.xlsx,.ppt,.pptx,image/*,*.pdf"}*/
-                    onChange={(info) => {
-                        const { status } = info.file;
-                        if (status !== 'uploading') {
-                            console.log('info.file', info.file, info.fileList);
-                        }
-                        if (status === 'done') {
-                            message.success(`${info.file.name} - загружен успешно.`);
-                        } else if (status === 'error') {
-                            message.error(`${info.file.name} - ошибка при загрузке.`);
-                        }
-                    }}
-                />
-            </Form.Item>
+            
+            {FragmentFileViewer()}
+
             <Divider type={'horizontal'} />
             <Collapse defaultActiveKey={['2']} onChange={callback}>
                     <Panel header={<b>Прикреплённые файлы</b>} key="2">
