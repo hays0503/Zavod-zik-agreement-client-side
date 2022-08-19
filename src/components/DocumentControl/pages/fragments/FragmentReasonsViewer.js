@@ -1,60 +1,35 @@
-import { Form, Steps } from 'antd';
-import React from 'react';
-import { formatDate } from '../../../../core/functions';
 
- const { Step } = Steps;
+import { Form, Input } from 'antd';
+
 
 /**
- * Фрагмент antd дающую возможность просматривать состояние движений документов 
- * @param props.signatures 
- * @param props.stepsDirection Направление "шагов" в движение документов
- * @param props.step Этап("шаг") движение документов
- * @param props.routesList Массив "шагов" движений документов
- */
-let FragmentReasonsViewer = (props) => {
-    return (     
+ * Фрагмент antd для вывода Замечаний по документу
+ * @param disabled Включен или выключен элемент управления
+ * @param ReasonInputChange Функция обратного вызова по изменению состояния объекта
+ * @param Reason Список замечаний
+*/
+export const FragmentReasonsViewer = (props) =>{
+    return (
+        <>
         <Form.Item
-        className='font-form-header'
-        name="signatures"
-        label="Подписи"
-        labelCol={{ span: 24 }}
-    >
-        {props?.signatures.map((item) => {  //remove commentsList
-            return (<>
-                <div className='signature-view-wrap'>
-                    <span className='signature-view-position'>
-                        {item.position}
-                    </span>
-                    <span className='signature-view-username'>
-                        {item.fio}
-                    </span>
-                    <span className='signature-view-date'>
-                        {formatDate(item.date_signature)}
-                    </span>
-                </div>
-            </>)
-        })}
-        <Steps
-            labelPlacement="vertical"
-            size="small"
-            direction={props?.stepsDirection.current}
-            responsive={true}
-            current={props?.step}
-            className="steps-form-update">
-            {
-                props?.routesList.map((item) => {
-                    return (
-                        <Step title={item.positionName} />
-                    )
-                })
-            }
-        </Steps>
-    </Form.Item>
-)
+            className='font-form-header'
+            name="reason"
+            label="Замечание"
+            labelCol={{ span: 24 }}
+        >
+        </Form.Item>
+        <div>
+            <Input
+                disabled={props.disabled}
+                onChange={props.ReasonInputChange}
+                placeholder="Замечание" />
+            {props?.reason?.map((item) => {
+                return (<span>
+                    <span>{item.text + '-' + item.userPosition}</span><br />
+                </span>
+                )
+            })}
+        </div>
+        </>
+    )
 }
-export default FragmentReasonsViewer
-
-
-
-
-

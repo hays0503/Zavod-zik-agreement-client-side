@@ -1,11 +1,9 @@
-import { EyeOutlined} from '@ant-design/icons';
-import { Button, Form, Input, Typography, Space, Divider, Row, Col, Steps, Collapse, message } from 'antd';
+import { Button, Form, Input, Typography, Space, Divider, Row, Col, Steps, Collapse} from 'antd';
 import React, { useEffect, useState, useRef } from 'react';
-import { useUser, formatDate } from '../../../../../../core/functions';
+import { useUser } from '../../../../../../core/functions';
 import TitleMenu from '../../../../../../core/TitleMenu'
 import { gql} from '@apollo/client';
-import UploadFile from '../../../../modals/UploadFile';
-import constants from "../../../../../../config/constants";
+
 
 //pop confirm
 import ApproveConfirm from './dialogs/ApproveConfirm';
@@ -19,9 +17,13 @@ import TasksAddDialog from '../../../../dialogs/TasksAddDialog';
 import TasksTableContainer from '../../tableContainers/TasksTableContainer'
 import TaskModalUpdate from '../../modals/TaskModalUpdate'
 import FragmentFileViewer from './../../../fragments/FragmentFileViewer';
-import { files } from 'jszip';
 import FragmentUploader from './../../../fragments/FragmentUploader';
-import FragmentReasonsViewer from './../../../fragments/FragmentReasonsViewer';
+import FragmentStepViewer from './../../../fragments/FragmentStepViewer';
+import { FormItem, FormWrap } from './../../../fragments/FragmentItemWrap';
+import { FragmentButtons } from './../../../fragments/FragmentButtons';
+import { FragmentReasonsViewer } from '../../../fragments/FragmentReasonsViewer';
+import { FragmentTaskList } from './../../../fragments/FragmentTaskList';
+import FragmentCommentsViewer from '../../../fragments/FragmentCommentsViewer';
 
 /**
  * Форма для вывода документа по клику "Закуп ТРУ"
@@ -150,13 +152,11 @@ let Update1 = React.memo((props) => {
     let [stepCount, setStepCount] = useState({ step: '0' })
     const visibleModalUpdate = useState(false);
 
-    // const price_pattern = /^\d+$/;
-    // const { Title, Link } = Typography;
-    const { Link } = Typography;
 
-    const { Step } = Steps;
     const { Panel } = Collapse;
+
     const stepsDirection = useRef('vertical');
+
     useEffect(() => {
         if (props?.initialValues?.documents[0]?.route_data?.length > 1)
             stepsDirection.current = props?.initialValues?.documents[0]?.route_data?.length <= 7 ? 'horizontal' : 'vertical'
@@ -169,25 +169,6 @@ let Update1 = React.memo((props) => {
         log_username: user.username,
 
     });
-
-    let OpenDocument = async (item) => {
-        // setBtnLoad(true)
-        console.log("PROPS", item.id)
-        // console.log('RECORD',props.record)
-        const tmp = await fetch('/api/files', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(
-                { user: Number(user.id), item: item.id }
-            )
-        })
-        const content = await tmp.json();
-        if (content !== undefined) {
-            console.log("RESULT", content)
-        }
-    }
 
     useEffect(() => { props.form.setFieldsValue(state) }, [state]);
     useEffect(() => {
@@ -225,32 +206,14 @@ let Update1 = React.memo((props) => {
         }
     }, [props.initialValues]);
 
-    // let download = async (e) => {
-    //     // let id = e.target.dataset.fileid
-    //     await fetch("/get-file", {
-    //         method: "POST",
-    //         body: JSON.stringify({ id: e.target.dataset.fileid }),
-    //         headers: {
-    //             "Content-Type": "application/json"
-    //         }
-    //     }).then(response => {
-    //         return response.json()
-    //     }).then(response => {
-    //         let result = response.result
-    //         let link = document.createElement('a')
-    //         link.href = result.data_file /*result.data_file.slice(result.data_file.indexOf(',')+1) */
-    //         link.download = result.filename
-    //         link.click()
-    //     })
-    // }
 
     let onFinish = (values) => {
         props.onFinish(state);
-        // console.log('Values --++++++++++', values)
     }
 
     //confirmations
     const [reasonText, setReasonText] = useState(props?.initialValues?.documents[0]?.reason);
+
     const ReasonInputChange = (all, change) => {
         if (all.target.value.length > 0) {
             setReasonText(all.target.value)
@@ -259,10 +222,7 @@ let Update1 = React.memo((props) => {
         }
     };
 
-    //collapse
-    function callback(key) {
-        // console.log(key);
-    }
+
 
     const dict = [
         {
@@ -301,142 +261,106 @@ let Update1 = React.memo((props) => {
             autoComplete="off"
             onValuesChange={(changedValues, allValues) => { setState(Object.assign({}, state, { ...allValues, })) }}
         >
-            <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-                <Col span={8}> <b>От: </b></Col> <Col span={16}>{props?.initialValues?.documents[0].fio}</Col>
-                <Col span={8}><b>Должность: </b></Col> <Col span={16}>{props?.initialValues?.documents[0].position}</Col>
-                <Col span={8}><b>Тип договора: </b></Col> <Col span={16}>Закуп ТРУ</Col>
-            </Row>
+
+            {/* /////////////////////////////////// */}
+            <FormWrap>{FormItem("От: ",state?.fio)}</FormWrap>
+            {/* /////////////////////////////////// */}
+            <FormWrap>{FormItem ("Должность: ",state?.position)}</FormWrap>
+            {/* /////////////////////////////////// */}
+            <FormWrap>{FormItem ("Тип договора: ","Закуп ТРУ")}</FormWrap>
+            {/* /////////////////////////////////// */}
 
             <Divider type={'horizontal'} />
+            {/* /////////////////////////////////// */}
+            <FormWrap>{FormItem ("Наименование ТРУ: ",state?.title)}</FormWrap>
+            {/* /////////////////////////////////// */}
+            <FormWrap>{FormItem ("Поставщик ТРУ: ",state?.supllier)}</FormWrap>
+            {/* /////////////////////////////////// */}
+            <FormWrap>{FormItem ("Основание: ",state?.subject)}</FormWrap>
+            {/* /////////////////////////////////// */}
+            <FormWrap>{FormItem ("Общая сумма договора: ",state?.price)}</FormWrap>
+            {/* /////////////////////////////////// */}
+            <Divider type={'horizontal'} /> 
 
-            <div className='form-item-wrap'>
-                <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-                    <Col span={8}><b>Наименование ТРУ: </b></Col> <Col span={16}>{state.title}</Col>
-                </Row>
-            </div>
-            <div className='form-item-wrap'>
-                <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-                    <Col span={8}><b>Поставщик ТРУ: </b></Col> <Col span={16}>{state.supllier}</Col>
-                </Row>
-            </div>
-            <div className='form-item-wrap'>
-                <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-                    <Col span={8}><b>Основание: </b></Col> <Col span={16}>{state.subject}</Col>
-                </Row>
-            </div>
-            <div className='form-item-wrap'>
-                <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-                    <Col span={8}><b>Общая сумма договора: </b></Col> <Col span={16}>{state.price}</Col>
-                </Row>
-            </div>
 
-            <Divider type={'horizontal'} />
-
+            {/* Фрагмент antd дающую возможность загружать файлы */}
             <FragmentUploader/>
+            {/* /////////////////////////////////// */}
 
             <Divider type={'horizontal'} />
 
-           {
-                 props.initialValues!==undefined?
+            {/*Фрагмент antd дающую возможность просматривать файлы*/}
+            {
+                props.initialValues!==undefined?
                 <FragmentFileViewer files={props?.initialValues?.documents[0]?.files} userId={user.id}/>:
                 <h1>Загрузка</h1>
             }
+            {/* /////////////////////////////////// */}
 
             <Divider type={'horizontal'} />
 
+            {/* Фрагмент antd дающую возможность просматривать состояние движений документов */}
             {
-                 props.initialValues!==undefined?
-                <FragmentReasonsViewer
-                 signatures={props?.initialValues?.documents[0]?.signatures}
-                 stepsDirection={stepsDirection.current}
-                 step={stepCount.step - 1}
-                 routesList={routesList}/>:
+                props.initialValues!==undefined?
+                <FragmentStepViewer
+                signatures={props?.initialValues?.documents[0]?.signatures}
+                stepsDirection={stepsDirection.current}
+                step={stepCount.step - 1}
+                routesList={routesList}/>:
                 <h1>Загрузка</h1>
             }
-
-            
-            <Row>
-                <Col span={24}>
-                    <Divider type={'horizontal'} />
-                    <ApproveConfirm reasonText={reasonText} dataProps={props} setState={setState} user={user} />
-                    <Divider type={'vertical'} />
-                    <Space>
-                        <Divider type={'vertical'} />
-                        <ReturnToSenderConfirm reasonText={reasonText} dataProps={props} setState={setState} user={user} />
-                        <ReturnStepBackConfirm reasonText={reasonText} dataProps={props} setState={setState} user={user} />
-                        <Divider type={'vertical'} />
-                        <RejectConfirm reasonText={reasonText} dataProps={props} setState={setState} user={user} />
-                    </Space>
-                </Col>
-                <Col span={24} className="marginTop">
-                    <Button onClick={props.modalCancelHandler}>
-                        Отменить
-                    </Button>
-                    <Divider type={'vertical'} />
-                    <Button onClick={props.modalEnableEditHandler}>
-                        Редактировать
-                    </Button>
-                </Col>
-            </Row>
+            {/* /////////////////////////////////// */}
 
             <Divider type={'horizontal'} />
 
-            <Form.Item
-                className='font-form-header'
-                name="reason"
-                label="Замечание"
-                labelCol={{ span: 24 }}
-            >
-            </Form.Item>
-            <div>
-                <Input
+            {/* Фрагмент antd с кнопками для форм  */}
+            <FragmentButtons
+                ApproveConfirm={()=>(<ApproveConfirm reasonText={reasonText} dataProps={props} setState={setState} user={user} />)}
+                ReturnToSenderConfirm={()=>(<ReturnToSenderConfirm reasonText={reasonText} dataProps={props} setState={setState} user={user} />)}
+                ReturnStepBackConfirm={()=>(<ReturnStepBackConfirm reasonText={reasonText} dataProps={props} setState={setState} user={user} />)}
+                RejectConfirm={()=>(<RejectConfirm reasonText={reasonText} dataProps={props} setState={setState} user={user} />)}
+                modalCancelHandler={props.modalCancelHandler}
+                modalEnableEditHandler={props.modalEnableEditHandler}
+                reasonText={reasonText}
+                props={props}
+                setState={setState}
+                user={user}
+                />
+            {/* /////////////////////////////////// */}
+
+            <Divider type={'horizontal'} />
+
+            {/* Фрагмент antd для вывода Замечаний по документу */}
+            <FragmentReasonsViewer 
+                disabled={props.disabled}
+                ReasonInputChange={ReasonInputChange}
+                Reason={props?.initialValues?.documents[0]?.reason}
+            />
+            {/* /////////////////////////////////// */}
+
+            <Divider type={'horizontal'} />
+
+            {/* Фрагмент antd для вывода поручений по документам */}
+            <FragmentTaskList
+                dict={dict}
+                documentTasksList={props.documentTasksList}
+                visibleModalUpdate={visibleModalUpdate}
+                DocumentTasks={DocumentTasks}
+                TasksTitleMenu={TasksTitleMenu}
+            />
+            {/* /////////////////////////////////// */}
+
+            <Divider type={'horizontal'} />
+
+
+            <FragmentCommentsViewer
+                    HandleCommentOnChange={props.HandleCommentOnChange} 
                     disabled={props.disabled}
-                    onChange={ReasonInputChange}
-                    placeholder="Замечание" />
-                {props?.initialValues?.documents[0]?.reason?.map((item) => {
-                    return (<span>
-                        <span>{item.text + '-' + item.userPosition}</span><br />
-                    </span>
-                    )
-                })}
-            </div>
+                    HandleComment={props.HandleComment}
+                    commentsList={props.commentsList}
+            />
 
-            <Divider type={'horizontal'} />
 
-            <Collapse defaultActiveKey={['1']} onChange={callback}>
-                <Panel header="Созданные мною поручения по данному договору" key="1">
-                    <TasksTableContainer
-                        data={{ dict, records: props.documentTasksList }}
-                        visibleModalUpdate={visibleModalUpdate}
-                        GQL={DocumentTasks}
-                        title={TasksTitleMenu}
-                    />
-                </Panel>
-            </Collapse>
-
-            <Divider type={'horizontal'} />
-            <Form.Item
-                className='font-form-header'
-                name="comments"
-                label="Комментарии"
-                labelCol={{ span: 24 }}
-            >
-                <Input.TextArea rows={7} name='comment' onChange={props.HandleCommentOnChange} disabled={props.disabled} />
-                <Button disabled={props.disabled} onClick={() => { props.HandleComment(props.form) }} className="marginTop">Оставить комментарий</Button>
-                {props.commentsList.map((item) => {
-                    return (
-                        <div className='comments'>
-                            <li className='comment-item'>
-                                <span className='user-position-comment'>{item.position}</span>
-                                <span className='user-name-comment'> ({item.fio}) </span>
-                                <span className='user-date-time-comment'>{item.date}</span><br />
-                                <span className='comment'>{item.comment}</span>
-                            </li>
-                        </div>
-
-                    )
-                })}
-            </Form.Item>
             <Form.Item
                 name="date_created"
                 hidden={true}
