@@ -11,6 +11,7 @@ import { formatDate } from '../../../../core/functions';
  * @param props.step Этап("шаг") движение документов
  * @param props.routesList Массив "шагов" движений документов
  */
+
 let FragmentStepViewer = (props) => {
     return (     
         <Form.Item
@@ -52,6 +53,9 @@ let FragmentStepViewer = (props) => {
     </Form.Item>
 )
 }
+
+FragmentStepViewer.defaultProps = {stepsDirection: 'vertical'};
+
 export default FragmentStepViewer
 
 

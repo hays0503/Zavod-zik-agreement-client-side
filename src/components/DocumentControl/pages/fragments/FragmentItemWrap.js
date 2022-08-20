@@ -22,5 +22,14 @@ import { Row, Col } from 'antd';
  * @param Text Строка с Текстом
  */
 export const FormItem = (Title,Text) =>{
-    return <><Col span={8}> <b>{Title}</b></Col><Col span={16}>{Text}</Col></>
+    return (Title !==undefined && Text !==undefined) ?
+    <>
+        <Col span={8}> 
+            <b>{Title}</b>
+        </Col>
+        <Col span={16}>
+            {Text}
+        </Col>
+    </> : null
+    
 }

@@ -12,6 +12,7 @@ import { useState } from 'react';
  * @param userid id пользователя
  */
 let FragmentFileViewer = (props) => {
+    console.log('FragmentFileViewer',props?.files)
      return (     
     <Form.Item
         name="files"

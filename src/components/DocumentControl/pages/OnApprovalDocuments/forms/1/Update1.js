@@ -1,8 +1,8 @@
-import { Button, Form, Input, Typography, Space, Divider, Row, Col, Steps, Collapse} from 'antd';
-import React, { useEffect, useState, useRef } from 'react';
+import { gql } from '@apollo/client';
+import { Divider, Form } from 'antd';
+import React, { useEffect, useRef, useState } from 'react';
 import { useUser } from '../../../../../../core/functions';
-import TitleMenu from '../../../../../../core/TitleMenu'
-import { gql} from '@apollo/client';
+import TitleMenu from '../../../../../../core/TitleMenu';
 
 
 //pop confirm
@@ -12,23 +12,52 @@ import ReturnStepBackConfirm from './dialogs/ReturnStepBackConfirm';
 import ReturnToSenderConfirm from './dialogs/ReturnToSenderConfirm';
 
 //tasks
-import UpdateTask1 from './UpdateTask1'
 import TasksAddDialog from '../../../../dialogs/TasksAddDialog';
-import TasksTableContainer from '../../tableContainers/TasksTableContainer'
-import TaskModalUpdate from '../../modals/TaskModalUpdate'
-import FragmentFileViewer from './../../../fragments/FragmentFileViewer';
-import FragmentUploader from './../../../fragments/FragmentUploader';
-import FragmentStepViewer from './../../../fragments/FragmentStepViewer';
-import { FormItem, FormWrap } from './../../../fragments/FragmentItemWrap';
-import { FragmentButtons } from './../../../fragments/FragmentButtons';
-import { FragmentReasonsViewer } from '../../../fragments/FragmentReasonsViewer';
-import { FragmentTaskList } from './../../../fragments/FragmentTaskList';
+import { FragmentAnyItems } from '../../../fragments/FragmentAnyItems';
 import FragmentCommentsViewer from '../../../fragments/FragmentCommentsViewer';
+import { FragmentReasonsViewer } from '../../../fragments/FragmentReasonsViewer';
+import TaskModalUpdate from '../../modals/TaskModalUpdate';
+import { FragmentButtons } from './../../../fragments/FragmentButtons';
+import FragmentFileViewer from './../../../fragments/FragmentFileViewer';
+import { FormItem, FormWrap } from './../../../fragments/FragmentItemWrap';
+import FragmentStepViewer from './../../../fragments/FragmentStepViewer';
+import { FragmentTaskList } from './../../../fragments/FragmentTaskList';
+import FragmentUploader from './../../../fragments/FragmentUploader';
+import UpdateTask1 from './UpdateTask1';
 
 /**
  * Форма для вывода документа по клику "Закуп ТРУ"
  */
 let Update1 = React.memo((props) => {
+
+
+
+    const dict = [
+        {
+            title: 'У кого',
+            dataIndex: 'fio_receiver',
+            key: 'fio_receiver',
+            width: '200px'
+        },
+        {
+            title: 'Срок',
+            dataIndex: 'deadline',
+            key: 'deadline',
+            width: '200px'
+        },
+        {
+            title: 'Статус',
+            dataIndex: 'task_statuses',
+            key: 'task_statuses',
+            width: '150px'
+        },
+        {
+            title: 'Задача',
+            dataIndex: 'note',
+            key: 'note',
+            width: '250px'
+        },
+    ];
 
     let DocumentTasks = {
         exemplar: 'document_tasks',
@@ -134,41 +163,25 @@ let Update1 = React.memo((props) => {
         `
     }
 
-    let TasksTitleMenu = (tableProps) => {
-        return (<TitleMenu
-            buttons={[
-                <TaskModalUpdate
-                    visibleModalUpdate={visibleModalUpdate} UpdateForm={UpdateTask1} GQL={DocumentTasks}
-                    title='Поручение' selectedRowKeys={tableProps.selectedRowKeys} update={true} width={750} />,
-                <TasksAddDialog visible={visible} setVisible={setVisible} document={props.initialValues} />
-            ]}
-            selectedRowKeys={tableProps.selectedRowKeys}
-        />)
-    };
-
+    const stepsDirection = useRef('vertical');
     let user = useUser();
-
     let [routesList, setRoutesList] = useState([{ positionName: 'Тип договора не выбран.' }])
     let [stepCount, setStepCount] = useState({ step: '0' })
     const visibleModalUpdate = useState(false);
 
+    //confirmations
+    const [reasonText, setReasonText] = useState(props?.initialValues?.documents[0]?.reason);
+    //Tasks
+    const [visible, setVisible] = useState(false)
+    const [state, setState] = useState({
+        log_username: user.username,
 
-    const { Panel } = Collapse;
-
-    const stepsDirection = useRef('vertical');
+    });
 
     useEffect(() => {
         if (props?.initialValues?.documents[0]?.route_data?.length > 1)
             stepsDirection.current = props?.initialValues?.documents[0]?.route_data?.length <= 7 ? 'horizontal' : 'vertical'
     }, [props]);
-
-    //Tasks
-    const [visible, setVisible] = useState(false)
-
-    const [state, setState] = useState({
-        log_username: user.username,
-
-    });
 
     useEffect(() => { props.form.setFieldsValue(state) }, [state]);
     useEffect(() => {
@@ -206,13 +219,21 @@ let Update1 = React.memo((props) => {
         }
     }, [props.initialValues]);
 
-
     let onFinish = (values) => {
         props.onFinish(state);
     }
 
-    //confirmations
-    const [reasonText, setReasonText] = useState(props?.initialValues?.documents[0]?.reason);
+    let TasksTitleMenu = (tableProps) => {
+        return (<TitleMenu
+            buttons={[
+                <TaskModalUpdate
+                    visibleModalUpdate={visibleModalUpdate} UpdateForm={UpdateTask1} GQL={DocumentTasks}
+                    title='Поручение' selectedRowKeys={tableProps.selectedRowKeys} update={true} width={750} />,
+                <TasksAddDialog visible={visible} setVisible={setVisible} document={props.initialValues} />
+            ]}
+            selectedRowKeys={tableProps.selectedRowKeys}
+        />)
+    };
 
     const ReasonInputChange = (all, change) => {
         if (all.target.value.length > 0) {
@@ -222,34 +243,6 @@ let Update1 = React.memo((props) => {
         }
     };
 
-
-
-    const dict = [
-        {
-            title: 'У кого',
-            dataIndex: 'fio_receiver',
-            key: 'fio_receiver',
-            width: '200px'
-        },
-        {
-            title: 'Срок',
-            dataIndex: 'deadline',
-            key: 'deadline',
-            width: '200px'
-        },
-        {
-            title: 'Статус',
-            dataIndex: 'task_statuses',
-            key: 'task_statuses',
-            width: '150px'
-        },
-        {
-            title: 'Задача',
-            dataIndex: 'note',
-            key: 'note',
-            width: '250px'
-        },
-    ];
 
 
     return (
@@ -334,7 +327,7 @@ let Update1 = React.memo((props) => {
             <FragmentReasonsViewer 
                 disabled={props.disabled}
                 ReasonInputChange={ReasonInputChange}
-                Reason={props?.initialValues?.documents[0]?.reason}
+                Reason={state?.reason}
             />
             {/* /////////////////////////////////// */}
 
@@ -352,40 +345,19 @@ let Update1 = React.memo((props) => {
 
             <Divider type={'horizontal'} />
 
-
+            {/* Фрагмент antd дающую возможность просматривать комментарии к документам */}
             <FragmentCommentsViewer
                     HandleCommentOnChange={props.HandleCommentOnChange} 
                     disabled={props.disabled}
                     HandleComment={props.HandleComment}
                     commentsList={props.commentsList}
             />
+            {/* /////////////////////////////////// */}
 
+            {/* Фрагмент antd элементами для хранение данных (ну или типо того) */}
+            <FragmentAnyItems/>
+            {/* /////////////////////////////////// */}
 
-            <Form.Item
-                name="date_created"
-                hidden={true}
-            >
-            </Form.Item>
-            <Form.Item
-                name="route_id"
-                hidden={true}
-            >
-            </Form.Item>
-            <Form.Item
-                name="status_id"
-                hidden={true}
-            >
-            </Form.Item>
-            <Form.Item
-                name="step"
-                hidden={true}
-            >
-            </Form.Item>
-            <Form.Item
-                name="log_username"
-                hidden={true}
-            >
-            </Form.Item>
         </Form>
     )
 });
