@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { useUser, formatDate } from '../../../../../../core/functions';
 import UploadFile from '../../../../modals/UploadFile';
 import constants from '../../../../../../config/constants'
+import {TaskFileDownload} from '../../../api/CRU_Document'
 
 let Update1 = React.memo((props) => {
     let user = useUser();
@@ -221,7 +222,7 @@ let Update1 = React.memo((props) => {
                             {props?.initialValues?.document_tasks[0]?.document_tasks_files.map((item) => {
                                 return (<>
                                     <Col span={24} className='document-view-wrap'>
-                                        <Link><a data-fileid={item.id} onClick={download}>{item.filename}</a></Link> <Button onClick={() => { OpenDocument(item) }} shape="circle" icon={<EyeOutlined />} /> <br />
+                                        <Link><a data-fileid={item.id} onClick={TaskFileDownload}>{item.filename}</a></Link> <Button onClick={() => { OpenDocument(item) }} shape="circle" icon={<EyeOutlined />} /> <br />
                                     </Col>
                                 </>)
                             })}
@@ -229,50 +230,6 @@ let Update1 = React.memo((props) => {
                         </div>
                     </div>
             }
-            {/* <Form.Item
-                name='report'
-                className='font-form-header'
-                label='Отчёт'
-                labelCol={{ span: 24 }}
-                rules={[
-                    {
-                        required: true,
-                        message: 'Необходимо загрузить хотя бы один файл.',
-                    }
-                ]}
-            >
-                <Input.TextArea />
-            </Form.Item>
-            <Form.Item
-                name="files"
-                className='font-form-header'
-                label="Файлы"
-                labelCol={{ span: 24 }}
-                rules={[
-                    {
-                        required: true,
-                        message: 'Необходимо загрузить хотя бы один файл.',
-                    }
-                ]}
-            >
-                <UploadFile
-                    showUploadList={true}
-                    action={"https://" + constants.host + ":" + constants.port + "/document-control/for-execution-inbox"}
-                    multiple={true}
-                    maxCount={50}
-                    onChange={(info) => {
-                        const { status } = info.file;
-                        if (status !== 'uploading') {
-                            console.log('info.file', info.file, info.fileList);
-                        }
-                        if (status === 'done') {
-                            message.success(`${info.file.name} - загружен успешно.`);
-                        } else if (status === 'error') {
-                            message.error(`${info.file.name} - ошибка при загрузке.`);
-                        }
-                    }}
-                />
-            </Form.Item> */}
 
             {(state?.status == 1) ?
                 <><Divider type={'horizontal'} />
