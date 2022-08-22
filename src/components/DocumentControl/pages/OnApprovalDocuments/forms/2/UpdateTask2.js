@@ -1,7 +1,8 @@
-import { EyeOutlined, PlusOutlined } from '@ant-design/icons';
-import { Button, Form, Typography, Space, Divider, Row, Col, Steps, Collapse, Table, Input } from 'antd';
+import { EyeOutlined } from '@ant-design/icons';
+import { Button, Form, Typography, Divider, Row, Col } from 'antd';
 import React, { useEffect, useState } from 'react';
-import { useUser, formatDate } from '../../../../../../core/functions';
+import { useUser } from '../../../../../../core/functions';
+import { FileDownload, FileOpenDocument, TaskFileDownload, TaskFileOpenDocument } from '../../../api/CRU_Document';
 
 let Update2 = React.memo((props) => {
     let user = useUser();
@@ -11,49 +12,11 @@ let Update2 = React.memo((props) => {
         log_username: user.username,
     });
 
-    let OpenDocument = async (item) => {
-        // setBtnLoad(true)
-        console.log("PROPS", item.id)
-        // console.log('RECORD',props.record)
-        const tmp = await fetch('/api/tasks_files', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(
-                { user: Number(user.id), item: item.id }
-            )
-        })
-        const content = await tmp.json();
-        if (content != undefined) {
-            console.log("RESULT", content)
-        }
-    }
-
     let tasksFilesMap = state?.task_files?.map((item) => {
         return item.toString()
     })
 
     const result = props?.document?.files?.filter(i => tasksFilesMap?.includes(i.id));
-
-    let download = async (e) => {
-        let id = e.target.dataset.fileid
-        await fetch("/get-tasks-file", {
-            method: "POST",
-            body: JSON.stringify({ id: e.target.dataset.fileid }),
-            headers: {
-                "Content-Type": "application/json"
-            }
-        }).then(response => {
-            return response.json()
-        }).then(response => {
-            let result = response.result
-            let link = document.createElement('a')
-            link.href = result.data_file /*result.data_file.slice(result.data_file.indexOf(',')+1) */
-            link.download = result.filename
-            link.click()
-        })
-    }
 
     useEffect(() => { props.form.setFieldsValue(state) }, [state]);
 
@@ -82,7 +45,7 @@ let Update2 = React.memo((props) => {
         }
     }, [props.initialValues]);
 
-    let onFinish = (values) => {
+    let onFinish = () => {
         // props.onFinish(state)
     }
 
@@ -176,7 +139,7 @@ let Update2 = React.memo((props) => {
             {result?.map((file) => {
                 return (<>
                     <div className='document-view-wrap'>
-                        <Link><a data-fileid={file.id} onClick={download}>{file.filename}</a></Link> <Button onClick={() => { OpenDocument(file) }} shape="circle" icon={<EyeOutlined />} /> <br />
+                        <Link><a data-fileid={file.id} onClick={FileDownload}>{file.filename}</a></Link> <Button onClick={() => { FileOpenDocument(file) }} shape="circle" icon={<EyeOutlined />} /> <br />
                     </div>
                 </>)
             })}
@@ -192,9 +155,8 @@ let Update2 = React.memo((props) => {
                             <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
                                 {state.document_tasks_files.map((item) => {
                                     return (<>
-                                        <Col span={24} className='document-view-wrap'>
-                                            <Link><a data-fileid={item.id} onClick={download}>{item.filename}</a></Link> <Button onClick={() => { OpenDocument(item) }} shape="circle" icon={<EyeOutlined />} /> <br />
-                                        </Col>
+                                            <Link><a data-fileid={item.id} onClick={TaskFileDownload}>{item.filename}</a></Link>
+                                            <Button onClick={() => { TaskFileOpenDocument(item) }} shape="circle" icon={<EyeOutlined />} /> <br />
                                     </>)
                                 })}
                             </Row>
