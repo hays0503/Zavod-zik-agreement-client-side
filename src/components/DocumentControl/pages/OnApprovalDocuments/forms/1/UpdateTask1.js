@@ -15,7 +15,7 @@ let Update1 = React.memo((props) => {
         // setBtnLoad(true)
         console.log("PROPS", item.id)
         // console.log('RECORD',props.record)
-        const tmp = await fetch('/api/files', {
+        const tmp = await fetch('/api/tasks_files', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -25,7 +25,7 @@ let Update1 = React.memo((props) => {
             )
         })
         const content = await tmp.json();
-        if (content != undefined) {
+        if (content !== undefined) {
             console.log("RESULT", content)
         }
     }
@@ -38,7 +38,7 @@ let Update1 = React.memo((props) => {
 
     let download = async (e) => {
         let id = e.target.dataset.fileid
-        await fetch("/get-file", {
+        await fetch("/get-tasks-file", {
             method: "POST",
             body: JSON.stringify({ id: e.target.dataset.fileid }),
             headers: {
