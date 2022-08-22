@@ -1,0 +1,60 @@
+div.page-footer {
+    text-align: center;
+    height: 50px;
+    font-size: 10px;
+    opacity: 0.8;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+div.page-footer p {
+    margin: 0;
+}
+
+.watermark {
+    display: none;
+    top: 50vh;
+    z-index: -9;
+    width: 50vw;
+    page-break-after: always;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: .1;
+}
+
+table.report-container {
+    page-break-after: always;
+    width: 100%;
+}
+
+thead.report-header {
+    display: table-header-group;
+}
+
+tfoot.report-footer {
+    display: table-footer-group;
+}
+
+div.footer-info, div.page-footer {
+    display: none;
+    height: 60px;
+}
+
+
+@media print {
+    @page {
+        size: A4;
+        margin: 16mm 16mm 16mm 16mm;
+    }
+
+    .watermark {
+        display: block;
+        counter-increment: page;
+        position: fixed;
+    }
+
+    div.page-footer, div.footer-info {
+        display: block;
+    }
+}
