@@ -178,13 +178,6 @@ export const useUser = () => {
 
     const { loading: positionsLoading, data: positionsData, refetch: positionsRefetch } = useQuery(positions);
 
-    /*const { loading: positionsLoading, data: positionsData, refetch: positionsRefetch } = useQuery(
-        positions, {
-            onCompleted: (data) => {
-                setPos(data)
-            }
-    });*/
-
     let user = query.data ? query.data.authMe[0] : undefined;
     let positionNames = user ? query.data.authMe[0].position_names : [];
 

@@ -15,7 +15,7 @@ let Update2 = React.memo((props) => {
         // setBtnLoad(true)
         console.log("PROPS", item.id)
         // console.log('RECORD',props.record)
-        const tmp = await fetch('/api/files', {
+        const tmp = await fetch('/api/tasks_files', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -38,7 +38,7 @@ let Update2 = React.memo((props) => {
 
     let download = async (e) => {
         let id = e.target.dataset.fileid
-        await fetch("/get-file", {
+        await fetch("/get-tasks-file", {
             method: "POST",
             body: JSON.stringify({ id: e.target.dataset.fileid }),
             headers: {
@@ -181,7 +181,7 @@ let Update2 = React.memo((props) => {
                 </>)
             })}
             {
-                (state.status == 2) ?
+                (state.status === 2) ?
                     <div>
                         <Divider type={'horizontal'} />
                         <h3><b>Отчёт</b></h3>
@@ -203,7 +203,7 @@ let Update2 = React.memo((props) => {
                     : ''
             }
 
-            {(state?.status == 1 && state?.user_id_created != user.id) ?
+            {(state?.status === 1 && state?.user_id_created !== user.id) ?
                 <><Divider type={'horizontal'} />
                     <Button type='primary' htmlType="submit">Завершить</Button></>
                 : ''

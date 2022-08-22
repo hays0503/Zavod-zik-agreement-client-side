@@ -2,6 +2,7 @@ import { EyeOutlined, PlusOutlined } from '@ant-design/icons';
 import { Button, Form, Typography, Space, Divider, Row, Col, Steps, Collapse, Table, Input } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useUser, formatDate } from '../../../../../../core/functions';
+import { TaskFileDownload, TaskFileOpenDocument } from './../../../api/CRU_Document';
 
 let Update1 = React.memo((props) => {
     let user = useUser();
@@ -155,7 +156,7 @@ let Update1 = React.memo((props) => {
                 </>)
             })}
             {
-                (state.status == 2) ?
+                (state.status === 2) ?
                     <div>
                         <Divider type={'horizontal'} />
                         <h3><b>Отчёт</b></h3>
@@ -167,7 +168,8 @@ let Update1 = React.memo((props) => {
                                 {state.document_tasks_files.map((item) => {
                                     return (<>
                                         <Col span={24} className='document-view-wrap'>
-                                            <Link><a data-fileid={item.id} onClick={download}>{item.filename}</a></Link> <Button onClick={() => { OpenDocument(item) }} shape="circle" icon={<EyeOutlined />} /> <br />
+                                            <Link><a data-fileid={item.id} onClick={TaskFileDownload}>{item.filename}</a></Link>
+                                             <Button onClick={() => { TaskFileOpenDocument(item) }} shape="circle" icon={<EyeOutlined />} /> <br />
                                         </Col>
                                     </>)
                                 })}
@@ -177,7 +179,7 @@ let Update1 = React.memo((props) => {
                     : ''
             }
 
-            {(state?.status == 1 && state?.user_id_created != user.id) ?
+            {(state?.status === 1 && state?.user_id_created !== user.id) ?
                 <><Divider type={'horizontal'} />
                     <Button type='primary' htmlType="submit">Завершить</Button></>
                 : ''
