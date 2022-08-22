@@ -173,20 +173,20 @@ let ModalUpdate = React.memo(({ GQL, GQL2, GQL3, GQL4, GQL5, UpdateForm, UpdateF
         return {
             id: item.id,
             key: item.id,
-            document_id:item.document_id ? item.document_id: '',
-            status:item.status? item.status: '',
-            is_cancelled: item.is_cancelled? item.is_cancelled:'',
-            note:item.note?item.note:'',
-            deadline:item.deadline?item.deadline:'',
-            date_created:item.date_created?item.date_created:'',
-            user_id_created:item.user_id_created? item.user_id_created:'',
-            fio_created:item.fio_created?item.fio_created:'',
-            user_id_receiver:item.user_id_receiver? item.user_id_receiver:'',
-            fio_receiver:item.fio_receiver?item.fio_receiver:'',
-            route_id:item.route_id?item.route_id:'',
-            task_statuses: item.task_statuses.name?item.task_statuses.name:'',
-            document_tasks_files:item.document_tasks_files.length !=0?item.document_tasks_files:[],
-            document_tasks_logs:item.document_tasks_logs[item.document_tasks_logs.findIndex(item => item.user_id == user.id)]
+            document_id:item?.document_id ?                                     item?.document_id: '',
+            status:item?.status?                                                item?.status: '',
+            is_cancelled: item?.is_cancelled?                                   item?.is_cancelled:'',
+            note:item.note?                                                     item?.note:'',
+            deadline:item?.deadline?                                            item?.deadline:'',
+            date_created:item?.date_created?                                    item?.date_created:'',
+            user_id_created:item?.user_id_created?                              item?.user_id_created:'',
+            fio_created:item?.fio_created?                                      item?.fio_created:'',
+            user_id_receiver:item?.user_id_receiver?                            item?.user_id_receiver:'',
+            fio_receiver:item?.fio_receiver?                                    item?.fio_receiver:'',
+            route_id:item?.route_id?                                            item?.route_id:'',
+            task_statuses: item?.task_statuses?.name?                            item?.task_statuses?.name:'',
+            document_tasks_files:item?.document_tasks_files.length !==0?        item?.document_tasks_files:[],
+            document_tasks_logs:item?.document_tasks_logs[item.document_tasks_logs.findIndex(item => item.user_id === user.id)]
         }
     }) : [];
     //---------comments
