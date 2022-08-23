@@ -7,7 +7,7 @@ import { FormItem, FormWrap } from './../../../fragments/FragmentItemWrap';
 import { FileOpenDocument } from './../../../api/CRU_Document';
 import { FragmentInputArea } from './../../../fragments/FragmentInputArea';
 import FragmentUploader from '../../../fragments/FragmentUploader';
-import { FragmentTaskFileViewer } from '../../../fragments/FragmentFileViewer';
+import { FragmentFileViewer, FragmentTaskFileViewer } from '../../../fragments/FragmentFileViewer';
 
 let Update1 = React.memo((props) => {
     let user = useUser();
@@ -102,14 +102,7 @@ let Update1 = React.memo((props) => {
             <Divider type={'horizontal'} />
             {/* /////////////////////////////////// */}
             <h3 className='marginTop'><b>Файлы прикреплённые отправителем</b></h3>
-            {result?.map((file) => {
-                return (<>
-                    <div className='document-view-wrap'>
-                        <Link><a data-fileid={file.id} onClick={FileDownload}>{file.filename}</a></Link>
-                        <Button onClick={() => { FileOpenDocument(file) }} shape="circle" icon={<EyeOutlined />} /> <br />
-                    </div>
-                </>)
-            })}
+            <FragmentFileViewer files={result}/>
             {/* /////////////////////////////////// */}
             <Divider type={'horizontal'} />
             {/* /////////////////////////////////// */}
