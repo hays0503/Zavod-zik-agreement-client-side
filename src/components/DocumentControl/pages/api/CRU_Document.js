@@ -6,12 +6,7 @@ import { useUser } from "../../../../core/functions";
  * @param item id документа
  */
 export const TaskFileOpenDocument = async (item) => {
-
     let user = useUser();
-
-    // setBtnLoad(true)
-    console.log("PROPS", item.id)
-    // console.log('RECORD',props.record)
     const tmp = await fetch('/api/tasks_files', {
         method: 'POST',
         headers: {
@@ -52,9 +47,6 @@ export const TaskFileDownload = async (e) => {
  */
 export const FileOpenDocument = async (item) => {
     let user = useUser();
-
-    console.log("PROPS", item.id)
-    // console.log('RECORD',props.record)
     const tmp = await fetch('/api/files', {
         method: 'POST',
         headers: {
@@ -65,7 +57,7 @@ export const FileOpenDocument = async (item) => {
         )
     })
     const content = await tmp.json();
-    if (content != undefined) {
+    if (content !== undefined) {
         console.log("RESULT", content)
     }
 }
@@ -73,7 +65,7 @@ export const FileOpenDocument = async (item) => {
  * Скачать файл из б/д
  */
 export const FileDownload = async (e) => {
-    let id = e.target.dataset.fileid
+
     await fetch("/get-file", {
         method: "POST",
         body: JSON.stringify({ id: e.target.dataset.fileid }),

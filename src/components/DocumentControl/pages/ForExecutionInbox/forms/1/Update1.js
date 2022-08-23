@@ -1,10 +1,13 @@
-import { EyeOutlined, PlusOutlined } from '@ant-design/icons';
-import { Button, Form, Typography, Space, Divider, Row, Col, Steps, Collapse, Table, Input, message } from 'antd';
+import { EyeOutlined } from '@ant-design/icons';
+import { Button, Form, Typography, Divider } from 'antd';
 import React, { useEffect, useState } from 'react';
-import { useUser, formatDate } from '../../../../../../core/functions';
-import UploadFile from '../../../../modals/UploadFile';
-import constants from '../../../../../../config/constants'
-import {TaskFileDownload} from '../../../api/CRU_Document'
+import { useUser } from '../../../../../../core/functions';
+import {FileDownload} from '../../../api/CRU_Document'
+import { FormItem, FormWrap } from './../../../fragments/FragmentItemWrap';
+import { FileOpenDocument } from './../../../api/CRU_Document';
+import { FragmentInputArea } from './../../../fragments/FragmentInputArea';
+import FragmentUploader from '../../../fragments/FragmentUploader';
+import { FragmentTaskFileViewer } from '../../../fragments/FragmentFileViewer';
 
 let Update1 = React.memo((props) => {
     let user = useUser();
@@ -14,24 +17,6 @@ let Update1 = React.memo((props) => {
         log_username: user.username,
     });
 
-    let OpenDocument = async (item) => {
-        // setBtnLoad(true)
-        console.log("PROPS", item.id)
-        // console.log('RECORD',props.record)
-        const tmp = await fetch('/api/files', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(
-                { user: Number(user.id), item: item.id }
-            )
-        })
-        const content = await tmp.json();
-        if (content != undefined) {
-            console.log("RESULT", content)
-        }
-    }
 
     let tasksFilesMap = state?.task_files?.map((item) => {
         return item.toString()
@@ -39,29 +24,12 @@ let Update1 = React.memo((props) => {
 
     const result = props?.document?.files?.filter(i => tasksFilesMap?.includes(i.id));
 
-    let download = async (e) => {
-        let id = e.target.dataset.fileid
-        await fetch("/get-file", {
-            method: "POST",
-            body: JSON.stringify({ id: e.target.dataset.fileid }),
-            headers: {
-                "Content-Type": "application/json"
-            }
-        }).then(response => {
-            return response.json()
-        }).then(response => {
-            let result = response.result
-            let link = document.createElement('a')
-            link.href = result.data_file /*result.data_file.slice(result.data_file.indexOf(',')+1) */
-            link.download = result.filename
-            link.click()
-        })
-    }
 
     useEffect(() => { props.form.setFieldsValue(state) }, [state]);
 
     useEffect(() => {
         if (props.initialValues) {
+            console.log("props.initialValues",props.initialValues)
             setState({
                 id: props.initialValues.document_tasks[0].id,
                 document_id: props.initialValues.document_tasks[0].document_id,
@@ -77,7 +45,7 @@ let Update1 = React.memo((props) => {
                 route_id: props.initialValues.document_tasks[0].route_id,
                 document_options: props.initialValues.document_tasks[0].document_options,
                 task_files: props.initialValues.document_tasks[0].task_files,
-                log_username: state.log_username,
+                log_username: state.log_username, // ?
                 report: props.initialValues.document_tasks[0].report ? props.initialValues.document_tasks[0].report : '',
                 document_tasks_files: props.initialValues.document_tasks[0].document_tasks_files ? props.initialValues.document_tasks[0].document_tasks_files : [],
                 task_statuses: props.initialValues.document_tasks[0].task_statuses
@@ -92,151 +60,91 @@ let Update1 = React.memo((props) => {
         console.log('values2222', values)
     }
 
+    
     return (
+        props?.document !== undefined ?
         <Form
             form={props.form}
             name="DocumentsForm"
             onFinish={onFinish}
         >
-            <div className='form-item-wrap'>
-                <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-                    <Col span={12}>ФИО поручителя: </Col> <Col span={12}>{state.fio_created}</Col>
-                </Row>
-            </div>
-            <div className='form-item-wrap'>
-                <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-                    <Col span={12}>Задание: </Col> <Col span={12}>{state.note}</Col>
-                </Row>
-            </div>
-
+            {/* /////////////////////////////////// */}
+            <FormWrap>{FormItem("ФИО поручителя: ",state.fio_created)}</FormWrap>
+            {/* /////////////////////////////////// */}
+            <FormWrap>{FormItem ("Задание: ",state?.note)}</FormWrap>
+            {/* /////////////////////////////////// */}
             <Divider type={'horizontal'} />
-
+            {/* /////////////////////////////////// */}
             <h3 className='marginTop'><b>Информация о договоре</b></h3>
+            {/* /////////////////////////////////// */}
+            <FormWrap>{FormItem("Тип договора: ",props?.document?.route_id?.name)}</FormWrap>
+            {/* /////////////////////////////////// */}
 
-            <div className='form-item-wrap'>
-                <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-                    <Col span={12}>Тип договора: </Col> <Col span={12}>{props?.document?.route_id?.name}</Col>
-                </Row>
-            </div>
-            {(state?.document_options?.title == true) ?
-                <div className='form-item-wrap'>
-                    <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-                        <Col span={12}>Наименование ТРУ: </Col> <Col span={12}>{props?.document?.title}</Col>
-                    </Row>
-                </div> : ''
+            {console.log("state?.document_options?",state?.document_options)}
+            {console.log("props?.document",props?.document)}
+
+            {state?.document_options?.title ?
+                <FormWrap>{FormItem ("Наименование ТРУ: ",props?.document.title)}</FormWrap>: null
             }
-            {(state?.document_options?.supllier == true) ?
-                <div className='form-item-wrap'>
-                    <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-                        <Col span={12}>Поставщик ТРУ: </Col> <Col span={12}>{props?.document?.data_one[0]?.supllier}</Col>
-                    </Row>
-                </div>
-                : ''
+            {/* /////////////////////////////////// */}
+            {state?.document_options?.supllier ?
+                <FormWrap>{FormItem ("Поставщик ТРУ: ",props?.document.data_one[0].supllier)}</FormWrap>: null
             }
-            {(state?.document_options?.subject == true) ?
-                <div className='form-item-wrap'>
-                    <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-                        <Col span={12}>Основание: </Col> <Col span={12}>{props?.document?.data_one[0]?.subject}</Col>
-                    </Row>
-                </div>
-                : ''
+            {/* /////////////////////////////////// */}
+            {state?.document_options?.subject ?
+                <FormWrap>{FormItem ("Основание: ",props?.document.data_one[0].subject)}</FormWrap>: null
             }
-            {(state?.document_options?.price == true) ?
-                <div className='form-item-wrap'>
-                    <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-                        <Col span={12}>Общая сумма договора: </Col> <Col span={12}>{props?.document?.data_one[0]?.price}</Col>
-                    </Row>
-                </div>
-                : ''
+            {/* /////////////////////////////////// */}
+            {state?.document_options?.price ?
+                <FormWrap>{FormItem ("Общая сумма договора: ",props?.document.data_one[0].price)}</FormWrap>: null
             }
+            {/* /////////////////////////////////// */}
             <Divider type={'horizontal'} />
-
+            {/* /////////////////////////////////// */}
             <h3 className='marginTop'><b>Файлы прикреплённые отправителем</b></h3>
-
             {result?.map((file) => {
                 return (<>
                     <div className='document-view-wrap'>
-                        <Link><a data-fileid={file.id} onClick={download}>{file.filename}</a></Link> <Button onClick={() => { OpenDocument(file) }} shape="circle" icon={<EyeOutlined />} /> <br />
+                        <Link><a data-fileid={file.id} onClick={FileDownload}>{file.filename}</a></Link>
+                        <Button onClick={() => { FileOpenDocument(file) }} shape="circle" icon={<EyeOutlined />} /> <br />
                     </div>
                 </>)
             })}
-
+            {/* /////////////////////////////////// */}
             <Divider type={'horizontal'} />
-
+            {/* /////////////////////////////////// */}
             {
-                (state.status != 2) ?
+                (state.status !== 2) ?
                     <>
-                        <Form.Item
-                            name='report'
-                            className='font-form-header'
-                            label='Отчёт'
-                            labelCol={{ span: 24 }}
-                            rules={[
-                                {
-                                    required: true,
-                                    message: 'Необходимо загрузить хотя бы один файл.',
-                                }
-                            ]}
-                        >
-                            <Input.TextArea />
-                        </Form.Item>
-                        <Form.Item
-                            name="files"
-                            className='font-form-header'
-                            label="Файлы"
-                            labelCol={{ span: 24 }}
-                            rules={[
-                                {
-                                    required: true,
-                                    message: 'Необходимо загрузить хотя бы один файл.',
-                                }
-                            ]}
-                        >
-                            <UploadFile
-                                showUploadList={true}
-                                action={"https://" + constants.host + ":" + constants.port + "/document-control/for-execution-inbox"}
-                                multiple={true}
-                                maxCount={50}
-                                onChange={(info) => {
-                                    const { status } = info.file;
-                                    if (status !== 'uploading') {
-                                        console.log('info.file', info.file, info.fileList);
-                                    }
-                                    if (status === 'done') {
-                                        message.success(`${info.file.name} - загружен успешно.`);
-                                    } else if (status === 'error') {
-                                        message.error(`${info.file.name} - ошибка при загрузке.`);
-                                    }
-                                }}
-                            />
-                        </Form.Item>
+                        {/* /////////////////////////////////// */}
+                        <FragmentInputArea/>
+                        {/* /////////////////////////////////// */}
+                        <FragmentUploader url={"/document-control/for-execution-inbox"}/>
+                        {/* /////////////////////////////////// */}
                     </>
-                    : 
-                    <div>
+                    :                        
+                    <>
+                        {/* /////////////////////////////////// */}
                         <h3><b>Отчёт</b></h3>
                         {state.report?state.report:''}
+                        {/* /////////////////////////////////// */}
                         <Divider type={'horizontal'} />
-                        <div>
-                        <h3 className='font-form-header'><b>Файлы прикреплённые исполнителем</b></h3>
-                        <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-                            {props?.initialValues?.document_tasks[0]?.document_tasks_files.map((item) => {
-                                return (<>
-                                    <Col span={24} className='document-view-wrap'>
-                                        <Link><a data-fileid={item.id} onClick={TaskFileDownload}>{item.filename}</a></Link> <Button onClick={() => { OpenDocument(item) }} shape="circle" icon={<EyeOutlined />} /> <br />
-                                    </Col>
-                                </>)
-                            })}
-                        </Row>
-                        </div>
-                    </div>
+                        {/* /////////////////////////////////// */}
+                        <>
+                            <h3 className='font-form-header'>
+                                <b>Файлы прикреплённые исполнителем</b>
+                            </h3>
+                            <FragmentTaskFileViewer files={props?.initialValues?.document_tasks[0]?.document_tasks_files}/>
+                        </>
+                        {/* /////////////////////////////////// */}         
+                    </>
             }
-
-            {(state?.status == 1) ?
+            {(state?.status === 1) ?
                 <><Divider type={'horizontal'} />
                     <Button type='primary' htmlType="submit">Завершить</Button></>
                 : ''
             }
-        </Form>
+        </Form>:"Загрузка (пустой рендер)"
     )
 })
 

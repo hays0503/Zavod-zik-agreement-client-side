@@ -10,7 +10,6 @@ import { FileDownload, FileOpenDocument, TaskFileDownload, TaskFileOpenDocument 
 /**
  * Фрагмент antd дающую возможность просматривать файлы 
  * @param files Массив из файлов для показа их на форме
- * @param userid id пользователя
  */
 export const  FragmentFileViewer = (props) => {
     console.log('FragmentFileViewer',props?.files)
@@ -36,7 +35,10 @@ export const  FragmentFileViewer = (props) => {
     )
 }
 
-
+/**
+ * Фрагмент antd дающую возможность просматривать файлы(по поручением) 
+ * @param files Массив из файлов для показа их на форме
+ */
 export const FragmentTaskFileViewer = (props) => {
     console.log('FragmentTaskFileViewer',props?.files)
      return (     

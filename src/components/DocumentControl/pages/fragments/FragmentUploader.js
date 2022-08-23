@@ -8,7 +8,7 @@ import { message, Form } from 'antd';
  * Фрагмент antd дающую возможность загружать файлы 
  * 
  */
-let FragmentUploader = () => {
+let FragmentUploader = (props) => {
     return (<>
         
         <Form.Item
@@ -25,7 +25,7 @@ let FragmentUploader = () => {
             >
                 <UploadFile
                     showUploadList={true}
-                    action={"https://" + constants.host + ":" + constants.port + "/document-control/orders"}
+                    action={"https://" + constants.host + ":" + constants.port + `${props.url}`}
                     multiple={true}
                     maxCount={50}
                     /*accept={".doc,.docx,.xls,.xlsx,.ppt,.pptx,image/*,*.pdf"}*/
@@ -44,5 +44,6 @@ let FragmentUploader = () => {
             </Form.Item>
    </>)
  }
+ FragmentUploader.defaultProps = {url: '/document-control/orders'};
 
 export default FragmentUploader;
