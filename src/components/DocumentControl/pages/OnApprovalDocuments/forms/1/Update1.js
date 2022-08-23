@@ -18,7 +18,7 @@ import FragmentCommentsViewer from '../../../fragments/FragmentCommentsViewer';
 import { FragmentReasonsViewer } from '../../../fragments/FragmentReasonsViewer';
 import TaskModalUpdate from '../../modals/TaskModalUpdate';
 import { FragmentButtons } from './../../../fragments/FragmentButtons';
-import FragmentFileViewer from './../../../fragments/FragmentFileViewer';
+import {FragmentFileViewer} from './../../../fragments/FragmentFileViewer';
 import { FormItem, FormWrap } from './../../../fragments/FragmentItemWrap';
 import FragmentStepViewer from './../../../fragments/FragmentStepViewer';
 import { FragmentTaskList } from './../../../fragments/FragmentTaskList';

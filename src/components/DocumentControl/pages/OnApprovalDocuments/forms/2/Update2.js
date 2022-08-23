@@ -18,7 +18,7 @@ import FragmentUploader from '../../../fragments/FragmentUploader'
 import { FragmentAnyItems } from './../../../fragments/FragmentAnyItems'
 import { FragmentButtons } from './../../../fragments/FragmentButtons'
 import FragmentCommentsViewer from './../../../fragments/FragmentCommentsViewer'
-import FragmentFileViewer from './../../../fragments/FragmentFileViewer'
+import {FragmentFileViewer} from './../../../fragments/FragmentFileViewer'
 import { FormWrap , FormItem } from './../../../fragments/FragmentItemWrap';
 import { FragmentReasonsViewer } from './../../../fragments/FragmentReasonsViewer'
 import FragmentStepViewer from './../../../fragments/FragmentStepViewer'

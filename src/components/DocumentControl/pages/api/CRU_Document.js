@@ -1,7 +1,10 @@
 import { useUser } from "../../../../core/functions";
 
 
-
+/**
+ * Считать из б/д(поручение) и открыть для просмотра 
+ * @param item id документа
+ */
 export const TaskFileOpenDocument = async (item) => {
 
     let user = useUser();
@@ -23,7 +26,9 @@ export const TaskFileOpenDocument = async (item) => {
         console.log("RESULT", content)
     }
 }
-
+/**
+ * Скачать файл(поручение) из б/д
+ */
 export const TaskFileDownload = async (e) => {
     await fetch("/get-tasks-file", {
         method: "POST",
@@ -41,7 +46,10 @@ export const TaskFileDownload = async (e) => {
         link.click()
     })
 }
-
+/**
+ * Считать из б/д и открыть для просмотра 
+ * @param item id документа
+ */
 export const FileOpenDocument = async (item) => {
     let user = useUser();
 
@@ -61,7 +69,9 @@ export const FileOpenDocument = async (item) => {
         console.log("RESULT", content)
     }
 }
-
+/**
+ * Скачать файл из б/д
+ */
 export const FileDownload = async (e) => {
     let id = e.target.dataset.fileid
     await fetch("/get-file", {

@@ -15,7 +15,7 @@ import TasksTableContainer from '../../tableContainers/TasksTableContainer'
 import TasksAddDialog3 from '../../../../dialogs/TasksAddDialog3'
 import TaskModalUpdate from '../../modals/TaskModalUpdate'
 import UpdateTask3 from './UpdateTask3'
-import FragmentFileViewer from './../../../fragments/FragmentFileViewer';
+import {FragmentFileViewer} from './../../../fragments/FragmentFileViewer';
 import { FormWrap , FormItem } from './../../../fragments/FragmentItemWrap';
 import FragmentUploader from './../../../fragments/FragmentUploader';
 import FragmentStepViewer from './../../../fragments/FragmentStepViewer';

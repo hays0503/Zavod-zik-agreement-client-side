@@ -13,7 +13,7 @@ import ReturnToSenderConfirm from './dialogs/ReturnToSenderConfirm';
 import TasksAddDialog5 from '../../../../dialogs/TasksAddDialog5'
 import TaskModalUpdate from '../../modals/TaskModalUpdate'
 import UpdateTask5 from './UpdateTask5'
-import FragmentFileViewer from '../../../fragments/FragmentFileViewer';
+import {FragmentFileViewer} from '../../../fragments/FragmentFileViewer';
 import { FormWrap , FormItem } from './../../../fragments/FragmentItemWrap';
 import FragmentUploader from '../../../fragments/FragmentUploader';
 import FragmentStepViewer from '../../../fragments/FragmentStepViewer';
