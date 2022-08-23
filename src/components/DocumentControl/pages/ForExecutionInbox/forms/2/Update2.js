@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { useUser, formatDate } from '../../../../../../core/functions';
 import UploadFile from '../../../../modals/UploadFile';
 import constants from '../../../../../../config/constants'
+import {TaskFileDownload} from '../../../api/CRU_Document'
 
 let Update2 = React.memo((props) => {
     let user = useUser();
@@ -245,7 +246,7 @@ let Update2 = React.memo((props) => {
                             {props?.initialValues?.document_tasks[0]?.document_tasks_files.map((item) => {
                                 return (<>
                                     <Col span={24} className='document-view-wrap'>
-                                        <Link><a data-fileid={item.id} onClick={download}>{item.filename}</a></Link> <Button onClick={() => { OpenDocument(item) }} shape="circle" icon={<EyeOutlined />} /> <br />
+                                        <Link><a data-fileid={item.id} onClick={TaskFileDownload}>{item.filename}</a></Link> <Button onClick={() => { OpenDocument(item) }} shape="circle" icon={<EyeOutlined />} /> <br />
                                     </Col>
                                 </>)
                             })}
