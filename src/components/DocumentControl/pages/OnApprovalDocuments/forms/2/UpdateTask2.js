@@ -64,38 +64,46 @@ let Update2 = React.memo((props) => {
             <Divider type={'horizontal'} />
             <h3 className='marginTop'><b>Информация о договоре</b></h3>
             {/* /////////////////////////////////// */}
-            <FormWrap>{FormItem("Тип договора: ",state.props?.document?.route_id?.name)}</FormWrap>
+            <FormWrap>{FormItem("Тип договора: ",
+            state.props?.document?.route_id?.name)}</FormWrap>
             {/* /////////////////////////////////// */}
             {(state?.document_options?.title === true) ?
-                <FormWrap>{FormItem("Наименование контрагента: ",props?.document?.title)}</FormWrap>: ''
+                <FormWrap>{FormItem("Наименование контрагента: ",
+                props?.document?.title)}</FormWrap>: ''
             }
             {/* /////////////////////////////////// */}
             {(state?.document_options?.subject === true) ?
-                <FormWrap>{FormItem("Предмет договора: ",props?.document?.data_agreement_list[0]?.subject)}</FormWrap>: ''
+                <FormWrap>{FormItem("Предмет договора: ",
+                props?.document?.data_agreement_list[0]?.subject)}</FormWrap>: ''
             }
             {/* /////////////////////////////////// */}
             {(state?.document_options?.price === true) ?
-                <FormWrap>{FormItem("Общая сумма договора в валюте цены договора: ",props?.document?.data_agreement_list[0]?.price)}</FormWrap>: ''
+                <FormWrap>{FormItem("Общая сумма договора в валюте цены договора: ",
+                props?.document?.data_agreement_list[0]?.price)}</FormWrap>: ''
             }
             {/* /////////////////////////////////// */}
             {(state?.document_options?.currency_price === true) ?
-                <FormWrap>{FormItem("Общая сумма договора в тенге, по курсу НБ РК: ",props?.document?.data_agreement_list[0]?.currency_price)}</FormWrap>: ''
+                <FormWrap>{FormItem("Общая сумма договора в тенге, по курсу НБ РК: ",
+                props?.document?.data_agreement_list[0]?.currency_price)}</FormWrap>: ''
             }
             {/* /////////////////////////////////// */}
             {(state?.document_options?.executor_name_division === true) ?
-                <FormWrap>{FormItem("Наименование подразделения, фамилия ответственного исполнителя: ",props?.document?.data_agreement_list[0]?.executor_name_division)}</FormWrap>: ''
+                <FormWrap>{FormItem("Наименование подразделения, фамилия ответственного исполнителя: ",
+                props?.document?.data_agreement_list[0]?.executor_name_division)}</FormWrap>: ''
             }
             {/* /////////////////////////////////// */}
             {(state?.document_options?.sider_signatures_date === true) ?
                 <FormWrap>
-                        <Col span={12}>Подписанный сторонами оригинал договора получен, дата, способ получения от контрагента: </Col> <Col span={12}>{props?.document?.data_agreement_list[0]?.sider_signatures_date}</Col>
+                        <Col span={12}>Подписанный сторонами оригинал договора получен, дата, способ получения от контрагента: </Col>
+                        <Col span={12}>{props?.document?.data_agreement_list[0]?.sider_signatures_date}</Col>
                 </FormWrap>
                 : ''
             }
             {/* /////////////////////////////////// */}
             {(state?.document_options?.sider_signatures_date === true) ?
                 <FormWrap>
-                        <Col span={12}>Дата получение проекта договора, способ получения от контрагента: </Col> <Col span={12}>{props?.document?.data_agreement_list[0]?.received_from_counteragent_date}</Col>
+                        <Col span={12}>Дата получение проекта договора, способ получения от контрагента: </Col>
+                        <Col span={12}>{props?.document?.data_agreement_list[0]?.received_from_counteragent_date}</Col>
                 </FormWrap>
                 : ''
             }
