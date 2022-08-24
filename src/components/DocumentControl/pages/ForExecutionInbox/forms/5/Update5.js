@@ -1,10 +1,9 @@
 import { Button, Divider, Form } from 'antd';
-import FormItem from 'antd/lib/form/FormItem';
 import React, { useEffect, useState } from 'react';
 import { useUser } from '../../../../../../core/functions';
 import { FragmentFileViewer, FragmentTaskFileViewer } from '../../../fragments/FragmentFileViewer';
 import { FragmentInputArea } from './../../../fragments/FragmentInputArea';
-import { FormWrap } from './../../../fragments/FragmentItemWrap';
+import { FormItem, FormWrap } from './../../../fragments/FragmentItemWrap';
 import FragmentUploader from './../../../fragments/FragmentUploader';
 
 let Update5 = React.memo((props) => {
@@ -63,7 +62,7 @@ let Update5 = React.memo((props) => {
             name="DocumentsForm"
             onFinish={onFinish}
         >
-            {console.info(`Вызов Update1 (src\\components\\DocumentControl\\pages\\ForExecutionInbox)`)}
+            {console.info(`Вызов Update5 (src\\components\\DocumentControl\\pages\\ForExecutionInbox)`)}
             {/* /////////////////////////////////// */}
             <FormWrap>{FormItem("ФИО поручителя: ",state.fio_created)}</FormWrap>
             {/* /////////////////////////////////// */}
@@ -83,6 +82,7 @@ let Update5 = React.memo((props) => {
                 <FormWrap>{FormItem ("Основание: ",props?.document?.data_custom[0]?.subject)}</FormWrap>: null
             }
             {/* /////////////////////////////////// */}
+            {console.log(props?.document?.data_custom[0]?.remark)}
             {state?.document_options?.remark ?/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                 <FormWrap>{FormItem ("Примечание: ",props?.document?.data_custom[0]?.remark)}</FormWrap>: null
             }
