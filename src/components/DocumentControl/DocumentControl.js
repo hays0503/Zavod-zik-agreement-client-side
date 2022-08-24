@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react';
 import { useUser, accessRedirect } from '../../core/functions';
 import Header1 from '../../core/Header1';
 import SiderMenu from './SiderMenu';
-//import { Route, Switch } from 'react-router-dom/cjs/react-router-dom.min';
 import { Redirect, Route, useLocation, withRouter } from 'react-router-dom';
 import Orders from './/pages/Orders/Orders';
 
@@ -42,11 +41,6 @@ let DocumentControl = (props) => {
     const [countFunction, setCountFunction] = useState(null);
 
     useEffect(() => {
-        // console.log('dc effect', countFunction)
-    }, [countFunction]);
-
-    useEffect(() => {
-        console.log('dc2 effect', countManager)
         if (countFunction?.setValue && typeof (countFunction.setValue) == 'function') {
             countFunction.setValue(prev => {
                 let old = Object.assign({}, prev);
@@ -66,8 +60,6 @@ let DocumentControl = (props) => {
     };
 
     const countF = (stateSetter) => {
-        // console.log('Setter', stateSetter);
-        // console.log('Setter2', countF);
         const setValue = (value) => {
             stateSetter(value)
         }

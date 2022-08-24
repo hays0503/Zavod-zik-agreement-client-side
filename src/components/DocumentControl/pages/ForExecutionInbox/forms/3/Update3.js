@@ -5,6 +5,10 @@ import { useUser, formatDate } from '../../../../../../core/functions';
 import UploadFile from '../../../../modals/UploadFile';
 import constants from '../../../../../../config/constants'
 import {TaskFileDownload} from '../../../api/CRU_Document'
+import { FormItem, FormWrap } from '../../../fragments/FragmentItemWrap';
+import { FragmentFileViewer, FragmentTaskFileViewer } from '../../../fragments/FragmentFileViewer';
+import { FragmentInputArea } from '../../../fragments/FragmentInputArea';
+import FragmentUploader from '../../../fragments/FragmentUploader';
 
 let Update3 = React.memo((props) => {
     let user = useUser();
@@ -93,182 +97,92 @@ let Update3 = React.memo((props) => {
     }
 
     return (
+        props?.document !== undefined ? 
         <Form
             form={props.form}
             name="DocumentsForm"
             onFinish={onFinish}
         >
-            <div className='form-item-wrap'>
-                <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-                    <Col span={12}>ФИО поручителя: </Col> <Col span={12}>{state.fio_created}</Col>
-                </Row>
-            </div>
-            <div className='form-item-wrap'>
-                <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-                    <Col span={12}>Задание: </Col> <Col span={12}>{state.note}</Col>
-                </Row>
-            </div>
-
+            {console.info(`Вызов Update3 (src\\components\\DocumentControl\\pages\\ForExecutionInbox)`)}
+            {console.count("Количество вызовов Update3")}
+            {/* /////////////////////////////////// */}
+            <FormWrap>{FormItem("ФИО поручителя: ",state.fio_created)}</FormWrap>
+            {/* /////////////////////////////////// */}
+            <FormWrap>{FormItem ("Задание: ",state?.note)}</FormWrap>
+            {/* /////////////////////////////////// */}
             <Divider type={'horizontal'} />
-
+            {/* /////////////////////////////////// */}
             <h3 className='marginTop'><b>Информация о договоре</b></h3>
-
-            <div className='form-item-wrap'>
-                <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-                    <Col span={12}>Тип договора: </Col>
-                    <Col span={12}>{props?.document?.route_id?.name}</Col>
-                </Row>
-            </div>
-            {(state?.document_options?.title == true) ?
-                <div className='form-item-wrap'>
-                    <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-                        <Col span={12}>Наименование контрагента: </Col>
-                        <Col span={12}>{props?.document?.title}</Col>
-                    </Row>
-                </div> : ''
+            {/* /////////////////////////////////// */}
+            <FormWrap>{FormItem("Тип договора: ",props?.document?.route_id?.name)}</FormWrap>
+            {/* /////////////////////////////////// */}
+            {state?.document_options?.title ?
+                <FormWrap>{FormItem ("Наименование контрагента: ",props?.document.title)}</FormWrap>: 'Что то не то'
             }
-            {(state?.document_options?.subject == true) ?
-                <div className='form-item-wrap'>
-                    <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-                        <Col span={12}>Предмет договора: </Col>
-                        <Col span={12}>{props?.document?.data_agreement_list_production[0]?.subject}</Col>
-                    </Row>
-                </div>
-                : ''
+            {/* /////////////////////////////////// */}
+            {state?.document_options?.subject ?
+                <FormWrap>{FormItem ("Предмет договора: ",props?.document?.data_agreement_list_production[0]?.subject)}</FormWrap>: 'Что то не то'
             }
-            {(state?.document_options?.price == true) ?
-                <div className='form-item-wrap'>
-                    <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-                        <Col span={12}>Общая сумма договора: </Col>
-                        <Col span={12}>{props?.document?.data_agreement_list_production[0]?.price}</Col>
-                    </Row>
-                </div>
-                : ''
+            {/* /////////////////////////////////// */}
+            {state?.document_options?.price ?
+                <FormWrap>{FormItem ("Общая сумма договора: ",props?.document?.data_agreement_list_production[0]?.price)}</FormWrap>: 'Что то не то'
             }
-            {(state?.document_options?.currency == true) ?
-                <div className='form-item-wrap'>
-                    <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-                        <Col span={12}>Валюта платежа: </Col>
-                        <Col span={12}>{props?.document?.data_agreement_list_production[0]?.currency}</Col>
-                    </Row>
-                </div>
-                : ''
+            {/* /////////////////////////////////// */}
+            {state?.document_options?.currency ?
+                <FormWrap>{FormItem ("Валюта платежа: ",props?.document?.data_agreement_list_production[0]?.currency)}</FormWrap>: 'Что то не то'
             }
-            {(state?.document_options?.executor_name_division == true) ?
-                <div className='form-item-wrap'>
-                    <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-                        <Col span={12}>Наименование подразделения, фамилия ответственного исполнителя: </Col>
-                        <Col span={12}>{props?.document?.data_agreement_list_production[0]?.executor_name_division}</Col>
-                    </Row>
-                </div>
-                : ''
+            {/* /////////////////////////////////// */}
+            {state?.document_options?.executor_name_division ?
+                <FormWrap>{FormItem ("Наименование подразделения, фамилия ответственного исполнителя: ",props?.document?.data_agreement_list_production[0]?.executor_name_division)}</FormWrap>: 'Что то не то'
             }
-            {(state?.document_options?.executor_phone_number == true) ?
-                <div className='form-item-wrap'>
-                    <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-                        <Col span={12}>Телефон исполнителя: </Col>
-                        <Col span={12}>{props?.document?.data_agreement_list_production[0]?.executor_phone_number}</Col>
-                    </Row>
-                </div>
-                : ''
+            {/* /////////////////////////////////// */}
+            {state?.document_options?.executor_phone_number ?
+                <FormWrap>{FormItem ("Телефон исполнителя: ",props?.document?.data_agreement_list_production[0]?.executor_phone_number)}</FormWrap>: 'Что то не то'
             }
-            {(state?.document_options?.counteragent_contacts == true) ?
-                <div className='form-item-wrap'>
-                    <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-                        <Col span={12}>Контакты контрагента: </Col>
-                        <Col span={12}>{props?.document?.data_agreement_list_production[0]?.counteragent_contacts}</Col>
-                    </Row>
-                </div>
-                : ''
+            {/* /////////////////////////////////// */}
+            {state?.document_options?.counteragent_contacts ?
+                <FormWrap>{FormItem ("Контакты контрагента: ",props?.document?.data_agreement_list_production[0]?.counteragent_contacts)}</FormWrap>: 'Что то не то'
             }
+            {/* /////////////////////////////////// */}
             <Divider type={'horizontal'} />
-
+            {/* /////////////////////////////////// */}
             <h3 className='marginTop'><b>Файлы прикреплённые отправителем</b></h3>
-
-            {result?.map((file) => {
-                return (<>
-                    <div className='document-view-wrap'>
-                        <Link><a data-fileid={file.id} onClick={download}>{file.filename}</a></Link> <Button onClick={() => { OpenDocument(file) }} shape="circle" icon={<EyeOutlined />} /> <br />
-                    </div>
-                </>)
-            })}
-
+            <FragmentFileViewer files={result}/>
+            {/* /////////////////////////////////// */}
             <Divider type={'horizontal'} />
-
+            {/* /////////////////////////////////// */}
             {
-                (state.status != 2) ?
+                (parseInt(state.status) !== 2) ?
                     <>
-                        <Form.Item
-                            name='report'
-                            className='font-form-header'
-                            label='Отчёт'
-                            labelCol={{ span: 24 }}
-                            rules={[
-                                {
-                                    required: true,
-                                    message: 'Необходимо загрузить хотя бы один файл.',
-                                }
-                            ]}
-                        >
-                            <Input.TextArea />
-                        </Form.Item>
-                        <Form.Item
-                            name="files"
-                            className='font-form-header'
-                            label="Файлы"
-                            labelCol={{ span: 24 }}
-                            rules={[
-                                {
-                                    required: true,
-                                    message: 'Необходимо загрузить хотя бы один файл.',
-                                }
-                            ]}
-                        >
-                            <UploadFile
-                                showUploadList={true}
-                                action={"https://" + constants.host + ":" + constants.port + "/document-control/for-execution-inbox"}
-                                multiple={true}
-                                maxCount={50}
-                                onChange={(info) => {
-                                    const { status } = info.file;
-                                    if (status !== 'uploading') {
-                                        console.log('info.file', info.file, info.fileList);
-                                    }
-                                    if (status === 'done') {
-                                        message.success(`${info.file.name} - загружен успешно.`);
-                                    } else if (status === 'error') {
-                                        message.error(`${info.file.name} - ошибка при загрузке.`);
-                                    }
-                                }}
-                            />
-                        </Form.Item>
+                        {/* /////////////////////////////////// */}
+                        <FragmentInputArea/>
+                        {/* /////////////////////////////////// */}
+                        <FragmentUploader url={"/document-control/for-execution-inbox"}/>
+                        {/* /////////////////////////////////// */}
                     </>
-                    :
-                    <div>
+                    :                        
+                    <>
+                        {/* /////////////////////////////////// */}
                         <h3><b>Отчёт</b></h3>
-                        {state.report ? state.report : ''}
+                        {state.report?state.report:''}
+                        {/* /////////////////////////////////// */}
                         <Divider type={'horizontal'} />
-                        <div>
-                            <h3 className='font-form-header'><b>Файлы прикреплённые исполнителем</b></h3>
-                            <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-                                {props?.initialValues?.document_tasks[0]?.document_tasks_files.map((item) => {
-                                    return (<>
-                                        <Col span={24} className='document-view-wrap'>
-                                            <Link><a data-fileid={item.id} onClick={TaskFileDownload}>{item.filename}</a></Link> <Button onClick={() => { OpenDocument(item) }} shape="circle" icon={<EyeOutlined />} /> <br />
-                                        </Col>
-                                    </>)
-                                })}
-                            </Row>
-                        </div>
-                    </div>
+                        {/* /////////////////////////////////// */}
+                        <>
+                            <h3 className='font-form-header'>
+                                <b>Файлы прикреплённые исполнителем</b>
+                            </h3>
+                            <FragmentTaskFileViewer files={props?.initialValues?.document_tasks[0]?.document_tasks_files}/>
+                        </>
+                        {/* /////////////////////////////////// */}         
+                    </>
             }
-
-            {(state?.status == 1) ?
+            {(state?.status === 1) ?
                 <><Divider type={'horizontal'} />
                     <Button type='primary' htmlType="submit">Завершить</Button></>
                 : ''
             }
-        </Form>
+        </Form>:"Загрузка (пустой рендер)"
     )
 })
 

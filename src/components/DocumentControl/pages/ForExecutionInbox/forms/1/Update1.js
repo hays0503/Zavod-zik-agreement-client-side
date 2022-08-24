@@ -2,21 +2,17 @@ import { EyeOutlined } from '@ant-design/icons';
 import { Button, Form, Typography, Divider } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useUser } from '../../../../../../core/functions';
-import {FileDownload} from '../../../api/CRU_Document'
 import { FormItem, FormWrap } from './../../../fragments/FragmentItemWrap';
-import { FileOpenDocument } from './../../../api/CRU_Document';
 import { FragmentInputArea } from './../../../fragments/FragmentInputArea';
 import FragmentUploader from '../../../fragments/FragmentUploader';
 import { FragmentFileViewer, FragmentTaskFileViewer } from '../../../fragments/FragmentFileViewer';
 
 let Update1 = React.memo((props) => {
     let user = useUser();
-    const { Link } = Typography;
 
     const [state, setState] = useState({
         log_username: user.username,
     });
-
 
     let tasksFilesMap = state?.task_files?.map((item) => {
         return item.toString()
@@ -24,12 +20,10 @@ let Update1 = React.memo((props) => {
 
     const result = props?.document?.files?.filter(i => tasksFilesMap?.includes(i.id));
 
-
     useEffect(() => { props.form.setFieldsValue(state) }, [state]);
 
     useEffect(() => {
         if (props.initialValues) {
-            console.log("props.initialValues",props.initialValues)
             setState({
                 id: props.initialValues.document_tasks[0].id,
                 document_id: props.initialValues.document_tasks[0].document_id,
@@ -57,17 +51,16 @@ let Update1 = React.memo((props) => {
         values.type = 1
         values.user_id_created = state.user_id_created
         props.onFinish(values)
-        console.log('values2222', values)
     }
 
-    
     return (
-        props?.document !== undefined ?
+        props?.document !== undefined ? 
         <Form
             form={props.form}
             name="DocumentsForm"
             onFinish={onFinish}
         >
+            {console.info(`Вызов Update1 (src\\components\\DocumentControl\\pages\\ForExecutionInbox)`)}
             {/* /////////////////////////////////// */}
             <FormWrap>{FormItem("ФИО поручителя: ",state.fio_created)}</FormWrap>
             {/* /////////////////////////////////// */}
@@ -79,10 +72,6 @@ let Update1 = React.memo((props) => {
             {/* /////////////////////////////////// */}
             <FormWrap>{FormItem("Тип договора: ",props?.document?.route_id?.name)}</FormWrap>
             {/* /////////////////////////////////// */}
-
-            {console.log("state?.document_options?",state?.document_options)}
-            {console.log("props?.document",props?.document)}
-
             {state?.document_options?.title ?
                 <FormWrap>{FormItem ("Наименование ТРУ: ",props?.document.title)}</FormWrap>: null
             }
@@ -107,7 +96,7 @@ let Update1 = React.memo((props) => {
             <Divider type={'horizontal'} />
             {/* /////////////////////////////////// */}
             {
-                (state.status !== 2) ?
+                (parseInt(state.status) !== 2) ?
                     <>
                         {/* /////////////////////////////////// */}
                         <FragmentInputArea/>

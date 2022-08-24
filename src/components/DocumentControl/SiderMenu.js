@@ -106,7 +106,6 @@ let SiderMenu = (props) => {
     useEffect(() => {
         (() => {
             props.countF(setCon);
-            console.log('setCon applied')
         })();
     }, []);
 
@@ -114,7 +113,6 @@ let SiderMenu = (props) => {
     const { loading: taskLoading, data: taskData, refetch: taskRefetch } = useQuery(tasksLogs, {
         variables: { document_tasks_logs: { global: { is_read: '=false', user_id: '=' + user.id, ORDER_BY: ['date'] } } },
         onCompleted: (data) => {
-            console.log('tasks query',data)
             setCon1(data.document_tasks_logs.length);
         }
     });
@@ -123,7 +121,6 @@ let SiderMenu = (props) => {
         variables: { document_tasks_logs: { global: { is_read: '=false', user_id: '=' + user.id, ORDER_BY: ['date'] } } },
         onSubscriptionData: ({ subscriptionData: { data } }) => {
             setCon1(data.document_tasks_logs.length);
-            console.log('tasks sub', data)
             if (con1 > 0 ) {
                 //sendAgentNotification(user.email);
                 notifyMe('Есть новые входящие сообщения.');
@@ -161,6 +158,8 @@ let SiderMenu = (props) => {
             case '/document-control/for-execution-inbox':
                 props.setHeaderTitle('На исполнение')
                 break;
+            default:
+                break
         }
     }, [pathname])
 

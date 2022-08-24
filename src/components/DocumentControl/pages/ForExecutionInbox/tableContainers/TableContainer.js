@@ -46,40 +46,39 @@ let TableContainer = React.memo(({ GQL, ...props}) => {
                 return {
                     onClick: event => { 
                         setSelectedRowKeys([record.key, record.document_id])
-                        console.log(record.route_id)
                     },
                     onDoubleClick: event => {
-                        if (record?.document_tasks_logs?.is_read == false) {
+                        if (record?.document_tasks_logs?.is_read === false) {
                             readTrue({ variables: { task: { id: record.document_tasks_logs.id,is_read:true} } });
-                            if (record.route_id == 10) {
+                            if (parseInt(record.route_id) === 10) {
                                 props.visibleModalUpdate[1](true)
                             }
-                            if (record.route_id == 24) {
+                            if (parseInt(record.route_id) === 24) {
                                 props.visibleModalUpdate2[1](true)
                             }
-                            if (record.route_id == 26) {
+                            if (parseInt(record.route_id) === 26) {
                                 props.visibleModalUpdate3[1](true)
                             }
-                            if (record.route_id == 27) {
+                            if (parseInt(record.route_id) === 27) {
                                 props.visibleModalUpdate4[1](true)
                             }
-                            if (record.route_id == 29) {
+                            if (parseInt(record.route_id) === 29) {
                                 props.visibleModalUpdate5[1](true)
                             }
                         }else{
-                            if (record.route_id == 10) {
+                            if (parseInt(record.route_id) === 10) {
                                 props.visibleModalUpdate[1](true)
                             }
-                            if (record.route_id == 24) {
+                            if (parseInt(record.route_id) === 24) {
                                 props.visibleModalUpdate2[1](true)
                             }
-                            if (record.route_id == 26) {
+                            if (parseInt(record.route_id) === 26) {
                                 props.visibleModalUpdate3[1](true)
                             }
-                            if (record.route_id == 27) {
+                            if (parseInt(record.route_id) === 27) {
                                 props.visibleModalUpdate4[1](true)
                             }
-                            if (record.route_id == 29) {
+                            if (parseInt(record.route_id) === 29) {
                                 props.visibleModalUpdate5[1](true)
                             }
                         }

@@ -1,10 +1,6 @@
 import { EyeOutlined } from '@ant-design/icons';
 import { Button, Collapse, Typography, Form } from 'antd';
 import React from 'react';
-import { Col } from 'antd';
-import { useEffect } from 'react';
-import { files } from 'jszip';
-import { useState } from 'react';
 import { FileDownload, FileOpenDocument, TaskFileDownload, TaskFileOpenDocument } from './../api/CRU_Document';
 
 /**
@@ -12,7 +8,6 @@ import { FileDownload, FileOpenDocument, TaskFileDownload, TaskFileOpenDocument 
  * @param files Массив из файлов для показа их на форме
  */
 export const  FragmentFileViewer = (props) => {
-    console.log('FragmentFileViewer',props?.files)
      return (     
     <Form.Item
         name="files"
@@ -40,7 +35,6 @@ export const  FragmentFileViewer = (props) => {
  * @param files Массив из файлов для показа их на форме
  */
 export const FragmentTaskFileViewer = (props) => {
-    console.log('FragmentTaskFileViewer',props?.files)
      return (     
     <Form.Item
         name="files"
