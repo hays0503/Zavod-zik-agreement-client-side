@@ -1,5 +1,4 @@
-import { EyeOutlined } from '@ant-design/icons';
-import { Button, Form, Typography, Divider } from 'antd';
+import { Button, Form, Divider } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useUser } from '../../../../../../core/functions';
 import { FormItem, FormWrap } from './../../../fragments/FragmentItemWrap';
