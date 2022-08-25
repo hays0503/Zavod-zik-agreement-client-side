@@ -20,9 +20,7 @@ let Update2 = React.memo((props) => {
     });
 
     let OpenDocument = async (item) => {
-        // setBtnLoad(true)
         console.log("PROPS", item.id)
-        // console.log('RECORD',props.record)
         const tmp = await fetch('/api/files', {
             method: 'POST',
             headers: {

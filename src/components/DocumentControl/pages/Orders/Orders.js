@@ -73,24 +73,6 @@ let Orders = React.memo((props) => {
         }
     }) : [];
 
-    /*list[0].temp = 'try';
-    let list2 = list.map((item) => {
-        return {
-            id: item.id,
-            key: item.id,
-            title: item.title,
-            date_created: item.date_created,
-            date_modified: item.date_modified,
-            status_id: item.status_id,
-            status: item.status,
-            route_id: item.route_id,
-            route: item.route,
-            route_data: item.route_data,
-            route_test: item?.route_data?.length > 0 ? Object.values(item.route_data[0].positionId): [], //console.log('T',item.id):[]
-            step: item.step
-        }
-    });
-    */
 
     let dict = test([
         { title: 'Наименование договора', dataIndex: 'title', width: '214px', type: 'search', tooltip: true, sorter: (a, b) => a.title.localeCompare(b.title), sortDirections: ['ascend', 'descend'] },

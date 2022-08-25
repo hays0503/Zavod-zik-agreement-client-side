@@ -131,7 +131,7 @@ let Insert2 = React.memo((props) => {
                     },
                     {
                         pattern:price_max_count,
-                        message:'Общая сумма договора не должна привышать 99999999'
+                        message:'Общая сумма договора не должна превышать 99999999'
                     }
                 ]}
             >

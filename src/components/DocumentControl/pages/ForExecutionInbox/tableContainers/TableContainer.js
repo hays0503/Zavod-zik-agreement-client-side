@@ -1,7 +1,6 @@
 import { Table } from 'antd';
 import React, { useState, useEffect } from 'react';
 import { useMutation } from '@apollo/client';
-import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 
 let TableContainer = React.memo(({ GQL, ...props}) => {
 
