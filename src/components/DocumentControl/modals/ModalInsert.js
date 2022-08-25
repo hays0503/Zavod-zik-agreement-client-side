@@ -207,7 +207,6 @@ let ModalInsert = React.memo(({ GQL, GQL2, GQL3, GQL4, GQL5, Form1, Form2, Form3
     let routesMap = []
     useEffect(() => {
         if (dataRoutes && dataRoutes[Object.keys(dataRoutes)[0]] != null && state.route_id > 0) {
-            console.log('dataRoutes', dataRoutes)
             form.setFieldsValue({
                 route_id: dataRoutes.document_routes[0].id,
                 step: 1,
