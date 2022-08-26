@@ -216,6 +216,9 @@ export const useUser = () => {
             rejectedUser: {
                 select: admin ? true : accesses.includes('/document-control-p/rejecteduser-p/select')
             },
+            registrationDocuments: {
+                select: admin ? true : accesses.includes('/document-control-p/registration-p/select')
+            },
             onApproval: {
                 select: admin ? true : accesses.includes('/document-control-p/on-approval-p/select')
             },
@@ -255,7 +258,7 @@ export const useUser = () => {
             insert: admin ? true : accesses.includes('/document-search-p/insert'),
             update: admin ? true : accesses.includes('/document-search-p/update'),
             delete: admin ? true : accesses.includes('/document-search-p/delete'),
-            search:{
+            search: {
                 select: admin ? true : accesses.includes('/document-search-p/search-p/select')
             },
             isDocumentStatusChangeAllowed: admin ? true : accesses.includes('/document-search-p/document-status-change'),
@@ -319,6 +322,8 @@ export const accessRedirect = (Component) => {
                 if (!user.documentControl.approvedUser.select) { return <Redirect /> } break;
             case '/document-control/rejecteduser': case '/document-control/rejecteduser/':
                 if (!user.documentControl.rejectedUser.select) { return <Redirect /> } break;
+            case '/document-control/registration': case '/document-control/registration/':
+                if (!user.documentControl.registrationDocuments.select) { return <Redirect /> } break;
 
             case '/document-control/on-approval': case '/document-control/on-approval/':
                 if (!user.documentControl.onApproval.select) { return <Redirect /> } break;
@@ -328,7 +333,7 @@ export const accessRedirect = (Component) => {
             case '/document-control/for-execution-inbox': case '/document-control/for-execution-inbox/':
                 if (!user.documentControl.forExecutionInbox.select) { return <Redirect /> } break;
 
-            case '/document-control/approved': case '/document-control/approved/': 
+            case '/document-control/approved': case '/document-control/approved/':
                 if (!user.documentControl.approved.select) { return <Redirect /> } break;
             case '/document-control/rejected': case '/document-control/rejected/':
                 if (!user.documentControl.rejected.select) { return <Redirect /> } break;
@@ -341,7 +346,7 @@ export const accessRedirect = (Component) => {
             //     if (!user.adminDepartment.select) { return <Redirect /> } break;
             case '/document-search': case '/document-search/':
                 if (!user.documentSearch.select) { return <Redirect /> } break;
-            case '/document-search/search': case '/document-search/search/': 
+            case '/document-search/search': case '/document-search/search/':
                 if (!user.documentSearch.search.select) { return <Redirect /> } break;
 
             default:
@@ -438,9 +443,9 @@ export const getDiffHours = (date1, date2) => {
     diff /= (60 * 60);
     console.log('diff', diff)
     if (diff < 1) return "менее часа назад";
-    if (diff < 12 && diff>=1) return Math.abs(Math.round(diff)) + " ч. назад";
+    if (diff < 12 && diff >= 1) return Math.abs(Math.round(diff)) + " ч. назад";
     if (diff > 12 && diff < 24) return "Вчера";
-    if (diff > 24) return Math.abs(Math.round(diff/24))+" д. назад";
+    if (diff > 24) return Math.abs(Math.round(diff / 24)) + " д. назад";
 };
 
 

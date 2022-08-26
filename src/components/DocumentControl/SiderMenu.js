@@ -7,7 +7,7 @@ import {
     CarryOutOutlined,
     SafetyCertificateOutlined
 } from '@ant-design/icons';
-import { gql, useQuery,useSubscription } from '@apollo/client';
+import { gql, useQuery, useSubscription } from '@apollo/client';
 import { Link, NavLink } from 'react-router-dom';
 import { useUser, notifyMe, sendAgentNotification } from '../../core/functions';
 import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
@@ -84,23 +84,23 @@ let SiderMenu = (props) => {
         }
     });
 
-    const {data:countData,loading:countLoading} = useSubscription(testSub, {
-            variables: { document_logs: { global: { is_read: '=false', user_id:'='+user.id, ORDER_BY: ['date'] } } },
-            onSubscriptionData: ({ subscriptionData: { data } }) => {
-                let subData = {};
-                subData.revised = data.document_logs.filter(el => { return el.type == 4 && el.is_read==false}).length;
-                subData.approved = data.document_logs.filter(el => { return el.type == 1 && el.is_read == false }).length;
-                subData.rejected = data.document_logs.filter(el => { return el.type == 3 && el.is_read == false }).length;
-                subData.onaproval = data.document_logs.filter(el => { return el.type == 2 && el.is_read == false }).length;
-                //console.log('testSub', data);
-                //console.log('testSub2', subData);
-                setCon(subData);
-                if (subData.revised > 0 || subData.approved > 0 || subData.rejected > 0 || subData.onaproval > 0) {
-                    //sendAgentNotification(user.email);
-                    notifyMe('Есть новые входящие сообщения.');
-                }
+    const { data: countData, loading: countLoading } = useSubscription(testSub, {
+        variables: { document_logs: { global: { is_read: '=false', user_id: '=' + user.id, ORDER_BY: ['date'] } } },
+        onSubscriptionData: ({ subscriptionData: { data } }) => {
+            let subData = {};
+            subData.revised = data.document_logs.filter(el => { return el.type == 4 && el.is_read == false }).length;
+            subData.approved = data.document_logs.filter(el => { return el.type == 1 && el.is_read == false }).length;
+            subData.rejected = data.document_logs.filter(el => { return el.type == 3 && el.is_read == false }).length;
+            subData.onaproval = data.document_logs.filter(el => { return el.type == 2 && el.is_read == false }).length;
+            //console.log('testSub', data);
+            //console.log('testSub2', subData);
+            setCon(subData);
+            if (subData.revised > 0 || subData.approved > 0 || subData.rejected > 0 || subData.onaproval > 0) {
+                //sendAgentNotification(user.email);
+                notifyMe('Есть новые входящие сообщения.');
             }
         }
+    }
     );
 
     useEffect(() => {
@@ -121,7 +121,7 @@ let SiderMenu = (props) => {
         variables: { document_tasks_logs: { global: { is_read: '=false', user_id: '=' + user.id, ORDER_BY: ['date'] } } },
         onSubscriptionData: ({ subscriptionData: { data } }) => {
             setCon1(data.document_tasks_logs.length);
-            if (con1 > 0 ) {
+            if (con1 > 0) {
                 //sendAgentNotification(user.email);
                 notifyMe('Есть новые входящие сообщения.');
             }
@@ -181,43 +181,57 @@ let SiderMenu = (props) => {
                 defaultOpenKeys={['User', 'onApproval', 'Admin']}
             >
                 <SubMenu key="User" icon={<DatabaseOutlined />} title='Мои документы'>
-                {user.documentControl.insert ?
-                    <Menu.Item key="/document-control/orders">
-                        <Link to={'/document-control/orders'}>Созданные мною</Link>
-                    </Menu.Item>
+                    {user.documentControl.insert ?
+                        <Menu.Item key="/document-control/orders">
+                            <Link to={'/document-control/orders'}>Созданные мною</Link>
+                        </Menu.Item>
                         : null}
-                {user.documentControl.revisedUser.select ?
-                    <Menu.Item key={"/document-control/reviseduser"}>
-                            <NavLink to={'/document-control/reviseduser'}>На доработку <sup><Badge count={con.revised}/></sup></NavLink>
-                    </Menu.Item>
-                    : null}
-                {user.documentControl.approvedUser.select ?
+                    {user.documentControl.revisedUser.select ?
+                        <Menu.Item key={"/document-control/reviseduser"}>
+                            <NavLink to={'/document-control/reviseduser'}>На доработку <sup><Badge count={con.revised} /></sup></NavLink>
+                        </Menu.Item>
+                        : null}
+                    {/* {user.documentControl.approvedUser.select ?
                     <Menu.Item key={"/document-control/approveduser"}>
                             <NavLink to={'/document-control/approveduser'}>Исполненные <sup><Badge count={con.approved} /></sup></NavLink>
-                    </Menu.Item>
-                    : null}
-                {user.documentControl.rejectedUser.select ?
+                    </Menu.Item> Переименовать в других компанентах модуль Исполненные на Согласованные
+                    : null} */}
+                    {user.documentControl.approvedUser.select ?
+                        <Menu.Item key={"/document-control/approveduser"}>
+                            <NavLink to={'/document-control/approveduser'}>Согласованные <sup><Badge count={con.approved} /></sup></NavLink>
+                        </Menu.Item>
+                        : null}
+                    {user.documentControl.rejectedUser.select ?
                         <Menu.Item key={"/document-control/rejecteduser"}>
                             <Link to={'/document-control/rejecteduser'}>Отклонённые <sup><Badge count={con.rejected} /></sup></Link>
-                    </Menu.Item>
+                        </Menu.Item>
                         : null}
                 </SubMenu>
                 {user.documentControl.onApproval.select || user.documentControl.onApprovalList.select ?
-                <SubMenu key="onApproval" icon={<SafetyCertificateOutlined />} title='Подписание'>
-                {user.documentControl.onApproval.select ?
-                    <Menu.Item key="/document-control/on-approval">
+                    <SubMenu key="onApproval" icon={<SafetyCertificateOutlined />} title='Подписание'>
+                        {user.documentControl.onApproval.select ?
+                            <Menu.Item key="/document-control/on-approval">
                                 <Link to={'/document-control/on-approval'}>Входящие<sup><Badge count={con.onaproval} /></sup></Link>
-                    </Menu.Item>
-                    : null}
+                            </Menu.Item>
+                            : null}
                         {user.documentControl.onApprovalList.select ?
-                    <Menu.Item key="/document-control/on-approval-list">
-                        <Link to={'/document-control/on-approval-list'}>Подписанные мною</Link>
-                    </Menu.Item>
-                    : null}
+                            <Menu.Item key="/document-control/on-approval-list">
+                                <Link to={'/document-control/on-approval-list'}>Подписанные мною</Link>
+                            </Menu.Item>
+                            : null}
                     </SubMenu>
                     : null}
-                {user.documentControl.forExecutionInbox.select ?
-                    <SubMenu key="forExecution" icon={<SafetyCertificateOutlined />} title='Исполнение'>
+                {/* {user.documentControl.forExecutionInbox.select ?
+                    <SubMenu key="forExecution" icon={<SafetyCertificateOutlined />} title='Исполнение'> Переименовать модуль Исполнение на Задачи
+                        {user.documentControl.forExecutionInbox.select ?
+                            <Menu.Item key="/document-control/for-execution-inbox">
+                                <Link to={'/document-control/for-execution-inbox'}>Входящие<sup><Badge count={con1} /></sup></Link>
+                            </Menu.Item>
+                            : null}
+                    </SubMenu>
+                    : null} */}
+                    {user.documentControl.forExecutionInbox.select ?
+                    <SubMenu key="forExecution" icon={<SafetyCertificateOutlined />} title='Задачи'>
                         {user.documentControl.forExecutionInbox.select ?
                             <Menu.Item key="/document-control/for-execution-inbox">
                                 <Link to={'/document-control/for-execution-inbox'}>Входящие<sup><Badge count={con1} /></sup></Link>
@@ -228,12 +242,12 @@ let SiderMenu = (props) => {
                 {user.documentControl.approved.select || user.documentControl.rejected.select ?
                     <SubMenu key="Admin" icon={<CarryOutOutlined />} title='Список (Админ)'>
                         {user.documentControl.approved.select ?
-                    <Menu.Item key={"/document-control/approved"}>
-                        <NavLink to={'/document-control/approved'}>Все документы</NavLink>
+                            <Menu.Item key={"/document-control/approved"}>
+                                <NavLink to={'/document-control/approved'}>Все документы</NavLink>
                             </Menu.Item> : null}
-                {user.documentControl.rejected.select ?
-                    <Menu.Item key={"/document-control/rejected"}>
-                        <Link to={'/document-control/rejected'}>Все отклонённые</Link>
+                        {user.documentControl.rejected.select ?
+                            <Menu.Item key={"/document-control/rejected"}>
+                                <Link to={'/document-control/rejected'}>Все отклонённые</Link>
                             </Menu.Item> : null}
                     </SubMenu>
                     : null}
