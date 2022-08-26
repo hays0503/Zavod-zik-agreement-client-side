@@ -21,6 +21,7 @@ export const TaskFileOpenDocument = async (item) => {
         console.log("RESULT", content)
     }
 }
+
 /**
  * Скачать файл(поручение) из б/д
  */
@@ -77,8 +78,31 @@ export const FileDownload = async (e) => {
     }).then(response => {
         let result = response.result
         let link = document.createElement('a')
-        link.href = result.data_file /*result.data_file.slice(result.data_file.indexOf(',')+1) */
+        link.href = result.data_file
         link.download = result.filename
         link.click()
     })
+}
+
+
+
+/**
+ * Считать из б/д(поручение) и открыть для просмотра 
+ * @param item id документа
+ */
+ export const GetIDNameTaskFile = async (item) => {
+    const tmp = await fetch('/api/tasks_files_is_add_to_document', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(
+            { item: item }
+        )
+    })
+    const content = await tmp.json();
+    if (content !== undefined) {
+        console.log("RESULT", content)
+    }
+    return await content
 }

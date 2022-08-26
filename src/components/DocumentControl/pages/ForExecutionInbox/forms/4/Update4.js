@@ -77,36 +77,36 @@ let Update4 = React.memo((props) => {
             {/* /////////////////////////////////// */}
             {state?.document_options?.title ?
                 <FormWrap>{FormItem ("Наименование контрагента: ",
-                props?.document.title)}</FormWrap>: 'Что то не то'
+                props?.document.title)}</FormWrap>: 'null'
             }
             {/* /////////////////////////////////// */}
             {state?.document_options?.subject ?
                 <FormWrap>{FormItem ("Предмет договора: ",
-                props?.document?.data_agreement_list_internal_needs[0]?.subject)}</FormWrap>: 'Что то не то'
+                props?.document?.data_agreement_list_internal_needs[0]?.subject)}</FormWrap>: 'null'
             }
             {/* /////////////////////////////////// */}
             {state?.document_options?.price ?
             <   FormWrap>{FormItem ("Общая сумма договора: ",
-            props?.document?.data_agreement_list_internal_needs[0]?.price)}</FormWrap>: 'Что то не то'
+            props?.document?.data_agreement_list_internal_needs[0]?.price)}</FormWrap>: 'null'
             }
             {/* /////////////////////////////////// */}
             {state?.document_options?.currency ?
                 <FormWrap>{FormItem ("Валюта платежа: ",
-                props?.document?.data_agreement_list_internal_needs[0]?.currency)}</FormWrap>: 'Что то не то'
+                props?.document?.data_agreement_list_internal_needs[0]?.currency)}</FormWrap>: 'null'
             }
             {/* /////////////////////////////////// */}
             {state?.document_options?.executor_name_division ?
                 <FormWrap>{FormItem ("Наименование подразделения, фамилия ответственного исполнителя: ",
-                props?.document?.data_agreement_list_internal_needs[0]?.executor_name_division)}</FormWrap>: 'Что то не то'
+                props?.document?.data_agreement_list_internal_needs[0]?.executor_name_division)}</FormWrap>: 'null'
             }
             {/* /////////////////////////////////// */}
             {state?.document_options?.executor_phone_number ?
                 <FormWrap>{FormItem ("Телефон исполнителя: ",
-                props?.document?.data_agreement_list_internal_needs[0]?.executor_phone_number)}</FormWrap>: 'Что то не то'
+                props?.document?.data_agreement_list_internal_needs[0]?.executor_phone_number)}</FormWrap>: 'null'
             }
             {/* /////////////////////////////////// */}
             {state?.document_options?.counteragent_contacts ?
-                <FormWrap>{FormItem ("Контакты контрагента: ",props?.document?.data_agreement_list_internal_needs[0]?.counteragent_contacts)}</FormWrap>: 'Что то не то'
+                <FormWrap>{FormItem ("Контакты контрагента: ",props?.document?.data_agreement_list_internal_needs[0]?.counteragent_contacts)}</FormWrap>: 'null'
             }
             <Divider type={'horizontal'} />
             {/* /////////////////////////////////// */}

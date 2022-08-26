@@ -76,32 +76,32 @@ let Update2 = React.memo((props) => {
             {/* /////////////////////////////////// */}
 
             {state?.document_options?.title ?
-                <FormWrap>{FormItem ("Наименование контрагента: ",props?.document.title)}</FormWrap>: 'Что то не то'
+                <FormWrap>{FormItem ("Наименование контрагента: ",props?.document.title)}</FormWrap>: 'null'
             }
 
             {/* /////////////////////////////////// */}
             {state?.document_options?.subject ?
-                <FormWrap>{FormItem ("Предмет договора: ",props?.document?.data_agreement_list[0]?.subject)}</FormWrap>: 'Что то не то'
+                <FormWrap>{FormItem ("Предмет договора: ",props?.document?.data_agreement_list[0]?.subject)}</FormWrap>: 'null'
             }
             {/* /////////////////////////////////// */}
             {state?.document_options?.price ?
-                <FormWrap>{FormItem ("Общая сумма договора в валюте цены договора: ",props?.document?.data_agreement_list[0]?.price)}</FormWrap>: 'Что то не то'
+                <FormWrap>{FormItem ("Общая сумма договора в валюте цены договора: ",props?.document?.data_agreement_list[0]?.price)}</FormWrap>: 'null'
             }
             {/* /////////////////////////////////// */}
             {state?.document_options?.currency_price ?
-                <FormWrap>{FormItem ("Общая сумма договора в тенге, по курсу НБ РК: ",props?.document?.data_agreement_list[0]?.currency_price)}</FormWrap>: 'Что то не то'
+                <FormWrap>{FormItem ("Общая сумма договора в тенге, по курсу НБ РК: ",props?.document?.data_agreement_list[0]?.currency_price)}</FormWrap>: 'null'
             }
             {/* /////////////////////////////////// */}
             {state?.document_options?.executor_name_division ?
-                <FormWrap>{FormItem ("Наименование подразделения, фамилия ответственного исполнителя: ",props?.document?.data_agreement_list[0]?.executor_name_division)}</FormWrap>: 'Что то не то'
+                <FormWrap>{FormItem ("Наименование подразделения, фамилия ответственного исполнителя: ",props?.document?.data_agreement_list[0]?.executor_name_division)}</FormWrap>: 'null'
             }
             {/* /////////////////////////////////// */}
             {state?.document_options?.sider_signatures_date ?
-                <FormWrap>{FormItem ("Подписанный сторонами оригинал договора получен, дата, способ получения от контрагента: ",props?.document?.data_agreement_list[0]?.sider_signatures_date)}</FormWrap>: 'Что то не то'
+                <FormWrap>{FormItem ("Подписанный сторонами оригинал договора получен, дата, способ получения от контрагента: ",props?.document?.data_agreement_list[0]?.sider_signatures_date)}</FormWrap>: 'null'
             }
             {/* /////////////////////////////////// */}
             {state?.document_options?.received_from_counteragent_date ?
-                <FormWrap>{FormItem ("Дата получение проекта договора, способ получения от контрагента: ",props?.document?.data_agreement_list[0]?.received_from_counteragent_date)}</FormWrap>: 'Что то не то'
+                <FormWrap>{FormItem ("Дата получение проекта договора, способ получения от контрагента: ",props?.document?.data_agreement_list[0]?.received_from_counteragent_date)}</FormWrap>: 'null'
             }
             {/* /////////////////////////////////// */}
             <Divider type={'horizontal'} />
