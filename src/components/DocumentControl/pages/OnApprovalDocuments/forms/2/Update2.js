@@ -1,5 +1,5 @@
-import { gql } from '@apollo/client'
-import { Collapse, Divider, Form, Steps, Typography } from 'antd'
+
+import { Divider, Form } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { useUser } from '../../../../../../core/functions'
 import TitleMenu from '../../../../../../core/TitleMenu'
@@ -18,147 +18,47 @@ import FragmentUploader from '../../../fragments/FragmentUploader'
 import { FragmentAnyItems } from './../../../fragments/FragmentAnyItems'
 import { FragmentButtons } from './../../../fragments/FragmentButtons'
 import FragmentCommentsViewer from './../../../fragments/FragmentCommentsViewer'
-import {FragmentFileViewer} from './../../../fragments/FragmentFileViewer'
-import { FormWrap , FormItem } from './../../../fragments/FragmentItemWrap';
+import { FormItem, FormWrap } from './../../../fragments/FragmentItemWrap'
 import { FragmentReasonsViewer } from './../../../fragments/FragmentReasonsViewer'
 import FragmentStepViewer from './../../../fragments/FragmentStepViewer'
 import { FragmentTaskList } from './../../../fragments/FragmentTaskList'
 
-let Update2 = React.memo((props) => {
+import { GetIDNameTaskFile } from './../../../api/CRU_Document'
+import { dict, DocumentTasks } from './gql'
+import { FragmentTaskAndFileViewer } from './../../../fragments/FragmentFileViewer';
 
-    let DocumentTasks = {
-        exemplar: 'document_tasks',
-        table: 'document_tasks',
-        options: {
-            all: {
-                fetchPolicy: 'standby'
-            },
-            one: {
-                fetchPolicy: 'standby'
-            }
-        },
-        select: {
-            all: gql`
-                query document_tasks ($document_tasks: JSON){
-                    document_tasks(document_tasks: $document_tasks){
-                        id
-                        document_id
-                        status
-                        is_cancelled
-                        note
-                        deadline
-                        date_created
-                        user_id_created
-                        fio_created
-                        user_id_receiver
-                        fio_receiver
-                        route_id
-                        document_options
-                        task_files
-                        report
-                        document_tasks_files{
-                            id
-                            filename
-                            data_file
-                            task_id
-                        }
-                    }
-                }
-            `,
-            one: gql`
-            query document_tasks ($document_tasks: JSON){
-                document_tasks(document_tasks: $document_tasks){
-                    id
-                    document_id
-                    status
-                    is_cancelled
-                    note
-                    deadline
-                    date_created
-                    user_id_created
-                    fio_created
-                    user_id_receiver
-                    fio_receiver
-                    route_id
-                    document_options
-                    task_files
-                    report
-                    document_tasks_files{
-                        id
-                        filename
-                        data_file
-                        task_id
-                    }
-                }
-            }
-            `
-        },
-        subscription: {
-            all: gql`
-            subscription document_tasks ($document_tasks: JSON) {
-                document_tasks(document_tasks: $document_tasks) {
-                    id
-                    document_id
-                    status
-                    is_cancelled
-                    note
-                    deadline
-                    date_created
-                    user_id_created
-                    fio_created
-                    user_id_receiver
-                    fio_receiver
-                }
-            }
-        `
-        },
-        insert: gql`
-        mutation insertDocumentTasks($document_tasks: JSON) {
-            insertDocumentTasks(document_tasks: $document_tasks) {
-                type
-                message
-            }
-        }
-        `,
-        setTaskIsReadTrue: gql`
-        mutation setTaskIsReadTrue($task: JSON) {
-            setTaskIsReadTrue(task: $task){
-                type
-                message
-            }
-        }
-        `
-    }
+const Update2 = React.memo((props) => {
 
-    let TasksTitleMenu = (tableProps) => {
-        return (<TitleMenu
-            buttons={[
-                <TaskModalUpdate
-                    visibleModalUpdate={visibleModalUpdate} UpdateForm={UpdateTask2} GQL={DocumentTasks}
-                    // visibleModalUpdate={visibleModalUpdate} GQL={DocumentTasks}
-                    title='Поручение' selectedRowKeys={tableProps.selectedRowKeys} update={true} width={750} />,
-                <TasksAddDialog2 visible={visible} setVisible={setVisible} document={props.initialValues2} />
-            ]}
-            selectedRowKeys={tableProps.selectedRowKeys}
-        />)
-    };
-
-    let user = useUser();
-    const { Title, Link } = Typography;
-    const { Step } = Steps;
-    const { Panel } = Collapse;
-
+    const user = useUser();
     const [state, setState] = useState({
         log_username: user.username,
     });
     const visibleModalUpdate = useState(false);
     const [visible, setVisible] = useState(false)
+    const [routesList, setRoutesList] = useState([{ positionName: 'Тип договора не выбран.' }])
+    const [stepCount, setStepCount] = useState({ step: '0' })
+    const [reasonText, setReasonText] = useState(props?.initialValues?.documents[0]?.reason);
+
+/**
+ * Cтейт для таблиц файлов по поручением
+ */
+    const [FileTask , setFileTask] = useState([])
+/**
+ * Инициализация стейта для таблиц файлов по поручением
+ */
+    useEffect(() => {
+        if (props.initialValues2) {
+        GetIDNameTaskFile(props?.initialValues2?.documents[0]?.id).then(value=>{
+            setFileTask(value.result)
+        })
+
+    }},[props.initialValues2])
+
 
     useEffect(() => {
         props.form2.setFieldsValue(state);
     }, [state]);
-    let [routesList, setRoutesList] = useState([{ positionName: 'Тип договора не выбран.' }])
-    let [stepCount, setStepCount] = useState({ step: '0' })
+
     useEffect(() => {
         if (props.initialValues2) {
             setState({
@@ -197,42 +97,23 @@ let Update2 = React.memo((props) => {
         }
     }, [props.initialValues2]);
 
+    let TasksTitleMenu = (tableProps) => {
+        return (<TitleMenu
+            buttons={[
+                <TaskModalUpdate
+                    visibleModalUpdate={visibleModalUpdate} UpdateForm={UpdateTask2} GQL={DocumentTasks}
+                    title='Поручение' selectedRowKeys={tableProps.selectedRowKeys} update={true} width={750} />,
+                <TasksAddDialog2 visible={visible} setVisible={setVisible} document={props.initialValues2} />
+            ]}
+            selectedRowKeys={tableProps.selectedRowKeys}
+        />)
+    };
 
     let onFinish = (values) => {
         props.onFinish2(state);
-        console.log('+++++++++++++++++++++++', values);
     }
 
-    const dict = [
-        {
-            title: 'У кого',
-            dataIndex: 'fio_receiver',
-            key: 'fio_receiver',
-            width: '200px'
-        },
-        {
-            title: 'Срок',
-            dataIndex: 'deadline',
-            key: 'deadline',
-            width: '200px'
-        },
-        {
-            title: 'Статус',
-            dataIndex: 'task_statuses',
-            key: 'task_statuses',
-            width: '150px'
-        },
-        {
-            title: 'Задача',
-            dataIndex: 'note',
-            key: 'note',
-            width: '250px'
-        },
-    ];
-
     //collapse
-
-    const [reasonText, setReasonText] = useState(props?.initialValues?.documents[0]?.reason);
     let ReasonInputChange = (all) => {
         if (all.target.value.length > 0) {
             setReasonText(all.target.value)
@@ -240,9 +121,6 @@ let Update2 = React.memo((props) => {
             setReasonText(all.target.value)
         }
     }
-
-    const [radioState, setRadioState] = useState(props?.initialValues2?.documents[0]?.data_agreement_list[0]?.subject);
-
 
     return (
         <Form
@@ -290,11 +168,11 @@ let Update2 = React.memo((props) => {
 
             {/*Фрагмент antd дающую возможность просматривать файлы*/}
             {
-                props.initialValues2!==undefined?
-                <FragmentFileViewer files={props?.initialValues2?.documents[0]?.files} userId={user.id}/>:
+                props.initialValues2!==undefined && FileTask!==undefined?
+                <FragmentTaskAndFileViewer files={props?.initialValues2?.documents[0]?.files} files_task={FileTask} userId={user.id}/>:
                 <h1>Загрузка</h1>
             }
-            {/* /////////////////////////////////// */}            
+            {/* /////////////////////////////////// */}      
 
             <Divider type={'horizontal'} />
 

@@ -1,4 +1,4 @@
-import { Button, Form, Divider } from 'antd';
+import { Button, Form, Divider} from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useUser } from '../../../../../../core/functions';
 import { FormItem, FormWrap } from './../../../fragments/FragmentItemWrap';
@@ -121,8 +121,15 @@ let Update1 = React.memo((props) => {
                     </>
             }
             {(state?.status === 1) ?
-                <><Divider type={'horizontal'} />
-                    <Button type='primary' htmlType="submit">Завершить</Button></>
+                <>
+                <Divider type={'horizontal'} />
+                    <Button type='primary' htmlType="submit">
+                        Завершить
+                    </Button>
+
+                    <Divider type={'vertical'} />
+                    Добавить к документу
+                </>
                 : ''
             }
         </Form>:"Загрузка (пустой рендер)"

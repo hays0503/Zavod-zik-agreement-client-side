@@ -1,11 +1,8 @@
-import { EyeOutlined } from '@ant-design/icons';
-import { Button, Form, Input, Typography, Space, Divider, Row, Col, Steps, Checkbox, Popconfirm, message, Radio, Collapse } from 'antd';
+import { Form, Divider,} from 'antd';
 import React, { useEffect, useState } from 'react';
-import { useUser, formatDate } from '../../../../../../core/functions';
+import { useUser } from '../../../../../../core/functions';
 import TitleMenu from '../../../../../../core/TitleMenu'
-import { gql, useMutation } from '@apollo/client'
-import UploadFile from '../../../../modals/UploadFile';
-import constants from "../../../../../../config/constants";
+
 
 import ApproveConfirm from './dialogs/ApproveConfirm';
 import RejectConfirm from './dialogs/RejectConfirm';
@@ -13,11 +10,9 @@ import ReturnStepBackConfirm from './dialogs/ReturnStepBackConfirm';
 import ReturnToSenderConfirm from './dialogs/ReturnToSenderConfirm';
 
 //Tasks
-import TasksTableContainer from '../../tableContainers/TasksTableContainer'
 import TasksAddDialog4 from '../../../../dialogs/TasksAddDialog4'
 import TaskModalUpdate from '../../modals/TaskModalUpdate'
 import UpdateTask4 from './UpdateTask4'
-import {FragmentFileViewer} from './../../../fragments/FragmentFileViewer';
 import { FormWrap, FormItem } from './../../../fragments/FragmentItemWrap';
 import FragmentUploader from './../../../fragments/FragmentUploader';
 import FragmentStepViewer from '../../../fragments/FragmentStepViewer';
@@ -26,160 +21,40 @@ import { FragmentReasonsViewer } from '../../../fragments/FragmentReasonsViewer'
 import { FragmentTaskList } from '../../../fragments/FragmentTaskList';
 import FragmentCommentsViewer from '../../../fragments/FragmentCommentsViewer';
 import { FragmentAnyItems } from '../../../fragments/FragmentAnyItems';
+import { GetIDNameTaskFile } from './../../../api/CRU_Document'
+import { dict, DocumentTasks } from './gql'
+import { FragmentTaskAndFileViewer } from './../../../fragments/FragmentFileViewer';
 
-let Update4 = React.memo((props) => {
+const Update4 = React.memo((props) => {
 
-    let DocumentTasks = {
-        exemplar: 'document_tasks',
-        table: 'document_tasks',
-        options: {
-            all: {
-                fetchPolicy: 'standby'
-            },
-            one: {
-                fetchPolicy: 'standby'
-            }
-        },
-        select: {
-            all: gql`
-                query document_tasks ($document_tasks: JSON){
-                    document_tasks(document_tasks: $document_tasks){
-                        id
-                        document_id
-                        status
-                        is_cancelled
-                        note
-                        deadline
-                        date_created
-                        user_id_created
-                        fio_created
-                        user_id_receiver
-                        fio_receiver
-                        route_id
-                        document_options
-                        task_files
-                        report
-                        document_tasks_files{
-                            id
-                            filename
-                            data_file
-                            task_id
-                        }
-                    }
-                }
-            `,
-            one: gql`
-            query document_tasks ($document_tasks: JSON){
-                document_tasks(document_tasks: $document_tasks){
-                    id
-                    document_id
-                    status
-                    is_cancelled
-                    note
-                    deadline
-                    date_created
-                    user_id_created
-                    fio_created
-                    user_id_receiver
-                    fio_receiver
-                    route_id
-                    document_options
-                    task_files
-                    report
-                    document_tasks_files{
-                        id
-                        filename
-                        data_file
-                        task_id
-                    }
-                }
-            }
-            `
-        },
-        subscription: {
-            all: gql`
-            subscription document_tasks ($document_tasks: JSON) {
-                document_tasks(document_tasks: $document_tasks) {
-                    id
-                    document_id
-                    status
-                    is_cancelled
-                    note
-                    deadline
-                    date_created
-                    user_id_created
-                    fio_created
-                    user_id_receiver
-                    fio_receiver
-                }
-            }
-        `
-        },
-        insert: gql`
-        mutation insertDocumentTasks($document_tasks: JSON) {
-            insertDocumentTasks(document_tasks: $document_tasks) {
-                type
-                message
-            }
-        }
-        `,
-        setTaskIsReadTrue: gql`
-        mutation setTaskIsReadTrue($task: JSON) {
-            setTaskIsReadTrue(task: $task){
-                type
-                message
-            }
-        }
-        `
-    }
-
-    let TasksTitleMenu = (tableProps) => {
-        return (<TitleMenu
-            buttons={[
-                <TaskModalUpdate
-                    visibleModalUpdate={visibleModalUpdate} UpdateForm={UpdateTask4} GQL={DocumentTasks}
-                    title='Поручение' selectedRowKeys={tableProps.selectedRowKeys} update={true} width={750} />,
-                <TasksAddDialog4 visible={visible} setVisible={setVisible} document={props.initialValues4} />
-            ]}
-            selectedRowKeys={tableProps.selectedRowKeys}
-        />)
-    };
-
-    let user = useUser();
-    const price_pattern = /^\d+$/;
-    const { Title, Link } = Typography;
-    const { Step } = Steps;
-    const { Panel } = Collapse;
-
+    const user = useUser();
+    const visibleModalUpdate = useState(false)
+    const [visible, setVisible] = useState(false)
+    const [reasonText, setReasonText] = useState(props?.initialValues4?.documents[0]?.reason);
+    const [routesList, setRoutesList] = useState([{ positionName: 'Тип договора не выбран.' }])
+    const [stepCount, setStepCount] = useState({ step: '0' })
     const [state, setState] = useState({
         log_username: user.username,
     });
-
-    const visibleModalUpdate = useState(false)
-    const [visible, setVisible] = useState(false)
-
-    let OpenDocument = async (item) => {
-        console.log("PROPS", item.id)
-        const tmp = await fetch('/api/files', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(
-                { user:Number(user.id),item:item.id }
-            )
+    /**
+     * Cтейт для таблиц файлов по поручением
+     */
+    const [FileTask , setFileTask] = useState([])
+    /**
+     * Инициализация стейта для таблиц файлов по поручением
+     */
+    useEffect(() => {
+        if (props.initialValues4) {
+        GetIDNameTaskFile(props?.initialValues4?.documents[0]?.id).then(value=>{
+            setFileTask(value.result)
         })
-        const content = await tmp.json();
-        if (content != undefined) {
-            console.log("RESULT", content)
-        }
-    }
+
+    }},[props.initialValues4])
     
     useEffect(() => {
         props.form4.setFieldsValue(state);
     }, [state]);
-    let [routesList, setRoutesList] = useState([{ positionName: 'Тип договора не выбран.' }])
-    let [stepCount, setStepCount] = useState({ step: '0' })
+
     useEffect(() => {
         if (props.initialValues4) {
             setState({
@@ -215,63 +90,12 @@ let Update4 = React.memo((props) => {
         }
     }, [props.initialValues4]);
 
-    let download = async (e) => {
-        let id = e.target.dataset.fileid
-        await fetch("/get-file", {
-            method: "POST",
-            body: JSON.stringify({ id: e.target.dataset.fileid }),
-            headers: {
-                "Content-Type": "application/json"
-            }
-        }).then(response => {
-            return response.json()
-        }).then(response => {
-            let result = response.result
-            let link = document.createElement('a')
-            link.href = result.data_file /*result.data_file.slice(result.data_file.indexOf(',')+1) */
-            link.download = result.filename
-            link.click()
-        })
-    }
-
-    let onFinish = (values) => {
+    const onFinish = () => {
         props.onFinish4(state);
     }
 
-    const dict = [
-        {
-            title: 'У кого',
-            dataIndex: 'fio_receiver',
-            key: 'fio_receiver',
-            width: '200px'
-        },
-        {
-            title: 'Срок',
-            dataIndex: 'deadline',
-            key: 'deadline',
-            width: '200px'
-        },
-        {
-            title: 'Статус',
-            dataIndex: 'task_statuses',
-            key: 'task_statuses',
-            width: '150px'
-        },
-        {
-            title: 'Задача',
-            dataIndex: 'note',
-            key: 'note',
-            width: '250px'
-        },
-    ];
-
     //collapse
-    function callback(key) {
-        // console.log(key);
-    }
-
-    const [reasonText, setReasonText] = useState(props?.initialValues4?.documents[0]?.reason);
-    let ReasonInputChange = (all, change) => {
+    const ReasonInputChange = (all) => {
         if (all.target.value.length > 0) {
             setReasonText(all.target.value)
         } else {
@@ -279,19 +103,18 @@ let Update4 = React.memo((props) => {
         }
     }
 
-    let radioOptions = [
-        {label:'Закупки товаров, работ и услуг', value:'1'},
-        {label:'Поставка продукции (выполнение работ, оказание услуг) заказчикам',value:'2'},
-        {label:'Передача имущества в аренду (бесплатное пользование)',value:'3'},
-        {label:'Совместная деятельность',value:'4'},
-        {label:'Финансирование (кредитование, обеспечение исполнения обязательств)',value:'5'},
-        {label:'Прочие обязательства',value:'6'}
-    ]
-    const[radioState, setRadioState] = useState(props?.initialValues4?.documents[0]?.data_agreement_list_internal_needs[0]?.subject);
-
-    const RadioOnChange = (radioValue) => {
-        setRadioState(radioValue.target.value);
+    const TasksTitleMenu = (tableProps) => {
+        return (<TitleMenu
+            buttons={[
+                <TaskModalUpdate
+                    visibleModalUpdate={visibleModalUpdate} UpdateForm={UpdateTask4} GQL={DocumentTasks}
+                    title='Поручение' selectedRowKeys={tableProps.selectedRowKeys} update={true} width={750} />,
+                <TasksAddDialog4 visible={visible} setVisible={setVisible} document={props.initialValues4} />
+            ]}
+            selectedRowKeys={tableProps.selectedRowKeys}
+        />)
     };
+
 
     return(
         <Form
@@ -300,8 +123,8 @@ let Update4 = React.memo((props) => {
             onFinish={onFinish}
             scrollToFirstError
             autoComplete="off"
-
-            onValuesChange={(changedValues, allValues) => { setState(Object.assign({}, state, { ...allValues, })); console.log('UPDATE4 values',allValues)}}
+            onValuesChange={(changedValues, allValues) => {
+                setState(Object.assign({}, state, { ...allValues, })); console.log('UPDATE4 values',allValues)}}
         
         >
             {/* /////////////////////////////////// */}
@@ -339,11 +162,11 @@ let Update4 = React.memo((props) => {
 
             {/*Фрагмент antd дающую возможность просматривать файлы*/}
             {
-                props.initialValues4!==undefined?
-                <FragmentFileViewer files={props?.initialValues4?.documents[0]?.files} userId={user.id}/>:
+                props.initialValues4!==undefined && FileTask!==undefined?
+                <FragmentTaskAndFileViewer files={props?.initialValues4?.documents[0]?.files} files_task={FileTask} userId={user.id}/>:
                 <h1>Загрузка</h1>
             }
-            {/* /////////////////////////////////// */}
+            {/* /////////////////////////////////// */}  
             
             <Divider type={'horizontal'} />
             

@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client';
+
 import { Divider, Form } from 'antd';
 import React, { useEffect, useRef, useState } from 'react';
 import { useUser } from '../../../../../../core/functions';
@@ -18,157 +18,25 @@ import FragmentCommentsViewer from '../../../fragments/FragmentCommentsViewer';
 import { FragmentReasonsViewer } from '../../../fragments/FragmentReasonsViewer';
 import TaskModalUpdate from '../../modals/TaskModalUpdate';
 import { FragmentButtons } from './../../../fragments/FragmentButtons';
-import { FragmentFileViewer, FragmentTaskFileViewer, FragmentTaskAndFileViewer } from './../../../fragments/FragmentFileViewer';
+import { FragmentTaskAndFileViewer } from './../../../fragments/FragmentFileViewer';
 import { FormItem, FormWrap } from './../../../fragments/FragmentItemWrap';
 import FragmentStepViewer from './../../../fragments/FragmentStepViewer';
 import { FragmentTaskList } from './../../../fragments/FragmentTaskList';
 import FragmentUploader from './../../../fragments/FragmentUploader';
 import UpdateTask1 from './UpdateTask1';
 import { GetIDNameTaskFile } from './../../../api/CRU_Document';
+import { dict, DocumentTasks } from './gql';
 
 
 
 
 
-let Update1 = React.memo((props) => {
-
-
-
-    const dict = [
-        {
-            title: 'У кого',
-            dataIndex: 'fio_receiver',
-            key: 'fio_receiver',
-            width: '200px'
-        },
-        {
-            title: 'Срок',
-            dataIndex: 'deadline',
-            key: 'deadline',
-            width: '200px'
-        },
-        {
-            title: 'Статус',
-            dataIndex: 'task_statuses',
-            key: 'task_statuses',
-            width: '150px'
-        },
-        {
-            title: 'Задача',
-            dataIndex: 'note',
-            key: 'note',
-            width: '250px'
-        },
-    ];
-
-    let DocumentTasks = {
-        exemplar: 'document_tasks',
-        table: 'document_tasks',
-        options: {
-            all: {
-                fetchPolicy: 'standby'
-            },
-            one: {
-                fetchPolicy: 'standby'
-            }
-        },
-        select: {
-            all: gql`
-                query document_tasks ($document_tasks: JSON){
-                    document_tasks(document_tasks: $document_tasks){
-                        id
-                        document_id
-                        status
-                        is_cancelled
-                        note
-                        deadline
-                        date_created
-                        user_id_created
-                        fio_created
-                        user_id_receiver
-                        fio_receiver
-                        route_id
-                        document_options
-                        task_files
-                        report
-                        document_tasks_files{
-                            id
-                            filename
-                            data_file
-                            task_id
-                        }
-                    }
-                }
-            `,
-            one: gql`
-            query document_tasks ($document_tasks: JSON){
-                document_tasks(document_tasks: $document_tasks){
-                    id
-                    document_id
-                    status
-                    is_cancelled
-                    note
-                    deadline
-                    date_created
-                    user_id_created
-                    fio_created
-                    user_id_receiver
-                    fio_receiver
-                    route_id
-                    document_options
-                    task_files
-                    report
-                    document_tasks_files{
-                        id
-                        filename
-                        data_file
-                        task_id
-                    }
-                }
-            }
-            `
-        },
-        subscription: {
-            all: gql`
-            subscription document_tasks ($document_tasks: JSON) {
-                document_tasks(document_tasks: $document_tasks) {
-                    id
-                    document_id
-                    status
-                    is_cancelled
-                    note
-                    deadline
-                    date_created
-                    user_id_created
-                    fio_created
-                    user_id_receiver
-                    fio_receiver
-                }
-            }
-        `
-        },
-        insert: gql`
-        mutation insertDocumentTasks($document_tasks: JSON) {
-            insertDocumentTasks(document_tasks: $document_tasks) {
-                type
-                message
-            }
-        }
-        `,
-        setTaskIsReadTrue: gql`
-        mutation setTaskIsReadTrue($task: JSON) {
-            setTaskIsReadTrue(task: $task){
-                type
-                message
-            }
-        }
-        `
-    }
+const Update1 = React.memo((props) => {
 
     const stepsDirection = useRef('vertical');
-    let user = useUser();
-    let [routesList, setRoutesList] = useState([{ positionName: 'Тип договора не выбран.' }])
-    let [stepCount, setStepCount] = useState({ step: '0' })
+    const user = useUser();
+    const [routesList, setRoutesList] = useState([{ positionName: 'Тип договора не выбран.' }])
+    const [stepCount, setStepCount] = useState({ step: '0' })
     const visibleModalUpdate = useState(false);
 
     //confirmations
@@ -180,9 +48,11 @@ let Update1 = React.memo((props) => {
 
     });
 
-    const [FileTask , setFileTask] = useState()
 
-
+/**
+ * Cтейт для таблиц файлов по поручением
+ */
+    const [FileTask , setFileTask] = useState([])
 /**
  * Инициализация стейта для таблиц файлов по поручением
  */
@@ -227,7 +97,6 @@ let Update1 = React.memo((props) => {
                 comments: props.initialValues.documents[0].comments,
                 signatures: props.initialValues.documents[0].signatures,
                 files: props.initialValues.documents[0].files,
-                files_task_is_add:FileTask,
                 document_logs: props.initialValues.documents[0].document_logs,
                 log_username: state.log_username
             });
@@ -252,7 +121,7 @@ let Update1 = React.memo((props) => {
         />)
     };
 
-    const ReasonInputChange = (all, change) => {
+    const ReasonInputChange = (all) => {
         if (all.target.value.length > 0) {
             setReasonText(all.target.value)
         } else {
