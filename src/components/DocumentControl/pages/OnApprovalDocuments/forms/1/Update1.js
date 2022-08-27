@@ -18,16 +18,18 @@ import FragmentCommentsViewer from '../../../fragments/FragmentCommentsViewer';
 import { FragmentReasonsViewer } from '../../../fragments/FragmentReasonsViewer';
 import TaskModalUpdate from '../../modals/TaskModalUpdate';
 import { FragmentButtons } from './../../../fragments/FragmentButtons';
-import {FragmentFileViewer} from './../../../fragments/FragmentFileViewer';
+import { FragmentFileViewer, FragmentTaskFileViewer, FragmentTaskAndFileViewer } from './../../../fragments/FragmentFileViewer';
 import { FormItem, FormWrap } from './../../../fragments/FragmentItemWrap';
 import FragmentStepViewer from './../../../fragments/FragmentStepViewer';
 import { FragmentTaskList } from './../../../fragments/FragmentTaskList';
 import FragmentUploader from './../../../fragments/FragmentUploader';
 import UpdateTask1 from './UpdateTask1';
+import { GetIDNameTaskFile } from './../../../api/CRU_Document';
 
-/**
- * Форма для вывода документа по клику "Закуп ТРУ"
- */
+
+
+
+
 let Update1 = React.memo((props) => {
 
 
@@ -178,6 +180,21 @@ let Update1 = React.memo((props) => {
 
     });
 
+    const [FileTask , setFileTask] = useState()
+
+
+/**
+ * Инициализация стейта для таблиц файлов по поручением
+ */
+    useEffect(() => {
+        if (props.initialValues) {
+        GetIDNameTaskFile(props?.initialValues?.documents[0]?.id).then(value=>{
+            setFileTask(value.result)
+        })
+
+    }},[props.initialValues])
+
+
     useEffect(() => {
         if (props?.initialValues?.documents[0]?.route_data?.length > 1)
             stepsDirection.current = props?.initialValues?.documents[0]?.route_data?.length <= 7 ? 'horizontal' : 'vertical'
@@ -185,7 +202,6 @@ let Update1 = React.memo((props) => {
 
     useEffect(() => { props.form.setFieldsValue(state) }, [state]);
     useEffect(() => {
-        console.log("Props.initialValues",props.initialValues);
         if (props.initialValues) {
             setState({
                 id: props.initialValues.documents[0].id,
@@ -211,6 +227,7 @@ let Update1 = React.memo((props) => {
                 comments: props.initialValues.documents[0].comments,
                 signatures: props.initialValues.documents[0].signatures,
                 files: props.initialValues.documents[0].files,
+                files_task_is_add:FileTask,
                 document_logs: props.initialValues.documents[0].document_logs,
                 log_username: state.log_username
             });
@@ -284,8 +301,8 @@ let Update1 = React.memo((props) => {
 
             {/*Фрагмент antd дающую возможность просматривать файлы*/}
             {
-                props.initialValues!==undefined?
-                <FragmentFileViewer files={props?.initialValues?.documents[0]?.files} userId={user.id}/>:
+                props.initialValues!==undefined && FileTask!==undefined?
+                <FragmentTaskAndFileViewer files={props?.initialValues?.documents[0]?.files} files_task={FileTask} userId={user.id}/>:
                 <h1>Загрузка</h1>
             }
             {/* /////////////////////////////////// */}
