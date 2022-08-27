@@ -7,7 +7,7 @@ import UploadFile from '../../../../modals/UploadFile';
 let Insert3 = React.memo((props) => {
     let user = useUser();
     const price_pattern = /^\d+$/;
-    // const phone_pattern= /^!*([0-9]!*){11,11}$/g;
+    const phone_pattern= /^!*([0-9]!*){11,11}$/g;
     const price_max_count = /^.{1,8}$/;
     const [state, setState] = useState({
         log_username: user.username,
@@ -154,6 +154,10 @@ let Insert3 = React.memo((props) => {
                         required: true,
                         message: 'Необходимо для заполнения!',
                     },
+                    {
+                        pattern: phone_pattern,
+                        message: 'Номер введен не корректно'
+                    }
                 ]}
             >
                 <Input disabled={props.disabled} placeholder="Телефон исполнителя" />
