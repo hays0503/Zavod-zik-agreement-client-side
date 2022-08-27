@@ -6,7 +6,7 @@ let AllDocumentsGQL = {
     options: {
         all: {
             variables: {
-                documents: { global: { positions: positionsVariable, status_id: '=5', ORDER_BY: ['date_created desc'] } }
+                documents: { global: { } }
             },
             fetchPolicy: 'cache-only'
         },

@@ -146,6 +146,9 @@ let SiderMenu = (props) => {
             case '/document-control/on-approval':
                 props.setHeaderTitle('Входящие')
                 break;
+            case '/document-control/registration':
+                props.setHeaderTitle('Ригастрация документов')
+                break;
             case '/document-control/on-approval-list':
                 props.setHeaderTitle('Подписанные мною')
                 break;
@@ -204,6 +207,11 @@ let SiderMenu = (props) => {
                     {user.documentControl.rejectedUser.select ?
                         <Menu.Item key={"/document-control/rejecteduser"}>
                             <Link to={'/document-control/rejecteduser'}>Отклонённые <sup><Badge count={con.rejected} /></sup></Link>
+                        </Menu.Item>
+                        : null}
+                    {user.documentControl.registrationDocuments.select ?
+                        <Menu.Item key={'/document-control/registration'}>
+                            <Link to={'/document-control/registration'}>Регистрация документов</Link>
                         </Menu.Item>
                         : null}
                 </SubMenu>
