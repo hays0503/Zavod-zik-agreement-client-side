@@ -1,248 +1,350 @@
+import { Divider, Form } from "antd";
+import React, { useEffect, useState } from "react";
+import { useUser } from "../../../../../../core/functions";
+import TitleMenu from "../../../../../../core/TitleMenu";
 
-import { Divider, Form } from 'antd'
-import React, { useEffect, useState } from 'react'
-import { useUser } from '../../../../../../core/functions'
-import TitleMenu from '../../../../../../core/TitleMenu'
-
-import ApproveConfirm from './dialogs/ApproveConfirm'
-import RejectConfirm from './dialogs/RejectConfirm'
-import ReturnStepBackConfirm from './dialogs/ReturnStepBackConfirm'
-import ReturnToSenderConfirm from './dialogs/ReturnToSenderConfirm'
+import ApproveConfirm from "./dialogs/ApproveConfirm";
+import RejectConfirm from "./dialogs/RejectConfirm";
+import ReturnStepBackConfirm from "./dialogs/ReturnStepBackConfirm";
+import ReturnToSenderConfirm from "./dialogs/ReturnToSenderConfirm";
 
 //Tasks
-import TasksAddDialog2 from '../../../../dialogs/TasksAddDialogs2'
-import TaskModalUpdate from '../../modals/TaskModalUpdate'
-import UpdateTask2 from './UpdateTask2'
+import TasksAddDialog2 from "../../../../dialogs/TasksAddDialogs2";
+import TaskModalUpdate from "../../modals/TaskModalUpdate";
+import UpdateTask2 from "./UpdateTask2";
 
-import FragmentUploader from '../../../fragments/FragmentUploader'
-import { FragmentAnyItems } from './../../../fragments/FragmentAnyItems'
-import { FragmentButtons } from './../../../fragments/FragmentButtons'
-import FragmentCommentsViewer from './../../../fragments/FragmentCommentsViewer'
-import { FormItem, FormWrap } from './../../../fragments/FragmentItemWrap'
-import { FragmentReasonsViewer } from './../../../fragments/FragmentReasonsViewer'
-import FragmentStepViewer from './../../../fragments/FragmentStepViewer'
-import { FragmentTaskList } from './../../../fragments/FragmentTaskList'
+import FragmentUploader from "../../../fragments/FragmentUploader";
+import { FragmentAnyItems } from "./../../../fragments/FragmentAnyItems";
+import { FragmentButtons } from "./../../../fragments/FragmentButtons";
+import FragmentCommentsViewer from "./../../../fragments/FragmentCommentsViewer";
+import { FormItem, FormWrap } from "./../../../fragments/FragmentItemWrap";
+import { FragmentReasonsViewer } from "./../../../fragments/FragmentReasonsViewer";
+import FragmentStepViewer from "./../../../fragments/FragmentStepViewer";
+import { FragmentTaskList } from "./../../../fragments/FragmentTaskList";
 
-import { GetIDNameTaskFile } from './../../../api/CRU_Document'
-import { dict, DocumentTasks } from './gql'
-import { FragmentTaskAndFileViewer } from './../../../fragments/FragmentFileViewer';
+import { GetIDNameTaskFile } from "./../../../api/CRU_Document";
+import { dict, DocumentTasks } from "./gql";
+import { FragmentTaskAndFileViewer } from "./../../../fragments/FragmentFileViewer";
+
+//Реализация готовой продукции
 
 const Update2 = React.memo((props) => {
+	const user = useUser();
+	const [state, setState] = useState({
+		log_username: user.username,
+	});
+	const visibleModalUpdate = useState(false);
+	const [visible, setVisible] = useState(false);
+	const [routesList, setRoutesList] = useState([
+		{ positionName: "Тип договора не выбран." },
+	]);
+	const [stepCount, setStepCount] = useState({ step: "0" });
+	const [reasonText, setReasonText] = useState(
+		props?.initialValues2?.documents[0]?.reason
+	);
 
-    const user = useUser();
-    const [state, setState] = useState({
-        log_username: user.username,
-    });
-    const visibleModalUpdate = useState(false);
-    const [visible, setVisible] = useState(false)
-    const [routesList, setRoutesList] = useState([{ positionName: 'Тип договора не выбран.' }])
-    const [stepCount, setStepCount] = useState({ step: '0' })
-    const [reasonText, setReasonText] = useState(props?.initialValues?.documents[0]?.reason);
+	/**
+	 * Отобразить новое состояние компонентов после обновление (файлов / по поручению)
+	 */
+	const [ReRender, setRerender] = useState(false);
+	useEffect(() => {
+		console.log("Обновилось состояние !");
+		GetIDNameTaskFile(props?.initialValues2?.documents[0]?.id).then((value) => {
+			setFileTask(value.result);
+		});
+	}, [ReRender]);
 
-/**
- * Cтейт для таблиц файлов по поручением
- */
-    const [FileTask , setFileTask] = useState([])
-/**
- * Инициализация стейта для таблиц файлов по поручением
- */
-    useEffect(() => {
-        if (props.initialValues2) {
-        GetIDNameTaskFile(props?.initialValues2?.documents[0]?.id).then(value=>{
-            setFileTask(value.result)
-        })
+	/**
+	 * Cтейт для таблиц файлов по поручением
+	 */
+	const [FileTask, setFileTask] = useState([]);
+	/**
+	 * Инициализация стейта для таблиц файлов по поручением
+	 */
+	useEffect(() => {
+		if (props.initialValues2) {
+			GetIDNameTaskFile(props?.initialValues2?.documents[0]?.id).then(
+				(value) => {
+					setFileTask(value.result);
+				}
+			);
+		}
+	}, [props.initialValues2]);
 
-    }},[props.initialValues2])
+	useEffect(() => {
+		props.form2.setFieldsValue(state);
+	}, [state]);
 
+	useEffect(() => {
+		if (props.initialValues2) {
+			setState({
+				id: props.initialValues2.documents[0].id,
+				title: props.initialValues2.documents[0].title,
+				position: props.initialValues2.documents[0].position,
+				username: props.initialValues2.documents[0].username,
+				fio: props.initialValues2.documents[0].fio,
+				price: props.initialValues2.documents[0].data_agreement_list[0].price,
+				subject:
+					props.initialValues2.documents[0].data_agreement_list[0].subject,
+				currency_price:
+					props.initialValues2.documents[0].data_agreement_list[0]
+						.currency_price,
+				executor_name_division:
+					props.initialValues2.documents[0].data_agreement_list[0]
+						.executor_name_division,
+				sider_signatures_date:
+					props.initialValues2.documents[0].data_agreement_list[0]
+						.sider_signatures_date,
+				received_from_counteragent_date:
+					props.initialValues2.documents[0].data_agreement_list[0]
+						.received_from_counteragent_date,
+				reason: props.initialValues2.documents[0].reason,
+				date_created: props.initialValues2.documents[0].date_created,
+				date_modified: props.initialValues2.documents[0].date_modified,
+				route_id: props.initialValues2.documents[0].route_id.id,
+				status_in_process:
+					props.initialValues2.documents[0].route_id.status_in_process,
+				status_cancelled:
+					props.initialValues2.documents[0].route_id.status_cancelled,
+				status_finished:
+					props.initialValues2.documents[0].route_id.status_finished,
+				status_id: props.initialValues2.documents[0].status_id,
+				route: props.initialValues2.documents[0].route_data,
+				step: props.initialValues2.documents[0].step,
+				comments: props.initialValues2.documents[0].comments,
+				signatures: props.initialValues2.documents[0].signatures,
+				files: props.initialValues2.documents[0].files,
+				document_logs: props.initialValues2.documents[0].document_logs,
+				log_username: state.log_username,
+			});
+			setStepCount({ step: props.initialValues2.documents[0].step });
+			setRoutesList(props.initialValues2.documents[0].route_data);
+		}
+	}, [props.initialValues2]);
 
-    useEffect(() => {
-        props.form2.setFieldsValue(state);
-    }, [state]);
+	let TasksTitleMenu = (tableProps) => {
+		return (
+			<TitleMenu
+				buttons={[
+					<TaskModalUpdate
+						visibleModalUpdate={visibleModalUpdate}
+						UpdateForm={UpdateTask2}
+						GQL={DocumentTasks}
+						title="Поручение"
+						selectedRowKeys={tableProps.selectedRowKeys}
+						update={true}
+						width={750}
+                        setRerender={setRerender}// Стейт функция для обновления
+						ReRender={ReRender}// Стейт переменная для обновления
+					/>,
+					<TasksAddDialog2
+						visible={visible}
+						setVisible={setVisible}
+						document={props.initialValues2}
+					/>,
+				]}
+				selectedRowKeys={tableProps.selectedRowKeys}
+			/>
+		);
+	};
 
-    useEffect(() => {
-        if (props.initialValues2) {
-            setState({
-                id: props.initialValues2.documents[0].id,
-                title: props.initialValues2.documents[0].title,
-                position: props.initialValues2.documents[0].position,
-                username: props.initialValues2.documents[0].username,
-                fio: props.initialValues2.documents[0].fio,
+	let onFinish = (values) => {
+		props.onFinish2(state);
+	};
 
-                price: props.initialValues2.documents[0].data_agreement_list[0].price,
-                subject: props.initialValues2.documents[0].data_agreement_list[0].subject,
+	//collapse
+	let ReasonInputChange = (all) => {
+		if (all.target.value.length > 0) {
+			setReasonText(all.target.value);
+		} else {
+			setReasonText(all.target.value);
+		}
+	};
 
-                currency_price: props.initialValues2.documents[0].data_agreement_list[0].currency_price,
-                executor_name_division: props.initialValues2.documents[0].data_agreement_list[0].executor_name_division,
-                sider_signatures_date: props.initialValues2.documents[0].data_agreement_list[0].sider_signatures_date,
-                received_from_counteragent_date: props.initialValues2.documents[0].data_agreement_list[0].received_from_counteragent_date,
+	return (
+		<Form
+			form={props.form2}
+			name="DocumentsForm2"
+			onFinish={onFinish}
+			scrollToFirstError
+			autoComplete="off"
+			onValuesChange={(changedValues, allValues) => {
+				setState(Object.assign({}, state, { ...allValues }));
+				console.log("UPDATE2 values", allValues);
+			}}
+		>
+			{/* /////////////////////////////////// */}
+			<FormWrap>{FormItem("От: ", state?.fio)}</FormWrap>
+			{/* /////////////////////////////////// */}
+			<FormWrap>{FormItem("Должность: ", state?.position)}</FormWrap>
+			{/* /////////////////////////////////// */}
+			<FormWrap>
+				{FormItem(
+					"Тип договора: ",
+					"Лист согласования на реализацию готовой продукции"
+				)}
+			</FormWrap>
+			{/* /////////////////////////////////// */}
 
-                reason: props.initialValues2.documents[0].reason,
-                date_created: props.initialValues2.documents[0].date_created,
-                date_modified: props.initialValues2.documents[0].date_modified,
-                route_id: props.initialValues2.documents[0].route_id.id,
-                status_in_process: props.initialValues2.documents[0].route_id.status_in_process,
-                status_cancelled: props.initialValues2.documents[0].route_id.status_cancelled,
-                status_finished: props.initialValues2.documents[0].route_id.status_finished,
-                status_id: props.initialValues2.documents[0].status_id,
-                route: props.initialValues2.documents[0].route_data,
-                step: props.initialValues2.documents[0].step,
-                comments: props.initialValues2.documents[0].comments,
-                signatures: props.initialValues2.documents[0].signatures,
-                files: props.initialValues2.documents[0].files,
-                document_logs: props.initialValues2.documents[0].document_logs,
-                log_username: state.log_username
-            });
-            setStepCount({ step: props.initialValues2.documents[0].step })
-            setRoutesList(props.initialValues2.documents[0].route_data)
-        }
-    }, [props.initialValues2]);
+			<Divider type={"horizontal"} />
 
-    let TasksTitleMenu = (tableProps) => {
-        return (<TitleMenu
-            buttons={[
-                <TaskModalUpdate
-                    visibleModalUpdate={visibleModalUpdate} UpdateForm={UpdateTask2} GQL={DocumentTasks}
-                    title='Поручение' selectedRowKeys={tableProps.selectedRowKeys} update={true} width={750} />,
-                <TasksAddDialog2 visible={visible} setVisible={setVisible} document={props.initialValues2} />
-            ]}
-            selectedRowKeys={tableProps.selectedRowKeys}
-        />)
-    };
+			{/* /////////////////////////////////// */}
+			<FormWrap>{FormItem("Наименование ТРУ: ", state?.title)}</FormWrap>
+			{/* /////////////////////////////////// */}
+			<FormWrap>{FormItem("Предмет договора: ", state?.subject)}</FormWrap>
+			{/* /////////////////////////////////// */}
+			<FormWrap>
+				{FormItem(
+					"Общая сумма договора в валюте цены договора: ",
+					state?.price
+				)}
+			</FormWrap>
+			{/* /////////////////////////////////// */}
+			<FormWrap>
+				{FormItem(
+					"Общая сумма договора в тенге, по курсу НБ РК: ",
+					state?.currency_price
+				)}
+			</FormWrap>
+			{/* /////////////////////////////////// */}
+			<FormWrap>
+				{FormItem(
+					"Наименование подразделения, фамилия ответственного исполнителя: ",
+					state?.executor_name_division
+				)}
+			</FormWrap>
+			{/* /////////////////////////////////// */}
+			<FormWrap>
+				{FormItem(
+					"Подписанный сторонами оригинал договора получен, дата, способ получения от контрагента: ",
+					state?.sider_signatures_date
+				)}
+			</FormWrap>
+			{/* /////////////////////////////////// */}
+			<FormWrap>
+				{FormItem(
+					"Дата получение проекта договора, способ получения от контрагента: ",
+					state?.received_from_counteragent_date
+				)}
+			</FormWrap>
+			{/* /////////////////////////////////// */}
+			<Divider type={"horizontal"} />
 
-    let onFinish = (values) => {
-        props.onFinish2(state);
-    }
+			{/* Фрагмент antd дающую возможность загружать файлы */}
+			<FragmentUploader />
+			{/* /////////////////////////////////// */}
 
-    //collapse
-    let ReasonInputChange = (all) => {
-        if (all.target.value.length > 0) {
-            setReasonText(all.target.value)
-        } else {
-            setReasonText(all.target.value)
-        }
-    }
+			<Divider type={"horizontal"} />
 
-    return (
-        <Form
-            form={props.form2}
-            name="DocumentsForm2"
-            onFinish={onFinish}
-            scrollToFirstError
-            autoComplete="off"
-            onValuesChange={(changedValues, allValues) => { setState(Object.assign({}, state, { ...allValues, })); console.log('UPDATE2 values', allValues) }}
+			{/*Фрагмент antd дающую возможность просматривать файлы*/}
+			{props.initialValues2 !== undefined && FileTask !== undefined ? (
+				<FragmentTaskAndFileViewer
+					files={props?.initialValues2?.documents[0]?.files}
+					files_task={FileTask}
+					userId={user.id}
+				/>
+			) : (
+				<h1>Загрузка</h1>
+			)}
+			{/* /////////////////////////////////// */}
 
-        >
+			<Divider type={"horizontal"} />
 
-            {/* /////////////////////////////////// */}
-            <FormWrap>{FormItem("От: ",state?.fio)}</FormWrap>
-            {/* /////////////////////////////////// */}
-            <FormWrap>{FormItem ("Должность: ",state?.position)}</FormWrap>
-            {/* /////////////////////////////////// */}
-            <FormWrap>{FormItem ("Тип договора: ","Лист согласования на реализацию готовой продукции")}</FormWrap>
-            {/* /////////////////////////////////// */}
+			{/* Фрагмент antd дающую возможность просматривать состояние движений документов */}
+			{props.initialValues2 !== undefined ? (
+				<FragmentStepViewer
+					signatures={props?.initialValues2?.documents[0]?.signatures}
+					step={stepCount.step - 1}
+					routesList={routesList}
+				/>
+			) : (
+				<h1>Загрузка</h1>
+			)}
+			{/* /////////////////////////////////// */}
 
-            <Divider type={'horizontal'} />
+			<Divider type={"horizontal"} />
 
-            {/* /////////////////////////////////// */}
-            <FormWrap>{FormItem ("Наименование ТРУ: ",state?.title)}</FormWrap>
-            {/* /////////////////////////////////// */}
-            <FormWrap>{FormItem ("Предмет договора: ",state?.subject)}</FormWrap>
-            {/* /////////////////////////////////// */}
-            <FormWrap>{FormItem ("Общая сумма договора в валюте цены договора: ",state?.price)}</FormWrap>
-            {/* /////////////////////////////////// */}
-            <FormWrap>{FormItem ("Общая сумма договора в тенге, по курсу НБ РК: ",state?.currency_price)}</FormWrap>
-            {/* /////////////////////////////////// */}
-            <FormWrap>{FormItem ("Наименование подразделения, фамилия ответственного исполнителя: ",state?.executor_name_division)}</FormWrap>
-            {/* /////////////////////////////////// */}
-            <FormWrap>{FormItem ("Подписанный сторонами оригинал договора получен, дата, способ получения от контрагента: ",state?.sider_signatures_date)}</FormWrap>
-            {/* /////////////////////////////////// */}
-            <FormWrap>{FormItem ("Дата получение проекта договора, способ получения от контрагента: ",state?.received_from_counteragent_date)}</FormWrap>
-            {/* /////////////////////////////////// */}
-            <Divider type={'horizontal'} /> 
+			{/* Фрагмент antd с кнопками для форм  */}
+			<FragmentButtons
+				ApproveConfirm={() => (
+					<ApproveConfirm
+						reasonText={reasonText}
+						dataProps={props}
+						setState={setState}
+						user={user}
+					/>
+				)}
+				ReturnToSenderConfirm={() => (
+					<ReturnToSenderConfirm
+						reasonText={reasonText}
+						dataProps={props}
+						setState={setState}
+						user={user}
+					/>
+				)}
+				ReturnStepBackConfirm={() => (
+					<ReturnStepBackConfirm
+						reasonText={reasonText}
+						dataProps={props}
+						setState={setState}
+						user={user}
+					/>
+				)}
+				RejectConfirm={() => (
+					<RejectConfirm
+						reasonText={reasonText}
+						dataProps={props}
+						setState={setState}
+						user={user}
+					/>
+				)}
+				modalCancelHandler={props.modalCancelHandler}
+				modalEnableEditHandler={props.modalEnableEditHandler}
+				reasonText={reasonText}
+				props={props}
+				setState={setState}
+				user={user}
+			/>
+			{/* /////////////////////////////////// */}
 
-            {/* Фрагмент antd дающую возможность загружать файлы */}
-            <FragmentUploader/>
-            {/* /////////////////////////////////// */}
+			<Divider type={"horizontal"} />
 
-            <Divider type={'horizontal'} />
+			{/* Фрагмент antd для вывода Замечаний по документу */}
+			<FragmentReasonsViewer
+				disabled={props.disabled}
+				ReasonInputChange={ReasonInputChange}
+				Reason={state?.reason}
+			/>
+			{/* /////////////////////////////////// */}
 
-            {/*Фрагмент antd дающую возможность просматривать файлы*/}
-            {
-                props.initialValues2!==undefined && FileTask!==undefined?
-                <FragmentTaskAndFileViewer files={props?.initialValues2?.documents[0]?.files} files_task={FileTask} userId={user.id}/>:
-                <h1>Загрузка</h1>
-            }
-            {/* /////////////////////////////////// */}      
+			<Divider type={"horizontal"} />
 
-            <Divider type={'horizontal'} />
+			{/* Фрагмент antd для вывода поручений по документам */}
+			<FragmentTaskList
+				dict={dict}
+				documentTasksList={props.documentTasksList}
+				visibleModalUpdate={visibleModalUpdate}
+				DocumentTasks={DocumentTasks}
+				TasksTitleMenu={TasksTitleMenu}
+			/>
+			{/* /////////////////////////////////// */}
 
-            {/* Фрагмент antd дающую возможность просматривать состояние движений документов */}
-            {
-                props.initialValues2!==undefined?
-                <FragmentStepViewer
-                signatures={props?.initialValues2?.documents[0]?.signatures}
-                step={stepCount.step - 1}
-                routesList={routesList}/>:
-                <h1>Загрузка</h1>
-            }
-            {/* /////////////////////////////////// */}
+			<Divider type={"horizontal"} />
 
-            <Divider type={'horizontal'} />
+			{/* Фрагмент antd дающую возможность просматривать комментарии к документам */}
+			<FragmentCommentsViewer
+				HandleCommentOnChange={props.HandleCommentOnChange}
+				disabled={props.disabled}
+				HandleComment={props.HandleComment}
+				commentsList={props.commentsList}
+			/>
+			{/* /////////////////////////////////// */}
 
-            {/* Фрагмент antd с кнопками для форм  */}
-            <FragmentButtons
-                ApproveConfirm={()=>(<ApproveConfirm reasonText={reasonText} dataProps={props} setState={setState} user={user} />)}
-                ReturnToSenderConfirm={()=>(<ReturnToSenderConfirm reasonText={reasonText} dataProps={props} setState={setState} user={user} />)}
-                ReturnStepBackConfirm={()=>(<ReturnStepBackConfirm reasonText={reasonText} dataProps={props} setState={setState} user={user} />)}
-                RejectConfirm={()=>(<RejectConfirm reasonText={reasonText} dataProps={props} setState={setState} user={user} />)}
-                modalCancelHandler={props.modalCancelHandler}
-                modalEnableEditHandler={props.modalEnableEditHandler}
-                reasonText={reasonText}
-                props={props}
-                setState={setState}
-                user={user}
-            />
-            {/* /////////////////////////////////// */}
-
-            <Divider type={'horizontal'} />
-
-            {/* Фрагмент antd для вывода Замечаний по документу */}
-            <FragmentReasonsViewer 
-                disabled={props.disabled}
-                ReasonInputChange={ReasonInputChange}
-                Reason={state?.reason}
-            />
-            {/* /////////////////////////////////// */}
-
-            <Divider type={'horizontal'} />
-
-            {/* Фрагмент antd для вывода поручений по документам */}
-            <FragmentTaskList
-                dict={dict}
-                documentTasksList={props.documentTasksList}
-                visibleModalUpdate={visibleModalUpdate}
-                DocumentTasks={DocumentTasks}
-                TasksTitleMenu={TasksTitleMenu}
-            />
-            {/* /////////////////////////////////// */}
-
-            <Divider type={'horizontal'} />
-
-            {/* Фрагмент antd дающую возможность просматривать комментарии к документам */}
-            <FragmentCommentsViewer
-                    HandleCommentOnChange={props.HandleCommentOnChange} 
-                    disabled={props.disabled}
-                    HandleComment={props.HandleComment}
-                    commentsList={props.commentsList}
-            />
-            {/* /////////////////////////////////// */}
-
-            {/* Фрагмент antd элементами для хранение данных (ну или типо того) */}
-            <FragmentAnyItems/>
-            {/* /////////////////////////////////// */}
-
-        </Form>
-    )
+			{/* Фрагмент antd элементами для хранение данных (ну или типо того) */}
+			<FragmentAnyItems />
+			{/* /////////////////////////////////// */}
+		</Form>
+	);
 });
 
 export default Update2;

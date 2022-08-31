@@ -50,11 +50,9 @@ const Update1 = React.memo((props) => {
 	const [ReRender, setRerender] = useState(false);
 	useEffect(() => {
 		console.log("Обновилось состояние !");
-		GetIDNameTaskFile(props?.initialValues?.documents[0]?.id).then(
-			(value) => {
-				setFileTask(value.result);
-			}
-		);
+		GetIDNameTaskFile(props?.initialValues?.documents[0]?.id).then((value) => {
+			setFileTask(value.result);
+		});
 	}, [ReRender]);
 
 	/**
@@ -93,11 +91,9 @@ const Update1 = React.memo((props) => {
 				position: props.initialValues.documents[0].position,
 				username: props.initialValues.documents[0].username,
 				fio: props.initialValues.documents[0].fio,
-
 				price: props.initialValues.documents[0].data_one[0].price,
 				supllier: props.initialValues.documents[0].data_one[0].supllier,
 				subject: props.initialValues.documents[0].data_one[0].subject,
-
 				date_created: props.initialValues.documents[0].date_created,
 				date_modified: props.initialValues.documents[0].date_modified,
 				route_id: props.initialValues.documents[0].route_id.id,
@@ -138,8 +134,8 @@ const Update1 = React.memo((props) => {
 						selectedRowKeys={tableProps.selectedRowKeys}
 						update={true}
 						width={750}
-						setRerender={setRerender}// Стейт функция для обновления
-						ReRender={ReRender}// Стейт переменная для обновления
+						setRerender={setRerender} // Стейт функция для обновления
+						ReRender={ReRender} // Стейт переменная для обновления
 					/>,
 					<TasksAddDialog
 						visible={visible}
