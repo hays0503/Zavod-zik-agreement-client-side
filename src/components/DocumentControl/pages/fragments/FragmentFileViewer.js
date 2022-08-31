@@ -151,7 +151,7 @@ export const FragmentTaskAndFileViewer = (props) => {
 };
 
 /**
- * Фрагмент antd дающую возможность просматривать файлы
+ * Фрагмент antd дающую возможность просматривать файлы (+ которые добавили по поручению можно добавить в основной документ прикрепив их)
  * @param files Массив из файлов для показа их на форме
  */
 export const FragmentFileViewerOnClick = (props) => {
