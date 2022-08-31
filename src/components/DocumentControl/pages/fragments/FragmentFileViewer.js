@@ -8,7 +8,8 @@ import {
 	TaskFileOpenDocument,
 } from "./../api/CRU_Document";
 import { SET_IS_ADD_TO_DOCUMENT } from "./../OnApprovalDocuments/forms/1/gql";
-import { useMutation } from '@apollo/client';
+import { useMutation } from "@apollo/client";
+
 /**
  * Фрагмент antd дающую возможность просматривать файлы
  * @param files Массив из файлов для показа их на форме
@@ -170,6 +171,19 @@ export const FragmentFileViewerOnClick = (props) => {
 						return (
 							<>
 								<div className="document-view-wrap">
+									<Checkbox
+										defaultChecked={item.is_add_to_document} //отметить в интерфейсе был ли добавлен файл
+										onChange={(e) => {
+											console.log(`${item.id} checked = ${e.target.checked}`);
+											set_is_add_to_document({
+												variables: {
+													ID: Number(item.id),
+													State: e.target.checked,
+												},
+											});
+										}}
+									/>
+									&nbsp; &nbsp;
 									<Link>
 										<a data-fileid={item.id} onClick={TaskFileDownload}>
 											{item.filename}
@@ -181,16 +195,6 @@ export const FragmentFileViewerOnClick = (props) => {
 										}}
 										shape="circle"
 										icon={<EyeOutlined />}
-									/>
-									&nbsp;
-									<Checkbox
-										defaultChecked={item.is_add_to_document} //отметить в интерфейсе был ли добавлен файл
-										onChange={(e) => {
-											console.log(`${item.id} checked = ${e.target.checked}`);
-											set_is_add_to_document({
-												variables: { ID: Number(item.id), State: e.target.checked },
-											});
-										}}
 									/>
 									<br />
 								</div>

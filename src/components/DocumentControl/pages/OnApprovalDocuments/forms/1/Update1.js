@@ -45,6 +45,19 @@ const Update1 = React.memo((props) => {
 	});
 
 	/**
+	 * Отобразить новое состояние компонентов после обновление (файлов / по поручению)
+	 */
+	const [ReRender, setRerender] = useState(false);
+	useEffect(() => {
+		console.log("Обновилось состояние !");
+		GetIDNameTaskFile(props?.initialValues?.documents[0]?.id).then(
+			(value) => {
+				setFileTask(value.result);
+			}
+		);
+	}, [ReRender]);
+
+	/**
 	 * Cтейт для таблиц файлов по поручением
 	 */
 	const [FileTask, setFileTask] = useState([]);
@@ -125,6 +138,8 @@ const Update1 = React.memo((props) => {
 						selectedRowKeys={tableProps.selectedRowKeys}
 						update={true}
 						width={750}
+						setRerender={setRerender}// Стейт функция для обновления
+						ReRender={ReRender}// Стейт переменная для обновления
 					/>,
 					<TasksAddDialog
 						visible={visible}

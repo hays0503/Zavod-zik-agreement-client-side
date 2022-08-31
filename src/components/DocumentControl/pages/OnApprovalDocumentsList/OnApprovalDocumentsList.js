@@ -1,6 +1,6 @@
 import { DeleteOutlined, QuestionCircleOutlined } from '@ant-design/icons';
 import { gql, useMutation } from '@apollo/client';
-import { Button, Popconfirm, Typography, Steps } from 'antd';
+import { Button, Popconfirm} from 'antd';
 import React, { useEffect, useState } from 'react';
 import { handlerQuery, handlerMutation, useUser } from '../../../../core/functions';
 import ModalUpdate from '../../modals/ModalUpdate';
@@ -13,10 +13,6 @@ import Update2 from './forms/2/Update2';
 import Update3 from './forms/3/Update3';
 import Update4 from './forms/4/Update4';
 import Update5 from './forms/5/Update5';
-
-
-const { Title, Link } = Typography;
-const { Step } = Steps;
 
 let OnApprovalDocumentsList = React.memo((props) => {
     let user = useUser();
@@ -316,14 +312,10 @@ let OnApprovalDocumentsList = React.memo((props) => {
             route_step: item.route_data? item.route_data.findIndex(item => item.positionId == positionsVariable) + 1 : [],
             step:item.step,
             step_count: item.step + ' из ' + item.route_data?.length,
-            //step_name:console.log('DDDDDD',item.step)
             step_name: item.route_data?.length > 0 ? item.route_data[item.step - 1].positionName : '',
             document_logs: item.document_logs[item.document_logs.findIndex(item=>item.user_id==user.id)]
-            //step_name: item.route_id?.routes ? item.route_id.routes[item.route_id.routes.findIndex(item => item.positionId == item.step)].positionName : ''
         }
     }) : [];
-
-    //console.log('list2', list2)
 
     let dict = test([
         { title: 'Наименование договора', dataIndex: 'title', width: '214px', type: 'search', tooltip: true, sorter: (a, b) => a.title.localeCompare(b.title) },
@@ -334,7 +326,7 @@ let OnApprovalDocumentsList = React.memo((props) => {
         { title: 'Статус', dataIndex: 'status', width: '80px', tooltip: true, sorter: (a, b) => a.status.localeCompare(b.status) },
         { title: 'На подписи', dataIndex: 'step_name', width: '114px' },
         { title: 'Этап', dataIndex: 'step_count', width: '55px' },
-        // { title: 'шаг п.', dataIndex: 'route_step', width: '55px' }
+
     ]);
 
 

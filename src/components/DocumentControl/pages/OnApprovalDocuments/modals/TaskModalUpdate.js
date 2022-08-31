@@ -316,6 +316,7 @@ let TaskModalUpdate = React.memo(({ GQL, UpdateForm, ...props }) => {
 		data: documentData,
 		refetch: refetchData,
 	} = handlerQuery(document, "one", { variables1 })();
+
 	useEffect(() => {
 		if (visible) {
 			refetchData(documentVariables);
@@ -354,7 +355,6 @@ let TaskModalUpdate = React.memo(({ GQL, UpdateForm, ...props }) => {
 				disabled={props.selectedRowKeys.length !== 3}
 				onClick={() => {
 					setVisible(true);
-					console.log("onClick={() => { setVisible(true);}");
 				}}
 			>
 				<EyeOutlined />
@@ -367,6 +367,7 @@ let TaskModalUpdate = React.memo(({ GQL, UpdateForm, ...props }) => {
 				onCancel={() => {
 					setVisible(false);
 					setViewMode(true);
+					props.setRerender(!props.ReRender);
 				}}
 				footer={null}
 			>
