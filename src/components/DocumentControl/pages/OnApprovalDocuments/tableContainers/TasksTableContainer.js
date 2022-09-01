@@ -1,13 +1,8 @@
 import { Table } from 'antd';
 import React, { useState, useEffect } from 'react';
 import { useMutation } from '@apollo/client';
-import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 
 let TasksTableContainer = React.memo(({ GQL, ...props }) => {
-
-    const location = useLocation();
-    const { pathname } = location;
-
 
     let [selectedRowKeys, setSelectedRowKeys] = useState([]);
     let itemKeys = [];
@@ -16,8 +11,6 @@ let TasksTableContainer = React.memo(({ GQL, ...props }) => {
             return item.id
         });
     }
-    // const [readTrue,  loading ] = handlerMutation(useMutation(GQL.setTaskIsReadTrue))();
-
 
     const [readTrue, { loading , error }] = useMutation(GQL.setTaskIsReadTrue, {
         onCompleted: (data) => console.log("Data from mutation", data),
@@ -34,6 +27,8 @@ let TasksTableContainer = React.memo(({ GQL, ...props }) => {
             return false;
         }));
     }, [props.data]);
+
+    
     return (
         <>
             <Table

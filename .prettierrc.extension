@@ -1,0 +1,23 @@
+{
+    // Пусть prettier использует формат кода eslint для проверки
+    "eslintIntegration": true,
+    // Пусть prettier использует формат кода stylelint для проверки
+    "stylelintIntegration": true,
+    "arrowParens": "always",
+    "bracketSameLine": true,
+    "bracketSpacing": false,
+    "embeddedLanguageFormatting": "auto",
+    "htmlWhitespaceSensitivity": "css",
+    "insertPragma": false,
+    "jsxSingleQuote": false,
+    "printWidth": 80,
+    "proseWrap": "always",
+    "quoteProps": "as-needed",
+    "requirePragma": false,
+    "semi": false,
+    "singleQuote": false,
+    "tabWidth": 2,
+    "trailingComma": "es5",
+    "useTabs": true,
+    "vueIndentScriptAndStyle": false
+}

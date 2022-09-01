@@ -1,0 +1,3616 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset='utf-8'>
+  <title>docrecyler 0.1.0 | Documentation</title>
+  <meta name='viewport' content='width=device-width,initial-scale=1'>
+  <link href='assets/bass.css' rel='stylesheet'>
+  <link href='assets/style.css' rel='stylesheet'>
+  <link href='assets/github.css' rel='stylesheet'>
+  <link href='assets/split.css' rel='stylesheet'>
+</head>
+<body class='documentation m0'>
+    <div class='flex'>
+      <div id='split-left' class='overflow-auto fs0 height-viewport-100'>
+        <div class='py1 px2'>
+          <h3 class='mb0 no-anchor'>docrecyler</h3>
+          <div class='mb1'><code>0.1.0</code></div>
+          <input
+            placeholder='Filter'
+            id='filter-input'
+            class='col12 block input'
+            spellcheck='false'
+            autocapitalize='off'
+            autocorrect='off'
+            type='text' />
+          <div id='toc'>
+            <ul class='list-reset h5 py1-ul'>
+              
+                
+                <li><a
+                  href='#taskfileopendocument'
+                  class="">
+                  TaskFileOpenDocument
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#taskfiledownload'
+                  class="">
+                  TaskFileDownload
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#fileopendocument'
+                  class="">
+                  FileOpenDocument
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#filedownload'
+                  class="">
+                  FileDownload
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#getidnametaskfile'
+                  class="">
+                  GetIDNameTaskFile
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#fragmentanyitems'
+                  class="">
+                  FragmentAnyItems
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#fragmentbuttons'
+                  class="">
+                  FragmentButtons
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#fragmentcommentsviewer'
+                  class="">
+                  FragmentCommentsViewer
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#fragmentfileviewer'
+                  class="">
+                  FragmentFileViewer
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#fragmenttaskfileviewer'
+                  class="">
+                  FragmentTaskFileViewer
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#fragmenttaskandfileviewer'
+                  class="">
+                  FragmentTaskAndFileViewer
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#fragmentfilevieweronclick'
+                  class="">
+                  FragmentFileViewerOnClick
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#callback'
+                  class="">
+                  callback
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#fragmentinputarea'
+                  class="">
+                  FragmentInputArea
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#formwrap'
+                  class="">
+                  FormWrap
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#formitem'
+                  class="">
+                  FormItem
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#fragmentreasonsviewer'
+                  class="">
+                  FragmentReasonsViewer
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#fragmentstepviewer'
+                  class="">
+                  FragmentStepViewer
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#fragmenttasklist'
+                  class="">
+                  FragmentTaskList
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#fragmentuploader'
+                  class="">
+                  FragmentUploader
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#inivalue'
+                  class="">
+                  iniValue
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#inivalue'
+                  class="">
+                  iniValue
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#inivalue'
+                  class="">
+                  iniValue
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#inivalue'
+                  class="">
+                  iniValue
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#inivalue'
+                  class="">
+                  iniValue
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#inivalue'
+                  class="">
+                  iniValue
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#rerender'
+                  class="">
+                  ReRender
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#rerender'
+                  class="">
+                  ReRender
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#rerender'
+                  class="">
+                  ReRender
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#rerender'
+                  class="">
+                  ReRender
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#rerender'
+                  class="">
+                  ReRender
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#filetask'
+                  class="">
+                  FileTask
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#filetask'
+                  class="">
+                  FileTask
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#filetask'
+                  class="">
+                  FileTask
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#filetask'
+                  class="">
+                  FileTask
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#filetask'
+                  class="">
+                  FileTask
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#useeffect'
+                  class="">
+                  useEffect
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#useeffect'
+                  class="">
+                  useEffect
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#useeffect'
+                  class="">
+                  useEffect
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#useeffect'
+                  class="">
+                  useEffect
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#useeffect'
+                  class="">
+                  useEffect
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#initask'
+                  class="">
+                  iniTask
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#initask'
+                  class="">
+                  iniTask
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#initask'
+                  class="">
+                  iniTask
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#initask'
+                  class="">
+                  iniTask
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#initask'
+                  class="">
+                  iniTask
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#update3'
+                  class="">
+                  Update3
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#centerpage'
+                  class="">
+                  centerPage
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#pdfconstruct'
+                  class="">
+                  pdfConstruct
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#printreasons'
+                  class="">
+                  printReasons
+                  
+                </a>
+                
+                </li>
+              
+            </ul>
+          </div>
+          <div class='mt1 h6 quiet'>
+            <a href='https://documentation.js.org/reading-documentation.html'>Need help reading this?</a>
+          </div>
+        </div>
+      </div>
+      <div id='split-right' class='relative overflow-auto height-viewport-100'>
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='taskfileopendocument'>
+      TaskFileOpenDocument
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Считать из б/д(поручение) и открыть для просмотра</p>
+
+    <div class='pre p1 fill-light mt0'>TaskFileOpenDocument</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>item</span> <code class='quiet'>(any)</code>
+	    id документа
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='taskfiledownload'>
+      TaskFileDownload
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Скачать файл(поручение) из б/д</p>
+
+    <div class='pre p1 fill-light mt0'>TaskFileDownload</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>e</span> <code class='quiet'>(any)</code>
+	    
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='fileopendocument'>
+      FileOpenDocument
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Считать из б/д и открыть для просмотра</p>
+
+    <div class='pre p1 fill-light mt0'>FileOpenDocument</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>item</span> <code class='quiet'>(any)</code>
+	    id документа
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='filedownload'>
+      FileDownload
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Скачать файл из б/д</p>
+
+    <div class='pre p1 fill-light mt0'>FileDownload</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>e</span> <code class='quiet'>(any)</code>
+	    
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='getidnametaskfile'>
+      GetIDNameTaskFile
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Считать из б/д(поручение) и открыть для просмотра</p>
+
+    <div class='pre p1 fill-light mt0'>GetIDNameTaskFile</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>item</span> <code class='quiet'>(any)</code>
+	    id документа
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='fragmentanyitems'>
+      FragmentAnyItems
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Фрагмент antd элементами для хранение данных (ну или типо того)</p>
+
+    <div class='pre p1 fill-light mt0'>FragmentAnyItems</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>props</span> <code class='quiet'>(any)</code>
+	    
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='fragmentbuttons'>
+      FragmentButtons
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Фрагмент antd с кнопками для форм</p>
+
+    <div class='pre p1 fill-light mt0'>FragmentButtons</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>props</span> <code class='quiet'>(func)</code>
+	    
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>ApproveConfirm</span> <code class='quiet'>(func)</code>
+	    
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>ReturnToSenderConfirm</span> <code class='quiet'>(func)</code>
+	    
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>ReturnStepBackConfirm</span> <code class='quiet'>(func)</code>
+	    
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>RejectConfirm</span> <code class='quiet'>(func)</code>
+	    
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>reasonText</span> <code class='quiet'>(func)</code>
+	    
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>setState</span> <code class='quiet'>(func)</code>
+	    
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>user</span> <code class='quiet'>(func)</code>
+	    
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='fragmentcommentsviewer'>
+      FragmentCommentsViewer
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Фрагмент antd дающую возможность просматривать комментарии к документам</p>
+
+    <div class='pre p1 fill-light mt0'>FragmentCommentsViewer(props: any, HandleCommentOnChange: any, disabled: any, HandleComment: any, commentsList: any, item: any)</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>props</span> <code class='quiet'>(any)</code>
+	    
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>HandleCommentOnChange</span> <code class='quiet'>(any)</code>
+	    
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>disabled</span> <code class='quiet'>(any)</code>
+	    
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>HandleComment</span> <code class='quiet'>(any)</code>
+	    
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>commentsList</span> <code class='quiet'>(any)</code>
+	    
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>item</span> <code class='quiet'>(any)</code>
+	    
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='fragmentfileviewer'>
+      FragmentFileViewer
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Фрагмент antd дающую возможность просматривать файлы</p>
+
+    <div class='pre p1 fill-light mt0'>FragmentFileViewer</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>props</span> <code class='quiet'>(any)</code>
+	    
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>files</span> <code class='quiet'>(any)</code>
+	    Массив из файлов для показа их на форме
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='fragmenttaskfileviewer'>
+      FragmentTaskFileViewer
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Фрагмент antd дающую возможность просматривать файлы(по поручением)</p>
+
+    <div class='pre p1 fill-light mt0'>FragmentTaskFileViewer</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>props</span> <code class='quiet'>(any)</code>
+	    
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>files</span> <code class='quiet'>(any)</code>
+	    Массив из файлов для показа их на форме
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='fragmenttaskandfileviewer'>
+      FragmentTaskAndFileViewer
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Фрагмент antd дающую возможность просматривать файлы(по поручением и обычные файлы из document_tasks)</p>
+
+    <div class='pre p1 fill-light mt0'>FragmentTaskAndFileViewer</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>props</span> <code class='quiet'>(any)</code>
+	    
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>files</span> <code class='quiet'>(any)</code>
+	    Массив из файлов для показа их на форме
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='fragmentfilevieweronclick'>
+      FragmentFileViewerOnClick
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Фрагмент antd дающую возможность просматривать файлы (+ которые добавили по поручению можно добавить в основной документ прикрепив их)</p>
+
+    <div class='pre p1 fill-light mt0'>FragmentFileViewerOnClick</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>props</span> <code class='quiet'>(any)</code>
+	    
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>files</span> <code class='quiet'>(any)</code>
+	    Массив из файлов для показа их на форме
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='callback'>
+      callback
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Для отладки</p>
+
+    <div class='pre p1 fill-light mt0'>callback(key: any)</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>key</span> <code class='quiet'>(any)</code>
+	    
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='fragmentinputarea'>
+      FragmentInputArea
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Фрагмент antd для считывание текста пользователем</p>
+
+    <div class='pre p1 fill-light mt0'>FragmentInputArea</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>props</span> <code class='quiet'>(any)</code>
+	    
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>name</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+	    Имя формы. Будет префиксом идентификатора поля
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>label</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+	    Текст метки
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='formwrap'>
+      FormWrap
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Фрагмент antd обёртка</p>
+
+    <div class='pre p1 fill-light mt0'>FormWrap</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>props</span> <code class='quiet'>(any)</code>
+	    
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>children</span> <code class='quiet'>(any)</code>
+	    Принимает потомка и встраивает в строку
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='formitem'>
+      FormItem
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Фрагмент antd вёрстки для вывода текста</p>
+
+    <div class='pre p1 fill-light mt0'>FormItem</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>Title</span> <code class='quiet'>(any)</code>
+	    Строка с Наименованием
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>Text</span> <code class='quiet'>(any)</code>
+	    Строка с Текстом
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='fragmentreasonsviewer'>
+      FragmentReasonsViewer
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Фрагмент antd для вывода Замечаний по документу</p>
+
+    <div class='pre p1 fill-light mt0'>FragmentReasonsViewer</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>props</span> <code class='quiet'>(any)</code>
+	    
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>disabled</span> <code class='quiet'>(any)</code>
+	    Включен или выключен элемент управления
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>ReasonInputChange</span> <code class='quiet'>(any)</code>
+	    Функция обратного вызова по изменению состояния объекта
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>Reason</span> <code class='quiet'>(any)</code>
+	    Список замечаний
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='fragmentstepviewer'>
+      FragmentStepViewer
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Фрагмент antd дающую возможность просматривать состояние движений документов</p>
+
+    <div class='pre p1 fill-light mt0'>FragmentStepViewer(props: any)</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>props</span> <code class='quiet'>(any)</code>
+	    
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='fragmenttasklist'>
+      FragmentTaskList
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Фрагмент antd для вывода поручений по документам</p>
+
+    <div class='pre p1 fill-light mt0'>FragmentTaskList</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>props</span> <code class='quiet'>(any)</code>
+	    
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>dict</span> <code class='quiet'>(any)</code>
+	    
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>documentTasksList</span> <code class='quiet'>(any)</code>
+	    
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>visibleModalUpdate</span> <code class='quiet'>(any)</code>
+	    
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>DocumentTasks</span> <code class='quiet'>(any)</code>
+	    
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>TasksTitleMenu</span> <code class='quiet'>(any)</code>
+	    
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'><span class="hljs-comment">//Пример использования компонента</span>
+&lt;<span class="hljs-title class_">FragmentTaskList</span>
+dict={dict}
+documentTasksList={props.<span class="hljs-property">documentTasksList</span>}
+visibleModalUpdate={visibleModalUpdate}
+<span class="hljs-title class_">DocumentTasks</span>={<span class="hljs-title class_">DocumentTasks</span>}
+<span class="hljs-title class_">TasksTitleMenu</span>={<span class="hljs-title class_">TasksTitleMenu</span>}
+/&gt;</pre>
+    
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='fragmentuploader'>
+      FragmentUploader
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Фрагмент antd дающую возможность загружать файлы</p>
+
+    <div class='pre p1 fill-light mt0'>FragmentUploader(props: any)</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>props</span> <code class='quiet'>(any)</code>
+	    
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='inivalue'>
+      iniValue
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Деструктаризация (начального значение)</p>
+
+    <div class='pre p1 fill-light mt0'>iniValue</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='inivalue'>
+      iniValue
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Деструктаризация (начального значение)</p>
+
+    <div class='pre p1 fill-light mt0'>iniValue</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='inivalue'>
+      iniValue
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Деструктаризация (начального значение)</p>
+
+    <div class='pre p1 fill-light mt0'>iniValue</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='inivalue'>
+      iniValue
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Деструктаризация (начального значение)</p>
+
+    <div class='pre p1 fill-light mt0'>iniValue</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='inivalue'>
+      iniValue
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Деструктаризация (начального значение)</p>
+
+    <div class='pre p1 fill-light mt0'>iniValue</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='inivalue'>
+      iniValue
+    </h3>
+    
+    
+  </div>
+  
+
+  <p><a href="https://habr.com/ru/all/">Ссылка на статью</a>
+Деструктаризация (начального значение)</p>
+
+    <div class='pre p1 fill-light mt0'>iniValue</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='rerender'>
+      ReRender
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Отобразить новое состояние компонентов после обновление (файлов / по поручению)</p>
+
+    <div class='pre p1 fill-light mt0'>ReRender</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='rerender'>
+      ReRender
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Отобразить новое состояние компонентов после обновление (файлов / по поручению)</p>
+
+    <div class='pre p1 fill-light mt0'>ReRender</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='rerender'>
+      ReRender
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Отобразить новое состояние компонентов после обновление (файлов / по поручению)</p>
+
+    <div class='pre p1 fill-light mt0'>ReRender</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='rerender'>
+      ReRender
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Отобразить новое состояние компонентов после обновление (файлов / по поручению)</p>
+
+    <div class='pre p1 fill-light mt0'>ReRender</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='rerender'>
+      ReRender
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Отобразить новое состояние компонентов после обновление (файлов / по поручению)</p>
+
+    <div class='pre p1 fill-light mt0'>ReRender</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='filetask'>
+      FileTask
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Cтейт для таблиц файлов по поручением</p>
+
+    <div class='pre p1 fill-light mt0'>FileTask</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='filetask'>
+      FileTask
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Cтейт для таблиц файлов по поручением</p>
+
+    <div class='pre p1 fill-light mt0'>FileTask</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='filetask'>
+      FileTask
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Cтейт для таблиц файлов по поручением</p>
+
+    <div class='pre p1 fill-light mt0'>FileTask</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='filetask'>
+      FileTask
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Cтейт для таблиц файлов по поручением</p>
+
+    <div class='pre p1 fill-light mt0'>FileTask</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='filetask'>
+      FileTask
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Cтейт для таблиц файлов по поручением</p>
+
+    <div class='pre p1 fill-light mt0'>FileTask</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='useeffect'>
+      useEffect
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Инициализация стейта для таблиц файлов по поручением</p>
+
+    <div class='pre p1 fill-light mt0'>useEffect</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='useeffect'>
+      useEffect
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Инициализация стейта для таблиц файлов по поручением</p>
+
+    <div class='pre p1 fill-light mt0'>useEffect</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='useeffect'>
+      useEffect
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Инициализация стейта для таблиц файлов по поручением</p>
+
+    <div class='pre p1 fill-light mt0'>useEffect</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='useeffect'>
+      useEffect
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Инициализация стейта для таблиц файлов по поручением</p>
+
+    <div class='pre p1 fill-light mt0'>useEffect</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='useeffect'>
+      useEffect
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Инициализация стейта для таблиц файлов по поручением</p>
+
+    <div class='pre p1 fill-light mt0'>useEffect</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='initask'>
+      iniTask
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Деструктаризация (начального значение)</p>
+
+    <div class='pre p1 fill-light mt0'>iniTask</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='initask'>
+      iniTask
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Деструктаризация (начального значение)</p>
+
+    <div class='pre p1 fill-light mt0'>iniTask</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='initask'>
+      iniTask
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Деструктаризация (начального значение)</p>
+
+    <div class='pre p1 fill-light mt0'>iniTask</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='initask'>
+      iniTask
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Деструктаризация (начального значение)</p>
+
+    <div class='pre p1 fill-light mt0'>iniTask</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='initask'>
+      iniTask
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Деструктаризация (начального значение)</p>
+
+    <div class='pre p1 fill-light mt0'>iniTask</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='update3'>
+      Update3
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Форма 3 Лист согласования на закуп ТРУ для производства продукции</p>
+
+    <div class='pre p1 fill-light mt0'>Update3</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='centerpage'>
+      centerPage
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Сокращение для нахождение центра на странице или в блоке</p>
+
+    <div class='pre p1 fill-light mt0'>new centerPage(widthOrheight: Int, aliase: Int)</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>widthOrheight</span> <code class='quiet'>(Int)</code>
+	    Ожидается что пользователь передаст высоту или ширину
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>aliase</span> <code class='quiet'>(Int)</code>
+	    Ожидается что пользователь передаст смещение относительно высоты или ширины
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='pdfconstruct'>
+      pdfConstruct
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Создание pdf документа из входящих данных html</p>
+
+    <div class='pre p1 fill-light mt0'>new pdfConstruct(reason: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>)</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>reason</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>)</code>
+	    Массив с замечанием по изменению и дополнению документа
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='printreasons'>
+      printReasons
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Печать замечаний в документ возвращает html</p>
+
+    <div class='pre p1 fill-light mt0'>new printReasons(props: any, reason: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>)</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>props</span> <code class='quiet'>(any)</code>
+	    
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>reason</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>)</code>
+	    Массив с замечанием по изменению и дополнению документа
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+      </div>
+    </div>
+  <script src='assets/anchor.js'></script>
+  <script src='assets/split.js'></script>
+  <script src='assets/site.js'></script>
+</body>
+</html>

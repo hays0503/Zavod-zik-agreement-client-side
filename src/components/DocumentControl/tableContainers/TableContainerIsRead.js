@@ -15,7 +15,7 @@ let TableContainer = React.memo(({ GQL, ...props }) => {
             return item.id
         });
     }
-    // const [readTrue,  loading ] = handlerMutation(useMutation(GQL.setIsReadTrue))();
+
 
 
     const [readTrue, { loading , error }] = useMutation(GQL.setIsReadTrue, {
@@ -34,7 +34,6 @@ let TableContainer = React.memo(({ GQL, ...props }) => {
         }));
     }, [props.data]);
 
-    // console.log("props TableContainer", props.data.records[0])
     return (
         <>
             <Table
