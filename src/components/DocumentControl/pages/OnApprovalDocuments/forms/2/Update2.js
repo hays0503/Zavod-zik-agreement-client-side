@@ -29,6 +29,11 @@ import { FragmentTaskAndFileViewer } from "./../../../fragments/FragmentFileView
 //Реализация готовой продукции
 
 const Update2 = React.memo((props) => {
+	/**
+	 * Деструктаризация (начального значение)
+	 */
+	const iniValue = props?.initialValues2?.documents[0];
+
 	const user = useUser();
 	const [state, setState] = useState({
 		log_username: user.username,
@@ -39,9 +44,7 @@ const Update2 = React.memo((props) => {
 		{ positionName: "Тип договора не выбран." },
 	]);
 	const [stepCount, setStepCount] = useState({ step: "0" });
-	const [reasonText, setReasonText] = useState(
-		props?.initialValues2?.documents[0]?.reason
-	);
+	const [reasonText, setReasonText] = useState(iniValue?.reason);
 
 	/**
 	 * Отобразить новое состояние компонентов после обновление (файлов / по поручению)
@@ -49,7 +52,7 @@ const Update2 = React.memo((props) => {
 	const [ReRender, setRerender] = useState(false);
 	useEffect(() => {
 		console.log("Обновилось состояние !");
-		GetIDNameTaskFile(props?.initialValues2?.documents[0]?.id).then((value) => {
+		GetIDNameTaskFile(iniValue?.id).then((value) => {
 			setFileTask(value.result);
 		});
 	}, [ReRender]);
@@ -63,11 +66,9 @@ const Update2 = React.memo((props) => {
 	 */
 	useEffect(() => {
 		if (props.initialValues2) {
-			GetIDNameTaskFile(props?.initialValues2?.documents[0]?.id).then(
-				(value) => {
-					setFileTask(value.result);
-				}
-			);
+			GetIDNameTaskFile(iniValue?.id).then((value) => {
+				setFileTask(value.result);
+			});
 		}
 	}, [props.initialValues2]);
 
@@ -78,47 +79,38 @@ const Update2 = React.memo((props) => {
 	useEffect(() => {
 		if (props.initialValues2) {
 			setState({
-				id: props.initialValues2.documents[0].id,
-				title: props.initialValues2.documents[0].title,
-				position: props.initialValues2.documents[0].position,
-				username: props.initialValues2.documents[0].username,
-				fio: props.initialValues2.documents[0].fio,
-				price: props.initialValues2.documents[0].data_agreement_list[0].price,
-				subject:
-					props.initialValues2.documents[0].data_agreement_list[0].subject,
-				currency_price:
-					props.initialValues2.documents[0].data_agreement_list[0]
-						.currency_price,
+				id: iniValue.id,
+				title: iniValue.title,
+				position: iniValue.position,
+				username: iniValue.username,
+				fio: iniValue.fio,
+				price: iniValue.data_agreement_list[0].price,
+				subject: iniValue.data_agreement_list[0].subject,
+				currency_price: iniValue.data_agreement_list[0].currency_price,
 				executor_name_division:
-					props.initialValues2.documents[0].data_agreement_list[0]
-						.executor_name_division,
+					iniValue.data_agreement_list[0].executor_name_division,
 				sider_signatures_date:
-					props.initialValues2.documents[0].data_agreement_list[0]
-						.sider_signatures_date,
+					iniValue.data_agreement_list[0].sider_signatures_date,
 				received_from_counteragent_date:
-					props.initialValues2.documents[0].data_agreement_list[0]
-						.received_from_counteragent_date,
-				reason: props.initialValues2.documents[0].reason,
-				date_created: props.initialValues2.documents[0].date_created,
-				date_modified: props.initialValues2.documents[0].date_modified,
-				route_id: props.initialValues2.documents[0].route_id.id,
-				status_in_process:
-					props.initialValues2.documents[0].route_id.status_in_process,
-				status_cancelled:
-					props.initialValues2.documents[0].route_id.status_cancelled,
-				status_finished:
-					props.initialValues2.documents[0].route_id.status_finished,
-				status_id: props.initialValues2.documents[0].status_id,
-				route: props.initialValues2.documents[0].route_data,
-				step: props.initialValues2.documents[0].step,
-				comments: props.initialValues2.documents[0].comments,
-				signatures: props.initialValues2.documents[0].signatures,
-				files: props.initialValues2.documents[0].files,
-				document_logs: props.initialValues2.documents[0].document_logs,
+					iniValue.data_agreement_list[0].received_from_counteragent_date,
+				reason: iniValue.reason,
+				date_created: iniValue.date_created,
+				date_modified: iniValue.date_modified,
+				route_id: iniValue.route_id.id,
+				status_in_process: iniValue.route_id.status_in_process,
+				status_cancelled: iniValue.route_id.status_cancelled,
+				status_finished: iniValue.route_id.status_finished,
+				status_id: iniValue.status_id,
+				route: iniValue.route_data,
+				step: iniValue.step,
+				comments: iniValue.comments,
+				signatures: iniValue.signatures,
+				files: iniValue.files,
+				document_logs: iniValue.document_logs,
 				log_username: state.log_username,
 			});
-			setStepCount({ step: props.initialValues2.documents[0].step });
-			setRoutesList(props.initialValues2.documents[0].route_data);
+			setStepCount({ step: iniValue.step });
+			setRoutesList(iniValue.route_data);
 		}
 	}, [props.initialValues2]);
 
@@ -134,8 +126,8 @@ const Update2 = React.memo((props) => {
 						selectedRowKeys={tableProps.selectedRowKeys}
 						update={true}
 						width={750}
-                        setRerender={setRerender}// Стейт функция для обновления
-						ReRender={ReRender}// Стейт переменная для обновления
+						setRerender={setRerender} // Стейт функция для обновления
+						ReRender={ReRender} // Стейт переменная для обновления
 					/>,
 					<TasksAddDialog2
 						visible={visible}
@@ -239,7 +231,7 @@ const Update2 = React.memo((props) => {
 			{/*Фрагмент antd дающую возможность просматривать файлы*/}
 			{props.initialValues2 !== undefined && FileTask !== undefined ? (
 				<FragmentTaskAndFileViewer
-					files={props?.initialValues2?.documents[0]?.files}
+					files={iniValue?.files}
 					files_task={FileTask}
 					userId={user.id}
 				/>
@@ -253,7 +245,7 @@ const Update2 = React.memo((props) => {
 			{/* Фрагмент antd дающую возможность просматривать состояние движений документов */}
 			{props.initialValues2 !== undefined ? (
 				<FragmentStepViewer
-					signatures={props?.initialValues2?.documents[0]?.signatures}
+					signatures={iniValue?.signatures}
 					step={stepCount.step - 1}
 					routesList={routesList}
 				/>

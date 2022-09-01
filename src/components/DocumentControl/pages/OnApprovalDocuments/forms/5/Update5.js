@@ -25,13 +25,16 @@ import { dict, DocumentTasks } from "./gql";
 import { FragmentTaskAndFileViewer } from "./../../../fragments/FragmentFileViewer";
 
 const Update5 = React.memo((props) => {
+	/**
+	 * Деструктаризация (начального значение)
+	 */
+	const iniValue = props?.initialValues5?.documents[0];
+
 	const user = useUser();
 	const stepsDirection = useRef("vertical");
 	const visibleModalUpdate = useState(false);
 	const [visible, setVisible] = useState(false);
-	const [reasonText, setReasonText] = useState(
-		props?.initialValues5?.documents[0]?.reason
-	);
+	const [reasonText, setReasonText] = useState(iniValue?.reason);
 	const [state, setState] = useState({
 		log_username: user.username,
 	});
@@ -46,7 +49,7 @@ const Update5 = React.memo((props) => {
 	const [ReRender, setRerender] = useState(false);
 	useEffect(() => {
 		console.log("Обновилось состояние !");
-		GetIDNameTaskFile(props?.initialValues5?.documents[0]?.id).then((value) => {
+		GetIDNameTaskFile(iniValue?.id).then((value) => {
 			setFileTask(value.result);
 		});
 	}, [ReRender]);
@@ -60,20 +63,16 @@ const Update5 = React.memo((props) => {
 	 */
 	useEffect(() => {
 		if (props.initialValues5) {
-			GetIDNameTaskFile(props?.initialValues5?.documents[0]?.id).then(
-				(value) => {
-					setFileTask(value.result);
-				}
-			);
+			GetIDNameTaskFile(iniValue?.id).then((value) => {
+				setFileTask(value.result);
+			});
 		}
 	}, [props.initialValues5]);
 
 	useEffect(() => {
-		if (props?.initialValues5?.documents[0]?.route_data?.length > 1)
+		if (iniValue?.route_data?.length > 1)
 			stepsDirection.current =
-				props?.initialValues5?.documents[0]?.route_data?.length <= 7
-					? "horizontal"
-					: "vertical";
+				iniValue?.route_data?.length <= 7 ? "horizontal" : "vertical";
 	}, [props]);
 
 	useEffect(() => {
@@ -83,34 +82,31 @@ const Update5 = React.memo((props) => {
 	useEffect(() => {
 		if (props.initialValues5) {
 			setState({
-				id: props.initialValues5.documents[0].id,
-				title: props.initialValues5.documents[0].title,
-				position: props.initialValues5.documents[0].position,
-				username: props.initialValues5.documents[0].username,
-				fio: props.initialValues5.documents[0].fio,
+				id: iniValue.id,
+				title: iniValue.title,
+				position: iniValue.position,
+				username: iniValue.username,
+				fio: iniValue.fio,
 
-				subject: props.initialValues5.documents[0].data_custom[0].subject,
-				remark: props.initialValues5.documents[0].data_custom[0].remark,
+				subject: iniValue.data_custom[0].subject,
+				remark: iniValue.data_custom[0].remark,
 
-				date_created: props.initialValues5.documents[0].date_created,
-				date_modified: props.initialValues5.documents[0].date_modified,
-				route_id: props.initialValues5.documents[0].route_id.id,
-				status_in_process:
-					props.initialValues5.documents[0].route_id.status_in_process,
-				status_cancelled:
-					props.initialValues5.documents[0].route_id.status_cancelled,
-				status_finished:
-					props.initialValues5.documents[0].route_id.status_finished,
-				status_id: props.initialValues5.documents[0].status_id,
-				route: props.initialValues5.documents[0].route_data,
-				step: props.initialValues5.documents[0].step,
-				comments: props.initialValues5.documents[0].comments,
-				signatures: props.initialValues5.documents[0].signatures,
-				files: props.initialValues5.documents[0].files,
+				date_created: iniValue.date_created,
+				date_modified: iniValue.date_modified,
+				route_id: iniValue.route_id.id,
+				status_in_process: iniValue.route_id.status_in_process,
+				status_cancelled: iniValue.route_id.status_cancelled,
+				status_finished: iniValue.route_id.status_finished,
+				status_id: iniValue.status_id,
+				route: iniValue.route_data,
+				step: iniValue.step,
+				comments: iniValue.comments,
+				signatures: iniValue.signatures,
+				files: iniValue.files,
 				log_username: state.log_username,
 			});
-			setStepCount({ step: props.initialValues5.documents[0].step });
-			setRoutesList(props.initialValues5.documents[0].route_data);
+			setStepCount({ step: iniValue.step });
+			setRoutesList(iniValue.route_data);
 		}
 	}, [props.initialValues5]);
 
@@ -191,7 +187,7 @@ const Update5 = React.memo((props) => {
 			{/*Фрагмент antd дающую возможность просматривать файлы*/}
 			{props.initialValues5 !== undefined && FileTask !== undefined ? (
 				<FragmentTaskAndFileViewer
-					files={props?.initialValues5?.documents[0]?.files}
+					files={iniValue?.files}
 					files_task={FileTask}
 					userId={user.id}
 				/>
@@ -205,7 +201,7 @@ const Update5 = React.memo((props) => {
 			{/* Фрагмент antd дающую возможность просматривать состояние движений документов */}
 			{props.initialValues5 !== undefined ? (
 				<FragmentStepViewer
-					signatures={props?.initialValues5?.documents[0]?.signatures}
+					signatures={iniValue?.signatures}
 					stepsDirection={stepsDirection.current}
 					step={stepCount.step - 1}
 					routesList={routesList}

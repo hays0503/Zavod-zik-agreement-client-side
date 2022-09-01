@@ -8,6 +8,10 @@ import {
 import { FormItem, FormWrap } from "./../../../fragments/FragmentItemWrap";
 
 let Update1 = React.memo((props) => {
+	/**
+	 * 	Деструктаризация (начального значение)
+	 */
+	const iniTask = props?.initialValues?.document_tasks[0];
 	/////////////////////////////////////////////////////////
 	let user = useUser();
 	/////////////////////////////////////////////////////////
@@ -31,31 +35,29 @@ let Update1 = React.memo((props) => {
 		if (props.initialValues) {
 			console.log("props.initialValues", props.initialValues);
 			setState({
-				id: iniValue.id,
-				document_id: iniValue.document_id,
-				status: iniValue.status,
-				is_cancelled: iniValue.is_cancelled,
-				note: iniValue.note,
-				deadline: iniValue.deadline,
-				date_created: iniValue.date_created,
-				fio_created: iniValue.fio_created,
-				user_id_created: iniValue.user_id_created,
-				user_id_receiver: iniValue.user_id_receiver,
-				fio_receiver: iniValue.fio_receiver,
-				route_id: iniValue.route_id,
-				document_options: iniValue.document_options,
-				task_files: iniValue.task_files,
-				report: iniValue.report,
-				document_tasks_files: iniValue.document_tasks_files,
+				id: iniTask.id,
+				document_id: iniTask.document_id,
+				status: iniTask.status,
+				is_cancelled: iniTask.is_cancelled,
+				note: iniTask.note,
+				deadline: iniTask.deadline,
+				date_created: iniTask.date_created,
+				fio_created: iniTask.fio_created,
+				user_id_created: iniTask.user_id_created,
+				user_id_receiver: iniTask.user_id_receiver,
+				fio_receiver: iniTask.fio_receiver,
+				route_id: iniTask.route_id,
+				document_options: iniTask.document_options,
+				task_files: iniTask.task_files,
+				report: iniTask.report,
+				document_tasks_files: iniTask.document_tasks_files,
 				log_username: state.log_username,
-				task_statuses: props.initialValues.document_tasks[0].task_statuses,
+				task_statuses: iniTask.task_statuses,
 			});
 		}
 	}, [props.initialValues]);
 	/////////////////////////////////////////////////////////
-	let onFinish = () => {
-		// props.onFinish(state)
-	};
+	let onFinish = () => {};
 	/////////////////////////////////////////////////////////
 	return (
 		<Form form={props.form} name="DocumentsForm" onFinish={onFinish}>

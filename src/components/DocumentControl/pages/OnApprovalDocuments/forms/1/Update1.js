@@ -26,6 +26,11 @@ import { GetIDNameTaskFile } from "./../../../api/CRU_Document";
 import { dict, DocumentTasks } from "./gql";
 
 const Update1 = React.memo((props) => {
+	/**
+	 * Деструктаризация (начального значение)
+	 */
+	const iniValue = props?.initialValues?.documents[0];
+
 	const stepsDirection = useRef("vertical");
 	const user = useUser();
 	const [routesList, setRoutesList] = useState([
@@ -35,9 +40,7 @@ const Update1 = React.memo((props) => {
 	const visibleModalUpdate = useState(false);
 
 	//confirmations
-	const [reasonText, setReasonText] = useState(
-		props?.initialValues?.documents[0]?.reason
-	);
+	const [reasonText, setReasonText] = useState(iniValue?.reason);
 	//Tasks
 	const [visible, setVisible] = useState(false);
 	const [state, setState] = useState({
@@ -50,7 +53,7 @@ const Update1 = React.memo((props) => {
 	const [ReRender, setRerender] = useState(false);
 	useEffect(() => {
 		console.log("Обновилось состояние !");
-		GetIDNameTaskFile(props?.initialValues?.documents[0]?.id).then((value) => {
+		GetIDNameTaskFile(iniValue?.id).then((value) => {
 			setFileTask(value.result);
 		});
 	}, [ReRender]);
@@ -64,20 +67,16 @@ const Update1 = React.memo((props) => {
 	 */
 	useEffect(() => {
 		if (props.initialValues) {
-			GetIDNameTaskFile(props?.initialValues?.documents[0]?.id).then(
-				(value) => {
-					setFileTask(value.result);
-				}
-			);
+			GetIDNameTaskFile(iniValue?.id).then((value) => {
+				setFileTask(value.result);
+			});
 		}
 	}, [props.initialValues]);
 
 	useEffect(() => {
-		if (props?.initialValues?.documents[0]?.route_data?.length > 1)
+		if (iniValue?.route_data?.length > 1)
 			stepsDirection.current =
-				props?.initialValues?.documents[0]?.route_data?.length <= 7
-					? "horizontal"
-					: "vertical";
+				iniValue?.route_data?.length <= 7 ? "horizontal" : "vertical";
 	}, [props]);
 
 	useEffect(() => {
@@ -86,35 +85,32 @@ const Update1 = React.memo((props) => {
 	useEffect(() => {
 		if (props.initialValues) {
 			setState({
-				id: props.initialValues.documents[0].id,
-				title: props.initialValues.documents[0].title,
-				position: props.initialValues.documents[0].position,
-				username: props.initialValues.documents[0].username,
-				fio: props.initialValues.documents[0].fio,
-				price: props.initialValues.documents[0].data_one[0].price,
-				supllier: props.initialValues.documents[0].data_one[0].supllier,
-				subject: props.initialValues.documents[0].data_one[0].subject,
-				date_created: props.initialValues.documents[0].date_created,
-				date_modified: props.initialValues.documents[0].date_modified,
-				route_id: props.initialValues.documents[0].route_id.id,
-				status_in_process:
-					props.initialValues.documents[0].route_id.status_in_process,
-				status_cancelled:
-					props.initialValues.documents[0].route_id.status_cancelled,
-				status_finished:
-					props.initialValues.documents[0].route_id.status_finished,
-				status_id: props.initialValues.documents[0].status_id,
-				reason: props.initialValues.documents[0].reason,
-				route: props.initialValues.documents[0].route_data,
-				step: props.initialValues.documents[0].step,
-				comments: props.initialValues.documents[0].comments,
-				signatures: props.initialValues.documents[0].signatures,
-				files: props.initialValues.documents[0].files,
-				document_logs: props.initialValues.documents[0].document_logs,
+				id: iniValue.id,
+				title: iniValue.title,
+				position: iniValue.position,
+				username: iniValue.username,
+				fio: iniValue.fio,
+				price: iniValue.data_one[0].price,
+				supllier: iniValue.data_one[0].supllier,
+				subject: iniValue.data_one[0].subject,
+				date_created: iniValue.date_created,
+				date_modified: iniValue.date_modified,
+				route_id: iniValue.route_id.id,
+				status_in_process: iniValue.route_id.status_in_process,
+				status_cancelled: iniValue.route_id.status_cancelled,
+				status_finished: iniValue.route_id.status_finished,
+				status_id: iniValue.status_id,
+				reason: iniValue.reason,
+				route: iniValue.route_data,
+				step: iniValue.step,
+				comments: iniValue.comments,
+				signatures: iniValue.signatures,
+				files: iniValue.files,
+				document_logs: iniValue.document_logs,
 				log_username: state.log_username,
 			});
-			setStepCount({ step: props.initialValues.documents[0].step });
-			setRoutesList(props.initialValues.documents[0].route_data);
+			setStepCount({ step: iniValue.step });
+			setRoutesList(iniValue.route_data);
 		}
 	}, [props.initialValues]);
 
@@ -196,7 +192,7 @@ const Update1 = React.memo((props) => {
 			{/*Фрагмент antd дающую возможность просматривать файлы*/}
 			{props.initialValues !== undefined && FileTask !== undefined ? (
 				<FragmentTaskAndFileViewer
-					files={props?.initialValues?.documents[0]?.files}
+					files={iniValue?.files}
 					files_task={FileTask}
 					userId={user.id}
 				/>
@@ -210,7 +206,7 @@ const Update1 = React.memo((props) => {
 			{/* Фрагмент antd дающую возможность просматривать состояние движений документов */}
 			{props.initialValues !== undefined ? (
 				<FragmentStepViewer
-					signatures={props?.initialValues?.documents[0]?.signatures}
+					signatures={iniValue?.signatures}
 					stepsDirection={stepsDirection.current}
 					step={stepCount.step - 1}
 					routesList={routesList}

@@ -8,6 +8,10 @@ import {
 import { FormItem, FormWrap } from "./../../../fragments/FragmentItemWrap";
 
 let Update4 = React.memo((props) => {
+	/**
+	 * Деструктаризация (начального значение)
+	 */
+	const iniTask = props?.initialValues?.document_tasks[0];
 	/////////////////////////////////////////////////////////
 	let user = useUser();
 	/////////////////////////////////////////////////////////
@@ -30,27 +34,24 @@ let Update4 = React.memo((props) => {
 	useEffect(() => {
 		if (props.initialValues) {
 			setState({
-				id: props.initialValues.document_tasks[0].id,
-				document_id: props.initialValues.document_tasks[0].document_id,
-				status: props.initialValues.document_tasks[0].status,
-				is_cancelled: props.initialValues.document_tasks[0].is_cancelled,
-				note: props.initialValues.document_tasks[0].note,
-				deadline: props.initialValues.document_tasks[0].deadline,
-				date_created: props.initialValues.document_tasks[0].date_created,
-				fio_created: props.initialValues.document_tasks[0].fio_created,
-				user_id_created: props.initialValues.document_tasks[0].user_id_created,
-				user_id_receiver:
-					props.initialValues.document_tasks[0].user_id_receiver,
-				fio_receiver: props.initialValues.document_tasks[0].fio_receiver,
-				route_id: props.initialValues.document_tasks[0].route_id,
-				document_options:
-					props.initialValues.document_tasks[0].document_options,
-				task_files: props.initialValues.document_tasks[0].task_files,
-				report: props.initialValues.document_tasks[0].report,
-				document_tasks_files:
-					props.initialValues.document_tasks[0].document_tasks_files,
+				id: iniTask.id,
+				document_id: iniTask.document_id,
+				status: iniTask.status,
+				is_cancelled: iniTask.is_cancelled,
+				note: iniTask.note,
+				deadline: iniTask.deadline,
+				date_created: iniTask.date_created,
+				fio_created: iniTask.fio_created,
+				user_id_created: iniTask.user_id_created,
+				user_id_receiver: iniTask.user_id_receiver,
+				fio_receiver: iniTask.fio_receiver,
+				route_id: iniTask.route_id,
+				document_options: iniTask.document_options,
+				task_files: iniTask.task_files,
+				report: iniTask.report,
+				document_tasks_files: iniTask.document_tasks_files,
 				log_username: state.log_username,
-				task_statuses: props.initialValues.document_tasks[0].task_statuses,
+				task_statuses: iniTask.task_statuses,
 			});
 		}
 	}, [props.initialValues]);

@@ -25,12 +25,15 @@ import { dict, DocumentTasks } from "./gql";
 import { FragmentTaskAndFileViewer } from "./../../../fragments/FragmentFileViewer";
 
 const Update4 = React.memo((props) => {
+	/**
+	 * Деструктаризация (начального значение)
+	 */
+	const iniValue = props?.initialValues4?.documents[0];
+
 	const user = useUser();
 	const visibleModalUpdate = useState(false);
 	const [visible, setVisible] = useState(false);
-	const [reasonText, setReasonText] = useState(
-		props?.initialValues4?.documents[0]?.reason
-	);
+	const [reasonText, setReasonText] = useState(iniValue?.reason);
 	const [routesList, setRoutesList] = useState([
 		{ positionName: "Тип договора не выбран." },
 	]);
@@ -45,7 +48,7 @@ const Update4 = React.memo((props) => {
 	const [ReRender, setRerender] = useState(false);
 	useEffect(() => {
 		console.log("Обновилось состояние !");
-		GetIDNameTaskFile(props?.initialValues4?.documents[0]?.id).then((value) => {
+		GetIDNameTaskFile(iniValue?.id).then((value) => {
 			setFileTask(value.result);
 		});
 	}, [ReRender]);
@@ -59,11 +62,9 @@ const Update4 = React.memo((props) => {
 	 */
 	useEffect(() => {
 		if (props.initialValues4) {
-			GetIDNameTaskFile(props?.initialValues4?.documents[0]?.id).then(
-				(value) => {
-					setFileTask(value.result);
-				}
-			);
+			GetIDNameTaskFile(iniValue?.id).then((value) => {
+				setFileTask(value.result);
+			});
 		}
 	}, [props.initialValues4]);
 
@@ -74,50 +75,38 @@ const Update4 = React.memo((props) => {
 	useEffect(() => {
 		if (props.initialValues4) {
 			setState({
-				id: props.initialValues4.documents[0].id,
-				title: props.initialValues4.documents[0].title,
-				position: props.initialValues4.documents[0].position,
-				username: props.initialValues4.documents[0].username,
-				fio: props.initialValues4.documents[0].fio,
+				id: iniValue.id,
+				title: iniValue.title,
+				position: iniValue.position,
+				username: iniValue.username,
+				fio: iniValue.fio,
 
-				price:
-					props.initialValues4.documents[0]
-						.data_agreement_list_internal_needs[0].price,
-				subject:
-					props.initialValues4.documents[0]
-						.data_agreement_list_internal_needs[0].subject,
-				currency:
-					props.initialValues4.documents[0]
-						.data_agreement_list_internal_needs[0].currency,
+				price: iniValue.data_agreement_list_internal_needs[0].price,
+				subject: iniValue.data_agreement_list_internal_needs[0].subject,
+				currency: iniValue.data_agreement_list_internal_needs[0].currency,
 				executor_name_division:
-					props.initialValues4.documents[0]
-						.data_agreement_list_internal_needs[0].executor_name_division,
+					iniValue.data_agreement_list_internal_needs[0].executor_name_division,
 				executor_phone_number:
-					props.initialValues4.documents[0]
-						.data_agreement_list_internal_needs[0].executor_phone_number,
+					iniValue.data_agreement_list_internal_needs[0].executor_phone_number,
 				counteragent_contacts:
-					props.initialValues4.documents[0]
-						.data_agreement_list_internal_needs[0].counteragent_contacts,
+					iniValue.data_agreement_list_internal_needs[0].counteragent_contacts,
 
-				date_created: props.initialValues4.documents[0].date_created,
-				date_modified: props.initialValues4.documents[0].date_modified,
-				route_id: props.initialValues4.documents[0].route_id.id,
-				status_in_process:
-					props.initialValues4.documents[0].route_id.status_in_process,
-				status_cancelled:
-					props.initialValues4.documents[0].route_id.status_cancelled,
-				status_finished:
-					props.initialValues4.documents[0].route_id.status_finished,
-				status_id: props.initialValues4.documents[0].status_id,
-				route: props.initialValues4.documents[0].route_data,
-				step: props.initialValues4.documents[0].step,
-				comments: props.initialValues4.documents[0].comments,
-				signatures: props.initialValues4.documents[0].signatures,
-				files: props.initialValues4.documents[0].files,
+				date_created: iniValue.date_created,
+				date_modified: iniValue.date_modified,
+				route_id: iniValue.route_id.id,
+				status_in_process: iniValue.route_id.status_in_process,
+				status_cancelled: iniValue.route_id.status_cancelled,
+				status_finished: iniValue.route_id.status_finished,
+				status_id: iniValue.status_id,
+				route: iniValue.route_data,
+				step: iniValue.step,
+				comments: iniValue.comments,
+				signatures: iniValue.signatures,
+				files: iniValue.files,
 				log_username: state.log_username,
 			});
-			setStepCount({ step: props.initialValues4.documents[0].step });
-			setRoutesList(props.initialValues4.documents[0].route_data);
+			setStepCount({ step: iniValue.step });
+			setRoutesList(iniValue.route_data);
 		}
 	}, [props.initialValues4]);
 
@@ -227,7 +216,7 @@ const Update4 = React.memo((props) => {
 			{/*Фрагмент antd дающую возможность просматривать файлы*/}
 			{props.initialValues4 !== undefined && FileTask !== undefined ? (
 				<FragmentTaskAndFileViewer
-					files={props?.initialValues4?.documents[0]?.files}
+					files={iniValue?.files}
 					files_task={FileTask}
 					userId={user.id}
 				/>
@@ -241,7 +230,7 @@ const Update4 = React.memo((props) => {
 			{/* Фрагмент antd дающую возможность просматривать состояние движений документов */}
 			{props.initialValues4 !== undefined ? (
 				<FragmentStepViewer
-					signatures={props?.initialValues4?.documents[0]?.signatures}
+					signatures={iniValue?.signatures}
 					step={stepCount.step - 1}
 					routesList={routesList}
 				/>
