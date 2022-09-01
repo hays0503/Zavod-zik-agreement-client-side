@@ -328,9 +328,8 @@ let RegistrationDocuments = React.memo((props) => {
 
     const { loading, data, refetch } = handlerQuery(documents, 'all')();
     useEffect(() => { refetch() }, [])
-    /**
-    *Возвращает объект с данными для таблицы договоров
-    */
+
+    //Возвращает объект с данными для таблицы договоров
     let list = (data && data[Object.keys(data)[0]] != null) ? data[Object.keys(data)[0]].map((item) => {
         return {
             id: item.id,
@@ -350,15 +349,13 @@ let RegistrationDocuments = React.memo((props) => {
         }
     }) : [];
 
-    /**
-    *Столбцы для таблицы договоров
-    */
+    //Столбцы для таблицы договоров
     let dict = test([
         { title: 'Наименование договора', dataIndex: 'title', width: '214px', type: 'search', tooltip: true, sorter: (a, b) => a.title.localeCompare(b.title), sortDirections: ['ascend', 'descend'] },
         { title: 'Дата и время создания', dataIndex: 'date_created', width: '114px', type: 'search', tooltip: true, sorter: true, sorter: (a, b) => new Date(a.date_created) - new Date(b.date_created) },
         { title: 'Последние изменение', dataIndex: 'date_modified', width: '114px', type: 'search', tooltip: true, sorter: true, sorter: (a, b) => new Date(a.date_modified) - new Date(b.date_modified) },
         { title: 'Тип договора', dataIndex: 'route', width: '114px', type: 'search', tooltip: true, sorter: (a, b) => a.route.localeCompare(b.route), sortDirections: ['ascend', 'descend'] },
-        { title: 'Статус', dataIndex: 'status', width: '80px'},
+        { title: 'Статус', dataIndex: 'status', width: '80px' },
         { title: 'На подписи', dataIndex: 'step_name', width: '114px' },
         { title: 'Этап', dataIndex: 'step_count', width: '55px' },
     ]);
