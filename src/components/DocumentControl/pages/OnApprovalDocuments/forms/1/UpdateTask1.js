@@ -31,25 +31,22 @@ let Update1 = React.memo((props) => {
 		if (props.initialValues) {
 			console.log("props.initialValues", props.initialValues);
 			setState({
-				id: props.initialValues.document_tasks[0].id,
-				document_id: props.initialValues.document_tasks[0].document_id,
-				status: props.initialValues.document_tasks[0].status,
-				is_cancelled: props.initialValues.document_tasks[0].is_cancelled,
-				note: props.initialValues.document_tasks[0].note,
-				deadline: props.initialValues.document_tasks[0].deadline,
-				date_created: props.initialValues.document_tasks[0].date_created,
-				fio_created: props.initialValues.document_tasks[0].fio_created,
-				user_id_created: props.initialValues.document_tasks[0].user_id_created,
-				user_id_receiver:
-					props.initialValues.document_tasks[0].user_id_receiver,
-				fio_receiver: props.initialValues.document_tasks[0].fio_receiver,
-				route_id: props.initialValues.document_tasks[0].route_id,
-				document_options:
-					props.initialValues.document_tasks[0].document_options,
-				task_files: props.initialValues.document_tasks[0].task_files,
-				report: props.initialValues.document_tasks[0].report,
-				document_tasks_files:
-					props.initialValues.document_tasks[0].document_tasks_files,
+				id: iniValue.id,
+				document_id: iniValue.document_id,
+				status: iniValue.status,
+				is_cancelled: iniValue.is_cancelled,
+				note: iniValue.note,
+				deadline: iniValue.deadline,
+				date_created: iniValue.date_created,
+				fio_created: iniValue.fio_created,
+				user_id_created: iniValue.user_id_created,
+				user_id_receiver: iniValue.user_id_receiver,
+				fio_receiver: iniValue.fio_receiver,
+				route_id: iniValue.route_id,
+				document_options: iniValue.document_options,
+				task_files: iniValue.task_files,
+				report: iniValue.report,
+				document_tasks_files: iniValue.document_tasks_files,
 				log_username: state.log_username,
 				task_statuses: props.initialValues.document_tasks[0].task_statuses,
 			});
