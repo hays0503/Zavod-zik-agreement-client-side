@@ -1,25 +1,24 @@
-import { Popconfirm, Button } from "antd";
-import React, { useState } from "react";
+import { Popconfirm, Button } from 'antd'
+import React, { useState } from 'react'
 
-let ApproveConfirm = React.memo(({ reasonText, dataProps, setState, user, ...props }) => {
+const ApproveConfirm = React.memo(({ reasonText, dataProps, setState, user, ...props }) => {
+  const [confirmText, setConfirmText] = useState('Вы уверены что хотите согласовать договор?')
 
-    const [confirmText, setConfirmText] = useState('Вы уверены что хотите согласовать договор?');
-
-    const confirm = () => {
-        if (reasonText != null || reasonText?.length > 0) {
-            setState(prevState => {
-                let old = Object.assign({}, prevState);
-                old.reason = null;
-                old.reason = dataProps.initialValues5.documents[0].reason ? dataProps.initialValues5.documents[0].reason : [];
-                old.reason.push({ text: 'Замечание: ' + reasonText, userId: user.id, userFio: user.fio, userPosition: user.position_names[0], userName: user.username });
-                return old;
-            });
-        };
-        dataProps.handleRouteForward5()
-        dataProps.form5.submit()
+  const confirm = () => {
+    if (reasonText != null || reasonText?.length > 0) {
+      setState(prevState => {
+        const old = Object.assign({}, prevState)
+        old.reason = null
+        old.reason = dataProps.initialValues5.documents[0].reason ? dataProps.initialValues5.documents[0].reason : []
+        old.reason.push({ text: 'Замечание: ' + reasonText, userId: user.id, userFio: user.fio, userPosition: user.position_names[0], userName: user.username })
+        return old
+      })
     };
+    dataProps.handleRouteForward5()
+    dataProps.form5.submit()
+  }
 
-    return (
+  return (
         <Popconfirm
             title={confirmText}
             placement="topLeft"
@@ -31,17 +30,16 @@ let ApproveConfirm = React.memo(({ reasonText, dataProps, setState, user, ...pro
                 disabled={dataProps.disabled}
                 type='primary'
                 onClick={() => {
-                    if (reasonText == null || reasonText.length == 0) {
-                        setConfirmText('Вы уверены что хотите согласовать договор без замечаний?')
-                    }
-                    else {
-                        setConfirmText('Вы уверены что хотите согласовать договор?');
-                    }
+                  if (reasonText == null || reasonText.length == 0) {
+                    setConfirmText('Вы уверены что хотите согласовать договор без замечаний?')
+                  } else {
+                    setConfirmText('Вы уверены что хотите согласовать договор?')
+                  }
                 }}>
                 Согласовать
             </Button>
         </Popconfirm>
-    )
-});
+  )
+})
 
-export default ApproveConfirm;
+export default ApproveConfirm

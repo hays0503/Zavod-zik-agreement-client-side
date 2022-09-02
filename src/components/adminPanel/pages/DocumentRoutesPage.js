@@ -1,34 +1,33 @@
-import { DeleteOutlined, QuestionCircleOutlined, MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
-import { gql, useMutation } from '@apollo/client';
-import { Button, Form, Input, Popconfirm, Transfer, Empty, Space, Checkbox, Row, Col } from 'antd';
-import React, { useEffect, useState, useRef } from 'react';
-import { handlerQuery, handlerMutation, useUser } from '../../../core/functions';
-import ModalInsert from '../../../core/modal/ModalInsert';
-import ModalUpdate from '../../../core/modal/ModalUpdate';
-import IndependentSelect from '../../../core/IndependentSelect';
-import TableContainer from '../../../core/TableContainer';
-import TitleMenu from '../../../core/TitleMenu';
-import test from "../../../core/functions/test";
+import { DeleteOutlined, QuestionCircleOutlined, MinusCircleOutlined, PlusOutlined } from '@ant-design/icons'
+import { gql, useMutation } from '@apollo/client'
+import { Button, Form, Input, Popconfirm, Transfer, Empty, Space, Checkbox, Row, Col } from 'antd'
+import React, { useEffect, useState, useRef } from 'react'
+import { handlerQuery, handlerMutation, useUser } from '../../../core/functions'
+import ModalInsert from '../../../core/modal/ModalInsert'
+import ModalUpdate from '../../../core/modal/ModalUpdate'
+import IndependentSelect from '../../../core/IndependentSelect'
+import TableContainer from '../../../core/TableContainer'
+import TitleMenu from '../../../core/TitleMenu'
+import test from '../../../core/functions/test'
 
+import { ArrowRightOutlined, FormOutlined, CloseSquareOutlined } from '@ant-design/icons' // quick actions panel icon
 
-import { ArrowRightOutlined, FormOutlined, CloseSquareOutlined } from '@ant-design/icons';  //quick actions panel icon
-
-let document_routes = {
-    exemplar: 'document_routes',
-    table: 'document_routes',
-    options: {
-        all: {
-            /*variables: {
+const document_routes = {
+  exemplar: 'document_routes',
+  table: 'document_routes',
+  options: {
+    all: {
+      /* variables: {
                controller_addresses: { global: {ORDER_BY: ['id DESC']}}
-           },*/
-            fetchPolicy: 'cache-only'
-        },
-        one: {
-            fetchPolicy: 'standby'
-        }
+           }, */
+      fetchPolicy: 'cache-only'
     },
-    select: {
-        all: gql`
+    one: {
+      fetchPolicy: 'standby'
+    }
+  },
+  select: {
+    all: gql`
             query document_routes ($document_routes: JSON) {
                 document_routes (document_routes: $document_routes) {
                     id
@@ -40,7 +39,7 @@ let document_routes = {
                 }
             }
         `,
-        one: gql`
+    one: gql`
             query document_routes($document_routes: JSON) {
                 document_routes(document_routes: $document_routes) {
                     id
@@ -52,9 +51,9 @@ let document_routes = {
                 }
             }
         `
-    },
-    subscription: {
-        all: gql`
+  },
+  subscription: {
+    all: gql`
             subscription document_routes ($document_routes: JSON){
                 document_routes (document_routes: $document_routes) {
                     id
@@ -66,40 +65,40 @@ let document_routes = {
                 }
             }
         `
-    },
-    insert: gql`
+  },
+  insert: gql`
         mutation insertDocumentRoute($document_routes: JSON) {
             insertDocumentRoute(document_routes: $document_routes){
                 message
             }
         }
     `,
-    update: gql`
+  update: gql`
         mutation updateDocumentRoute($document_routes: JSON) {
             updateDocumentRoute(document_routes: $document_routes){
                 message
             }
         }
     `,
-    delete: gql`
+  delete: gql`
         mutation deleteDocumentRoute($document_routes: JSON) {
             deleteDocumentRoute(document_routes: $document_routes){
                 message
             }
         }
     `
-};
+}
 
-let document_statuses = {
-    exemplar: 'document_statuses',
-    table: 'document_statuses',
-    options: {
-        all: {
-            fetchPolicy: 'cache-only'
-        }
-    },
-    select: {
-        all: gql`
+const document_statuses = {
+  exemplar: 'document_statuses',
+  table: 'document_statuses',
+  options: {
+    all: {
+      fetchPolicy: 'cache-only'
+    }
+  },
+  select: {
+    all: gql`
             query document_statuses ($document_statuses: JSON) {
                 document_statuses (document_statuses: $document_statuses) {
                     id
@@ -107,9 +106,9 @@ let document_statuses = {
                 }
             }
         `
-    },
-    subscription: {
-        all: gql`
+  },
+  subscription: {
+    all: gql`
             subscription document_statuses ($document_statuses: JSON){
                 document_statuses (document_statuses: $document_statuses) {
                     id
@@ -117,25 +116,25 @@ let document_statuses = {
                 }
             }
         `
-    }
-};
+  }
+}
 
-let positions = {
-    exemplar: 'positions',
-    table: 'positions',
-    options: {
-        all: {
-            /*variables: {
+const positions = {
+  exemplar: 'positions',
+  table: 'positions',
+  options: {
+    all: {
+      /* variables: {
                controller_addresses: { global: {ORDER_BY: ['id DESC']}}
-           },*/
-            fetchPolicy: 'cache-only'
-        },
-        one: {
-            fetchPolicy: 'standby'
-        }
+           }, */
+      fetchPolicy: 'cache-only'
     },
-    select: {
-        all: gql`
+    one: {
+      fetchPolicy: 'standby'
+    }
+  },
+  select: {
+    all: gql`
             query positions ($positions: JSON) {
                 positions (positions: $positions) {
                     id
@@ -143,7 +142,7 @@ let positions = {
                 }
             }
         `,
-        one: gql`
+    one: gql`
             query positions($positions: JSON) {
                 positions(positions: $positions) {
                     id
@@ -151,9 +150,9 @@ let positions = {
                 }
             }
         `
-    },
-    subscription: {
-        all: gql`
+  },
+  subscription: {
+    all: gql`
             subscription positions ($positions: JSON){
                 positions (positions: $positions) {
                     id
@@ -161,31 +160,33 @@ let positions = {
                 }
             }
         `
-    }
+  }
 }
 
-let DocumentRoutesPage = React.memo((props) => {
-	let user = useUser();
-    const visibleModalUpdate = useState(false);
+const DocumentRoutesPage = React.memo((props) => {
+  const user = useUser()
+  const visibleModalUpdate = useState(false)
 
-    const [remove, { loading: loadingRemove }] = handlerMutation(useMutation(document_routes.delete))();
+  const [remove, { loading: loadingRemove }] = handlerMutation(useMutation(document_routes.delete))()
 
-    const { loading, data, refetch } = handlerQuery(document_routes, 'all')();
-    useEffect(() => { refetch() }, []);
-    let list = (data && data[Object.keys(data)[0]] != null) ? data[Object.keys(data)[0]].map((item) => {
-        return {
-            id: item.id,
-            key: item.id,
-            name: item.name
-        }
-    }) : [];
-    let dict = test([
-        { title: 'ID', dataIndex: 'id', width: '15px', type:'search', tooltip: true },
-        { title: 'Название', dataIndex: 'name', width: '150px', type:'search', tooltip: true }
-    ]);
+  const { loading, data, refetch } = handlerQuery(document_routes, 'all')()
+  useEffect(() => { refetch() }, [])
+  const list = (data && data[Object.keys(data)[0]] != null)
+    ? data[Object.keys(data)[0]].map((item) => {
+      return {
+        id: item.id,
+        key: item.id,
+        name: item.name
+      }
+    })
+    : []
+  const dict = test([
+    { title: 'ID', dataIndex: 'id', width: '15px', type: 'search', tooltip: true },
+    { title: 'Название', dataIndex: 'name', width: '150px', type: 'search', tooltip: true }
+  ])
 
-    let titleMenu = (tableProps) => {
-        return (<TitleMenu
+  const titleMenu = (tableProps) => {
+    return (<TitleMenu
             title='Редактирование маршрутов документа'
             buttons={[
                 <ModalInsert title='Добавление маршрута' GQL={document_routes} InsertForm={DocumentRoutesForm} width={750} />,
@@ -193,7 +194,7 @@ let DocumentRoutesPage = React.memo((props) => {
                     GQL={document_routes} UpdateForm={DocumentRoutesForm} update={true} width={750} />,
 				<Popconfirm
                     title="Вы уверены?"
-                    onConfirm={() => { let variables = {}; variables[document_routes.exemplar] = { id: Number(tableProps.selectedRowKeys[0]), log_username: user.username }; remove({ variables }) }}
+                    onConfirm={() => { const variables = {}; variables[document_routes.exemplar] = { id: Number(tableProps.selectedRowKeys[0]), log_username: user.username }; remove({ variables }) }}
                     okText="Да"
                     cancelText="Нет"
                     icon={<QuestionCircleOutlined style={{ color: 'red' }} />}
@@ -204,9 +205,9 @@ let DocumentRoutesPage = React.memo((props) => {
             ]}
             selectedRowKeys={tableProps.selectedRowKeys}
         />)
-    };
+  }
 
-    return (
+  return (
         <>
         <TableContainer
             data={{ dict, records: list }}
@@ -215,39 +216,39 @@ let DocumentRoutesPage = React.memo((props) => {
             visibleModalUpdate={visibleModalUpdate}
             />
         </>
-    )
-});
+  )
+})
 
-let DocumentRoutesForm = React.memo((props) => {
-    let user = useUser();
-    const panelAddButton = useRef();
+const DocumentRoutesForm = React.memo((props) => {
+  const user = useUser()
+  const panelAddButton = useRef()
   const [state, setState] = useState({
-		isuseforreport:false,
-		log_username:user.username
-    });
+    isuseforreport: false,
+    log_username: user.username
+  })
 
-    useEffect(() => { props.form.setFieldsValue(state); console.log('props top',state) }, [state]);
+  useEffect(() => { props.form.setFieldsValue(state); console.log('props top', state) }, [state])
 
-    useEffect(() => {
-        if (props.initialValues) {
-            setState({
-                id: props.initialValues.document_routes[0].id,
-                name: props.initialValues.document_routes[0].name,
-                status_in_process: props.initialValues.document_routes[0].status_in_process,
-                status_cancelled: props.initialValues.document_routes[0].status_cancelled,
-                status_finished: props.initialValues.document_routes[0].status_finished,
-                routes: props.initialValues.document_routes[0].routes,
-			    log_username:state.log_username
-            });
-            //console.log('props.initialValues routes',props.initialValues)
-		}
-    }, [props.initialValues]);
-
-	let onFinish = (values) => {
-        props.onFinish(state)
-        //console.log('-------------------------------------------', values);
+  useEffect(() => {
+    if (props.initialValues) {
+      setState({
+        id: props.initialValues.document_routes[0].id,
+        name: props.initialValues.document_routes[0].name,
+        status_in_process: props.initialValues.document_routes[0].status_in_process,
+        status_cancelled: props.initialValues.document_routes[0].status_cancelled,
+        status_finished: props.initialValues.document_routes[0].status_finished,
+        routes: props.initialValues.document_routes[0].routes,
+			    log_username: state.log_username
+      })
+      // console.log('props.initialValues routes',props.initialValues)
     }
-    return (
+  }, [props.initialValues])
+
+  const onFinish = (values) => {
+    props.onFinish(state)
+    // console.log('-------------------------------------------', values);
+  }
+  return (
         <>
         <Form
             form={props.form}
@@ -256,16 +257,16 @@ let DocumentRoutesForm = React.memo((props) => {
             scrollToFirstError
             autoComplete="off"
 
-            onValuesChange={(changedValues, allValues) => { setState(Object.assign({}, state, { ...allValues, })) }}
+            onValuesChange={(changedValues, allValues) => { setState(Object.assign({}, state, { ...allValues })) }}
         >
             <Form.Item
                 name="name"
                 rules={[
-                    {
-                        required: true,
-                        message: 'Необходимо для заполнения!',
-                        whitespace: true,
-                    },
+                  {
+                    required: true,
+                    message: 'Необходимо для заполнения!',
+                    whitespace: true
+                  }
                 ]}
             >
                 <Input disabled={props.disabled} placeholder="Название маршрута документа" />
@@ -273,11 +274,11 @@ let DocumentRoutesForm = React.memo((props) => {
             <Form.Item
                 name="status_in_process"
                 rules={[
-                    {
-                        required: true,
-                        message: 'Необходимо для заполнения!',
-                        whitespace: true,
-                    },
+                  {
+                    required: true,
+                    message: 'Необходимо для заполнения!',
+                    whitespace: true
+                  }
                 ]}
             >
                 <IndependentSelect disabled={props.disabled} placeholder="Статус в процессе" title="Статус в процессе" query={document_statuses} />
@@ -285,11 +286,11 @@ let DocumentRoutesForm = React.memo((props) => {
             <Form.Item
                 name="status_cancelled"
                 rules={[
-                    {
-                        required: true,
-                        message: 'Необходимо для заполнения!',
-                        whitespace: true,
-                    },
+                  {
+                    required: true,
+                    message: 'Необходимо для заполнения!',
+                    whitespace: true
+                  }
                 ]}
             >
                 <IndependentSelect disabled={props.disabled} placeholder="Статус - отклонён" title="Статус - отклонён" query={document_statuses} />
@@ -297,11 +298,11 @@ let DocumentRoutesForm = React.memo((props) => {
             <Form.Item
                 name="status_finished"
                 rules={[
-                    {
-                        required: true,
-                        message: 'Необходимо для заполнения!',
-                        whitespace: true,
-                    },
+                  {
+                    required: true,
+                    message: 'Необходимо для заполнения!',
+                    whitespace: true
+                  }
                 ]}
             >
                 <IndependentSelect disabled={props.disabled} placeholder="Статус - завершён" title="Статус - завершён" query={document_statuses} />
@@ -319,7 +320,7 @@ let DocumentRoutesForm = React.memo((props) => {
                         {fields.map((field) => (
                             <Space
                                 key={field.key}
-                                style={{ display: "flex", marginBottom: 40 }}
+                                style={{ display: 'flex', marginBottom: 40 }}
                                 align="baseline"
                             >
                                 <Row gutter={20}>
@@ -329,8 +330,8 @@ let DocumentRoutesForm = React.memo((props) => {
                                     <Col span={12}>
                                         <Form.Item
                                             {...field}
-                                            name={[field.name, "positionId"]}
-                                            fieldKey={[field.fieldKey, "positionId"]}
+                                            name={[field.name, 'positionId']}
+                                            fieldKey={[field.fieldKey, 'positionId']}
                                         >
                                             <IndependentSelect
                                                 disabled={props.disabled}
@@ -338,30 +339,30 @@ let DocumentRoutesForm = React.memo((props) => {
                                                 title="Должность"
                                                 query={positions}
                                                 onChange={(value, LabeledValue) => {
-                                                    //console.log('setFieldsValue', fields)
-                                                    setState(prevState => {
-                                                        let old = Object.assign({}, prevState);
-                                                        console.log('field.fieldKey',field.fieldKey)
-                                                        old.routes[field.name].positionName = LabeledValue.children;
-                                                        old.routes[field.name].step = field.name+1;
-                                                        return old
-                                                    })
-                                                    //console.log('setFieldsValue value', value, LabeledValue)
-                                                    //console.log('setFieldsValue state', state)
-                                                    //console.log('setFieldsValue initialValues', props.initialValues)
+                                                  // console.log('setFieldsValue', fields)
+                                                  setState(prevState => {
+                                                    const old = Object.assign({}, prevState)
+                                                    console.log('field.fieldKey', field.fieldKey)
+                                                    old.routes[field.name].positionName = LabeledValue.children
+                                                    old.routes[field.name].step = field.name + 1
+                                                    return old
+                                                  })
+                                                  // console.log('setFieldsValue value', value, LabeledValue)
+                                                  // console.log('setFieldsValue state', state)
+                                                  // console.log('setFieldsValue initialValues', props.initialValues)
                                                 }} />
                                         </Form.Item>
                                         <Form.Item
                                             {...field}
-                                            name={[field.name, "step"]}
-                                            fieldKey={[field.fieldKey, "step"]}
+                                            name={[field.name, 'step']}
+                                            fieldKey={[field.fieldKey, 'step']}
                                             hidden={true}
                                         >
                                         </Form.Item>
                                         <Form.Item
                                             {...field}
-                                            name={[field.name, "positionName"]}
-                                            fieldKey={[field.fieldKey, "positionName"]}
+                                            name={[field.name, 'positionName']}
+                                            fieldKey={[field.fieldKey, 'positionName']}
                                             hidden={true}
                                         >
                                         </Form.Item>
@@ -369,14 +370,14 @@ let DocumentRoutesForm = React.memo((props) => {
                                     <Col span={7}>
                                         <Form.Item
                                             {...field}
-                                            name={[field.name, "returnToCreator"]}
-                                            fieldKey={[field.fieldKey, "returnToCreator"]}
+                                            name={[field.name, 'returnToCreator']}
+                                            fieldKey={[field.fieldKey, 'returnToCreator']}
                                             valuePropName="checked"
                                             rules={[
-                                                {
-                                                    type: 'boolean',
-                                                    required: false,
-                                                },
+                                              {
+                                                type: 'boolean',
+                                                required: false
+                                              }
                                             ]}
                                         >
                                             <Checkbox disabled={props.disabled}>Вернуть к исполнителю</Checkbox>
@@ -385,14 +386,14 @@ let DocumentRoutesForm = React.memo((props) => {
                                     <Col span={5}>
                                         <Form.Item
                                             {...field}
-                                            name={[field.name, "isExecutor"]}
-                                            fieldKey={[field.fieldKey, "isExecutor"]}
+                                            name={[field.name, 'isExecutor']}
+                                            fieldKey={[field.fieldKey, 'isExecutor']}
                                             valuePropName="checked"
                                             rules={[
-                                                {
-                                                    type: 'boolean',
-                                                    required: false,
-                                                },
+                                              {
+                                                type: 'boolean',
+                                                required: false
+                                              }
                                             ]}
                                         >
                                             <Checkbox disabled={props.disabled}>Исполнитель?</Checkbox>
@@ -402,14 +403,14 @@ let DocumentRoutesForm = React.memo((props) => {
                                         <Form.Item
                                             {...field}
                                             label="Выбранные статусы:"
-                                            name={[field.name, "statuses"]}
-                                            fieldKey={[field.fieldKey, "statuses"]}
+                                            name={[field.name, 'statuses']}
+                                            fieldKey={[field.fieldKey, 'statuses']}
                                             rules={[
-                                                {
-                                                    type: 'array',
-                                                    required: false,
-                                                    message: 'Необходимо выбрать хотябы одну!'
-                                                },
+                                              {
+                                                type: 'array',
+                                                required: false,
+                                                message: 'Необходимо выбрать хотябы одну!'
+                                              }
                                             ]}
                                         >
                                             <DocumentStatusesTransfer disabled={props.disabled} />
@@ -419,14 +420,14 @@ let DocumentRoutesForm = React.memo((props) => {
                                         <Form.Item
                                             {...field}
                                             label="Заменяющие лица:"
-                                            name={[field.name, "substitutes"]}
-                                            fieldKey={[field.fieldKey, "substitutes"]}
+                                            name={[field.name, 'substitutes']}
+                                            fieldKey={[field.fieldKey, 'substitutes']}
                                             rules={[
-                                                {
-                                                    type: 'array',
-                                                    required: false,
-                                                    message: 'Необходимо выбрать хотябы одну!'
-                                                },
+                                              {
+                                                type: 'array',
+                                                required: false,
+                                                message: 'Необходимо выбрать хотябы одну!'
+                                              }
                                             ]}
                                         >
                                             <SubstitutesTransfer disabled={props.disabled} />
@@ -463,12 +464,12 @@ let DocumentRoutesForm = React.memo((props) => {
                         onClick={() => { panelAddButton.current.click() }}
                         icon={<ArrowRightOutlined />} />
                     <span style={{ marginRight: '5px' }}>
-                        {props.setViewMode ?
-                            <Button
+                        {props.setViewMode
+                          ? <Button
                                 onClick={() => { props.setViewMode(false) }}
                                 title='Редактировать'
                                 icon={<FormOutlined />} />
-                            : <Popconfirm
+                          : <Popconfirm
                                 title="Вы уверены?"
                                 onConfirm={() => { props.save() }}
                                 okText="Да"
@@ -489,41 +490,39 @@ let DocumentRoutesForm = React.memo((props) => {
                 </Col>
             </Row>
         </>
-    )
-});
+  )
+})
 
+const DocumentStatusesTransfer = React.memo((props) => {
+  const modalFormWidth = 650
 
-let DocumentStatusesTransfer = React.memo((props) => {
+  const { loading, data, refetch } = handlerQuery(document_statuses, 'all')()
+  useEffect(() => { refetch() }, [])
 
-    const modalFormWidth = 650;
+  const [selectedKeys, setSelectedKeys] = useState([])
+  const handleChange = (nextTargetKeys, direction, moveKeys) => {
+    props.onChange(nextTargetKeys)
+  }
 
-    const { loading, data, refetch } = handlerQuery(document_statuses, 'all')();
-    useEffect(() => { refetch() }, []);
+  const handleSelectChange = (sourceSelectedKeys, targetSelectedKeys) => {
+    setSelectedKeys([...sourceSelectedKeys, ...targetSelectedKeys])
+    console.log(selectedKeys)
+  }
 
-    const [selectedKeys, setSelectedKeys] = useState([]);
-    let handleChange = (nextTargetKeys, direction, moveKeys) => {
-        props.onChange(nextTargetKeys);
-    };
+  const filterOption = (inputValue, option) => option.description.indexOf(inputValue) > -1
 
-    let handleSelectChange = (sourceSelectedKeys, targetSelectedKeys) => {
-        setSelectedKeys([...sourceSelectedKeys, ...targetSelectedKeys]);
-        console.log(selectedKeys);
-    };
-
-    let filterOption = (inputValue, option) => option.description.indexOf(inputValue) > -1;
-
-    let mockData = []
-    if (!loading) {
-        mockData = data.document_statuses.map((item) => {
-            return {
-                id: item.id,
-                key: item.id,
-                title: item.name,
-                description: item.name
-            }
-        });
-    }
-    return (
+  let mockData = []
+  if (!loading) {
+    mockData = data.document_statuses.map((item) => {
+      return {
+        id: item.id,
+        key: item.id,
+        title: item.name,
+        description: item.name
+      }
+    })
+  }
+  return (
         <>
             <Transfer
                 dataSource={mockData}
@@ -540,48 +539,47 @@ let DocumentStatusesTransfer = React.memo((props) => {
                 filterOption={filterOption}
 
                 locale={{
-                    itemUnit: "",
-                    itemsUnit: "",
-                    notFoundContent: <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="Нет данных" />,
-                    searchPlaceholder: "Статус"
+                  itemUnit: '',
+                  itemsUnit: '',
+                  notFoundContent: <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="Нет данных" />,
+                  searchPlaceholder: 'Статус'
                 }}
                 disabled={props.disabled}
             />
         </>
-    );
-});
+  )
+})
 
-let SubstitutesTransfer = React.memo((props) => {
+const SubstitutesTransfer = React.memo((props) => {
+  const modalFormWidth = 650
 
-    const modalFormWidth = 650;
+  const { loading, data, refetch } = handlerQuery(positions, 'all')()
+  useEffect(() => { refetch() }, [])
 
-    const { loading, data, refetch } = handlerQuery(positions, 'all')();
-    useEffect(() => { refetch() }, []);
+  const [selectedKeys, setSelectedKeys] = useState([])
+  const handleChange = (nextTargetKeys, direction, moveKeys) => {
+    props.onChange(nextTargetKeys)
+  }
 
-    const [selectedKeys, setSelectedKeys] = useState([]);
-    let handleChange = (nextTargetKeys, direction, moveKeys) => {
-        props.onChange(nextTargetKeys);
-    };
+  const handleSelectChange = (sourceSelectedKeys, targetSelectedKeys) => {
+    setSelectedKeys([...sourceSelectedKeys, ...targetSelectedKeys])
+    console.log(selectedKeys)
+  }
 
-    let handleSelectChange = (sourceSelectedKeys, targetSelectedKeys) => {
-        setSelectedKeys([...sourceSelectedKeys, ...targetSelectedKeys]);
-        console.log(selectedKeys);
-    };
+  const filterOption = (inputValue, option) => option.description.indexOf(inputValue) > -1
 
-    let filterOption = (inputValue, option) => option.description.indexOf(inputValue) > -1;
-
-    let mockData = []
-    if (!loading) {
-        mockData = data.positions.map((item) => {
-            return {
-                id: item.id,
-                key: item.id,
-                title: item.name,
-                description: item.name
-            }
-        });
-    }
-    return (
+  let mockData = []
+  if (!loading) {
+    mockData = data.positions.map((item) => {
+      return {
+        id: item.id,
+        key: item.id,
+        title: item.name,
+        description: item.name
+      }
+    })
+  }
+  return (
         <>
             <Transfer
                 dataSource={mockData}
@@ -598,16 +596,15 @@ let SubstitutesTransfer = React.memo((props) => {
                 filterOption={filterOption}
 
                 locale={{
-                    itemUnit: "",
-                    itemsUnit: "",
-                    notFoundContent: <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="Нет данных" />,
-                    searchPlaceholder: "Позиция"
+                  itemUnit: '',
+                  itemsUnit: '',
+                  notFoundContent: <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="Нет данных" />,
+                  searchPlaceholder: 'Позиция'
                 }}
                 disabled={props.disabled}
             />
         </>
-    );
-});
+  )
+})
 
-
-export default DocumentRoutesPage;
+export default DocumentRoutesPage

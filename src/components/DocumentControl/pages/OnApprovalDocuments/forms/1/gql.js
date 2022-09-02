@@ -1,44 +1,44 @@
-import { gql } from "@apollo/client";
+import { gql } from '@apollo/client'
 export const dict = [
-	{
-		title: "У кого",
-		dataIndex: "fio_receiver",
-		key: "fio_receiver",
-		width: "200px",
-	},
-	{
-		title: "Срок",
-		dataIndex: "deadline",
-		key: "deadline",
-		width: "200px",
-	},
-	{
-		title: "Статус",
-		dataIndex: "task_statuses",
-		key: "task_statuses",
-		width: "150px",
-	},
-	{
-		title: "Задача",
-		dataIndex: "note",
-		key: "note",
-		width: "250px",
-	},
-];
+  {
+    title: 'У кого',
+    dataIndex: 'fio_receiver',
+    key: 'fio_receiver',
+    width: '200px'
+  },
+  {
+    title: 'Срок',
+    dataIndex: 'deadline',
+    key: 'deadline',
+    width: '200px'
+  },
+  {
+    title: 'Статус',
+    dataIndex: 'task_statuses',
+    key: 'task_statuses',
+    width: '150px'
+  },
+  {
+    title: 'Задача',
+    dataIndex: 'note',
+    key: 'note',
+    width: '250px'
+  }
+]
 
-export let DocumentTasks = {
-	exemplar: "document_tasks",
-	table: "document_tasks",
-	options: {
-		all: {
-			fetchPolicy: "standby",
-		},
-		one: {
-			fetchPolicy: "standby",
-		},
-	},
-	select: {
-		all: gql`
+export const DocumentTasks = {
+  exemplar: 'document_tasks',
+  table: 'document_tasks',
+  options: {
+    all: {
+      fetchPolicy: 'standby'
+    },
+    one: {
+      fetchPolicy: 'standby'
+    }
+  },
+  select: {
+    all: gql`
 			query document_tasks($document_tasks: JSON) {
 				document_tasks(document_tasks: $document_tasks) {
 					id
@@ -66,7 +66,7 @@ export let DocumentTasks = {
 				}
 			}
 		`,
-		one: gql`
+    one: gql`
 			query document_tasks($document_tasks: JSON) {
 				document_tasks(document_tasks: $document_tasks) {
 					id
@@ -93,10 +93,10 @@ export let DocumentTasks = {
 					}
 				}
 			}
-		`,
-	},
-	subscription: {
-		all: gql`
+		`
+  },
+  subscription: {
+    all: gql`
 			subscription document_tasks($document_tasks: JSON) {
 				document_tasks(document_tasks: $document_tasks) {
 					id
@@ -112,9 +112,9 @@ export let DocumentTasks = {
 					fio_receiver
 				}
 			}
-		`,
-	},
-	insert: gql`
+		`
+  },
+  insert: gql`
 		mutation insertDocumentTasks($document_tasks: JSON) {
 			insertDocumentTasks(document_tasks: $document_tasks) {
 				type
@@ -122,15 +122,15 @@ export let DocumentTasks = {
 			}
 		}
 	`,
-	setTaskIsReadTrue: gql`
+  setTaskIsReadTrue: gql`
 		mutation setTaskIsReadTrue($task: JSON) {
 			setTaskIsReadTrue(task: $task) {
 				type
 				message
 			}
 		}
-	`,
-};
+	`
+}
 
 export const SET_IS_ADD_TO_DOCUMENT = gql`
 	mutation set_is_add_to_document($ID: Int, $State: Boolean) {
@@ -139,4 +139,4 @@ export const SET_IS_ADD_TO_DOCUMENT = gql`
 			message
 		}
 	}
-`;
+`

@@ -1,35 +1,35 @@
-import { DeleteOutlined, QuestionCircleOutlined, FileImageOutlined } from '@ant-design/icons';
-import { gql, useMutation } from '@apollo/client';
-import { Button, Form, Input, Popconfirm, Typography, Space, Divider, Row, Col, Steps, Radio } from 'antd';
-import React, { useEffect, useState } from 'react';
-import { handlerQuery, handlerMutation, useUser, formatDate } from '../../../core/functions';
-import ModalUpdate from '../modals/ModalUpdate';
-import TableContainer from '../tableContainers/TableContainer';
-import TitleMenu from '../../../core/TitleMenu';
-import test from "../../../core/functions/test";
+import { DeleteOutlined, QuestionCircleOutlined, FileImageOutlined } from '@ant-design/icons'
+import { gql, useMutation } from '@apollo/client'
+import { Button, Form, Input, Popconfirm, Typography, Space, Divider, Row, Col, Steps, Radio } from 'antd'
+import React, { useEffect, useState } from 'react'
+import { handlerQuery, handlerMutation, useUser, formatDate } from '../../../core/functions'
+import ModalUpdate from '../modals/ModalUpdate'
+import TableContainer from '../tableContainers/TableContainer'
+import TitleMenu from '../../../core/TitleMenu'
+import test from '../../../core/functions/test'
 
-const { Title, Link } = Typography;
-const { Step } = Steps;
+const { Title, Link } = Typography
+const { Step } = Steps
 
-let RejectedDocuments = React.memo((props) => {
-    let user = useUser();
-    let positionsVariable = user.positions.toString();
-    console.log('positionsVariable', positionsVariable)
+const RejectedDocuments = React.memo((props) => {
+  const user = useUser()
+  const positionsVariable = user.positions.toString()
+  console.log('positionsVariable', positionsVariable)
 
-    let documents = {
-        exemplar: 'document',
-        table: 'documents',
-        options: {
-            all: {
-                variables: { documents: { global: { positions: positionsVariable, ORDER_BY: ['date_created desc'] } } },
-                fetchPolicy: 'cache-only'
-            },
-            one: {
-                fetchPolicy: 'standby'
-            }
-        },
-        select: {
-            all: gql`
+  const documents = {
+    exemplar: 'document',
+    table: 'documents',
+    options: {
+      all: {
+        variables: { documents: { global: { positions: positionsVariable, ORDER_BY: ['date_created desc'] } } },
+        fetchPolicy: 'cache-only'
+      },
+      one: {
+        fetchPolicy: 'standby'
+      }
+    },
+    select: {
+      all: gql`
         query documents ($documents: JSON) {
             documents(documents:$documents) {
                 id
@@ -78,7 +78,7 @@ let RejectedDocuments = React.memo((props) => {
                 route_data
             }
         }`,
-            one: gql`
+      one: gql`
             query documents ($documents: JSON) {
                 documents(documents:$documents) {
                     id
@@ -141,9 +141,9 @@ let RejectedDocuments = React.memo((props) => {
                 }
             }
         `
-        },
-        subscription: {
-            all: [gql`
+    },
+    subscription: {
+      all: [gql`
         subscription documents ($documents: JSON){
             documents(documents: $documents){
                 id
@@ -173,9 +173,9 @@ let RejectedDocuments = React.memo((props) => {
                 route_data
             }
         }`
-            ]
-        },
-        insert: gql`
+      ]
+    },
+    insert: gql`
        mutation insertDocument($document: JSON) {
         insertDocument(document: $document) {
             type
@@ -183,7 +183,7 @@ let RejectedDocuments = React.memo((props) => {
         }
     }
     `,
-        update: gql`
+    update: gql`
         mutation updateDocument($document: JSON) {
         updateDocument(document: $document) {
             type
@@ -191,7 +191,7 @@ let RejectedDocuments = React.memo((props) => {
         }
     }
     `,
-        delete: gql`
+    delete: gql`
         mutation deleteDocument($document: JSON) {
         deleteDocument(document: $document) {
             type
@@ -199,66 +199,65 @@ let RejectedDocuments = React.memo((props) => {
         }
     }
     `
-    };
+  }
 
-    const visibleModalUpdate = useState(false);
-    const visibleModalUpdate2 = useState(false)
+  const visibleModalUpdate = useState(false)
+  const visibleModalUpdate2 = useState(false)
 
-    const [remove, { loading: loadingRemove }] = handlerMutation(useMutation(documents.delete))();
+  const [remove, { loading: loadingRemove }] = handlerMutation(useMutation(documents.delete))()
 
-    const { loading, data, refetch } = handlerQuery(documents, 'all')();
-    useEffect(() => { refetch() }, []);
+  const { loading, data, refetch } = handlerQuery(documents, 'all')()
+  useEffect(() => { refetch() }, [])
 
-    let list = (data && data[Object.keys(data)[0]] != null) ? data[Object.keys(data)[0]].map((item) => {
-        return {
-            id: item.id,
-            key: item.id,
-            title: item.title,
-            date_created: item.date_created,
-            date_modified: item.date_modified,
-            status_id: item.status_id,
-            status: item.document_statuses?.name ? item.document_statuses.name : 'Без статуса',
-            route_id: item.route_id.id,
-            route: item.route_id?.name ? item.route_id.name : 'Не задан',
-            route_data: item.route_data,
-            route_step: item.route_data ? item.route_data.findIndex(item => item.positionId == positionsVariable) + 1 : [],
-            step: item.step,
-            step_count: item.step + ' из ' + item.route_data?.length,
-            document_logs: item.document_logs[item.document_logs.findIndex(item=>item.user_id==user.id)],
-            //step_name:console.log('DDDDDD',item.step)
-            step_name: item.route_data?.length > 0 ? item.route_data[item.step - 1].positionName : '',
-            //step_name: item.route_id?.routes ? item.route_id.routes[item.route_id.routes.findIndex(item => item.positionId == item.step)].positionName : ''
-        }
-    }) : [];
+  const list = (data && data[Object.keys(data)[0]] != null) ? data[Object.keys(data)[0]].map((item) => {
+    return {
+      id: item.id,
+      key: item.id,
+      title: item.title,
+      date_created: item.date_created,
+      date_modified: item.date_modified,
+      status_id: item.status_id,
+      status: item.document_statuses?.name ? item.document_statuses.name : 'Без статуса',
+      route_id: item.route_id.id,
+      route: item.route_id?.name ? item.route_id.name : 'Не задан',
+      route_data: item.route_data,
+      route_step: item.route_data ? item.route_data.findIndex(item => item.positionId == positionsVariable) + 1 : [],
+      step: item.step,
+      step_count: item.step + ' из ' + item.route_data?.length,
+      document_logs: item.document_logs[item.document_logs.findIndex(item => item.user_id == user.id)],
+      // step_name:console.log('DDDDDD',item.step)
+      step_name: item.route_data?.length > 0 ? item.route_data[item.step - 1].positionName : ''
+      // step_name: item.route_id?.routes ? item.route_id.routes[item.route_id.routes.findIndex(item => item.positionId == item.step)].positionName : ''
+    }
+  }) : []
 
-    //console.log('list2', list2)
+  // console.log('list2', list2)
 
-    let listFiltered = list.filter((el) => {
-        return el.status_id == 2
-    });
+  const listFiltered = list.filter((el) => {
+    return el.status_id == 2
+  })
 
-    //console.log('newArray', newArray)
+  // console.log('newArray', newArray)
 
-    let dict = test([
-        { title: 'Наименование договора', dataIndex: 'title', width: '214px', type: 'search', tooltip: true, sorter: true },
-        { title: 'Дата и время создания', dataIndex: 'date_created', width: '114px', type: 'search', tooltip: true, sorter: true },
-        { title: 'Последние изменение', dataIndex: 'date_modified', width: '114px', type: 'search', tooltip: true, sorter: true },
-        { title: 'Тип договора', dataIndex: 'route', width: '114px', type: 'search', tooltip: true, sorter: true },
-        { title: 'Статус', dataIndex: 'status', width: '80px', tooltip: true, sorter: true },
-        { title: 'На подписи', dataIndex: 'step_name', width: '114px' },
-        { title: 'Этап', dataIndex: 'step_count', width: '55px' },
-        // { title: 'шаг п.', dataIndex: 'route_step', width: '55px' }
-    ]);
+  const dict = test([
+    { title: 'Наименование договора', dataIndex: 'title', width: '214px', type: 'search', tooltip: true, sorter: true },
+    { title: 'Дата и время создания', dataIndex: 'date_created', width: '114px', type: 'search', tooltip: true, sorter: true },
+    { title: 'Последние изменение', dataIndex: 'date_modified', width: '114px', type: 'search', tooltip: true, sorter: true },
+    { title: 'Тип договора', dataIndex: 'route', width: '114px', type: 'search', tooltip: true, sorter: true },
+    { title: 'Статус', dataIndex: 'status', width: '80px', tooltip: true, sorter: true },
+    { title: 'На подписи', dataIndex: 'step_name', width: '114px' },
+    { title: 'Этап', dataIndex: 'step_count', width: '55px' }
+    // { title: 'шаг п.', dataIndex: 'route_step', width: '55px' }
+  ])
 
-
-    let titleMenu = (tableProps) => {
-        return (<TitleMenu
+  const titleMenu = (tableProps) => {
+    return (<TitleMenu
             buttons={[
                 <ModalUpdate visibleModalUpdate={visibleModalUpdate} visibleModalUpdate2={visibleModalUpdate2} title='Редактирование документа' selectedRowKeys={tableProps.selectedRowKeys}
                     GQL={documents} GQL2={documents} UpdateForm={DocumentsFormUpdate} UpdateForm2={DocumentsFormUpdate2} update={true} width={750} />,
                 <Popconfirm
                     title="Вы уверены?"
-                    onConfirm={() => { let variables = {}; variables[documents.exemplar] = { id: Number(tableProps.selectedRowKeys[0]), log_username: user.username }; remove({ variables }) }}
+                    onConfirm={() => { const variables = {}; variables[documents.exemplar] = { id: Number(tableProps.selectedRowKeys[0]), log_username: user.username }; remove({ variables }) }}
                     okText="Да"
                     cancelText="Нет"
                     icon={<QuestionCircleOutlined style={{ color: 'red' }} />}
@@ -269,9 +268,9 @@ let RejectedDocuments = React.memo((props) => {
             ]}
             selectedRowKeys={tableProps.selectedRowKeys}
         />)
-    };
+  }
 
-    return (
+  return (
         <TableContainer
             data={{ dict, records: listFiltered }}
             loading={loading}
@@ -280,98 +279,98 @@ let RejectedDocuments = React.memo((props) => {
             visibleModalUpdate2={visibleModalUpdate2}
             GQL={documents}
         />
-    )
-});
+  )
+})
 
-const price_pattern= /^\d+$/;
+const price_pattern = /^\d+$/
 
-let DocumentsFormUpdate = React.memo((props) => {
-    let user = useUser();
+const DocumentsFormUpdate = React.memo((props) => {
+  const user = useUser()
 
-    const [state, setState] = useState({
-        log_username: user.username,
-    });
+  const [state, setState] = useState({
+    log_username: user.username
+  })
 
-    let OpenDocument = async (item) => {
-        // setBtnLoad(true)
-        console.log("PROPS", item.id)
-        // console.log('RECORD',props.record)
-        const tmp = await fetch('/api/files', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(
-                { item }
-            )
-        })
-        const content = await tmp.json();
-        if (content != undefined) {
-            console.log("RESULT", content)
-        }
+  const OpenDocument = async (item) => {
+    // setBtnLoad(true)
+    console.log('PROPS', item.id)
+    // console.log('RECORD',props.record)
+    const tmp = await fetch('/api/files', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(
+        { item }
+      )
+    })
+    const content = await tmp.json()
+    if (content != undefined) {
+      console.log('RESULT', content)
     }
+  }
 
-    useEffect(() => { props.form.setFieldsValue(state) }, [state]);
-    let [routesList, setRoutesList] = useState([{ positionName: 'Тип договора не выбран.' }])
-    let [stepCount, setStepCount] = useState({ step: '0' })
-    useEffect(() => {
-        if (props.initialValues) {
-            setState({
-                id: props.initialValues.documents[0].id,
-                title: props.initialValues.documents[0].title,
-                position: props.initialValues.documents[0].position,
-                username: props.initialValues.documents[0].username,
-                fio: props.initialValues.documents[0].fio,
-                description: props.initialValues.documents[0].description,
-                price: props.initialValues.documents[0].price,
-                supllier: props.initialValues.documents[0].supllier,
-                subject: props.initialValues.documents[0].subject,
-                date_created: props.initialValues.documents[0].date_created,
-                date_modified: props.initialValues.documents[0].date_modified,
-                route_id: props.initialValues.documents[0].route_id.id,
-                status_in_process: props.initialValues.documents[0].route_id.status_in_process,
-                status_cancelled: props.initialValues.documents[0].route_id.status_cancelled,
-                status_finished: props.initialValues.documents[0].route_id.status_finished,
-                status_id: props.initialValues.documents[0].status_id,
-                route: props.initialValues.documents[0].route_data,
-                step: props.initialValues.documents[0].step,
-                comments: props.initialValues.documents[0].comments,
-                signatures: props.initialValues.documents[0].signatures,
-                files: props.initialValues.documents[0].files,
-                document_logs: props.initialValues.documents[0].document_logs,
-                log_username: state.log_username
-            });
-            console.log('props.initialValues', props.initialValues)
-            setStepCount({ step: props.initialValues.documents[0].step })
-            setRoutesList(props.initialValues.documents[0].route_data)
-        }
-    }, [props.initialValues]);
-
-    let download = async (e) => {
-        let id = e.target.dataset.fileid
-        await fetch("/get-file", {
-            method: "POST",
-            body: JSON.stringify({ id: e.target.dataset.fileid }),
-            headers: {
-                "Content-Type": "application/json"
-            }
-        }).then(response => {
-            return response.json()
-        }).then(response => {
-            let result = response.result
-            let link = document.createElement('a')
-            link.href = result.data_file /*result.data_file.slice(result.data_file.indexOf(',')+1) */
-            link.download = result.filename
-            link.click()
-        })
+  useEffect(() => { props.form.setFieldsValue(state) }, [state])
+  const [routesList, setRoutesList] = useState([{ positionName: 'Тип договора не выбран.' }])
+  const [stepCount, setStepCount] = useState({ step: '0' })
+  useEffect(() => {
+    if (props.initialValues) {
+      setState({
+        id: props.initialValues.documents[0].id,
+        title: props.initialValues.documents[0].title,
+        position: props.initialValues.documents[0].position,
+        username: props.initialValues.documents[0].username,
+        fio: props.initialValues.documents[0].fio,
+        description: props.initialValues.documents[0].description,
+        price: props.initialValues.documents[0].price,
+        supllier: props.initialValues.documents[0].supllier,
+        subject: props.initialValues.documents[0].subject,
+        date_created: props.initialValues.documents[0].date_created,
+        date_modified: props.initialValues.documents[0].date_modified,
+        route_id: props.initialValues.documents[0].route_id.id,
+        status_in_process: props.initialValues.documents[0].route_id.status_in_process,
+        status_cancelled: props.initialValues.documents[0].route_id.status_cancelled,
+        status_finished: props.initialValues.documents[0].route_id.status_finished,
+        status_id: props.initialValues.documents[0].status_id,
+        route: props.initialValues.documents[0].route_data,
+        step: props.initialValues.documents[0].step,
+        comments: props.initialValues.documents[0].comments,
+        signatures: props.initialValues.documents[0].signatures,
+        files: props.initialValues.documents[0].files,
+        document_logs: props.initialValues.documents[0].document_logs,
+        log_username: state.log_username
+      })
+      console.log('props.initialValues', props.initialValues)
+      setStepCount({ step: props.initialValues.documents[0].step })
+      setRoutesList(props.initialValues.documents[0].route_data)
     }
+  }, [props.initialValues])
 
-    let onFinish = (values) => {
-        props.onFinish(state);
-        console.log('+++++++++++++++++++++++', values);
-    }
+  const download = async (e) => {
+    const id = e.target.dataset.fileid
+    await fetch('/get-file', {
+      method: 'POST',
+      body: JSON.stringify({ id: e.target.dataset.fileid }),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then(response => {
+      return response.json()
+    }).then(response => {
+      const result = response.result
+      const link = document.createElement('a')
+      link.href = result.data_file /* result.data_file.slice(result.data_file.indexOf(',')+1) */
+      link.download = result.filename
+      link.click()
+    })
+  }
 
-    return (
+  const onFinish = (values) => {
+    props.onFinish(state)
+    console.log('+++++++++++++++++++++++', values)
+  }
+
+  return (
         <Form
             form={props.form}
             name="DocumentsForm"
@@ -379,7 +378,7 @@ let DocumentsFormUpdate = React.memo((props) => {
             scrollToFirstError
             autoComplete="off"
 
-            onValuesChange={(changedValues, allValues) => { setState(Object.assign({}, state, { ...allValues, })) }}
+            onValuesChange={(changedValues, allValues) => { setState(Object.assign({}, state, { ...allValues })) }}
 
         >
             <Form.Item
@@ -387,10 +386,10 @@ let DocumentsFormUpdate = React.memo((props) => {
                 label='Наименование ТРУ'
                 labelCol={{ span: 24 }}
                 rules={[
-                    {
-                        required: true,
-                        message: 'Необходимо для заполнения!',
-                    },
+                  {
+                    required: true,
+                    message: 'Необходимо для заполнения!'
+                  }
                 ]}
             >
                 <Input disabled={props.disabled} placeholder="Наименование ТРУ" />
@@ -400,10 +399,10 @@ let DocumentsFormUpdate = React.memo((props) => {
                 label='Поставщик ТРУ'
                 labelCol={{ span: 24 }}
                 rules={[
-                    {
-                        required: true,
-                        message: 'Необходимо для заполнения!',
-                    },
+                  {
+                    required: true,
+                    message: 'Необходимо для заполнения!'
+                  }
                 ]}
             >
                 <Input disabled={props.disabled} placeholder="Поставщик ТРУ" />
@@ -413,10 +412,10 @@ let DocumentsFormUpdate = React.memo((props) => {
                 label='"Основание'
                 labelCol={{ span: 24 }}
                 rules={[
-                    {
-                        required: true,
-                        message: 'Необходимо для заполнения!',
-                    },
+                  {
+                    required: true,
+                    message: 'Необходимо для заполнения!'
+                  }
                 ]}
             >
                 <Input disabled={props.disabled} placeholder="Основание" />
@@ -426,14 +425,14 @@ let DocumentsFormUpdate = React.memo((props) => {
                 label='"Общая сумма договора'
                 labelCol={{ span: 24 }}
                 rules={[
-                    {
-                        required: true,
-                        message: 'Необходимо для заполнения!',
-                    },
-                    {
-                        pattern: price_pattern,
-                        message: 'Можно использовать только цифры!',
-                    },
+                  {
+                    required: true,
+                    message: 'Необходимо для заполнения!'
+                  },
+                  {
+                    pattern: price_pattern,
+                    message: 'Можно использовать только цифры!'
+                  }
                 ]}
             >
                 <Input disabled={props.disabled} placeholder="Общая сумма договора" />
@@ -446,8 +445,8 @@ let DocumentsFormUpdate = React.memo((props) => {
                 labelCol={{ span: 24 }}
             >
                 {props?.initialValues?.documents[0].files.map((item) => {
-                    let blolbFile = new Blob([`${item.data_file}`], { type: 'data:application/vnd.openxmlformats-officedocument.wordprocessingml.document' })
-                    return (<>
+                  const blolbFile = new Blob([`${item.data_file}`], { type: 'data:application/vnd.openxmlformats-officedocument.wordprocessingml.document' })
+                  return (<>
                         <div className='document-view-wrap'>
                             <Link><a data-fileid={item.id} onClick={download} >{item.filename} <FileImageOutlined /></a></Link> <br/>
                             {/* <Link><a href={`/uploads/${item.filename}`} data-fileid={item.id} onClick={download} >{item.filename} <FileImageOutlined /></a></Link> <br/> */}
@@ -463,8 +462,8 @@ let DocumentsFormUpdate = React.memo((props) => {
                 label="Подписи"
                 labelCol={{ span: 24 }}
             >
-                {props?.initialValues?.documents[0].signatures.map((item) => {  //remove commentsList
-                    return (<> 
+                {props?.initialValues?.documents[0].signatures.map((item) => { // remove commentsList
+                  return (<>
                         <div className='signature-view-wrap'>
                             <span className='signature-view-position'>
                                 {item.position}
@@ -481,9 +480,9 @@ let DocumentsFormUpdate = React.memo((props) => {
                 <Steps labelPlacement="vertical" size="small" current={stepCount.step - 1} className="steps-form-update">
                     {
                         routesList.map((item) => {
-                            return (
+                          return (
                                 <Step title={item.positionName} />
-                            )
+                          )
                         })
                     }
                 </Steps>
@@ -521,7 +520,7 @@ let DocumentsFormUpdate = React.memo((props) => {
                 <Input.TextArea rows={7} name='comment' onChange={props.HandleCommentOnChange} disabled={props.disabled} />
                 <Button disabled={props.disabled} onClick={props.HandleComment} className="marginTop">Оставить комментарий</Button>
                 {props.commentsList.map((item) => {
-                    return (
+                  return (
                         <div className='comments'>
                             <li className='comment-item'>
                                 <span className='user-position-comment'>{item.position}</span>
@@ -531,7 +530,7 @@ let DocumentsFormUpdate = React.memo((props) => {
                             </li>
                         </div>
 
-                    )
+                  )
                 })}
 
             </Form.Item>
@@ -561,115 +560,115 @@ let DocumentsFormUpdate = React.memo((props) => {
             >
             </Form.Item>
         </Form>
-    )
-});
-let DocumentsFormUpdate2 = React.memo((props) => {
-    let user = useUser();
+  )
+})
+const DocumentsFormUpdate2 = React.memo((props) => {
+  const user = useUser()
 
-    const [state, setState] = useState({
-        log_username: user.username,
-    });
+  const [state, setState] = useState({
+    log_username: user.username
+  })
 
-    let OpenDocument = async (item) => {
-        // setBtnLoad(true)
-        console.log("PROPS", item.id)
-        // console.log('RECORD',props.record)
-        const tmp = await fetch('/api/files', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(
-                { item }
-            )
-        })
-        const content = await tmp.json();
-        if (content != undefined) {
-            console.log("RESULT", content)
-        }
+  const OpenDocument = async (item) => {
+    // setBtnLoad(true)
+    console.log('PROPS', item.id)
+    // console.log('RECORD',props.record)
+    const tmp = await fetch('/api/files', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(
+        { item }
+      )
+    })
+    const content = await tmp.json()
+    if (content != undefined) {
+      console.log('RESULT', content)
     }
+  }
 
-    useEffect(() => { props.form2.setFieldsValue(state) }, [state]);
-    let [routesList, setRoutesList] = useState([{ positionName: 'Тип договора не выбран.' }])
-    let [stepCount, setStepCount] = useState({ step: '0' })
-    console.log("PROPS UPDATE DOC 2",props)
-    useEffect(() => {
-        if (props.initialValues2) {
-            setState({
-                id: props.initialValues2.documents[0].id,
-                title: props.initialValues2.documents[0].title,
-                position: props.initialValues2.documents[0].position,
-                username: props.initialValues2.documents[0].username,
-                fio: props.initialValues2.documents[0].fio,
+  useEffect(() => { props.form2.setFieldsValue(state) }, [state])
+  const [routesList, setRoutesList] = useState([{ positionName: 'Тип договора не выбран.' }])
+  const [stepCount, setStepCount] = useState({ step: '0' })
+  console.log('PROPS UPDATE DOC 2', props)
+  useEffect(() => {
+    if (props.initialValues2) {
+      setState({
+        id: props.initialValues2.documents[0].id,
+        title: props.initialValues2.documents[0].title,
+        position: props.initialValues2.documents[0].position,
+        username: props.initialValues2.documents[0].username,
+        fio: props.initialValues2.documents[0].fio,
 
-                description: props.initialValues2.documents[0].data_agreement_list[0].description,
-                price: props.initialValues2.documents[0].data_agreement_list[0].price,
-                subject: props.initialValues2.documents[0].data_agreement_list[0].subject,
+        description: props.initialValues2.documents[0].data_agreement_list[0].description,
+        price: props.initialValues2.documents[0].data_agreement_list[0].price,
+        subject: props.initialValues2.documents[0].data_agreement_list[0].subject,
 
-                currency_price: props.initialValues2.documents[0].data_agreement_list[0].currency_price,
-                executor_name_division: props.initialValues2.documents[0].data_agreement_list[0].executor_name_division,
-                sider_signatures_date: props.initialValues2.documents[0].data_agreement_list[0].sider_signatures_date,
-                received_from_counteragent_date: props.initialValues2.documents[0].data_agreement_list[0].received_from_counteragent_date,
+        currency_price: props.initialValues2.documents[0].data_agreement_list[0].currency_price,
+        executor_name_division: props.initialValues2.documents[0].data_agreement_list[0].executor_name_division,
+        sider_signatures_date: props.initialValues2.documents[0].data_agreement_list[0].sider_signatures_date,
+        received_from_counteragent_date: props.initialValues2.documents[0].data_agreement_list[0].received_from_counteragent_date,
 
-                date_created: props.initialValues2.documents[0].date_created,
-                date_modified: props.initialValues2.documents[0].date_modified,
-                route_id: props.initialValues2.documents[0].route_id.id,
-                status_in_process: props.initialValues2.documents[0].route_id.status_in_process,
-                status_cancelled: props.initialValues2.documents[0].route_id.status_cancelled,
-                status_finished: props.initialValues2.documents[0].route_id.status_finished,
-                status_id: props.initialValues2.documents[0].status_id,
-                route: props.initialValues2.documents[0].route_data,
-                step: props.initialValues2.documents[0].step,
-                comments: props.initialValues2.documents[0].comments,
-                signatures: props.initialValues2.documents[0].signatures,
-                files: props.initialValues2.documents[0].files,
-                document_logs: props.initialValues2.documents[0].document_logs,
-                log_username: state.log_username
-            });
-            setStepCount({ step: props.initialValues2.documents[0].step })
-            setRoutesList(props.initialValues2.documents[0].route_data)
-        }
-    }, [props.initialValues2]);
-
-    let download = async (e) => {
-        let id = e.target.dataset.fileid
-        await fetch("/get-file", {
-            method: "POST",
-            body: JSON.stringify({ id: e.target.dataset.fileid }),
-            headers: {
-                "Content-Type": "application/json"
-            }
-        }).then(response => {
-            return response.json()
-        }).then(response => {
-            let result = response.result
-            let link = document.createElement('a')
-            link.href = result.data_file /*result.data_file.slice(result.data_file.indexOf(',')+1) */
-            link.download = result.filename
-            link.click()
-        })
+        date_created: props.initialValues2.documents[0].date_created,
+        date_modified: props.initialValues2.documents[0].date_modified,
+        route_id: props.initialValues2.documents[0].route_id.id,
+        status_in_process: props.initialValues2.documents[0].route_id.status_in_process,
+        status_cancelled: props.initialValues2.documents[0].route_id.status_cancelled,
+        status_finished: props.initialValues2.documents[0].route_id.status_finished,
+        status_id: props.initialValues2.documents[0].status_id,
+        route: props.initialValues2.documents[0].route_data,
+        step: props.initialValues2.documents[0].step,
+        comments: props.initialValues2.documents[0].comments,
+        signatures: props.initialValues2.documents[0].signatures,
+        files: props.initialValues2.documents[0].files,
+        document_logs: props.initialValues2.documents[0].document_logs,
+        log_username: state.log_username
+      })
+      setStepCount({ step: props.initialValues2.documents[0].step })
+      setRoutesList(props.initialValues2.documents[0].route_data)
     }
+  }, [props.initialValues2])
 
-    let onFinish = (values) => {
-        props.onFinish(state);
-        console.log('+++++++++++++++++++++++', values);
-    }
+  const download = async (e) => {
+    const id = e.target.dataset.fileid
+    await fetch('/get-file', {
+      method: 'POST',
+      body: JSON.stringify({ id: e.target.dataset.fileid }),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then(response => {
+      return response.json()
+    }).then(response => {
+      const result = response.result
+      const link = document.createElement('a')
+      link.href = result.data_file /* result.data_file.slice(result.data_file.indexOf(',')+1) */
+      link.download = result.filename
+      link.click()
+    })
+  }
 
-    let radioOptions = [
-        {label:'Закупки товаров, работ и услуг', value:'1'},
-        {label:'Поставка продукции (выполнение работ, оказание услуг) заказчикам',value:'2'},
-        {label:'Передача имущества в аренду (бесплатное пользование)',value:'3'},
-        {label:'Совместная деятельность',value:'4'},
-        {label:'Финансирование (кредитование, обеспечение исполнения обязательств)',value:'5'},
-        {label:'Прочие обязательства',value:'6'}
-    ]
-    const[radioState, setRadioState] = useState(props?.initialValues2?.documents[0]?.data_agreement_list[0]?.subject);
+  const onFinish = (values) => {
+    props.onFinish(state)
+    console.log('+++++++++++++++++++++++', values)
+  }
 
-    const RadioOnChange = (radioValue) => {
-        setRadioState(radioValue.target.value);
-    };
+  const radioOptions = [
+    { label: 'Закупки товаров, работ и услуг', value: '1' },
+    { label: 'Поставка продукции (выполнение работ, оказание услуг) заказчикам', value: '2' },
+    { label: 'Передача имущества в аренду (бесплатное пользование)', value: '3' },
+    { label: 'Совместная деятельность', value: '4' },
+    { label: 'Финансирование (кредитование, обеспечение исполнения обязательств)', value: '5' },
+    { label: 'Прочие обязательства', value: '6' }
+  ]
+  const [radioState, setRadioState] = useState(props?.initialValues2?.documents[0]?.data_agreement_list[0]?.subject)
 
-    return (
+  const RadioOnChange = (radioValue) => {
+    setRadioState(radioValue.target.value)
+  }
+
+  return (
         <Form
             form={props.form2}
             name="DocumentsForm"
@@ -677,7 +676,7 @@ let DocumentsFormUpdate2 = React.memo((props) => {
             scrollToFirstError
             autoComplete="off"
 
-            onValuesChange={(changedValues, allValues) => { setState(Object.assign({}, state, { ...allValues, })) }}
+            onValuesChange={(changedValues, allValues) => { setState(Object.assign({}, state, { ...allValues })) }}
 
         >
             <b>От:</b> {props?.initialValues2?.documents[0].fio} <br/>
@@ -691,10 +690,10 @@ let DocumentsFormUpdate2 = React.memo((props) => {
                 labelCol={{ span: 24 }}
                 className='form-input-label'
                 rules={[
-                    {
-                        required: true,
-                        message: 'Необходимо для заполнения!',
-                    },
+                  {
+                    required: true,
+                    message: 'Необходимо для заполнения!'
+                  }
                 ]}
             >
                 <Input disabled={props.disabled} className='form-input' placeholder="Наименование контрагента" />
@@ -705,10 +704,10 @@ let DocumentsFormUpdate2 = React.memo((props) => {
                 labelCol={{ span: 24 }}
                 className='form-input-label'
                 rules={[
-                    {
-                        required: true,
-                        message: 'Необходимо для заполнения!',
-                    },
+                  {
+                    required: true,
+                    message: 'Необходимо для заполнения!'
+                  }
                 ]}
             >
                 <Radio.Group disabled={props.disabled} onChange={RadioOnChange} options={radioOptions} className='form-radio' value={radioState}/>
@@ -719,14 +718,14 @@ let DocumentsFormUpdate2 = React.memo((props) => {
                 labelCol={{ span: 24 }}
                 className='form-input-label'
                 rules={[
-                    {
-                        required: true,
-                        message: 'Необходимо для заполнения!',
-                    },
-                    {
-                        pattern: price_pattern,
-                        message: 'Можно использовать только цифры!',
-                    },
+                  {
+                    required: true,
+                    message: 'Необходимо для заполнения!'
+                  },
+                  {
+                    pattern: price_pattern,
+                    message: 'Можно использовать только цифры!'
+                  }
                 ]}
             >
                 <Input disabled={props.disabled} className='form-input' placeholder="В валюте цены договора" />
@@ -734,13 +733,13 @@ let DocumentsFormUpdate2 = React.memo((props) => {
             <Form.Item
                 name="currency_price"
                 label='Общая сумма договора'
-                labelCol={{span:24}}
+                labelCol={{ span: 24 }}
                 className='form-input-label'
                 rules={[
-                    {
-                        required:true,
-                        message:'Необходимо для заполнения!'
-                    }
+                  {
+                    required: true,
+                    message: 'Необходимо для заполнения!'
+                  }
                 ]}
             >
                 <Input disabled={props.disabled} className='form-input' placeholder="В тенге, по курсу НБ РК" />
@@ -751,10 +750,10 @@ let DocumentsFormUpdate2 = React.memo((props) => {
                 labelCol={{ span: 24 }}
                 className='form-input-label'
                 rules={[
-                    {
-                        required: true,
-                        message: 'Необходимо для заполнения!',
-                    },
+                  {
+                    required: true,
+                    message: 'Необходимо для заполнения!'
+                  }
                 ]}
             >
                 <Input disabled={props.disabled} className='form-input' placeholder="Наименование подразделения, фамилия ответственного исполнителя" />
@@ -765,10 +764,10 @@ let DocumentsFormUpdate2 = React.memo((props) => {
                 labelCol={{ span: 24 }}
                 className='form-input-label'
                 rules={[
-                    {
-                        required: true,
-                        message: 'Необходимо для заполнения!',
-                    },
+                  {
+                    required: true,
+                    message: 'Необходимо для заполнения!'
+                  }
                 ]}
             >
                 <Input disabled={props.disabled} className='form-input' placeholder="Дата, способ получения от контрагента" />
@@ -779,10 +778,10 @@ let DocumentsFormUpdate2 = React.memo((props) => {
                 labelCol={{ span: 24 }}
                 className='form-input-label'
                 rules={[
-                    {
-                        required: true,
-                        message: 'Необходимо для заполнения!',
-                    },
+                  {
+                    required: true,
+                    message: 'Необходимо для заполнения!'
+                  }
                 ]}
             >
                 <Input disabled={props.disabled} className='form-input' placeholder="Дата, способ получения от контрагента" />
@@ -795,8 +794,8 @@ let DocumentsFormUpdate2 = React.memo((props) => {
                 labelCol={{ span: 24 }}
             >
                 {props?.initialValues2?.documents[0].files.map((item) => {
-                    let blolbFile = new Blob([`${item.data_file}`], { type: 'data:application/vnd.openxmlformats-officedocument.wordprocessingml.document' })
-                    return (<>
+                  const blolbFile = new Blob([`${item.data_file}`], { type: 'data:application/vnd.openxmlformats-officedocument.wordprocessingml.document' })
+                  return (<>
                         <div className='document-view-wrap'>
                             <Link><a data-fileid={item.id} onClick={download} >{item.filename} <FileImageOutlined /></a></Link> <br/>
                             {/* <Link><a href={`/uploads/${item.filename}`} data-fileid={item.id} onClick={download} >{item.filename} <FileImageOutlined /></a></Link> <br/> */}
@@ -812,8 +811,8 @@ let DocumentsFormUpdate2 = React.memo((props) => {
                 label="Подписи"
                 labelCol={{ span: 24 }}
             >
-                {props?.initialValues2?.documents[0].signatures.map((item) => {  //remove commentsList
-                    return (<> 
+                {props?.initialValues2?.documents[0].signatures.map((item) => { // remove commentsList
+                  return (<>
                         <div className='signature-view-wrap'>
                             <span className='signature-view-position'>
                                 {item.position}
@@ -830,9 +829,9 @@ let DocumentsFormUpdate2 = React.memo((props) => {
                 <Steps labelPlacement="vertical" size="small" current={stepCount.step - 1} className="steps-form-update">
                     {
                         routesList.map((item) => {
-                            return (
+                          return (
                                 <Step title={item.positionName} />
-                            )
+                          )
                         })
                     }
                 </Steps>
@@ -870,7 +869,7 @@ let DocumentsFormUpdate2 = React.memo((props) => {
                 <Input.TextArea rows={7} name='comment' onChange={props.HandleCommentOnChange} disabled={props.disabled} />
                 <Button disabled={props.disabled} onClick={props.HandleComment} className="marginTop">Оставить комментарий</Button>
                 {props.commentsList.map((item) => {
-                    return (
+                  return (
                         <div className='comments'>
                             <li className='comment-item'>
                                 <span className='user-position-comment'>{item.position}</span>
@@ -880,7 +879,7 @@ let DocumentsFormUpdate2 = React.memo((props) => {
                             </li>
                         </div>
 
-                    )
+                  )
                 })}
 
             </Form.Item>
@@ -910,7 +909,7 @@ let DocumentsFormUpdate2 = React.memo((props) => {
             >
             </Form.Item>
         </Form>
-    )
-});
+  )
+})
 
-export default RejectedDocuments;
+export default RejectedDocuments

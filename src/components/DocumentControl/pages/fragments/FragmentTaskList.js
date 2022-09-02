@@ -1,5 +1,5 @@
-import { Collapse } from "antd";
-import TasksTableContainer from "./../OnApprovalDocuments/tableContainers/TasksTableContainer";
+import { Collapse } from 'antd'
+import TasksTableContainer from './../OnApprovalDocuments/tableContainers/TasksTableContainer'
 
 /**
  * Фрагмент antd для вывода поручений по документам
@@ -19,15 +19,15 @@ import TasksTableContainer from "./../OnApprovalDocuments/tableContainers/TasksT
         />
 */
 export const FragmentTaskList = (props) => {
-	const { dict } = props;
-	return (
+  const { dict } = props
+  return (
 		<>
-			<Collapse defaultActiveKey={["1"]} onChange={callback}>
+			<Collapse defaultActiveKey={['1']} onChange={callback}>
 				<Panel header="Созданные мною поручения по данному договору" key="1">
 					<TasksTableContainer
 						data={{
-							dict,
-							records: props.documentTasksList,
+						  dict,
+						  records: props.documentTasksList
 						}}
 						visibleModalUpdate={props.visibleModalUpdate}
 						GQL={props.DocumentTasks}
@@ -36,12 +36,12 @@ export const FragmentTaskList = (props) => {
 				</Panel>
 			</Collapse>
 		</>
-	);
-};
+  )
+}
 
-const { Panel } = Collapse;
+const { Panel } = Collapse
 
-//collapse
-function callback(key) {
-	// console.log(key);
+// collapse
+function callback (key) {
+  // console.log(key);
 }

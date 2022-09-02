@@ -1,8 +1,8 @@
-import { Form, Steps } from "antd";
-import React from "react";
-import { formatDate } from "../../../../core/functions";
-import { getDiffHours } from "./../../../../core/functions";
-const { Step } = Steps;
+import { Form, Steps } from 'antd'
+import React from 'react'
+import { formatDate, getDiffHours } from '../../../../core/functions'
+
+const { Step } = Steps
 
 /**
  * Фрагмент antd дающую возможность просматривать состояние движений документов
@@ -13,7 +13,7 @@ const { Step } = Steps;
  */
 
 export const FragmentStepViewer = (props) => {
-	return (
+  return (
 		<Form.Item
 			className="font-form-header"
 			name="signatures"
@@ -21,8 +21,8 @@ export const FragmentStepViewer = (props) => {
 			labelCol={{ span: 24 }}
 		>
 			{props?.signatures.map((item) => {
-				//remove commentsList
-				return (
+			  // remove commentsList
+			  return (
 					<>
 						<div className="signature-view-wrap">
 							<span className="signature-view-position">{item.position}</span>
@@ -32,7 +32,7 @@ export const FragmentStepViewer = (props) => {
 							</span>
 						</div>
 					</>
-				);
+			  )
 			})}
 			<Steps
 				labelPlacement="vertical"
@@ -43,14 +43,14 @@ export const FragmentStepViewer = (props) => {
 				className="steps-form-update"
 			>
 				{props?.routesList.map((item) => {
-					return <Step title={item.positionName} />;
+				  return <Step title={item.positionName} />
 				})}
 			</Steps>
 		</Form.Item>
-	);
-};
+  )
+}
 
-FragmentStepViewer.defaultProps = { stepsDirection: "vertical" };
+FragmentStepViewer.defaultProps = { stepsDirection: 'vertical' }
 
 /**
  * Фрагмент antd дающую возможность просматривать состояние движений документов и изменять замещающих
@@ -62,8 +62,8 @@ FragmentStepViewer.defaultProps = { stepsDirection: "vertical" };
  */
 
 export const FragmentStepViewerReplacementDialog = (props) => {
-	const { signatures, setVisible, stepCount, routeData, date_created,step } = props;
-	return (
+  const { signatures, setVisible, stepCount, routeData, date_created, step } = props
+  return (
 		<Form.Item
 			className="font-form-header"
 			name="signatures"
@@ -71,8 +71,8 @@ export const FragmentStepViewerReplacementDialog = (props) => {
 			labelCol={{ span: 24 }}
 		>
 			{signatures.map((item) => {
-				//remove commentsList
-				return (
+			  // remove commentsList
+			  return (
 					<>
 						<div className="signature-view-wrap">
 							<span className="signature-view-position">{item.position}</span>
@@ -82,9 +82,8 @@ export const FragmentStepViewerReplacementDialog = (props) => {
 							</span>
 						</div>
 					</>
-				);
+			  )
 			})}
-
 
 			<Steps
 				labelPlacement="vertical"
@@ -93,45 +92,45 @@ export const FragmentStepViewerReplacementDialog = (props) => {
 				className="steps-form-update"
 			>
 				{routeData.map((item, i) => {
-					return (
+				  return (
 						<>
 							<Step
 								title={item.positionName}
 								onClick={() => {
-									console.log("step click", item);
-									if (step == i + 1) {
-										console.log("setVisible(true);");
-										setVisible(true);
-									}
+								  console.log('step click', item)
+								  if (step == i + 1) {
+								    console.log('setVisible(true);')
+								    setVisible(true)
+								  }
 								}}
 								subTitle={
 									(i == stepCount.step - 1 && signatures?.length > 0) ||
 									stepCount.step == 1
-										? (() => {
-												if (stepCount.step == 1 && i == 0) {
-													let tmpD = getDiffHours(
-														new Date(date_created),
-														new Date()
-													);
-													return tmpD?.toString();
-												}
-												if (i !== 0 && signatures[i - 1]?.date_signature) {
-													let tmpD = getDiffHours(
-														new Date(
-															signatures[signatures.length - 1].date_signature
-														),
-														new Date()
-													);
-													return tmpD?.toString();
-												}
+									  ? (() => {
+									      if (stepCount.step == 1 && i == 0) {
+									        const tmpD = getDiffHours(
+									          new Date(date_created),
+									          new Date()
+									        )
+									        return tmpD?.toString()
+									      }
+									      if (i !== 0 && signatures[i - 1]?.date_signature) {
+									        const tmpD = getDiffHours(
+									          new Date(
+									            signatures[signatures.length - 1].date_signature
+									          ),
+									          new Date()
+									        )
+									        return tmpD?.toString()
+									      }
 										  })()
-										: null
+									  : null
 								}
 							/>
 						</>
-					);
+				  )
 				})}
 			</Steps>
 		</Form.Item>
-	);
-};
+  )
+}

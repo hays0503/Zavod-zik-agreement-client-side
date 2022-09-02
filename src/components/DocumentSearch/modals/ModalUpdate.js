@@ -1,8 +1,8 @@
-import { EyeOutlined } from '@ant-design/icons';
-import { useMutation,useQuery,gql } from '@apollo/client';
-import { Button, Form, Modal, message } from 'antd';
-import React, { useEffect, useState } from 'react';
-import { handlerQuery, handlerMutation, useUser } from '../../../core/functions';
+import { EyeOutlined } from '@ant-design/icons'
+import { useMutation, useQuery, gql } from '@apollo/client'
+import { Button, Form, Modal, message } from 'antd'
+import React, { useEffect, useState } from 'react'
+import { handlerQuery, handlerMutation, useUser } from '../../../core/functions'
 
 const insertComment = gql`
        mutation insertComment($comment: JSON) {
@@ -11,7 +11,7 @@ const insertComment = gql`
             message
         }
     }
-`;
+`
 
 const insertSignature = gql`
        mutation insertSignature($signature: JSON) {
@@ -20,7 +20,7 @@ const insertSignature = gql`
             message
         }
     }
-`;
+`
 
 const deleteSignature = gql`
        mutation deleteSignature($signature: JSON) {
@@ -29,7 +29,7 @@ const deleteSignature = gql`
             message
         }
     }
-`;
+`
 const deleteFile = gql`
         mutation deleteFile($document_files :JSON){
             deleteFile(document_files:$document_files){
@@ -51,379 +51,355 @@ const comments = gql`
                 date
             }
         }
-    `;
+    `
 
+const ModalUpdate = React.memo(({ GQL, GQL2, GQL3, GQL4, GQL5, UpdateForm, UpdateForm2, UpdateForm3, UpdateForm4, UpdateForm5, ...props }) => {
+  const [form] = Form.useForm()
+  const [form2] = Form.useForm()
+  const [form3] = Form.useForm()
+  const [form4] = Form.useForm()
+  const [form5] = Form.useForm()
 
+  const [visible, setVisible] = props.visibleModalUpdate ? props.visibleModalUpdate : []
+  const [visible2, setVisible2] = props.visibleModalUpdate2 ? props.visibleModalUpdate2 : []
+  const [visible3, setVisible3] = props.visibleModalUpdate3 ? props.visibleModalUpdate3 : []
+  const [visible4, setVisible4] = props.visibleModalUpdate4 ? props.visibleModalUpdate4 : []
+  const [visible5, setVisible5] = props.visibleModalUpdate5 ? props.visibleModalUpdate5 : []
+  const [viewMode, setViewMode] = useState(true)
 
-let ModalUpdate = React.memo(({ GQL, GQL2, GQL3, GQL4, GQL5, UpdateForm, UpdateForm2, UpdateForm3, UpdateForm4, UpdateForm5, ...props }) => {
+  const user = useUser()
 
-    const [form] = Form.useForm();
-    const [form2] = Form.useForm();
-    const [form3] = Form.useForm();
-    const [form4] = Form.useForm();
-    const [form5] = Form.useForm();
+  // -------modal handling
+  const modalCancelHandler = () => {
+    setVisible(false); setVisible2(false); setVisible3(false); setVisible4(false); setVisible5(false)
+    setViewMode(true)
+  }
 
-    const [visible, setVisible] = props.visibleModalUpdate ? props.visibleModalUpdate:[];
-    const [visible2, setVisible2] = props.visibleModalUpdate2 ? props.visibleModalUpdate2:[];
-    const [visible3, setVisible3] = props.visibleModalUpdate3 ? props.visibleModalUpdate3:[];
-    const [visible4, setVisible4] = props.visibleModalUpdate4 ? props.visibleModalUpdate4:[];
-    const [visible5, setVisible5] = props.visibleModalUpdate5 ? props.visibleModalUpdate5:[];
-    const [viewMode, setViewMode] = useState(true);
+  const modalEnableEditHandler = () => {
+    setViewMode(false)
+  }
 
-    const user = useUser();
+  const { confirm } = Modal
+  function showSendConfirm () {
+    confirm({
+      title: 'Вы действительно хотите отправить документ?',
+      content: 'test',
+      okText: 'Отправить',
+      cancelText: 'Отмена',
+      onOk () { },
+      onCancel () { }
+    })
+  }
 
-    //-------modal handling
-    let modalCancelHandler = () => {
-        setVisible(false); setVisible2(false); setVisible3(false); setVisible4(false); setVisible5(false)
-        setViewMode(true)
+  // ---------------------------------------------------------------------------data view handling
+  const variables1 = {}; variables1[GQL.table] = GQL.table ? { global: { id: `= ${props.selectedRowKeys[0]}` } } : {}
+  const variables2 = {}; variables2[GQL2.table] = GQL2.table ? { global: { id: `= ${props.selectedRowKeys[0]}` } } : {}
+  const variables3 = {}; variables3[GQL3?.table ? GQL3.table : {}] = { global: { id: `= ${props.selectedRowKeys[0]}` } }
+  const variables4 = {}; variables4[GQL4?.table ? GQL4.table : {}] = { global: { id: `= ${props.selectedRowKeys[0]}` } }
+  const variables5 = {}; variables5[GQL5?.table ? GQL5.table : {}] = { global: { id: `= ${props.selectedRowKeys[0]}` } }
+
+  const { loading: loadingOne, data, refetch } = handlerQuery(GQL, 'one', { variables1 })()
+  const { loading: loadingTwo, data: data2, refetch: refetch2 } = handlerQuery(GQL2, 'one', { variables2 })()
+  const { loading: loadingThree, data: data3, refetch: refetch3 } = handlerQuery(GQL3, 'one', { variables3 })()
+  const { loading: loadingFour, data: data4, refetch: refetch4 } = handlerQuery(GQL4, 'one', { variables4 })()
+  const { loading: loadingFive, data: data5, refetch: refetch5 } = handlerQuery(GQL5, 'one', { variables5 })()
+
+  useEffect(() => { if (data) { form.resetFields() } }, [data])
+  useEffect(() => { if (data2) { form2.resetFields() } }, [data2])
+  useEffect(() => { if (data3) { form3.resetFields() } }, [data3])
+  useEffect(() => { if (data4) { form4.resetFields() } }, [data4])
+  useEffect(() => { if (data5) { form5.resetFields() } }, [data5])
+
+  useEffect(() => { if (visible) { refetch(variables1) }; }, [visible])
+  useEffect(() => { if (visible2) { refetch2(variables2) } }, [visible2])
+  useEffect(() => { if (visible3) { refetch3(variables3) } }, [visible3])
+  useEffect(() => { if (visible4) { refetch4(variables4) } }, [visible4])
+  useEffect(() => { if (visible5) { refetch5(variables5) } }, [visible5])
+  // -----------------------------------------------------------------------------------------------------
+
+  // -------------mutations
+  const [update, { loading: loadingUpdate }] = handlerMutation(useMutation(GQL.update), () => { setVisible(false); setVisible2(false); setVisible3(false); setVisible4(false); setVisible5(false); setViewMode(true) })()
+
+  // ---------comments
+  const [commentText, setCommentText] = useState()
+  const commentVariables = props?.selectedRowKeys[0] ? { variables: { document_comments: { global: { document_id: `= ${props.selectedRowKeys[0]}`, ORDER_BY: ['date'] } } } } : {}
+  const { loading: loadingComments, data: dataComments, refetch: refetchComments } = useQuery(comments, commentVariables)
+  useEffect(() => { if (visible) { refetchComments(commentVariables) } }, [visible])
+  const commentsList = (dataComments && dataComments[Object.keys(dataComments)[0]] != null)
+    ? dataComments[Object.keys(dataComments)[0]].map((item) => {
+      return {
+        id: item.id,
+        key: item.id,
+        comment: item.comment ? item.comment : '',
+        position: item.position ? item.position : '',
+        document_id: item.document_id ? item.document_id : '',
+        user_id: item.user_id ? item.user_id : '',
+        username: item.username,
+        fio: item.fio,
+        date: item.date ? item.date : ''
+      }
+    })
+    : []
+  // console.log('commentsdata', dataComments)
+
+  const [dataComment, { loading: loadingMutation, error: errorMutation }] = useMutation(insertComment, {
+    onCompleted: (data) => console.log('Data from mutation', data),
+    onError: (error) => console.error('Error creating a post', error)
+  })
+  const handleComment = (form) => {
+    dataComment({ variables: { comment: { user_id: user.id, username: user.username, fio: user.fio, document_id: props.selectedRowKeys[0], position: user.position_names[0], comment: commentText } } })
+    refetchComments(commentVariables)
+    form.resetFields(['comments'])
+  }
+  const HandleCommentOnChange = (all, change) => {
+    if (all.target.value.length > 0) {
+      setCommentText(all.target.value)
     }
+  }
 
-    let modalEnableEditHandler = () => {
-        setViewMode(false);
+  // ----------signatures
+  const [step, setStep] = useState()
+  const [status, setStatus] = useState()
+  const [routeData, setRouteData] = useState()
+  const [dataSignature, { loading: loadingSignature, error: errorSignature }] = useMutation(insertSignature, {
+    onCompleted: (data) => console.log('Data from mutation', data),
+    onError: (error) => console.error('Error creating a post', error)
+  })
+  const [dataSignatureDelete, { loading: loadingSignatureDelete, error: errorSignatureDelete }] = useMutation(deleteSignature, {
+    onCompleted: (data) => console.log('Data from mutation', data),
+    onError: (error) => console.error('Error creating a post', error)
+  })
+
+  // --------------------------------------------approve processes
+  const handleRouteForward = () => {
+    const routeFinishIndex = data.documents[0].route_data.length
+    let routeCurrentIndex = data.documents[0].step
+
+    // SEARCH POSITION ID
+    setRouteData(data.documents[0].route_data.filter((el) => { return el.step == routeCurrentIndex + 1 }))
+    if (routeCurrentIndex < routeFinishIndex) {
+      setStep(routeCurrentIndex + 1)
+      if (status != 5) setStatus(5)
+      const signatureFilter = data.documents[0].signatures.filter(e => e.document_id == data.documents[0].id && e.user_id == user.id)
+      if (signatureFilter.filter(e => e.user_id == user.id).length == 0) {
+        dataSignature({ variables: { signature: { user_id: user.id, username: user.username, position: user.position_names[0], fio: user.fio, document_id: props.selectedRowKeys[0] } } })
+      }
+    } else if (routeCurrentIndex = routeFinishIndex) {
+      setStep(routeCurrentIndex)
+      setStatus(4)
+      const signatureFilter = data.documents[0].signatures.filter(e => e.document_id == data.documents[0].id && e.user_id == user.id)
+      if (signatureFilter.filter(e => e.user_id == user.id).length == 0) {
+        dataSignature({ variables: { signature: { user_id: user.id, username: user.username, position: user.position_names[0], fio: user.fio, document_id: props.selectedRowKeys[0] } } })
+      }
     }
+  }
+  const handleRouteForward2 = () => {
+    const routeFinishIndex = data2.documents[0].route_data.length
+    let routeCurrentIndex = data2.documents[0].step
 
-    const { confirm } = Modal;
-    function showSendConfirm() {
-        confirm({
-            title: 'Вы действительно хотите отправить документ?',
-            content: `test`,
-            okText: 'Отправить',
-            cancelText: 'Отмена',
-            onOk() { },
-            onCancel() { },
-        });
+    setRouteData(data2.documents[0].route_data.filter((el) => { return el.step == routeCurrentIndex + 1 }))
+    if (routeCurrentIndex < routeFinishIndex) {
+      setStep(routeCurrentIndex + 1)
+      if (status != 5) setStatus(5)
+      const signatureFilter = data2.documents[0].signatures.filter(e => e.document_id == data2.documents[0].id && e.user_id == user.id)
+      if (signatureFilter.filter(e => e.user_id == user.id).length == 0) {
+        dataSignature({ variables: { signature: { user_id: user.id, username: user.username, position: user.position_names[0], fio: user.fio, document_id: props.selectedRowKeys[0] } } })
+      }
+    } else if (routeCurrentIndex = routeFinishIndex) {
+      setStep(routeCurrentIndex)
+      setStatus(4)
+      const signatureFilter = data2.documents[0].signatures.filter(e => e.document_id == data2.documents[0].id && e.user_id == user.id)
+      if (signatureFilter.filter(e => e.user_id == user.id).length == 0) {
+        dataSignature({ variables: { signature: { user_id: user.id, username: user.username, position: user.position_names[0], fio: user.fio, document_id: props.selectedRowKeys[0] } } })
+      }
     }
+  }
+  const handleRouteForward3 = () => {
+    const routeFinishIndex = data3.documents[0].route_data.length
+    let routeCurrentIndex = data3.documents[0].step
 
-    //---------------------------------------------------------------------------data view handling
-    let variables1 = {}; variables1[GQL.table] = GQL.table ?{ global: { id: `= ${props.selectedRowKeys[0]}` } } : {};
-    let variables2 = {}; variables2[GQL2.table] = GQL2.table ? { global: { id: `= ${props.selectedRowKeys[0]}` } } : {};
-    let variables3 = {}; variables3[GQL3?.table ? GQL3.table : {}] = { global: { id: `= ${props.selectedRowKeys[0]}` } };
-    let variables4 = {}; variables4[GQL4?.table ? GQL4.table : {}] = { global: { id: `= ${props.selectedRowKeys[0]}` } };
-    let variables5 = {}; variables5[GQL5?.table ? GQL5.table : {}] = { global: { id: `= ${props.selectedRowKeys[0]}` } };
-
-    const { loading: loadingOne, data, refetch } = handlerQuery(GQL, 'one', { variables1 })();
-    const { loading: loadingTwo, data: data2, refetch: refetch2 } = handlerQuery(GQL2, 'one', { variables2 })();
-    const { loading: loadingThree, data: data3, refetch: refetch3 } = handlerQuery(GQL3, 'one', { variables3 })();
-    const { loading: loadingFour, data: data4, refetch: refetch4 } = handlerQuery(GQL4, 'one', { variables4 })();
-    const { loading: loadingFive, data: data5, refetch: refetch5 } = handlerQuery(GQL5, 'one', { variables5 })();
-
-    useEffect(() => {if (data) {form.resetFields() } }, [data]);
-    useEffect(() => {if (data2) {form2.resetFields() } }, [data2]);
-    useEffect(() => {if (data3) {form3.resetFields() } }, [data3]);
-    useEffect(() => {if (data4) {form4.resetFields() } }, [data4]);
-    useEffect(() => {if (data5) {form5.resetFields() } }, [data5]);
-
-    useEffect(() => { if (visible) { refetch(variables1) }; }, [visible]);
-    useEffect(() => { if (visible2) { refetch2(variables2); } }, [visible2]);
-    useEffect(() => { if (visible3) { refetch3(variables3); } }, [visible3]);
-    useEffect(() => { if (visible4) { refetch4(variables4); } }, [visible4]);
-    useEffect(() => { if (visible5) { refetch5(variables5); } }, [visible5]);
-    //-----------------------------------------------------------------------------------------------------
-
-    //-------------mutations
-    const [update, { loading: loadingUpdate }] = handlerMutation(useMutation(GQL.update), () => { setVisible(false); setVisible2(false); setVisible3(false); setVisible4(false); setVisible5(false); setViewMode(true); })();
-
-    //---------comments
-    const [commentText, setCommentText] = useState();
-    let commentVariables = props?.selectedRowKeys[0] ? { variables: { document_comments: { global: { document_id: `= ${props.selectedRowKeys[0]}`, ORDER_BY: ['date'] } } } } : {};
-    const { loading: loadingComments, data: dataComments, refetch: refetchComments } = useQuery(comments, commentVariables);
-    useEffect(() => { if (visible) { refetchComments(commentVariables) } }, [visible]);
-    let commentsList = (dataComments && dataComments[Object.keys(dataComments)[0]] != null) ? dataComments[Object.keys(dataComments)[0]].map((item) => {
-        return {
-            id: item.id,
-            key: item.id,
-            comment: item.comment ? item.comment : '',
-            position: item.position ? item.position: '',
-            document_id: item.document_id ? item.document_id : '',
-            user_id: item.user_id ? item.user_id : '',
-            username: item.username,
-            fio: item.fio,
-            date: item.date ? item.date : ''
-        }
-    }) : [];
-    //console.log('commentsdata', dataComments)
-
-    const [dataComment, { loading: loadingMutation, error: errorMutation }] = useMutation(insertComment, {
-        onCompleted: (data) => console.log("Data from mutation", data),
-        onError: (error) => console.error("Error creating a post", error)
-    });
-    let handleComment = (form) => {
-        dataComment({ variables: { comment: { user_id: user.id, username: user.username, fio: user.fio, document_id: props.selectedRowKeys[0], position: user.position_names[0], comment: commentText } } });
-        refetchComments(commentVariables);
-        form.resetFields(["comments"]);
-    };
-    let HandleCommentOnChange = (all, change) => {
-        if (all.target.value.length > 0) {
-            setCommentText(all.target.value)
-        }
+    setRouteData(data3.documents[0].route_data.filter((el) => { return el.step == routeCurrentIndex + 1 }))
+    if (routeCurrentIndex < routeFinishIndex) {
+      setStep(routeCurrentIndex + 1)
+      if (status != 5) setStatus(5)
+      const signatureFilter = data3.documents[0].signatures.filter(e => e.document_id == data3.documents[0].id && e.user_id == user.id)
+      if (signatureFilter.filter(e => e.user_id == user.id).length == 0) {
+        dataSignature({ variables: { signature: { user_id: user.id, username: user.username, position: user.position_names[0], fio: user.fio, document_id: props.selectedRowKeys[0] } } })
+      }
+    } else if (routeCurrentIndex = routeFinishIndex) {
+      setStep(routeCurrentIndex)
+      setStatus(4)
+      const signatureFilter = data3.documents[0].signatures.filter(e => e.document_id == data3.documents[0].id && e.user_id == user.id)
+      if (signatureFilter.filter(e => e.user_id == user.id).length == 0) {
+        dataSignature({ variables: { signature: { user_id: user.id, username: user.username, position: user.position_names[0], fio: user.fio, document_id: props.selectedRowKeys[0] } } })
+      }
     }
+  }
+  const handleRouteForward4 = () => {
+    const routeFinishIndex = data4.documents[0].route_data.length
+    let routeCurrentIndex = data4.documents[0].step
 
-    //----------signatures
-    const [step, setStep] = useState();
-    const [status, setStatus] = useState();
-    const [routeData, setRouteData] = useState();
-    const [dataSignature, { loading: loadingSignature, error: errorSignature }] = useMutation(insertSignature, {
-        onCompleted: (data) => console.log("Data from mutation", data),
-        onError: (error) => console.error("Error creating a post", error)
-    });
-    const [dataSignatureDelete, { loading: loadingSignatureDelete, error: errorSignatureDelete }] = useMutation(deleteSignature, {
-        onCompleted: (data) => console.log("Data from mutation", data),
-        onError: (error) => console.error("Error creating a post", error)
-    });
-
-    //--------------------------------------------approve processes
-    let handleRouteForward = () => {
-
-        let routeFinishIndex = data.documents[0].route_data.length;
-        let routeCurrentIndex = data.documents[0].step;
-
-        // SEARCH POSITION ID
-        setRouteData(data.documents[0].route_data.filter((el) => { return el.step == routeCurrentIndex + 1 }))
-        if (routeCurrentIndex < routeFinishIndex) {
-            setStep(routeCurrentIndex + 1);
-            if (status != 5) setStatus(5);
-            const signatureFilter = data.documents[0].signatures.filter(e => e.document_id == data.documents[0].id && e.user_id == user.id);
-            if (signatureFilter.filter(e => e.user_id == user.id).length == 0) {
-                dataSignature({ variables: { signature: { user_id: user.id, username: user.username, position: user.position_names[0], fio: user.fio, document_id: props.selectedRowKeys[0] } } });
-            }
-        }
-        else if (routeCurrentIndex = routeFinishIndex) {
-            setStep(routeCurrentIndex);
-            setStatus(4);
-            const signatureFilter = data.documents[0].signatures.filter(e => e.document_id == data.documents[0].id && e.user_id == user.id);
-            if (signatureFilter.filter(e => e.user_id == user.id).length == 0) {
-                dataSignature({ variables: { signature: { user_id: user.id, username: user.username, position: user.position_names[0], fio: user.fio, document_id: props.selectedRowKeys[0] } } });
-            }
-        }
-
-    };
-    let handleRouteForward2 = () => {
-
-        let routeFinishIndex = data2.documents[0].route_data.length;
-        let routeCurrentIndex = data2.documents[0].step;
-
-        setRouteData(data2.documents[0].route_data.filter((el) => { return el.step == routeCurrentIndex + 1 }))
-        if (routeCurrentIndex < routeFinishIndex) {
-            setStep(routeCurrentIndex + 1)
-            if (status != 5) setStatus(5);
-            const signatureFilter = data2.documents[0].signatures.filter(e => e.document_id == data2.documents[0].id && e.user_id == user.id);
-            if (signatureFilter.filter(e => e.user_id == user.id).length == 0) {
-                dataSignature({ variables: { signature: { user_id: user.id, username: user.username, position: user.position_names[0], fio: user.fio, document_id: props.selectedRowKeys[0] } } });
-            }
-        }
-        else if (routeCurrentIndex = routeFinishIndex) {
-            setStep(routeCurrentIndex);
-            setStatus(4);
-            const signatureFilter = data2.documents[0].signatures.filter(e => e.document_id == data2.documents[0].id && e.user_id == user.id);
-            if (signatureFilter.filter(e => e.user_id == user.id).length == 0) {
-                dataSignature({ variables: { signature: { user_id: user.id, username: user.username, position: user.position_names[0], fio: user.fio, document_id: props.selectedRowKeys[0] } } });
-            }
-        }
+    setRouteData(data4.documents[0].route_data.filter((el) => { return el.step == routeCurrentIndex + 1 }))
+    if (routeCurrentIndex < routeFinishIndex) {
+      setStep(routeCurrentIndex + 1)
+      if (status != 5) setStatus(5)
+      const signatureFilter = data4.documents[0].signatures.filter(e => e.document_id == data4.documents[0].id && e.user_id == user.id)
+      if (signatureFilter.filter(e => e.user_id == user.id).length == 0) {
+        dataSignature({ variables: { signature: { user_id: user.id, username: user.username, position: user.position_names[0], fio: user.fio, document_id: props.selectedRowKeys[0] } } })
+      }
+    } else if (routeCurrentIndex = routeFinishIndex) {
+      setStep(routeCurrentIndex)
+      setStatus(4)
+      const signatureFilter = data4.documents[0].signatures.filter(e => e.document_id == data4.documents[0].id && e.user_id == user.id)
+      if (signatureFilter.filter(e => e.user_id == user.id).length == 0) {
+        dataSignature({ variables: { signature: { user_id: user.id, username: user.username, position: user.position_names[0], fio: user.fio, document_id: props.selectedRowKeys[0] } } })
+      }
     }
-    let handleRouteForward3 = () => {
+  }
+  const handleRouteForward5 = () => {
+    const routeFinishIndex = data5.documents[0].route_data.length
+    let routeCurrentIndex = data5.documents[0].step
 
-        let routeFinishIndex = data3.documents[0].route_data.length;
-        let routeCurrentIndex = data3.documents[0].step;
-
-        setRouteData(data3.documents[0].route_data.filter((el) => { return el.step == routeCurrentIndex + 1 }))
-        if (routeCurrentIndex < routeFinishIndex) {
-            setStep(routeCurrentIndex + 1)
-            if (status != 5) setStatus(5);
-            const signatureFilter = data3.documents[0].signatures.filter(e => e.document_id == data3.documents[0].id && e.user_id == user.id);
-            if (signatureFilter.filter(e => e.user_id == user.id).length == 0) {
-                dataSignature({ variables: { signature: { user_id: user.id, username: user.username, position: user.position_names[0], fio: user.fio, document_id: props.selectedRowKeys[0] } } });
-            }
-        }
-        else if (routeCurrentIndex = routeFinishIndex) {
-            setStep(routeCurrentIndex);
-            setStatus(4);
-            const signatureFilter = data3.documents[0].signatures.filter(e => e.document_id == data3.documents[0].id && e.user_id == user.id);
-            if (signatureFilter.filter(e => e.user_id == user.id).length == 0) {
-                dataSignature({ variables: { signature: { user_id: user.id, username: user.username, position: user.position_names[0], fio: user.fio, document_id: props.selectedRowKeys[0] } } });
-            }
-        }
+    setRouteData(data5.documents[0].route_data.filter((el) => { return el.step == routeCurrentIndex + 1 }))
+    if (routeCurrentIndex < routeFinishIndex) {
+      setStep(routeCurrentIndex + 1)
+      if (status != 5) setStatus(5)
+      const signatureFilter = data5.documents[0].signatures.filter(e => e.document_id == data5.documents[0].id && e.user_id == user.id)
+      if (signatureFilter.filter(e => e.user_id == user.id).length == 0) {
+        dataSignature({ variables: { signature: { user_id: user.id, username: user.username, position: user.position_names[0], fio: user.fio, document_id: props.selectedRowKeys[0] } } })
+      }
+    } else if (routeCurrentIndex = routeFinishIndex) {
+      setStep(routeCurrentIndex)
+      setStatus(4)
+      const signatureFilter = data5.documents[0].signatures.filter(e => e.document_id == data5.documents[0].id && e.user_id == user.id)
+      if (signatureFilter.filter(e => e.user_id == user.id).length == 0) {
+        dataSignature({ variables: { signature: { user_id: user.id, username: user.username, position: user.position_names[0], fio: user.fio, document_id: props.selectedRowKeys[0] } } })
+      }
     }
-    let handleRouteForward4 = () => {
+  }
 
-        let routeFinishIndex = data4.documents[0].route_data.length;
-        let routeCurrentIndex = data4.documents[0].step;
+  const showInfoMessageRouteUnavailable = () => {
+    message.info('Нельзя возвратить документ на нулевой уровень, достигнуто начало маршрута.', 10)
+  }
+  const handleRouteBackward = () => {
+    const routeFirstIndex = 1
+    let routeCurrentIndex = data.documents[0].step
 
-        setRouteData(data4.documents[0].route_data.filter((el) => { return el.step == routeCurrentIndex + 1 }))
-        if (routeCurrentIndex < routeFinishIndex) {
-            setStep(routeCurrentIndex + 1)
-            if (status != 5) setStatus(5);
-            const signatureFilter = data4.documents[0].signatures.filter(e => e.document_id == data4.documents[0].id && e.user_id == user.id);
-            if (signatureFilter.filter(e => e.user_id == user.id).length == 0) {
-                dataSignature({ variables: { signature: { user_id: user.id, username: user.username, position: user.position_names[0], fio: user.fio, document_id: props.selectedRowKeys[0] } } });
-            }
-        }
-        else if (routeCurrentIndex = routeFinishIndex) {
-            setStep(routeCurrentIndex);
-            setStatus(4);
-            const signatureFilter = data4.documents[0].signatures.filter(e => e.document_id == data4.documents[0].id && e.user_id == user.id);
-            if (signatureFilter.filter(e => e.user_id == user.id).length == 0) {
-                dataSignature({ variables: { signature: { user_id: user.id, username: user.username, position: user.position_names[0], fio: user.fio, document_id: props.selectedRowKeys[0] } } });
-            }
-        }
+    setRouteData(data.documents[0].route_data.filter((el) => { return el.step == routeCurrentIndex - 1 }))
+    if (routeCurrentIndex > routeFirstIndex) {
+      setStep(routeCurrentIndex - 1)
+    } else if (routeCurrentIndex = routeFirstIndex) {
+      setStep(routeCurrentIndex)
+      showInfoMessageRouteUnavailable()
     }
-    let handleRouteForward5 = () => {
+  }
+  const handleRouteBackward2 = () => {
+    const routeFirstIndex = 1
+    let routeCurrentIndex = data2.documents[0].step
 
-        let routeFinishIndex = data5.documents[0].route_data.length;
-        let routeCurrentIndex = data5.documents[0].step;
-
-        setRouteData(data5.documents[0].route_data.filter((el) => { return el.step == routeCurrentIndex + 1 }))
-        if (routeCurrentIndex < routeFinishIndex) {
-            setStep(routeCurrentIndex + 1)
-            if (status != 5) setStatus(5);
-            const signatureFilter = data5.documents[0].signatures.filter(e => e.document_id == data5.documents[0].id && e.user_id == user.id);
-            if (signatureFilter.filter(e => e.user_id == user.id).length == 0) {
-                dataSignature({ variables: { signature: { user_id: user.id, username: user.username, position: user.position_names[0], fio: user.fio, document_id: props.selectedRowKeys[0] } } });
-            }
-        }
-        else if (routeCurrentIndex = routeFinishIndex) {
-            setStep(routeCurrentIndex);
-            setStatus(4);
-            const signatureFilter = data5.documents[0].signatures.filter(e => e.document_id == data5.documents[0].id && e.user_id == user.id);
-            if (signatureFilter.filter(e => e.user_id == user.id).length == 0) {
-                dataSignature({ variables: { signature: { user_id: user.id, username: user.username, position: user.position_names[0], fio: user.fio, document_id: props.selectedRowKeys[0] } } });
-            }
-        }
+    setRouteData(data2.documents[0].route_data.filter((el) => { return el.step == routeCurrentIndex - 1 }))
+    if (routeCurrentIndex > routeFirstIndex) {
+      setStep(routeCurrentIndex - 1)
+    } else if (routeCurrentIndex = routeFirstIndex) {
+      setStep(routeCurrentIndex)
+      showInfoMessageRouteUnavailable()
     }
+  }
+  const handleRouteBackward3 = () => {
+    const routeFirstIndex = 1
+    let routeCurrentIndex = data3.documents[0].step
 
-    const showInfoMessageRouteUnavailable = () => {
-        message.info('Нельзя возвратить документ на нулевой уровень, достигнуто начало маршрута.', 10);
-    };
-    let handleRouteBackward = () => {
-
-        let routeFirstIndex = 1;
-        let routeCurrentIndex = data.documents[0].step;
-
-        setRouteData(data.documents[0].route_data.filter((el) => { return el.step == routeCurrentIndex - 1 }))
-        if (routeCurrentIndex > routeFirstIndex) {
-            setStep(routeCurrentIndex - 1)
-        }
-        else if (routeCurrentIndex = routeFirstIndex) {
-            setStep(routeCurrentIndex);
-            showInfoMessageRouteUnavailable();
-        }
+    setRouteData(data3.documents[0].route_data.filter((el) => { return el.step == routeCurrentIndex - 1 }))
+    if (routeCurrentIndex > routeFirstIndex) {
+      setStep(routeCurrentIndex - 1)
+    } else if (routeCurrentIndex = routeFirstIndex) {
+      setStep(routeCurrentIndex)
+      showInfoMessageRouteUnavailable()
     }
-    let handleRouteBackward2 = () => {
+  }
+  const handleRouteBackward4 = () => {
+    const routeFirstIndex = 1
+    let routeCurrentIndex = data4.documents[0].step
 
-        let routeFirstIndex = 1;
-        let routeCurrentIndex = data2.documents[0].step;
-
-        setRouteData(data2.documents[0].route_data.filter((el) => { return el.step == routeCurrentIndex - 1 }))
-        if (routeCurrentIndex > routeFirstIndex) {
-            setStep(routeCurrentIndex - 1)
-        }
-        else if (routeCurrentIndex = routeFirstIndex) {
-            setStep(routeCurrentIndex);
-            showInfoMessageRouteUnavailable();
-        }
-    };
-    let handleRouteBackward3 = () => {
-
-        let routeFirstIndex = 1;
-        let routeCurrentIndex = data3.documents[0].step;
-
-        setRouteData(data3.documents[0].route_data.filter((el) => { return el.step == routeCurrentIndex - 1 }))
-        if (routeCurrentIndex > routeFirstIndex) {
-            setStep(routeCurrentIndex - 1)
-        }
-        else if (routeCurrentIndex = routeFirstIndex) {
-            setStep(routeCurrentIndex);
-            showInfoMessageRouteUnavailable();
-        }
-    };
-    let handleRouteBackward4 = () => {
-
-        let routeFirstIndex = 1;
-        let routeCurrentIndex = data4.documents[0].step;
-
-        setRouteData(data4.documents[0].route_data.filter((el) => { return el.step == routeCurrentIndex - 1 }))
-        if (routeCurrentIndex > routeFirstIndex) {
-            setStep(routeCurrentIndex - 1)
-        }
-        else if (routeCurrentIndex = routeFirstIndex) {
-            setStep(routeCurrentIndex);
-            showInfoMessageRouteUnavailable();
-        }
-    };
-    let handleRouteBackward5 = () => {
-
-        let routeFirstIndex = 1;
-        let routeCurrentIndex = data5.documents[0].step;
-
-        setRouteData(data5.documents[0].route_data.filter((el) => { return el.step == routeCurrentIndex - 1 }))
-        if (routeCurrentIndex > routeFirstIndex) {
-            setStep(routeCurrentIndex - 1)
-        }
-        else if (routeCurrentIndex = routeFirstIndex) {
-            setStep(routeCurrentIndex);
-        }
-    };
-
-    let handleRouteReturnToSender = () => {
-        //setStep(0); doe not work
-        setStatus(7);
-    };
-
-    let handleRouteFromUserEditToApprove = () => { //user send to approve
-        let routeCurrentIndex = data.documents[0].step;
-
-        setRouteData(data.documents[0].route_data.filter((el) => { return el.step == routeCurrentIndex}))
-        setStatus(5);
+    setRouteData(data4.documents[0].route_data.filter((el) => { return el.step == routeCurrentIndex - 1 }))
+    if (routeCurrentIndex > routeFirstIndex) {
+      setStep(routeCurrentIndex - 1)
+    } else if (routeCurrentIndex = routeFirstIndex) {
+      setStep(routeCurrentIndex)
+      showInfoMessageRouteUnavailable()
     }
-    let handleRouteFromUserEditToApprove2 = () => { //user send to approve
-        let routeCurrentIndex = data2.documents[0].step;
+  }
+  const handleRouteBackward5 = () => {
+    const routeFirstIndex = 1
+    let routeCurrentIndex = data5.documents[0].step
 
-        setRouteData(data2.documents[0].route_data.filter((el) => { return el.step == routeCurrentIndex}))
-        setStatus(5);
+    setRouteData(data5.documents[0].route_data.filter((el) => { return el.step == routeCurrentIndex - 1 }))
+    if (routeCurrentIndex > routeFirstIndex) {
+      setStep(routeCurrentIndex - 1)
+    } else if (routeCurrentIndex = routeFirstIndex) {
+      setStep(routeCurrentIndex)
     }
-    let handleRouteFromUserEditToApprove3 = () => { //user send to approve
-        let routeCurrentIndex = data3.documents[0].step;
+  }
 
-        setRouteData(data3.documents[0].route_data.filter((el) => { return el.step == routeCurrentIndex}))
-        setStatus(5);
-    }
-    let handleRouteFromUserEditToApprove4 = () => { //user send to approve
-        let routeCurrentIndex = data4.documents[0].step;
+  const handleRouteReturnToSender = () => {
+    // setStep(0); doe not work
+    setStatus(7)
+  }
 
-        setRouteData(data4.documents[0].route_data.filter((el) => { return el.step == routeCurrentIndex}))
-        setStatus(5);
-    }
-    let handleRouteFromUserEditToApprove5 = () => { //user send to approve
-        let routeCurrentIndex = data5.documents[0].step;
+  const handleRouteFromUserEditToApprove = () => { // user send to approve
+    const routeCurrentIndex = data.documents[0].step
 
-        setRouteData(data5.documents[0].route_data.filter((el) => { return el.step == routeCurrentIndex}))
-        setStatus(5);
-    }
-    //------------------document statuses
-    let handleStatusCancelled=() => {
-        setStatus(2);
-    };
+    setRouteData(data.documents[0].route_data.filter((el) => { return el.step == routeCurrentIndex }))
+    setStatus(5)
+  }
+  const handleRouteFromUserEditToApprove2 = () => { // user send to approve
+    const routeCurrentIndex = data2.documents[0].step
 
+    setRouteData(data2.documents[0].route_data.filter((el) => { return el.step == routeCurrentIndex }))
+    setStatus(5)
+  }
+  const handleRouteFromUserEditToApprove3 = () => { // user send to approve
+    const routeCurrentIndex = data3.documents[0].step
 
-    //---------------------------------------debug
-    // useEffect(() => { console.log('loadingOne status:', loadingOne) }, [loadingOne]);
-    // useEffect(() => { console.log('loadingTwo status:', loadingTwo) }, [loadingTwo]);
-    // useEffect(() => { console.log('loadingThree status:', loadingThree) }, [loadingThree]);
-    // useEffect(() => { console.log('loadingFour status:', loadingFour) }, [loadingFour]);
+    setRouteData(data3.documents[0].route_data.filter((el) => { return el.step == routeCurrentIndex }))
+    setStatus(5)
+  }
+  const handleRouteFromUserEditToApprove4 = () => { // user send to approve
+    const routeCurrentIndex = data4.documents[0].step
 
-    console.log('route_data', routeData)
-    console.log('data', data)
+    setRouteData(data4.documents[0].route_data.filter((el) => { return el.step == routeCurrentIndex }))
+    setStatus(5)
+  }
+  const handleRouteFromUserEditToApprove5 = () => { // user send to approve
+    const routeCurrentIndex = data5.documents[0].step
 
+    setRouteData(data5.documents[0].route_data.filter((el) => { return el.step == routeCurrentIndex }))
+    setStatus(5)
+  }
+  // ------------------document statuses
+  const handleStatusCancelled = () => {
+    setStatus(2)
+  }
 
-    let HandleDeleteFile = (file) => {
-        console.log('CLIIIICK',file)
-        fileDelete({variables:{document_files:{id:file.id}}})
-    }
-    const [fileDelete, { loading: loadingFileDelete, error: errorDileDelete }] = useMutation(deleteFile, {
-        onCompleted: (data) => console.log("Data from mutation", data),
-        onError: (error) => console.error("Error creating a post", error)
-    });
+  // ---------------------------------------debug
+  // useEffect(() => { console.log('loadingOne status:', loadingOne) }, [loadingOne]);
+  // useEffect(() => { console.log('loadingTwo status:', loadingTwo) }, [loadingTwo]);
+  // useEffect(() => { console.log('loadingThree status:', loadingThree) }, [loadingThree]);
+  // useEffect(() => { console.log('loadingFour status:', loadingFour) }, [loadingFour]);
 
-    return (
+  console.log('route_data', routeData)
+  console.log('data', data)
+
+  const HandleDeleteFile = (file) => {
+    console.log('CLIIIICK', file)
+    fileDelete({ variables: { document_files: { id: file.id } } })
+  }
+  const [fileDelete, { loading: loadingFileDelete, error: errorDileDelete }] = useMutation(deleteFile, {
+    onCompleted: (data) => console.log('Data from mutation', data),
+    onError: (error) => console.error('Error creating a post', error)
+  })
+
+  return (
         <>
             <Button
                 type="primary"
@@ -467,15 +443,15 @@ let ModalUpdate = React.memo(({ GQL, GQL2, GQL3, GQL4, GQL5, UpdateForm, UpdateF
 
                     form={form}
                     onFinish={(values) => {
-                        let variables = {};
-                        console.log('values on finish', values);
-                        if (step) { values.step = step };
-                        if (status) { values.status_id = status };
-                        values.is_read = false
-                        if (routeData && routeData[0]?.positionId) { values.positionId = routeData[0].positionId }
-                        values.route_id = 10;
-                        variables[GQL.exemplar] = values;
-                        update({ variables })
+                      const variables = {}
+                      console.log('values on finish', values)
+                      if (step) { values.step = step };
+                      if (status) { values.status_id = status };
+                      values.is_read = false
+                      if (routeData && routeData[0]?.positionId) { values.positionId = routeData[0].positionId }
+                      values.route_id = 10
+                      variables[GQL.exemplar] = values
+                      update({ variables })
                     }}
                     initialValues={data}
                     disabled={viewMode}
@@ -515,15 +491,15 @@ let ModalUpdate = React.memo(({ GQL, GQL2, GQL3, GQL4, GQL5, UpdateForm, UpdateF
 
                     form2={form2}
                     onFinish2={(values) => {
-                        let variables = {};
-                        console.log('values on finish', values);
-                        if (step) { values.step = step };
-                        if (status) { values.status_id = status };
-                        values.is_read = false
-                        if (routeData && routeData[0]?.positionId) { values.positionId = routeData[0].positionId }
-                        values.route_id = 24;
-                        variables[GQL2.exemplar] = values;
-                        update({ variables })
+                      const variables = {}
+                      console.log('values on finish', values)
+                      if (step) { values.step = step };
+                      if (status) { values.status_id = status };
+                      values.is_read = false
+                      if (routeData && routeData[0]?.positionId) { values.positionId = routeData[0].positionId }
+                      values.route_id = 24
+                      variables[GQL2.exemplar] = values
+                      update({ variables })
                     }}
                     initialValues2={data2}
                     disabled={viewMode}
@@ -563,15 +539,15 @@ let ModalUpdate = React.memo(({ GQL, GQL2, GQL3, GQL4, GQL5, UpdateForm, UpdateF
 
                     form3={form3}
                     onFinish3={(values) => {
-                        let variables = {};
-                        console.log('values on finish', values);
-                        if (step) { values.step = step };
-                        if (status) { values.status_id = status };
-                        values.is_read = false
-                        if (routeData && routeData[0]?.positionId) { values.positionId = routeData[0].positionId }
-                        values.route_id = 26;
-                        variables[GQL3.exemplar] = values;
-                        update({ variables })
+                      const variables = {}
+                      console.log('values on finish', values)
+                      if (step) { values.step = step };
+                      if (status) { values.status_id = status };
+                      values.is_read = false
+                      if (routeData && routeData[0]?.positionId) { values.positionId = routeData[0].positionId }
+                      values.route_id = 26
+                      variables[GQL3.exemplar] = values
+                      update({ variables })
                     }}
                     initialValues3={data3}
                     disabled={viewMode}
@@ -611,15 +587,15 @@ let ModalUpdate = React.memo(({ GQL, GQL2, GQL3, GQL4, GQL5, UpdateForm, UpdateF
 
                     form4={form4}
                     onFinish4={(values) => {
-                        let variables = {};
-                        console.log('values on finish', values);
-                        if (step) { values.step = step };
-                        if (status) { values.status_id = status };
-                        values.is_read = false
-                        if (routeData && routeData[0]?.positionId) { values.positionId = routeData[0].positionId }
-                        values.route_id = 27;
-                        variables[GQL.exemplar] = values;
-                        update({ variables })
+                      const variables = {}
+                      console.log('values on finish', values)
+                      if (step) { values.step = step };
+                      if (status) { values.status_id = status };
+                      values.is_read = false
+                      if (routeData && routeData[0]?.positionId) { values.positionId = routeData[0].positionId }
+                      values.route_id = 27
+                      variables[GQL.exemplar] = values
+                      update({ variables })
                     }}
                     initialValues4={data4}
                     disabled={viewMode}
@@ -659,22 +635,22 @@ let ModalUpdate = React.memo(({ GQL, GQL2, GQL3, GQL4, GQL5, UpdateForm, UpdateF
 
                     form5={form5}
                     onFinish5={(values) => {
-                        let variables = {};
-                        console.log('values on finish', values);
-                        if (step) { values.step = step };
-                        if (status) { values.status_id = status };
-                        values.is_read = false
-                        if (routeData && routeData[0]?.positionId) { values.positionId = routeData[0].positionId }
-                        values.route_id = 29;
-                        variables[GQL.exemplar] = values;
-                        update({ variables })
+                      const variables = {}
+                      console.log('values on finish', values)
+                      if (step) { values.step = step };
+                      if (status) { values.status_id = status };
+                      values.is_read = false
+                      if (routeData && routeData[0]?.positionId) { values.positionId = routeData[0].positionId }
+                      values.route_id = 29
+                      variables[GQL.exemplar] = values
+                      update({ variables })
                     }}
                     initialValues5={data5}
                     disabled={viewMode}
                 />
             </Modal>
         </>
-    );
-});
+  )
+})
 
-export default ModalUpdate;
+export default ModalUpdate

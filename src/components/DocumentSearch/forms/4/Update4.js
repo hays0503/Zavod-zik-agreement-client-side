@@ -1,127 +1,125 @@
-import { EyeOutlined } from '@ant-design/icons';
-import { Button, Form, Input, Typography, Space, Divider, Row, Col, Steps, Checkbox, Popconfirm, message, Radio } from 'antd';
-import React, { useEffect, useState } from 'react';
-import { useUser, formatDate } from '../../../../core/functions';
+import { EyeOutlined } from '@ant-design/icons'
+import { Button, Form, Input, Typography, Space, Divider, Row, Col, Steps, Checkbox, Popconfirm, message, Radio } from 'antd'
+import React, { useEffect, useState } from 'react'
+import { useUser, formatDate } from '../../../../core/functions'
 
+import ApproveConfirm from './dialogs/ApproveConfirm'
+import RejectConfirm from './dialogs/RejectConfirm'
+import ReturnStepBackConfirm from './dialogs/ReturnStepBackConfirm'
+import ReturnToSenderConfirm from './dialogs/ReturnToSenderConfirm'
 
-import ApproveConfirm from './dialogs/ApproveConfirm';
-import RejectConfirm from './dialogs/RejectConfirm';
-import ReturnStepBackConfirm from './dialogs/ReturnStepBackConfirm';
-import ReturnToSenderConfirm from './dialogs/ReturnToSenderConfirm';
+const Update4 = React.memo((props) => {
+  const user = useUser()
+  const price_pattern = /^\d+$/
+  const { Title, Link } = Typography
+  const { Step } = Steps
 
+  const [state, setState] = useState({
+    log_username: user.username
+  })
 
-let Update4 = React.memo((props) => {
-    let user = useUser();
-    const price_pattern = /^\d+$/;
-    const { Title, Link } = Typography;
-    const { Step } = Steps;
-
-    const [state, setState] = useState({
-        log_username: user.username,
-    });
-
-    let OpenDocument = async (item) => {
-        console.log("PROPS", item.id)
-        const tmp = await fetch('/api/files', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(
-                { user:Number(user.id),item:item.id }
-            )
-        })
-        const content = await tmp.json();
-        if (content != undefined) {
-            console.log("RESULT", content)
-        }
+  const OpenDocument = async (item) => {
+    console.log('PROPS', item.id)
+    const tmp = await fetch('/api/files', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(
+        { user: Number(user.id), item: item.id }
+      )
+    })
+    const content = await tmp.json()
+    if (content != undefined) {
+      console.log('RESULT', content)
     }
-    useEffect(() => {
-        props.form4.setFieldsValue(state);
-    }, [state]);
-    let [routesList, setRoutesList] = useState([{ positionName: 'Тип договора не выбран.' }])
-    let [stepCount, setStepCount] = useState({ step: '0' })
-    useEffect(() => {
-        if (props.initialValues4) {
-            setState({
-                id: props.initialValues4.documents[0].id,
-                title: props.initialValues4.documents[0].title,
-                position: props.initialValues4.documents[0].position,
-                username: props.initialValues4.documents[0].username,
-                fio: props.initialValues4.documents[0].fio,
+  }
+  useEffect(() => {
+    props.form4.setFieldsValue(state)
+  }, [state])
+  const [routesList, setRoutesList] = useState([{ positionName: 'Тип договора не выбран.' }])
+  const [stepCount, setStepCount] = useState({ step: '0' })
+  useEffect(() => {
+    if (props.initialValues4) {
+      setState({
+        id: props.initialValues4.documents[0].id,
+        title: props.initialValues4.documents[0].title,
+        position: props.initialValues4.documents[0].position,
+        username: props.initialValues4.documents[0].username,
+        fio: props.initialValues4.documents[0].fio,
 
-                price: props.initialValues4.documents[0].data_agreement_list_internal_needs[0].price,
-                subject: props.initialValues4.documents[0].data_agreement_list_internal_needs[0].subject,
-                currency: props.initialValues4.documents[0].data_agreement_list_internal_needs[0].currency,
-                executor_name_division: props.initialValues4.documents[0].data_agreement_list_internal_needs[0].executor_name_division,
-                executor_phone_number: props.initialValues4.documents[0].data_agreement_list_internal_needs[0].executor_phone_number,
-                counteragent_contacts: props.initialValues4.documents[0].data_agreement_list_internal_needs[0].counteragent_contacts,
+        price: props.initialValues4.documents[0].data_agreement_list_internal_needs[0].price,
+        subject: props.initialValues4.documents[0].data_agreement_list_internal_needs[0].subject,
+        currency: props.initialValues4.documents[0].data_agreement_list_internal_needs[0].currency,
+        executor_name_division: props.initialValues4.documents[0].data_agreement_list_internal_needs[0].executor_name_division,
+        executor_phone_number: props.initialValues4.documents[0].data_agreement_list_internal_needs[0].executor_phone_number,
+        counteragent_contacts: props.initialValues4.documents[0].data_agreement_list_internal_needs[0].counteragent_contacts,
 
-                date_created: props.initialValues4.documents[0].date_created,
-                date_modified: props.initialValues4.documents[0].date_modified,
-                route_id: props.initialValues4.documents[0].route_id.id,
-                status_in_process: props.initialValues4.documents[0].route_id.status_in_process,
-                status_cancelled: props.initialValues4.documents[0].route_id.status_cancelled,
-                status_finished: props.initialValues4.documents[0].route_id.status_finished,
-                status_id: props.initialValues4.documents[0].status_id,
-                route: props.initialValues4.documents[0].route_data,
-                step: props.initialValues4.documents[0].step,
-                comments: props.initialValues4.documents[0].comments,
-                signatures: props.initialValues4.documents[0].signatures,
-                files: props.initialValues4.documents[0].files,
-                log_username: state.log_username
-            });
-            setStepCount({ step: props.initialValues4.documents[0].step })
-            setRoutesList(props.initialValues4.documents[0].route_data)
-        }
-    }, [props.initialValues4]);
-
-    let download = async (e) => {
-        let id = e.target.dataset.fileid
-        await fetch("/get-file", {
-            method: "POST",
-            body: JSON.stringify({ id: e.target.dataset.fileid }),
-            headers: {
-                "Content-Type": "application/json"
-            }
-        }).then(response => {
-            return response.json()
-        }).then(response => {
-            let result = response.result
-            let link = document.createElement('a')
-            link.href = result.data_file /*result.data_file.slice(result.data_file.indexOf(',')+1) */
-            link.download = result.filename
-            link.click()
-        })
+        date_created: props.initialValues4.documents[0].date_created,
+        date_modified: props.initialValues4.documents[0].date_modified,
+        route_id: props.initialValues4.documents[0].route_id.id,
+        status_in_process: props.initialValues4.documents[0].route_id.status_in_process,
+        status_cancelled: props.initialValues4.documents[0].route_id.status_cancelled,
+        status_finished: props.initialValues4.documents[0].route_id.status_finished,
+        status_id: props.initialValues4.documents[0].status_id,
+        route: props.initialValues4.documents[0].route_data,
+        step: props.initialValues4.documents[0].step,
+        comments: props.initialValues4.documents[0].comments,
+        signatures: props.initialValues4.documents[0].signatures,
+        files: props.initialValues4.documents[0].files,
+        log_username: state.log_username
+      })
+      setStepCount({ step: props.initialValues4.documents[0].step })
+      setRoutesList(props.initialValues4.documents[0].route_data)
     }
+  }, [props.initialValues4])
 
-    let onFinish = (values) => {
-        props.onFinish4(state);
+  const download = async (e) => {
+    const id = e.target.dataset.fileid
+    await fetch('/get-file', {
+      method: 'POST',
+      body: JSON.stringify({ id: e.target.dataset.fileid }),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then(response => {
+      return response.json()
+    }).then(response => {
+      const result = response.result
+      const link = document.createElement('a')
+      link.href = result.data_file /* result.data_file.slice(result.data_file.indexOf(',')+1) */
+      link.download = result.filename
+      link.click()
+    })
+  }
+
+  const onFinish = (values) => {
+    props.onFinish4(state)
+  }
+  const [reasonText, setReasonText] = useState(props?.initialValues4?.documents[0]?.reason)
+  const ReasonInputChange = (all, change) => {
+    if (all.target.value.length > 0) {
+      setReasonText(all.target.value)
+    } else {
+      setReasonText(all.target.value)
     }
-    const [reasonText, setReasonText] = useState(props?.initialValues4?.documents[0]?.reason);
-    let ReasonInputChange = (all, change) => {
-        if (all.target.value.length > 0) {
-            setReasonText(all.target.value)
-        } else {
-            setReasonText(all.target.value)
-        }
-    }
+  }
 
-    let radioOptions = [
-        {label:'Закупки товаров, работ и услуг', value:'1'},
-        {label:'Поставка продукции (выполнение работ, оказание услуг) заказчикам',value:'2'},
-        {label:'Передача имущества в аренду (бесплатное пользование)',value:'3'},
-        {label:'Совместная деятельность',value:'4'},
-        {label:'Финансирование (кредитование, обеспечение исполнения обязательств)',value:'5'},
-        {label:'Прочие обязательства',value:'6'}
-    ]
-    const[radioState, setRadioState] = useState(props?.initialValues4?.documents[0]?.data_agreement_list_internal_needs[0]?.subject);
+  const radioOptions = [
+    { label: 'Закупки товаров, работ и услуг', value: '1' },
+    { label: 'Поставка продукции (выполнение работ, оказание услуг) заказчикам', value: '2' },
+    { label: 'Передача имущества в аренду (бесплатное пользование)', value: '3' },
+    { label: 'Совместная деятельность', value: '4' },
+    { label: 'Финансирование (кредитование, обеспечение исполнения обязательств)', value: '5' },
+    { label: 'Прочие обязательства', value: '6' }
+  ]
+  const [radioState, setRadioState] = useState(props?.initialValues4?.documents[0]?.data_agreement_list_internal_needs[0]?.subject)
 
-    const RadioOnChange = (radioValue) => {
-        setRadioState(radioValue.target.value);
-    };
+  const RadioOnChange = (radioValue) => {
+    setRadioState(radioValue.target.value)
+  }
 
-    return(
+  return (
         <Form
         form={props.form4}
             name="DocumentsForm4"
@@ -129,8 +127,8 @@ let Update4 = React.memo((props) => {
             scrollToFirstError
             autoComplete="off"
 
-            onValuesChange={(changedValues, allValues) => { setState(Object.assign({}, state, { ...allValues, })); console.log('UPDATE4 values',allValues)}}
-        
+            onValuesChange={(changedValues, allValues) => { setState(Object.assign({}, state, { ...allValues })); console.log('UPDATE4 values', allValues) }}
+
         >
             <b>От:</b> {props?.initialValues4?.documents[0].fio} <br/>
             <b>Должность:</b> {props?.initialValues4?.documents[0].position}
@@ -179,7 +177,7 @@ let Update4 = React.memo((props) => {
                 labelCol={{ span: 24 }}
             >
                 {props?.initialValues4?.documents[0].files.map((item) => {
-                    return (<>
+                  return (<>
                         <div className='document-view-wrap'>
                             <Link><a data-fileid={item.id} onClick={download}>{item.filename}</a></Link> <Button onClick={() => { OpenDocument(item) }} shape="circle" icon={<EyeOutlined />}/> <br />
                         </div>
@@ -193,8 +191,8 @@ let Update4 = React.memo((props) => {
                 label="Подписи"
                 labelCol={{ span: 24 }}
             >
-                {props?.initialValues4?.documents[0].signatures.map((item) => {  //remove commentsList
-                    return (<>
+                {props?.initialValues4?.documents[0].signatures.map((item) => { // remove commentsList
+                  return (<>
                         <div className='signature-view-wrap'>
                             <span className='signature-view-position'>
                                 {item.position}
@@ -246,10 +244,10 @@ let Update4 = React.memo((props) => {
                     onChange={ReasonInputChange}
                     placeholder="Замечание" /> */}
                 {props?.initialValues4?.documents[0]?.reason?.map((item) => {
-                    return (<span>
+                  return (<span>
                         <span>{item.text + '-' + item.userPosition}</span><br />
                     </span>
-                    )
+                  )
                 })}
             </div>
             <Divider type={'horizontal'} />
@@ -262,7 +260,7 @@ let Update4 = React.memo((props) => {
                 {/* <Input.TextArea rows={7} name='comment' onChange={props.HandleCommentOnChange} disabled={props.disabled} />
                 <Button disabled={props.disabled} onClick={props.HandleComment} className="marginTop">Оставить комментарий</Button> */}
                 {props.commentsList.map((item) => {
-                    return (
+                  return (
                         <div className='comments'>
                             <li className='comment-item'>
                                 <span className='user-position-comment'>{item.position}</span>
@@ -272,7 +270,7 @@ let Update4 = React.memo((props) => {
                             </li>
                         </div>
 
-                    )
+                  )
                 })}
 
             </Form.Item>
@@ -302,7 +300,7 @@ let Update4 = React.memo((props) => {
             >
             </Form.Item>
         </Form>
-    )
+  )
 })
 
 export default Update4

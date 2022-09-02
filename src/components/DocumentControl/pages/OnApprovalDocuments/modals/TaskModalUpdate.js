@@ -1,31 +1,31 @@
-import { EyeOutlined } from "@ant-design/icons";
-import { gql } from "@apollo/client";
-import { Button, Form, Modal } from "antd";
-import React, { useEffect, useState } from "react";
-import { handlerQuery } from "../../../../../core/functions";
+import { EyeOutlined } from '@ant-design/icons'
+import { gql } from '@apollo/client'
+import { Button, Form, Modal } from 'antd'
+import React, { useEffect, useState } from 'react'
+import { handlerQuery } from '../../../../../core/functions'
 
-let TaskModalUpdate = React.memo(({ GQL, UpdateForm, ...props }) => {
-	const document = {
-		exemplar: "document",
-		table: "documents",
-		options: {
-			all: {
-				variables: {
-					documents: {
-						global: {
-							id: `=${props.selectedRowKeys[1]}`,
-							ORDER_BY: ["date_created desc"],
-						},
-					},
-				},
-				fetchPolicy: "cache-only",
-			},
-			one: {
-				fetchPolicy: "standby",
-			},
-		},
-		select: {
-			all: gql`
+const TaskModalUpdate = React.memo(({ GQL, UpdateForm, ...props }) => {
+  const document = {
+    exemplar: 'document',
+    table: 'documents',
+    options: {
+      all: {
+        variables: {
+          documents: {
+            global: {
+              id: `=${props.selectedRowKeys[1]}`,
+              ORDER_BY: ['date_created desc']
+            }
+          }
+        },
+        fetchPolicy: 'cache-only'
+      },
+      one: {
+        fetchPolicy: 'standby'
+      }
+    },
+    select: {
+      all: gql`
 				query documents($documents: JSON) {
 					documents(documents: $documents) {
 						id
@@ -108,7 +108,7 @@ let TaskModalUpdate = React.memo(({ GQL, UpdateForm, ...props }) => {
 					}
 				}
 			`,
-			one: gql`
+      one: gql`
 				query documents($documents: JSON) {
 					documents(documents: $documents) {
 						id
@@ -203,11 +203,11 @@ let TaskModalUpdate = React.memo(({ GQL, UpdateForm, ...props }) => {
 						route_data
 					}
 				}
-			`,
-		},
-		subscription: {
-			all: [
-				gql`
+			`
+    },
+    subscription: {
+      all: [
+        gql`
 					subscription documents($documents: JSON) {
 						documents(documents: $documents) {
 							id
@@ -242,10 +242,10 @@ let TaskModalUpdate = React.memo(({ GQL, UpdateForm, ...props }) => {
 							route_data
 						}
 					}
-				`,
-			],
-		},
-		insert: gql`
+				`
+      ]
+    },
+    insert: gql`
 			mutation insertDocument($document: JSON) {
 				insertDocument(document: $document) {
 					type
@@ -253,7 +253,7 @@ let TaskModalUpdate = React.memo(({ GQL, UpdateForm, ...props }) => {
 				}
 			}
 		`,
-		update: gql`
+    update: gql`
 			mutation updateDocument($document: JSON) {
 				updateDocument(document: $document) {
 					type
@@ -261,7 +261,7 @@ let TaskModalUpdate = React.memo(({ GQL, UpdateForm, ...props }) => {
 				}
 			}
 		`,
-		delete: gql`
+    delete: gql`
 			mutation deleteDocument($document: JSON) {
 				deleteDocument(document: $document) {
 					type
@@ -269,92 +269,92 @@ let TaskModalUpdate = React.memo(({ GQL, UpdateForm, ...props }) => {
 				}
 			}
 		`,
-		setIsReadTrue: gql`
+    setIsReadTrue: gql`
 			mutation setIsReadTrue($document: JSON) {
 				setIsReadTrue(document: $document) {
 					type
 					message
 				}
 			}
-		`,
-	};
+		`
+  }
 
-	const [form] = Form.useForm();
-	const [viewMode, setViewMode] = useState(true);
-	const [visible, setVisible] = props.visibleModalUpdate
-		? props.visibleModalUpdate
-		: [];
+  const [form] = Form.useForm()
+  const [viewMode, setViewMode] = useState(true)
+  const [visible, setVisible] = props.visibleModalUpdate
+    ? props.visibleModalUpdate
+    : []
 
-	let variables1 = {};
-	variables1[GQL.table] = GQL.table
-		? { global: { id: `= ${props.selectedRowKeys[0]}` } }
-		: {};
+  const variables1 = {}
+  variables1[GQL.table] = GQL.table
+    ? { global: { id: `= ${props.selectedRowKeys[0]}` } }
+    : {}
 
-	const {
-		loading: loadingOne,
-		data,
-		refetch,
-	} = handlerQuery(GQL, "one", { variables1 })();
+  const {
+    loading: loadingOne,
+    data,
+    refetch
+  } = handlerQuery(GQL, 'one', { variables1 })()
 
-	useEffect(() => {
-		if (visible) {
-			refetch(variables1);
-		}
-	}, [visible]);
+  useEffect(() => {
+    if (visible) {
+      refetch(variables1)
+    }
+  }, [visible])
 
-	// //------------documents
-	let documentVariables = {
-		documents: {
-			global: {
-				id: `=${props.selectedRowKeys[1]}`,
-				ORDER_BY: ["date_created desc"],
-			},
-		},
-	};
-	const {
-		loading: loadingData,
-		data: documentData,
-		refetch: refetchData,
-	} = handlerQuery(document, "one", { variables1 })();
+  // //------------documents
+  const documentVariables = {
+    documents: {
+      global: {
+        id: `=${props.selectedRowKeys[1]}`,
+        ORDER_BY: ['date_created desc']
+      }
+    }
+  }
+  const {
+    loading: loadingData,
+    data: documentData,
+    refetch: refetchData
+  } = handlerQuery(document, 'one', { variables1 })()
 
-	useEffect(() => {
-		if (visible) {
-			refetchData(documentVariables);
-		}
-	}, [visible]);
+  useEffect(() => {
+    if (visible) {
+      refetchData(documentVariables)
+    }
+  }, [visible])
 
-	let uploadDocuments = async (files) => {
-		console.log(files);
-		const filePromises = files.map((file) => {
-			// Return a promise per file
-			return new Promise((resolve, reject) => {
-				const reader = new FileReader();
-				reader.onload = async (e) => {
-					resolve({ dataFile: e.target.result, fileName: file.name });
-				};
-				reader.onerror = (error) => {
-					reject(error);
-				};
-				reader.readAsDataURL(file.originFileObj);
-			});
-		});
+  const uploadDocuments = async (files) => {
+    console.log(files)
+    const filePromises = files.map((file) => {
+      // Return a promise per file
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader()
+        reader.onload = async (e) => {
+          resolve({ dataFile: e.target.result, fileName: file.name })
+        }
+        reader.onerror = (error) => {
+          reject(error)
+        }
+        reader.readAsDataURL(file.originFileObj)
+      })
+    })
 
-		// Wait for all promises to be resolved
-		const fileInfos = await Promise.all(filePromises);
+    // Wait for all promises to be resolved
+    const fileInfos = await Promise.all(filePromises)
 
-		console.log("COMPLETED");
+    console.log('COMPLETED')
 
-		// Profit
-		return fileInfos;
-	};
+    // Profit
+    return fileInfos
+  }
 
-	return (
+  return (
 		<>
 			<Button
 				type="primary"
 				disabled={props.selectedRowKeys.length !== 3}
 				onClick={() => {
-					setVisible(true);
+				  setVisible(true)
 				}}
 			>
 				<EyeOutlined />
@@ -365,9 +365,9 @@ let TaskModalUpdate = React.memo(({ GQL, UpdateForm, ...props }) => {
 				visible={visible}
 				width={900}
 				onCancel={() => {
-					setVisible(false);
-					setViewMode(true);
-					props.setRerender(!props.ReRender);
+				  setVisible(false)
+				  setViewMode(true)
+				  props.setRerender(!props.ReRender)
 				}}
 				footer={null}
 			>
@@ -376,24 +376,24 @@ let TaskModalUpdate = React.memo(({ GQL, UpdateForm, ...props }) => {
 					initialValues={data}
 					form={form}
 					onFinish={async (values) => {
-						let variables = {};
-						let base64 = [];
-						if (values?.files?.fileList) {
-							await uploadDocuments(values.files.fileList).then((result) => {
-								base64 = result;
-							});
-						}
-						values.docs = base64 ? base64 : [];
-						variables[GQL.exemplar] = {
-							id: props.selectedRowKeys[0],
-							status: 2,
-							user_id: values.user_id_created,
-						};
+					  const variables = {}
+					  let base64 = []
+					  if (values?.files?.fileList) {
+					    await uploadDocuments(values.files.fileList).then((result) => {
+					      base64 = result
+					    })
+					  }
+					  values.docs = base64 || []
+					  variables[GQL.exemplar] = {
+					    id: props.selectedRowKeys[0],
+					    status: 2,
+					    user_id: values.user_id_created
+					  }
 					}}
 				/>
 			</Modal>
 		</>
-	);
-});
+  )
+})
 
-export default TaskModalUpdate;
+export default TaskModalUpdate

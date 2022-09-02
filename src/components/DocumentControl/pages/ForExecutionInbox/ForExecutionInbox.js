@@ -1,40 +1,38 @@
-import { DeleteOutlined, QuestionCircleOutlined } from '@ant-design/icons';
-import { gql, useMutation } from '@apollo/client';
-import { Button, Popconfirm } from 'antd';
-import React, { useEffect, useState, useLayoutEffect, useRef } from 'react';
-import { handlerQuery, handlerMutation, useUser } from '../../../../core/functions';
-import ModalUpdate from './modals/ModalUpdate';
-import TableContainer from './tableContainers/TableContainer';
-import TitleMenu from '../../../../core/TitleMenu';
-import test from "../../../../core/functions/test";
+import { DeleteOutlined, QuestionCircleOutlined } from '@ant-design/icons'
+import { gql, useMutation } from '@apollo/client'
+import { Button, Popconfirm } from 'antd'
+import React, { useEffect, useState, useLayoutEffect, useRef } from 'react'
+import { handlerQuery, handlerMutation, useUser } from '../../../../core/functions'
+import ModalUpdate from './modals/ModalUpdate'
+import TableContainer from './tableContainers/TableContainer'
+import TitleMenu from '../../../../core/TitleMenu'
+import test from '../../../../core/functions/test'
 
+import Update1 from './forms/1/Update1'
+import Update2 from './forms/2/Update2'
+import Update3 from './forms/3/Update3'
+import Update4 from './forms/4/Update4'
+import Update5 from './forms/5/Update5'
 
-import Update1 from './forms/1/Update1';
-import Update2 from './forms/2/Update2';
-import Update3 from './forms/3/Update3';
-import Update4 from './forms/4/Update4';
-import Update5 from './forms/5/Update5';
+const ForExecutionInbox = React.memo((props) => {
+  const user = useUser()
+  const userVariable = user.id
+  const positionsVariable = user.positions.toString()
 
-
-let ForExecutionInbox = React.memo((props) => {
-    let user = useUser();
-    let userVariable = user.id;
-    let positionsVariable = user.positions.toString();
-
-    let documents = {
-        exemplar: 'document',
-        table: 'documents',
-        options: {
-            all: {
-                variables: { documents: { global: { documents_for_receiver: userVariable, ORDER_BY: ['date_created desc'] } } },
-                fetchPolicy: 'cache-only'
-            },
-            one: {
-                fetchPolicy: 'standby'
-            }
-        },
-        select: {
-            all: gql`
+  const documents = {
+    exemplar: 'document',
+    table: 'documents',
+    options: {
+      all: {
+        variables: { documents: { global: { documents_for_receiver: userVariable, ORDER_BY: ['date_created desc'] } } },
+        fetchPolicy: 'cache-only'
+      },
+      one: {
+        fetchPolicy: 'standby'
+      }
+    },
+    select: {
+      all: gql`
         query documents ($documents: JSON) {
             documents(documents:$documents) {
                 id
@@ -130,7 +128,7 @@ let ForExecutionInbox = React.memo((props) => {
                 route_data
             }
         }`,
-            one: gql`
+      one: gql`
             query documents ($documents: JSON) {
                 documents(documents:$documents) {
                     id
@@ -239,9 +237,9 @@ let ForExecutionInbox = React.memo((props) => {
                 }
             }
         `
-        },
-        subscription: {
-            all: [gql`
+    },
+    subscription: {
+      all: [gql`
         subscription documents ($documents: JSON){
             documents(documents: $documents){
                 id
@@ -276,9 +274,9 @@ let ForExecutionInbox = React.memo((props) => {
                 route_data
             }
         }`
-            ]
-        },
-        insert: gql`
+      ]
+    },
+    insert: gql`
        mutation insertDocument($document: JSON) {
         insertDocument(document: $document) {
             type
@@ -286,7 +284,7 @@ let ForExecutionInbox = React.memo((props) => {
         }
     }
     `,
-        update: gql`
+    update: gql`
         mutation updateDocument($document: JSON) {
         updateDocument(document: $document) {
             type
@@ -294,7 +292,7 @@ let ForExecutionInbox = React.memo((props) => {
         }
     }
     `,
-        delete: gql`
+    delete: gql`
         mutation deleteDocument($document: JSON) {
         deleteDocument(document: $document) {
             type
@@ -302,7 +300,7 @@ let ForExecutionInbox = React.memo((props) => {
         }
     }
     `,
-        setIsReadTrue: gql`
+    setIsReadTrue: gql`
     mutation setIsReadTrue($document: JSON) {
     setIsReadTrue(document: $document) {
         type
@@ -310,22 +308,22 @@ let ForExecutionInbox = React.memo((props) => {
     }
 }
 `
-    };
+  }
 
-    let DocumentTasks = {
-        exemplar: 'document_tasks',
-        table: 'document_tasks',
-        options: {
-            all: {
-                variables: { document_tasks: { global: { user_id_receiver: `=${userVariable}`, ORDER_BY: ['date_created desc'] } } },
-                fetchPolicy: 'standby'
-            },
-            one: {
-                fetchPolicy: 'standby'
-            }
-        },
-        select: {
-            all: gql`
+  const DocumentTasks = {
+    exemplar: 'document_tasks',
+    table: 'document_tasks',
+    options: {
+      all: {
+        variables: { document_tasks: { global: { user_id_receiver: `=${userVariable}`, ORDER_BY: ['date_created desc'] } } },
+        fetchPolicy: 'standby'
+      },
+      one: {
+        fetchPolicy: 'standby'
+      }
+    },
+    select: {
+      all: gql`
                 query document_tasks ($document_tasks: JSON){
                     document_tasks(document_tasks: $document_tasks){
                         id
@@ -357,7 +355,7 @@ let ForExecutionInbox = React.memo((props) => {
                     }
                 }
             `,
-            one: gql`
+      one: gql`
             query document_tasks ($document_tasks: JSON){
                 document_tasks(document_tasks: $document_tasks){
                     id
@@ -395,9 +393,9 @@ let ForExecutionInbox = React.memo((props) => {
                 }
             }
             `
-        },
-        subscription: {
-            all: gql`
+    },
+    subscription: {
+      all: gql`
             subscription document_tasks ($document_tasks: JSON) {
                 document_tasks(document_tasks: $document_tasks) {
                     id
@@ -428,8 +426,8 @@ let ForExecutionInbox = React.memo((props) => {
                 }
             }
         `
-        },
-        update: gql`
+    },
+    update: gql`
         mutation updateDocumentTasks($document_tasks: JSON) {
             updateDocumentTasks(document_tasks: $document_tasks) {
             type
@@ -437,7 +435,7 @@ let ForExecutionInbox = React.memo((props) => {
         }
         }
         `,
-        setTaskIsReadTrue: gql`
+    setTaskIsReadTrue: gql`
         mutation setTaskIsReadTrue($task: JSON) {
             setTaskIsReadTrue(task: $task){
                 type
@@ -445,58 +443,57 @@ let ForExecutionInbox = React.memo((props) => {
             }
         }
         `
-    }
+  }
 
+  const visibleModalUpdate = useState(false)
+  const visibleModalUpdate2 = useState(false)
+  const visibleModalUpdate3 = useState(false)
+  const visibleModalUpdate4 = useState(false)
+  const visibleModalUpdate5 = useState(false)
 
-    const visibleModalUpdate = useState(false);
-    const visibleModalUpdate2 = useState(false)
-    const visibleModalUpdate3 = useState(false)
-    const visibleModalUpdate4 = useState(false)
-    const visibleModalUpdate5 = useState(false)
+  const { loading: loadingTasks, data: dataTasks, refetch: refetchTasks } = handlerQuery(DocumentTasks, 'all')()
 
-    const { loading: loadingTasks, data: dataTasks, refetch: refetchTasks } = handlerQuery(DocumentTasks, 'all')();
+  useEffect(() => { refetchTasks() }, [])
 
-    useEffect(() => { refetchTasks() }, []);
+  const list = (dataTasks && dataTasks[Object.keys(dataTasks)[0]] != null)
+    ? dataTasks[Object.keys(dataTasks)[0]].map((item) => {
+      return {
+        id: item.id,
+        key: item.id,
+        document_id: item.document_id,
+        status: item.status,
+        is_cancelled: item.is_cancelled,
+        note: item.note,
+        deadline: item.deadline,
+        date_created: item.date_created,
+        user_id_created: item.user_id_created,
+        fio_created: item.fio_created,
+        user_id_receiver: item.user_id_receiver,
+        fio_receiver: item.fio_receiver,
+        route_id: item.route_id ? item.route_id : 10,
+        document_options: item.document_options,
+        task_files: item.task_files ? item.task_files : {},
+        task_statuses: item?.task_statuses?.name,
+        document_tasks_logs: item.document_tasks_logs ? item.document_tasks_logs[item.document_tasks_logs.findIndex(item => item.user_id == user.id)] : []
+      }
+    })
+    : []
 
-    let list = (dataTasks && dataTasks[Object.keys(dataTasks)[0]] != null) ? dataTasks[Object.keys(dataTasks)[0]].map((item) => {
-        return {
-            id: item.id,
-            key: item.id,
-            document_id: item.document_id,
-            status: item.status,
-            is_cancelled: item.is_cancelled,
-            note: item.note,
-            deadline: item.deadline,
-            date_created: item.date_created,
-            user_id_created: item.user_id_created,
-            fio_created: item.fio_created,
-            user_id_receiver: item.user_id_receiver,
-            fio_receiver: item.fio_receiver,
-            route_id: item.route_id ? item.route_id : 10,
-            document_options: item.document_options,
-            task_files: item.task_files ? item.task_files : {},
-            task_statuses: item?.task_statuses?.name,
-            document_tasks_logs: item.document_tasks_logs ? item.document_tasks_logs[item.document_tasks_logs.findIndex(item => item.user_id == user.id)] : []
-        }
-    }) : []
+  const listFiltered = list.filter((el) => {
+    return el.status_id === 4
+  })
+  window.localStorage.rows_approved = listFiltered.length
 
-    let listFiltered = list.filter((el) => {
-        return el.status_id === 4
-    });
-    window.localStorage['rows_approved'] = listFiltered.length;
+  const dict = test([
+    { title: 'ФИО поручителя', dataIndex: 'fio_created', width: '214px', type: 'search', tooltip: true, sorter: (a, b) => a.fio_created.localeCompare(b.fio_created) },
+    { title: 'Дата создания', dataIndex: 'date_created', width: '300px', type: 'search', tooltip: true, sorter: true, sorter: (a, b) => new Date(a.date_created) - new Date(b.date_created) },
+    { title: 'Выполнить до', dataIndex: 'deadline', width: '214px', type: 'search', tooltip: true, sorter: true, sorter: (a, b) => new Date(a.deadline) - new Date(b.deadline) },
+    { title: 'Статус', dataIndex: 'task_statuses', width: '114px', tooltip: true },
+    { title: 'Задача', dataIndex: 'note', width: '214px' }
+  ])
 
-    let dict = test([
-        { title: 'ФИО поручителя', dataIndex: 'fio_created', width: '214px', type: 'search', tooltip: true, sorter: (a, b) => a.fio_created.localeCompare(b.fio_created) },
-        { title: 'Дата создания', dataIndex: 'date_created', width: '300px', type: 'search', tooltip: true, sorter: true, sorter: (a, b) => new Date(a.date_created) - new Date(b.date_created) },
-        { title: 'Выполнить до', dataIndex: 'deadline', width: '214px', type: 'search', tooltip: true, sorter: true, sorter: (a, b) => new Date(a.deadline) - new Date(b.deadline) },
-        { title: 'Статус', dataIndex: 'task_statuses', width: '114px', tooltip: true },
-        { title: 'Задача', dataIndex: 'note', width: '214px' },
-    ]);
-
-
-    let titleMenu = (tableProps) => {
-
-        return (<TitleMenu
+  const titleMenu = (tableProps) => {
+    return (<TitleMenu
             buttons={[
                 <ModalUpdate
                     visibleModalUpdate={visibleModalUpdate} UpdateForm={Update1}
@@ -504,13 +501,13 @@ let ForExecutionInbox = React.memo((props) => {
                     visibleModalUpdate3={visibleModalUpdate3} UpdateForm3={Update3}
                     visibleModalUpdate4={visibleModalUpdate4} UpdateForm4={Update4}
                     visibleModalUpdate5={visibleModalUpdate5} UpdateForm5={Update5}
-                    GQL={DocumentTasks} title='Просмотр задания' selectedRowKeys={tableProps.selectedRowKeys} update={true} width={750} />,
+                    GQL={DocumentTasks} title='Просмотр задания' selectedRowKeys={tableProps.selectedRowKeys} update={true} width={750} />
             ]}
             selectedRowKeys={tableProps.selectedRowKeys}
         />)
-    };
+  }
 
-    return (
+  return (
         <TableContainer
             data={{ dict, records: list }}
             loading={loadingTasks}
@@ -522,7 +519,7 @@ let ForExecutionInbox = React.memo((props) => {
             visibleModalUpdate5={visibleModalUpdate5}
             GQL={DocumentTasks}
         />
-    )
-});
+  )
+})
 
-export default ForExecutionInbox;
+export default ForExecutionInbox

@@ -1,30 +1,30 @@
-import { DeleteOutlined, QuestionCircleOutlined } from '@ant-design/icons';
-import { gql, useMutation } from '@apollo/client';
-import { Button, Form, Input, Popconfirm } from 'antd';
-import React, { useEffect, useState } from 'react';
-import { handlerQuery, handlerMutation, useUser } from '../../../core/functions';
-import ModalInsert from '../../../core/modal/ModalInsert';
-import ModalUpdate from '../../../core/modal/ModalUpdate';
-import TableContainer from '../../../core/TableContainer';
-import TitleMenu from '../../../core/TitleMenu';
-import test from "../../../core/functions/test";
+import { DeleteOutlined, QuestionCircleOutlined } from '@ant-design/icons'
+import { gql, useMutation } from '@apollo/client'
+import { Button, Form, Input, Popconfirm } from 'antd'
+import React, { useEffect, useState } from 'react'
+import { handlerQuery, handlerMutation, useUser } from '../../../core/functions'
+import ModalInsert from '../../../core/modal/ModalInsert'
+import ModalUpdate from '../../../core/modal/ModalUpdate'
+import TableContainer from '../../../core/TableContainer'
+import TitleMenu from '../../../core/TitleMenu'
+import test from '../../../core/functions/test'
 
-let document_statuses = {
-    exemplar: 'document_statuses',
-    table: 'document_statuses',
-    options: {
-        all: {
-			 /*variables: {
+const document_statuses = {
+  exemplar: 'document_statuses',
+  table: 'document_statuses',
+  options: {
+    all: {
+			 /* variables: {
                 controller_addresses: { global: {ORDER_BY: ['id DESC']}}
-            },*/
-            fetchPolicy: 'cache-only'
-        },
-        one: {
-            fetchPolicy: 'standby'
-        }
+            }, */
+      fetchPolicy: 'cache-only'
     },
-    select: {
-        all: gql`
+    one: {
+      fetchPolicy: 'standby'
+    }
+  },
+  select: {
+    all: gql`
             query document_statuses ($document_statuses: JSON) {
                 document_statuses (document_statuses: $document_statuses) {
                     id
@@ -32,7 +32,7 @@ let document_statuses = {
                 }
             }
         `,
-        one: gql`
+    one: gql`
             query document_statuses($document_statuses: JSON) {
                 document_statuses(document_statuses: $document_statuses) {
                     id
@@ -40,9 +40,9 @@ let document_statuses = {
                 }
             }
         `
-    },
-    subscription: {
-        all: gql`
+  },
+  subscription: {
+    all: gql`
             subscription document_statuses ($document_statuses: JSON){
                 document_statuses (document_statuses: $document_statuses) {
                     id
@@ -50,22 +50,22 @@ let document_statuses = {
                 }
             }
         `
-    },
-    insert: gql`
+  },
+  insert: gql`
         mutation insertDocumentStatus($document_statuses: JSON) {
             insertDocumentStatus(document_statuses: $document_statuses){
                 message
             }
         }
     `,
-    update: gql`
+  update: gql`
         mutation updateDocumentStatus($document_statuses: JSON) {
             updateDocumentStatus(document_statuses: $document_statuses){
                 message
             }
         }
     `,
-	delete: gql`
+  delete: gql`
         mutation deleteDocumentStatus($document_statuses: JSON) {
             deleteDocumentStatus(document_statuses: $document_statuses){
                 message
@@ -74,35 +74,36 @@ let document_statuses = {
     `
 }
 
+const DocumentStatusesPage = React.memo((props) => {
+  const user = useUser()
+  const visibleModalUpdate = useState(false)
 
-let DocumentStatusesPage = React.memo((props) => {
-	let user = useUser();
-    const visibleModalUpdate = useState(false);
-	
-    const [remove, { loading: loadingRemove }] = handlerMutation(useMutation(document_statuses.delete))();
+  const [remove, { loading: loadingRemove }] = handlerMutation(useMutation(document_statuses.delete))()
 
-    const { loading, data, refetch } = handlerQuery(document_statuses, 'all')();
-    useEffect(() => { refetch() }, []);
-    let list = (data && data[Object.keys(data)[0]] != null) ? data[Object.keys(data)[0]].map((item) => {
-        return {
-            id: item.id,
-            key: item.id,
-            name: item.name
-        }
-    }) : [];
-    let dict = test([
-        { title: 'ID', dataIndex: 'id', width: '15px', type:'search', tooltip: true },
-        { title: 'Название', dataIndex: 'name', width: '150px', type:'search', tooltip: true }
-    ]);
-    let titleMenu = (tableProps) => {
-        return (<TitleMenu
+  const { loading, data, refetch } = handlerQuery(document_statuses, 'all')()
+  useEffect(() => { refetch() }, [])
+  const list = (data && data[Object.keys(data)[0]] != null)
+    ? data[Object.keys(data)[0]].map((item) => {
+      return {
+        id: item.id,
+        key: item.id,
+        name: item.name
+      }
+    })
+    : []
+  const dict = test([
+    { title: 'ID', dataIndex: 'id', width: '15px', type: 'search', tooltip: true },
+    { title: 'Название', dataIndex: 'name', width: '150px', type: 'search', tooltip: true }
+  ])
+  const titleMenu = (tableProps) => {
+    return (<TitleMenu
             title='Редактирование статусов документов'
             buttons={[
                 <ModalInsert title='Добавление статуса' GQL={document_statuses} InsertForm={DocumentStatusesForm} />,
                 <ModalUpdate visibleModalUpdate={visibleModalUpdate} title='Редактирование статуса' selectedRowKeys={tableProps.selectedRowKeys} GQL={document_statuses} UpdateForm={DocumentStatusesForm} update={true} />,
 				<Popconfirm
                     title="Вы уверены?"
-                    onConfirm={() => { let variables = {}; variables[document_statuses.exemplar] = { id: Number(tableProps.selectedRowKeys[0]), log_username: user.username }; remove({ variables }) }}
+                    onConfirm={() => { const variables = {}; variables[document_statuses.exemplar] = { id: Number(tableProps.selectedRowKeys[0]), log_username: user.username }; remove({ variables }) }}
                     okText="Да"
                     cancelText="Нет"
                     icon={<QuestionCircleOutlined style={{ color: 'red' }} />}
@@ -113,41 +114,41 @@ let DocumentStatusesPage = React.memo((props) => {
             ]}
             selectedRowKeys={tableProps.selectedRowKeys}
         />)
-    };
+  }
 
-    return (
+  return (
         <TableContainer
             data={{ dict, records: list }}
             loading={loading}
             title={titleMenu}
             visibleModalUpdate={visibleModalUpdate}
         />
-    )
-});
+  )
+})
 
-let DocumentStatusesForm = React.memo((props) => {
-	let user = useUser();
+const DocumentStatusesForm = React.memo((props) => {
+  const user = useUser()
   const [state, setState] = useState({
-		isuseforreport:false,
-		log_username:user.username
-    });
+    isuseforreport: false,
+    log_username: user.username
+  })
 
-    useEffect(() => { props.form.setFieldsValue(state) }, [state]);
+  useEffect(() => { props.form.setFieldsValue(state) }, [state])
 
-    useEffect(() => {
-        if (props.initialValues) {
-            setState({
-                id: props.initialValues.document_statuses[0].id,
-                name: props.initialValues.document_statuses[0].name,
-			    log_username:state.log_username
-			});
-		}
-    }, [props.initialValues]);
-	
-	let onFinish = (values) => {
-        props.onFinish(state)
+  useEffect(() => {
+    if (props.initialValues) {
+      setState({
+        id: props.initialValues.document_statuses[0].id,
+        name: props.initialValues.document_statuses[0].name,
+			    log_username: state.log_username
+      })
     }
-    return (
+  }, [props.initialValues])
+
+  const onFinish = (values) => {
+    props.onFinish(state)
+  }
+  return (
         <Form
             form={props.form}
             name="DocumentStatusesForm"
@@ -155,17 +156,17 @@ let DocumentStatusesForm = React.memo((props) => {
             scrollToFirstError
             autoComplete="off"
 
-            onValuesChange={(changedValues, allValues) => { setState(Object.assign({}, state, { ...allValues, })) }}
-            
+            onValuesChange={(changedValues, allValues) => { setState(Object.assign({}, state, { ...allValues })) }}
+
         >
             <Form.Item
                 name="name"
                 rules={[
-                    {
-                        required: true,
-                        message: 'Необходимо для заполнения!',
-                        whitespace: true,
-                    },
+                  {
+                    required: true,
+                    message: 'Необходимо для заполнения!',
+                    whitespace: true
+                  }
                 ]}
             >
                 <Input disabled={props.disabled} placeholder="Название статуса документа" />
@@ -177,7 +178,7 @@ let DocumentStatusesForm = React.memo((props) => {
                 <Input disabled={props.disabled}/>
             </Form.Item>
         </Form>
-    )
-});
+  )
+})
 
-export default DocumentStatusesPage;
+export default DocumentStatusesPage

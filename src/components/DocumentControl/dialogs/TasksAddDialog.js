@@ -1,30 +1,30 @@
-import React, { useEffect, useState } from 'react';
-import { PlusCircleOutlined, MinusCircleOutlined } from '@ant-design/icons';
-import { gql, useMutation } from '@apollo/client';
-import { handlerQuery, getDDMMYYYHHmm, useUser, handlerMutation } from '../../../core/functions';
-import { Modal, Popconfirm, Select, Button, Form, DatePicker, Input, Checkbox, Switch, Row, Col, Divider, Typography } from 'antd';
-import { EyeOutlined } from '@ant-design/icons';
-import 'moment/locale/ru';
-import locale from 'antd/es/date-picker/locale/ru_RU';
+import React, { useEffect, useState } from 'react'
+import { PlusCircleOutlined, MinusCircleOutlined, EyeOutlined } from '@ant-design/icons'
+import { gql, useMutation } from '@apollo/client'
+import { handlerQuery, getDDMMYYYHHmm, useUser, handlerMutation } from '../../../core/functions'
+import { Modal, Popconfirm, Select, Button, Form, DatePicker, Input, Checkbox, Switch, Row, Col, Divider, Typography } from 'antd'
 
-let TasksAddDialog = React.memo((props) => {
-    let user = useUser();
-    let users = {
-        exemplar: 'user',
-        table: 'users',
-        options: {
-            all: {
-                variables: {
-                    users: { global: { ORDER_BY: ['username asc'] } }
-                },
-                fetchPolicy: 'cache-only'
-            },
-            one: {
-                fetchPolicy: 'standby'
-            }
+import 'moment/locale/ru'
+import locale from 'antd/es/date-picker/locale/ru_RU'
+
+const TasksAddDialog = React.memo((props) => {
+  const user = useUser()
+  const users = {
+    exemplar: 'user',
+    table: 'users',
+    options: {
+      all: {
+        variables: {
+          users: { global: { ORDER_BY: ['username asc'] } }
         },
-        select: {
-            all: gql`
+        fetchPolicy: 'cache-only'
+      },
+      one: {
+        fetchPolicy: 'standby'
+      }
+    },
+    select: {
+      all: gql`
             query users ($users: JSON) {
                 users(users: $users) {
                     id
@@ -38,7 +38,7 @@ let TasksAddDialog = React.memo((props) => {
                 }
             }
         `,
-            one: gql`
+      one: gql`
             query users ($users: JSON) {
                 users(users: $users) {
                     id
@@ -53,9 +53,9 @@ let TasksAddDialog = React.memo((props) => {
                 }
             }
         `
-        },
-        subscription: {
-            all: gql`
+    },
+    subscription: {
+      all: gql`
             subscription users ($users: JSON) {
                 users(users: $users) {
                     id
@@ -69,22 +69,22 @@ let TasksAddDialog = React.memo((props) => {
                 }
             }
         `
-        }
     }
+  }
 
-    let DocumentTasks = {
-        exemplar: 'document_tasks',
-        table: 'document_tasks',
-        options: {
-            all: {
-                fetchPolicy: 'standby'
-            },
-            one: {
-                fetchPolicy: 'standby'
-            }
-        },
-        select: {
-            all: gql`
+  const DocumentTasks = {
+    exemplar: 'document_tasks',
+    table: 'document_tasks',
+    options: {
+      all: {
+        fetchPolicy: 'standby'
+      },
+      one: {
+        fetchPolicy: 'standby'
+      }
+    },
+    select: {
+      all: gql`
                 query document_tasks ($document_tasks: JSON){
                     document_tasks(document_tasks: $document_tasks){
                         id
@@ -102,7 +102,7 @@ let TasksAddDialog = React.memo((props) => {
                     }
                 }
             `,
-            one: gql`
+      one: gql`
             query document_tasks ($document_tasks: JSON){
                 document_tasks(document_tasks: $document_tasks){
                     id
@@ -120,9 +120,9 @@ let TasksAddDialog = React.memo((props) => {
                 }
             }
             `
-        },
-        subscription: {
-            all: gql`
+    },
+    subscription: {
+      all: gql`
             subscription document_tasks ($document_tasks: JSON) {
                 document_tasks(document_tasks: $document_tasks) {
                     id
@@ -140,8 +140,8 @@ let TasksAddDialog = React.memo((props) => {
                 }
             }
         `
-        },
-        insert: gql`
+    },
+    insert: gql`
         mutation insertDocumentTasks($document_tasks: JSON) {
             insertDocumentTasks(document_tasks: $document_tasks) {
                 type
@@ -149,111 +149,110 @@ let TasksAddDialog = React.memo((props) => {
             }
         }
      `
+  }
+  const { Link } = Typography
+  const [insert, { loading: documentTasksInsertLoading }] = handlerMutation(useMutation(DocumentTasks.insert))()
+  const { loading, data, refetch } = handlerQuery(users, 'all')()
+
+  const OpenDocument = async (item) => {
+    // setBtnLoad(true)
+    console.log('PROPS', item.id)
+    // console.log('RECORD',props.record)
+    const tmp = await fetch('/api/files', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(
+        { user: Number(user.id), item: item.id }
+      )
+    })
+    const content = await tmp.json()
+    if (content != undefined) {
+      console.log('RESULT', content)
     }
-    const { Link } = Typography;
-    const [insert, { loading: documentTasksInsertLoading }] = handlerMutation(useMutation(DocumentTasks.insert))();
-    const { loading, data, refetch } = handlerQuery(users, 'all')();
+  }
 
-    let OpenDocument = async (item) => {
-        // setBtnLoad(true)
-        console.log("PROPS", item.id)
-        // console.log('RECORD',props.record)
-        const tmp = await fetch('/api/files', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(
-                { user: Number(user.id), item: item.id }
-            )
-        })
-        const content = await tmp.json();
-        if (content != undefined) {
-            console.log("RESULT", content)
-        }
-    }
+  const download = async (e) => {
+    const id = e.target.dataset.fileid
+    await fetch('/get-file', {
+      method: 'POST',
+      body: JSON.stringify({ id: e.target.dataset.fileid }),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then(response => {
+      return response.json()
+    }).then(response => {
+      const result = response.result
+      const link = document.createElement('a')
+      link.href = result.data_file /* result.data_file.slice(result.data_file.indexOf(',')+1) */
+      link.download = result.filename
+      link.click()
+    })
+  }
 
-    let download = async (e) => {
-        let id = e.target.dataset.fileid
-        await fetch("/get-file", {
-            method: "POST",
-            body: JSON.stringify({ id: e.target.dataset.fileid }),
-            headers: {
-                "Content-Type": "application/json"
-            }
-        }).then(response => {
-            return response.json()
-        }).then(response => {
-            let result = response.result
-            let link = document.createElement('a')
-            link.href = result.data_file /*result.data_file.slice(result.data_file.indexOf(',')+1) */
-            link.download = result.filename
-            link.click()
-        })
-    }
+  useEffect(() => { refetch() }, [])
 
-    useEffect(() => { refetch() }, []);
+  const [state, setState] = useState({})
 
-    const [state, setState] = useState({});
-
-    let onFinish = (values) => {
-
-        let taskData = {
-            variables: {
-                document_tasks:
+  const onFinish = (values) => {
+    const taskData = {
+      variables: {
+        document_tasks:
                 {
-                    document_id: props.document.documents[0].id,
-                    status: "1",
-                    is_cancelled: "false",
-                    note: values.note,
-                    deadline: getDDMMYYYHHmm(values.deadline._d),
-                    user_id_created: `${user.id}`,
-                    fio_created: user.fio,
-                    user_id_receiver: `${values.recepient.value}`,
-                    fio_receiver: values.recepient.label,
-                    route_id: props.document.documents[0].route_id.id,
-                    document_options: {
-                        title: values.title == undefined ? false : values.title,
-                        subject: values.subject == undefined ? false : values.subject,
-                        supllier: values.supllier == undefined ? false : values.supllier,
-                        price: values.price == undefined ? false : values.price
-                    },
-                    task_files: `{${values.task_files.map(item => parseInt(item))}}`,
-                    // task_files: values.task_files.map(item=>item.toString()),
-                    files: values.files
+                  document_id: props.document.documents[0].id,
+                  status: '1',
+                  is_cancelled: 'false',
+                  note: values.note,
+                  deadline: getDDMMYYYHHmm(values.deadline._d),
+                  user_id_created: `${user.id}`,
+                  fio_created: user.fio,
+                  user_id_receiver: `${values.recepient.value}`,
+                  fio_receiver: values.recepient.label,
+                  route_id: props.document.documents[0].route_id.id,
+                  document_options: {
+                    title: values.title == undefined ? false : values.title,
+                    subject: values.subject == undefined ? false : values.subject,
+                    supllier: values.supllier == undefined ? false : values.supllier,
+                    price: values.price == undefined ? false : values.price
+                  },
+                  task_files: `{${values.task_files.map(item => parseInt(item))}}`,
+                  // task_files: values.task_files.map(item=>item.toString()),
+                  files: values.files
                 }
-            }
-        }
-        insert(taskData)
-        props.setVisible(false)
-        // console.log('taskData-------------', taskData)
-        console.log('VALUES-----', values)
+      }
     }
+    insert(taskData)
+    props.setVisible(false)
+    // console.log('taskData-------------', taskData)
+    console.log('VALUES-----', values)
+  }
 
-    const [form] = Form.useForm();
-    useEffect(() => { form.setFieldsValue(state) }, [state]);
+  const [form] = Form.useForm()
+  useEffect(() => { form.setFieldsValue(state) }, [state])
 
-    const onChangeDatePicker = (date, dateString) => {
-        // console.log('datep', date, dateString);
-    };
+  const onChangeDatePicker = (date, dateString) => {
+    // console.log('datep', date, dateString);
+  }
 
-    //checkboxgroup select all 
-    const CheckboxGroup = Checkbox.Group;
+  // checkboxgroup select all
+  const CheckboxGroup = Checkbox.Group
 
-    let [popconfirmInModalVisible, setPopconfirmInModalVisible] = useState(false)
+  const [popconfirmInModalVisible, setPopconfirmInModalVisible] = useState(false)
 
-    let CheckAll = () => {
-        let files = props?.document?.documents[0]?.files.map((item) => { return (item.id) })
-        form.setFieldsValue({
-            task_files: files
-        })
-    }
+  const CheckAll = () => {
+    const files = props?.document?.documents[0]?.files.map((item) => { return (item.id) })
+    form.setFieldsValue({
+      task_files: files
+    })
+  }
 
-    return (
+  return (
         <>
             <Button
                 type='primary'
-                onClick={()=>{props.setVisible(true)}}
+                onClick={() => { props.setVisible(true) }}
             >
                 <PlusCircleOutlined />Создать
             </Button>
@@ -273,8 +272,8 @@ let TasksAddDialog = React.memo((props) => {
                         title='Вы уверены что хотите закрыть?'
                         // visible={popconfirmInModalVisible}
                         onConfirm={() => {
-                            props.setVisible(false)
-                            setPopconfirmInModalVisible(false)
+                          props.setVisible(false)
+                          setPopconfirmInModalVisible(false)
                         }}
                         onCancel={() => { setPopconfirmInModalVisible(false) }}
                         okText="Да"
@@ -286,9 +285,9 @@ let TasksAddDialog = React.memo((props) => {
                     <Popconfirm
                         title={'Отправить поручение?'}
                         placement="topLeft"
-                        disabled={state.recepient ? false : true}
+                        disabled={!state.recepient}
                         onConfirm={async () => {
-                            await form.submit();
+                          await form.submit()
                         }}
                         okText="Да"
                         cancelText="Нет">
@@ -305,7 +304,7 @@ let TasksAddDialog = React.memo((props) => {
                     onFinish={onFinish}
                     scrollToFirstError
                     autoComplete="off"
-                    onValuesChange={(changedValues, allValues) => { setState(Object.assign({}, state, { ...allValues, })) }}
+                    onValuesChange={(changedValues, allValues) => { setState(Object.assign({}, state, { ...allValues })) }}
                 >
                     <Form.Item
                         label="Выберите получателя"
@@ -314,14 +313,14 @@ let TasksAddDialog = React.memo((props) => {
                         wrapperCol={{ span: 12 }}
                         name="recepient"
                         rules={[
-                            {
-                                required: true,
-                                message: 'Необходимо для заполнения!'
-                            },
+                          {
+                            required: true,
+                            message: 'Необходимо для заполнения!'
+                          }
                         ]}
                     >
                         <Select
-                            style={{ width: 100 + "%" }}
+                            style={{ width: 100 + '%' }}
                             showSearch
                             optionFilterProp="children"
                             filterOption
@@ -330,7 +329,7 @@ let TasksAddDialog = React.memo((props) => {
                         >
                             <Select.Option key={null} value={null}></Select.Option>
                             {data?.users?.map((item, i) => {
-                                return (
+                              return (
                                     <Select.Option key={item.id} value={item.id}>
                                         {data?.users[i]?.fio}
                                     </Select.Option>)
@@ -345,16 +344,16 @@ let TasksAddDialog = React.memo((props) => {
                         wrapperCol={{ span: 12 }}
                         name="deadline"
                         rules={[
-                            {
-                                required: true,
-                                message: 'Необходимо для заполнения!'
-                            },
+                          {
+                            required: true,
+                            message: 'Необходимо для заполнения!'
+                          }
                         ]}
                     >
                         <DatePicker
                             locale={locale}
-                            format={"DD-MM-YYYY HH:mm"}
-                            showTime={{ format: "HH:mm" }}
+                            format={'DD-MM-YYYY HH:mm'}
+                            showTime={{ format: 'HH:mm' }}
                             onChange={onChangeDatePicker}
                         />
                     </Form.Item>
@@ -365,10 +364,10 @@ let TasksAddDialog = React.memo((props) => {
                         wrapperCol={{ span: 12 }}
                         name="note"
                         rules={[
-                            {
-                                required: true,
-                                message: 'Необходимо для заполнения!'
-                            },
+                          {
+                            required: true,
+                            message: 'Необходимо для заполнения!'
+                          }
                         ]}
                     >
                         <Input.TextArea rows={5} />
@@ -451,13 +450,13 @@ let TasksAddDialog = React.memo((props) => {
                     </Row>
 
                     <Form.Item
-                        style={{marginTop:'30px'}}
+                        style={{ marginTop: '30px' }}
                         name='task_files'
                     >
                         <CheckboxGroup>
                             <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
                                 {props?.document?.documents[0]?.files.map((item) => {
-                                    return (
+                                  return (
                                         <React.Fragment>
                                             <Col span={21}>
                                                 <Link><a data-fileid={item.id} onClick={download}>{item.filename}</a></Link>
@@ -467,7 +466,7 @@ let TasksAddDialog = React.memo((props) => {
                                                 <Checkbox value={item.id} defaultChecked={false} />
                                             </Col>
                                         </React.Fragment>
-                                    )
+                                  )
                                 })
                                 }
                             </Row>
@@ -476,7 +475,7 @@ let TasksAddDialog = React.memo((props) => {
                 </Form>
             </Modal>
         </>
-    );
-});
+  )
+})
 
-export default TasksAddDialog;
+export default TasksAddDialog
