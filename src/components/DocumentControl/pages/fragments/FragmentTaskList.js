@@ -1,4 +1,4 @@
-import { Collapse } from "antd";
+import { Form, Input, Collapse } from "antd";
 import TasksTableContainer from "./../OnApprovalDocuments/tableContainers/TasksTableContainer";
 
 /**

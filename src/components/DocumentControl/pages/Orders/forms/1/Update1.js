@@ -1,54 +1,68 @@
-import { Form, Divider, Steps } from "antd";
-
+import { EyeOutlined } from "@ant-design/icons";
+import {
+	Button,
+	Form,
+	Input,
+	Divider,
+	Row,
+	Col,
+	Typography,
+	Steps,
+} from "antd";
 import React, { useEffect, useState } from "react";
-
-import { useUser } from "../../../../../../core/functions";
+import {
+	useUser,
+	formatDate,
+	getDiffHours,
+} from "../../../../../../core/functions";
 
 import SelectReplacementDialog from "../../../../dialogs/SelectReplacementDialog";
-import { GetIDNameTaskFile } from "../../../api/CRU_Document";
-import FragmentCommentsViewer from "../../../fragments/FragmentCommentsViewer";
-import { FragmentTaskAndFileViewer } from "../../../fragments/FragmentFileViewer";
-import { FragmentReasonsViewer } from "../../../fragments/FragmentReasonsViewer";
-import { FragmentStepViewerReplacementDialog } from "../../../fragments/FragmentStepViewer";
-import { FormItem, FormWrap } from "./../../../fragments/FragmentItemWrap";
 
-const Update1 = React.memo((props) => {
+let Update1 = React.memo((props) => {
 	/**
+	 * {@link https://habr.com/ru/all/ Ссылка на статью}
 	 * Деструктаризация (начального значение)
 	 */
-	const iniValue = props?.initialValues?.documents[0];
+     const iniValue = props?.initialValues?.documents[0];
 
-	const user = useUser();
+
+
+    console.log(iniValue)
+
+	let user = useUser();
+	const { Link } = Typography;
+
 	const { Step } = Steps;
 	const [visible, setVisible] = useState(false);
-	const [routesList, setRoutesList] = useState([
+	let [routesList, setRoutesList] = useState([
 		{ positionName: "Тип договора не выбран." },
 	]);
-	const [stepCount, setStepCount] = useState({ step: "0" });
+	let [stepCount, setStepCount] = useState({ step: "0" });
 
 	const [state, setState] = useState({
 		log_username: user.username,
 	});
 
-	/**
-	 * Cтейт для таблиц файлов по поручением
-	 */
-	const [FileTask, setFileTask] = useState([]);
-	/**
-	 * Инициализация стейта для таблиц файлов по поручением
-	 */
-	useEffect(() => {
-		if (props.initialValues) {
-			GetIDNameTaskFile(iniValue?.id).then((value) => {
-				setFileTask(value.result);
-			});
+	let OpenDocument = async (item) => {
+		// setBtnLoad(true)
+		console.log("PROPS", item.id);
+		// console.log('RECORD',props.record)
+		const tmp = await fetch("/api/files", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({ user: Number(user.id), item: item.id }),
+		});
+		const content = await tmp.json();
+		if (content != undefined) {
+			console.log("RESULT", content);
 		}
-	}, [props.initialValues]);
+	};
 
 	useEffect(() => {
 		props.form.setFieldsValue(state);
 	}, [state]);
-
 	useEffect(() => {
 		if (props.initialValues) {
 			setState({
@@ -57,9 +71,11 @@ const Update1 = React.memo((props) => {
 				position: iniValue.position,
 				username: iniValue.username,
 				fio: iniValue.fio,
+
 				price: iniValue.data_one[0].price,
 				supllier: iniValue.data_one[0].supllier,
 				subject: iniValue.data_one[0].subject,
+
 				date_created: iniValue.date_created,
 				date_modified: iniValue.date_modified,
 				route_id: iniValue.route_id.id,
@@ -74,6 +90,7 @@ const Update1 = React.memo((props) => {
 				files: iniValue.files,
 				log_username: state.log_username,
 			});
+			console.log("props.initialValues", props.initialValues);
 			setStepCount({ step: iniValue.step });
 			setRoutesList(iniValue.route_data);
 		}
@@ -81,6 +98,27 @@ const Update1 = React.memo((props) => {
 
 	let onFinish = (values) => {
 		props.onFinish(state);
+	};
+
+	let download = async (e) => {
+		await fetch("/get-file", {
+			method: "POST",
+			body: JSON.stringify({ id: e.target.dataset.fileid }),
+			headers: {
+				"Content-Type": "application/json",
+			},
+		})
+			.then((response) => {
+				return response.json();
+			})
+			.then((response) => {
+				let result = response.result;
+				let link = document.createElement("a");
+				link.href =
+					result.data_file; /*result.data_file.slice(result.data_file.indexOf(',')+1) */
+				link.download = result.filename;
+				link.click();
+			});
 	};
 
 	return (
@@ -97,78 +135,191 @@ const Update1 = React.memo((props) => {
 			<h4>
 				<b>Тип договора:</b> Закуп ТРУ
 			</h4>
-
-			{/* /////////////////////////////////// */}
-			<FormWrap>{FormItem("Наименование ТРУ: ", state?.title)}</FormWrap>
-			{/* /////////////////////////////////// */}
-			<FormWrap>{FormItem("Поставщик ТРУ: ", state?.supllier)}</FormWrap>
-			{/* /////////////////////////////////// */}
-			<FormWrap>{FormItem("Основание: ", state?.subject)}</FormWrap>
-			{/* /////////////////////////////////// */}
-			<FormWrap>{FormItem("Общая сумма договора: ", state?.price)}</FormWrap>
-
+			<div className="form-item-wrap">
+				<Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
+					<Col span={12}>Наименование ТРУ: </Col>{" "}
+					<Col span={12}>{state.title}</Col>
+				</Row>
+			</div>
+			<div className="form-item-wrap">
+				<Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
+					<Col span={12}>Поставщик ТРУ: </Col>{" "}
+					<Col span={12}>{state.supllier}</Col>
+				</Row>
+			</div>
+			<div className="form-item-wrap">
+				<Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
+					<Col span={12}>Основание: </Col> <Col span={12}>{state.subject}</Col>
+				</Row>
+			</div>
+			<div className="form-item-wrap">
+				<Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
+					<Col span={12}>Общая сумма договора:</Col>{" "}
+					<Col span={12}>{state.price}</Col>
+				</Row>
+			</div>
 			<Divider type={"horizontal"} />
-
-			{/*Фрагмент antd дающую возможность просматривать файлы*/}
-			{props.initialValues !== undefined && FileTask !== undefined ? (
-				<FragmentTaskAndFileViewer
-					files={iniValue?.files}
-					files_task={FileTask}
-					userId={user.id}
-				/>
-			) : (
-				<h1>Загрузка</h1>
-			)}
-			{/* /////////////////////////////////// */}
-
+			<Form.Item
+				name="files"
+				className="font-form-header"
+				label="Файлы"
+				labelCol={{ span: 24 }}
+			>
+				{props?.initialValues?.documents[0].files.map((item) => {
+					return (
+						<>
+							<div className="document-view-wrap">
+								<Link>
+									<a data-fileid={item.id} onClick={download}>
+										{item.filename}
+									</a>
+								</Link>{" "}
+								<Button
+									onClick={() => {
+										OpenDocument(item);
+									}}
+									shape="circle"
+									icon={<EyeOutlined />}
+								/>{" "}
+								<br />
+							</div>
+						</>
+					);
+				})}
+			</Form.Item>
 			<Divider type={"horizontal"} />
-
-			{/*
-			Фрагмент antd дающую возможность просматривать состояние
-			движений документов (с надстройкой для замещающего)
-			*/}
-			{iniValue && (
-				<FragmentStepViewerReplacementDialog
-					signatures={iniValue?.signatures}
+			<Form.Item
+				className="font-form-header"
+				name="signatures"
+				label="Подписи"
+				labelCol={{ span: 24 }}
+			>
+				{props?.initialValues?.documents[0].signatures.map((item) => {
+					//remove commentsList
+					return (
+						<>
+							<div className="signature-view-wrap">
+								<span className="signature-view-position">{item.position}</span>
+								<span className="signature-view-username">{item.fio}</span>
+								<span className="signature-view-date">
+									{formatDate(item.date_signature)}
+								</span>
+							</div>
+						</>
+					);
+				})}
+				<SelectReplacementDialog
+					visible={visible}
 					setVisible={setVisible}
+					setRoutesList={setRoutesList}
+					routesList={routesList}
 					stepCount={stepCount}
-					routeData={iniValue?.route_data}
-					date_created={state.date_created}
-					step={iniValue?.step}
+					routeData={props?.initialValues?.documents[0]?.route_data}
+					form={props.form}
+				/>
+				<Steps
+					labelPlacement="vertical"
+					size="small"
+					current={stepCount.step - 1}
+					className="steps-form-update"
 				>
-					{/* Фрагмент antd дающую возможность устанавливать замещающего */}
-					<SelectReplacementDialog
-						visible={visible}
-						setVisible={setVisible}
-						setRoutesList={setRoutesList}
-						routesList={routesList}
-						stepCount={stepCount}
-						routeData={iniValue?.route_data}
-						form={props.form}
-					/>
-				</FragmentStepViewerReplacementDialog>
-			)}
-
+					{props?.initialValues?.documents[0].route_data.map((item, i) => {
+						return (
+							<>
+								<Step
+									title={item.positionName}
+									onClick={() => {
+										console.log("step click", item);
+										if (iniValue.step == i + 1) {
+											setVisible(true);
+										}
+									}}
+									subTitle={
+										(i == stepCount.step - 1 &&
+											state?.signatures?.length > 0) ||
+										stepCount.step == 1
+											? (() => {
+													if (stepCount.step == 1 && i == 0) {
+														let tmpD = getDiffHours(
+															new Date(state.date_created),
+															new Date()
+														);
+														return tmpD?.toString();
+													}
+													if (
+														i != 0 &&
+														state?.signatures[i - 1]?.date_signature
+													) {
+														let tmpD = getDiffHours(
+															new Date(
+																state.signatures[
+																	state.signatures.length - 1
+																].date_signature
+															),
+															new Date()
+														);
+														return tmpD?.toString();
+													}
+											  })()
+											: null
+									}
+								/>
+							</>
+						);
+					})}
+				</Steps>
+			</Form.Item>
 			<Divider type={"horizontal"} />
-
-			{/* Фрагмент antd для вывода Замечаний по документу */}
-			<FragmentReasonsViewer Reason={iniValue?.reason} />
-			{/* /////////////////////////////////// */}
-
+			<Form.Item
+				className="font-form-header"
+				name="reason"
+				label="Замечание"
+				labelCol={{ span: 24 }}
+			></Form.Item>
+			<div>
+				{props?.initialValues?.documents[0]?.reason?.map((item) => {
+					return (
+						<span>
+							<span>{item.text + "-" + item.userPosition}</span>
+							<br />
+						</span>
+					);
+				})}
+			</div>
 			<Divider type={"horizontal"} />
-
-			{/* Фрагмент antd дающую возможность просматривать комментарии к документам */}
-			<FragmentCommentsViewer
-				HandleCommentOnChange={props.HandleCommentOnChange}
-				disabled={false}
-				HandleComment={props.HandleComment}
-				commentsList={props.commentsList}
-			/>
-			{/* /////////////////////////////////// */}
-
-			{/* Фрагмент antd элементами для хранение данных (ну или типо того) */}
-			<FragmentAnyItems />
-			{/* /////////////////////////////////// */}
+			<Form.Item
+				className="font-form-header"
+				name="comments"
+				label="Комментарии"
+				labelCol={{ span: 24 }}
+			>
+				<Input.TextArea
+					rows={7}
+					name="comment"
+					onChange={props.HandleCommentOnChange}
+				/>
+				<Button onClick={props.HandleComment} className="marginTop">
+					Оставить комментарий
+				</Button>
+				{props.commentsList.map((item) => {
+					return (
+						<div className="comments">
+							<li className="comment-item">
+								<span className="user-position-comment">{item.position}</span>
+								<span className="user-name-comment"> ({item.fio}) </span>
+								<span className="user-date-time-comment">{item.date}</span>
+								<br />
+								<span className="comment">{item.comment}</span>
+							</li>
+						</div>
+					);
+				})}
+			</Form.Item>
+			<Form.Item name="date_created" hidden={true}></Form.Item>
+			<Form.Item name="route_id" hidden={true}></Form.Item>
+			<Form.Item name="status_id" hidden={true}></Form.Item>
+			<Form.Item name="step" hidden={true}></Form.Item>
+			<Form.Item name="log_username" hidden={true}></Form.Item>
 		</Form>
 	);
 });

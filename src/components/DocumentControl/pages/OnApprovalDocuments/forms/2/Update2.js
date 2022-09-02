@@ -19,7 +19,7 @@ import { FragmentButtons } from "./../../../fragments/FragmentButtons";
 import FragmentCommentsViewer from "./../../../fragments/FragmentCommentsViewer";
 import { FormItem, FormWrap } from "./../../../fragments/FragmentItemWrap";
 import { FragmentReasonsViewer } from "./../../../fragments/FragmentReasonsViewer";
-import { FragmentStepViewer } from "./../../../fragments/FragmentStepViewer";
+import FragmentStepViewer from "./../../../fragments/FragmentStepViewer";
 import { FragmentTaskList } from "./../../../fragments/FragmentTaskList";
 
 import { GetIDNameTaskFile } from "./../../../api/CRU_Document";

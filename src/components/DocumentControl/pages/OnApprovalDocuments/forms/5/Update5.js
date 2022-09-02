@@ -14,7 +14,7 @@ import TaskModalUpdate from "../../modals/TaskModalUpdate";
 import UpdateTask5 from "./UpdateTask5";
 import { FormWrap, FormItem } from "./../../../fragments/FragmentItemWrap";
 import FragmentUploader from "../../../fragments/FragmentUploader";
-import {FragmentStepViewer} from "../../../fragments/FragmentStepViewer";
+import FragmentStepViewer from "../../../fragments/FragmentStepViewer";
 import { FragmentButtons } from "../../../fragments/FragmentButtons";
 import { FragmentReasonsViewer } from "../../../fragments/FragmentReasonsViewer";
 import { FragmentTaskList } from "../../../fragments/FragmentTaskList";
