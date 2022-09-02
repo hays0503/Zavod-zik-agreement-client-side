@@ -161,7 +161,10 @@ let SelectReplacementDialog = React.memo((props) => {
                                     if (item != props.routeData.filter(el => { return el.id == item })[0]?.positionId) {
                                         return (
                                             <Select.Option key={item} value={item}>
-                                                {data.positions.filter(el => { console.log('map', item, i, data.positions.filter(el => { return el.id == item })); return el.id == item })[0]?.name}
+                                                {data.positions.filter(el => {
+                                                    return el.id == item
+                                                })[0]?.name
+                                                }
                                             </Select.Option>)
                                     }
                                 }) : null}
