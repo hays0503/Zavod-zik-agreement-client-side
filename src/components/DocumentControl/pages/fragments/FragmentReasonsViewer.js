@@ -1,4 +1,4 @@
-import { Form, Input } from "antd";
+import { Form, Input } from 'antd'
 
 /**
  * Фрагмент antd для вывода Замечаний по документу
@@ -7,7 +7,7 @@ import { Form, Input } from "antd";
  * @param Reason Список замечаний
  */
 export const FragmentReasonsViewer = (props) => {
-	return (
+  return (
 		<>
 			<Form.Item
 				className="font-form-header"
@@ -18,7 +18,7 @@ export const FragmentReasonsViewer = (props) => {
 			<div>
 				{console.log(`${props?.disabled} ${props?.ReasonInputChange}`)}
 				{
-					//Если определены флаг disable и callback функция то выводим Input
+					// Если определены флаг disable и callback функция то выводим Input
 					props?.disabled != undefined &&
 						props?.ReasonInputChange != undefined && (
 							<Input
@@ -26,17 +26,17 @@ export const FragmentReasonsViewer = (props) => {
 								onChange={props.ReasonInputChange}
 								placeholder="Замечание"
 							/>
-						)
+					)
 				}
 				{props?.reason?.map((item) => {
-					return (
+				  return (
 						<span>
-							<span>{item.text + "-" + item.userPosition}</span>
+							<span>{item.text + '-' + item.userPosition}</span>
 							<br />
 						</span>
-					);
+				  )
 				})}
 			</div>
 		</>
-	);
-};
+  )
+}

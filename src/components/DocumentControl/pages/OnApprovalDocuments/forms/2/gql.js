@@ -1,18 +1,18 @@
 import { gql } from '@apollo/client'
 
-export let DocumentTasks = {
-    exemplar: 'document_tasks',
-    table: 'document_tasks',
-    options: {
-        all: {
-            fetchPolicy: 'standby'
-        },
-        one: {
-            fetchPolicy: 'standby'
-        }
+export const DocumentTasks = {
+  exemplar: 'document_tasks',
+  table: 'document_tasks',
+  options: {
+    all: {
+      fetchPolicy: 'standby'
     },
-    select: {
-        all: gql`
+    one: {
+      fetchPolicy: 'standby'
+    }
+  },
+  select: {
+    all: gql`
             query document_tasks ($document_tasks: JSON){
                 document_tasks(document_tasks: $document_tasks){
                     id
@@ -39,7 +39,7 @@ export let DocumentTasks = {
                 }
             }
         `,
-        one: gql`
+    one: gql`
         query document_tasks ($document_tasks: JSON){
             document_tasks(document_tasks: $document_tasks){
                 id
@@ -66,9 +66,9 @@ export let DocumentTasks = {
             }
         }
         `
-    },
-    subscription: {
-        all: gql`
+  },
+  subscription: {
+    all: gql`
         subscription document_tasks ($document_tasks: JSON) {
             document_tasks(document_tasks: $document_tasks) {
                 id
@@ -85,8 +85,8 @@ export let DocumentTasks = {
             }
         }
     `
-    },
-    insert: gql`
+  },
+  insert: gql`
     mutation insertDocumentTasks($document_tasks: JSON) {
         insertDocumentTasks(document_tasks: $document_tasks) {
             type
@@ -94,7 +94,7 @@ export let DocumentTasks = {
         }
     }
     `,
-    setTaskIsReadTrue: gql`
+  setTaskIsReadTrue: gql`
     mutation setTaskIsReadTrue($task: JSON) {
         setTaskIsReadTrue(task: $task){
             type
@@ -104,30 +104,29 @@ export let DocumentTasks = {
     `
 }
 
-
 export const dict = [
-    {
-        title: 'У кого',
-        dataIndex: 'fio_receiver',
-        key: 'fio_receiver',
-        width: '200px'
-    },
-    {
-        title: 'Срок',
-        dataIndex: 'deadline',
-        key: 'deadline',
-        width: '200px'
-    },
-    {
-        title: 'Статус',
-        dataIndex: 'task_statuses',
-        key: 'task_statuses',
-        width: '150px'
-    },
-    {
-        title: 'Задача',
-        dataIndex: 'note',
-        key: 'note',
-        width: '250px'
-    },
-];
+  {
+    title: 'У кого',
+    dataIndex: 'fio_receiver',
+    key: 'fio_receiver',
+    width: '200px'
+  },
+  {
+    title: 'Срок',
+    dataIndex: 'deadline',
+    key: 'deadline',
+    width: '200px'
+  },
+  {
+    title: 'Статус',
+    dataIndex: 'task_statuses',
+    key: 'task_statuses',
+    width: '150px'
+  },
+  {
+    title: 'Задача',
+    dataIndex: 'note',
+    key: 'note',
+    width: '250px'
+  }
+]

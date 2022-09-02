@@ -1,16 +1,15 @@
-import { Popconfirm, Button } from "antd";
-import React, { useState } from "react";
+import { Popconfirm, Button } from 'antd'
+import React, { useState } from 'react'
 
-let FromUserEditToApproveConfirm = React.memo(({ reasonText, dataProps, setState, user, ...props }) => {
+const FromUserEditToApproveConfirm = React.memo(({ reasonText, dataProps, setState, user, ...props }) => {
+  const [confirmText, setConfirmText] = useState('Вы уверены что хотите отправить договор на согласование?')
 
-    const [confirmText, setConfirmText] = useState('Вы уверены что хотите отправить договор на согласование?');
+  const confirm = () => {
+    dataProps.handleRouteFromUserEditToApprove2()
+    dataProps.form2.submit()
+  }
 
-    const confirm = () => {
-        dataProps.handleRouteFromUserEditToApprove2()
-        dataProps.form2.submit()
-    };
-
-    return (
+  return (
         <Popconfirm
             title={confirmText}
             placement="topLeft"
@@ -25,7 +24,7 @@ let FromUserEditToApproveConfirm = React.memo(({ reasonText, dataProps, setState
                 Отправить на согласование
             </Button>
         </Popconfirm>
-    )
-});
+  )
+})
 
-export default FromUserEditToApproveConfirm;
+export default FromUserEditToApproveConfirm

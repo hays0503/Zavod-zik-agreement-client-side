@@ -1,5 +1,5 @@
-let SearchFilter = () => {
-    return (
+const SearchFilter = () => {
+  return (
         <Row style={{ paddingLeft: '10px', paddingRight: '10px', marginBottom: '15px', marginTop: '15px' }}>
             <Col span={2} style={{ marginRight: '25px' }}>От:<DatePicker style={{ width: '100%' }} /></Col>
             <Col span={2} style={{ marginRight: '25px' }}>До:<DatePicker style={{ width: '100%' }} /></Col>
@@ -23,5 +23,5 @@ let SearchFilter = () => {
                 </Select>
             </Col>
         </Row>
-    )
+  )
 }

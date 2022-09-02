@@ -1,66 +1,66 @@
-import { Form, Input, message, Radio } from 'antd';
-import React, { useEffect, useState } from 'react';
-import { useUser } from '../../../../../../core/functions';
-import constants from "../../../../../../config/constants";
-import UploadFile from '../../../../modals/UploadFile';
+import { Form, Input, message, Radio } from 'antd'
+import React, { useEffect, useState } from 'react'
+import { useUser } from '../../../../../../core/functions'
+import constants from '../../../../../../config/constants'
+import UploadFile from '../../../../modals/UploadFile'
 
-let Insert4 = React.memo((props) => {
-    let user = useUser();
-    const price_pattern = /^\d+$/;
-    // const phone_pattern= /^!*([0-9]!*){11,11}$/g;
-    const price_max_count = /^.{1,8}$/;
-    const [state, setState] = useState({
-        log_username: user.username,
-    });
+const Insert4 = React.memo((props) => {
+  const user = useUser()
+  const price_pattern = /^\d+$/
+  // const phone_pattern= /^!*([0-9]!*){11,11}$/g;
+  const price_max_count = /^.{1,8}$/
+  const [state, setState] = useState({
+    log_username: user.username
+  })
 
-    useEffect(() => { props.form4.setFieldsValue(state) }, [state]);
+  useEffect(() => { props.form4.setFieldsValue(state) }, [state])
 
-    useEffect(() => {
-        if (props.initialValues4) {
-            setState({
-                id: props.initialValues4.documents[0].id,
-                title: props.initialValues4.documents[0].title,
+  useEffect(() => {
+    if (props.initialValues4) {
+      setState({
+        id: props.initialValues4.documents[0].id,
+        title: props.initialValues4.documents[0].title,
 
-                price: props.initialValues4.documents[0].data_agreement_list_internal_needs[0].price,
-                subject: props.initialValues4.documents[0].data_agreement_list_internal_needs[0].subject,
-                currency: props.initialValues4.documents[0].data_agreement_list_internal_needs[0].currency,
-                executor_name_division: props.initialValues4.documents[0].data_agreement_list_internal_needs[0].executor_name_division,
-                executor_phone_number: props.initialValues4.documents[0].data_agreement_list_internal_needs[0].executor_phone_number,
-                counteragent_contacts: props.initialValues4.documents[0].data_agreement_list_internal_needs[0].counteragent_contacts,
+        price: props.initialValues4.documents[0].data_agreement_list_internal_needs[0].price,
+        subject: props.initialValues4.documents[0].data_agreement_list_internal_needs[0].subject,
+        currency: props.initialValues4.documents[0].data_agreement_list_internal_needs[0].currency,
+        executor_name_division: props.initialValues4.documents[0].data_agreement_list_internal_needs[0].executor_name_division,
+        executor_phone_number: props.initialValues4.documents[0].data_agreement_list_internal_needs[0].executor_phone_number,
+        counteragent_contacts: props.initialValues4.documents[0].data_agreement_list_internal_needs[0].counteragent_contacts,
 
-                date_created: props.initialValues4.documents[0].date_created,
-                date_modified: props.initialValues4.documents[0].date_modified,
-                route_id: props.initialValues4.documents[0].route_id.id,
-                status_in_process: props.initialValues4.documents[0].route_id.status_in_process,
-                status_id: props.initialValues4.documents[0].status_id,
-                step: props.initialValues4.documents[0].step,
-                comments: props.initialValues4.documents[0].comments,
-                files: props.initialValues4.documents[0].files,
-                log_username: state.log_username
-            });
-        }
-    }, [props.initialValues4]);
-
-    let onFinish = (values) => {
-        props.onFinish4(state)
-        console.log('-------------------------------------------', values);
+        date_created: props.initialValues4.documents[0].date_created,
+        date_modified: props.initialValues4.documents[0].date_modified,
+        route_id: props.initialValues4.documents[0].route_id.id,
+        status_in_process: props.initialValues4.documents[0].route_id.status_in_process,
+        status_id: props.initialValues4.documents[0].status_id,
+        step: props.initialValues4.documents[0].step,
+        comments: props.initialValues4.documents[0].comments,
+        files: props.initialValues4.documents[0].files,
+        log_username: state.log_username
+      })
     }
+  }, [props.initialValues4])
 
-    let radioOptions = [
-        { label: 'Закупки товаров, работ и услуг', value: 'Закупки товаров, работ и услуг' },
-        { label: 'Поставка продукции (выполнение работ, оказание услуг) заказчикам', value: 'Поставка продукции (выполнение работ, оказание услуг) заказчикам' },
-        { label: 'Передача имущества в аренду (бесплатное пользование)', value: 'Передача имущества в аренду (бесплатное пользование)' },
-        { label: 'Совместная деятельность', value: 'Совместная деятельность' },
-        { label: 'Финансирование (кредитование, обеспечение исполнения обязательств)', value: 'Финансирование (кредитование, обеспечение исполнения обязательств)' },
-        { label: 'Прочие обязательства', value: 'Прочие обязательства' }
-    ]
-    const [radioState, setRadioState] = useState(1);
+  const onFinish = (values) => {
+    props.onFinish4(state)
+    console.log('-------------------------------------------', values)
+  }
 
-    const RadioOnChange = (radioValue) => {
-        setRadioState(radioValue.target.value);
-    };
+  const radioOptions = [
+    { label: 'Закупки товаров, работ и услуг', value: 'Закупки товаров, работ и услуг' },
+    { label: 'Поставка продукции (выполнение работ, оказание услуг) заказчикам', value: 'Поставка продукции (выполнение работ, оказание услуг) заказчикам' },
+    { label: 'Передача имущества в аренду (бесплатное пользование)', value: 'Передача имущества в аренду (бесплатное пользование)' },
+    { label: 'Совместная деятельность', value: 'Совместная деятельность' },
+    { label: 'Финансирование (кредитование, обеспечение исполнения обязательств)', value: 'Финансирование (кредитование, обеспечение исполнения обязательств)' },
+    { label: 'Прочие обязательства', value: 'Прочие обязательства' }
+  ]
+  const [radioState, setRadioState] = useState(1)
 
-    return (
+  const RadioOnChange = (radioValue) => {
+    setRadioState(radioValue.target.value)
+  }
+
+  return (
         <Form
             form={props.form4}
             name="DocumentsForm4"
@@ -68,7 +68,7 @@ let Insert4 = React.memo((props) => {
             scrollToFirstError
             autoComplete="off"
 
-            onValuesChange={(changedValues, allValues) => { setState(Object.assign({}, state, { ...allValues, })) }}
+            onValuesChange={(changedValues, allValues) => { setState(Object.assign({}, state, { ...allValues })) }}
         >
             <h4>ЛИСТ СОГЛАСОВАНИЯ НА ЗАКУП ТРУ ДЛЯ ВНУТРИЗАВОДСКИХ НУЖД И КАПИТАЛЬНЫХ ЗАТРАТ</h4>
             <Form.Item
@@ -76,10 +76,10 @@ let Insert4 = React.memo((props) => {
                 label='Наименование контрагента'
                 labelCol={{ span: 24 }}
                 rules={[
-                    {
-                        required: true,
-                        message: 'Необходимо для заполнения!',
-                    },
+                  {
+                    required: true,
+                    message: 'Необходимо для заполнения!'
+                  }
                 ]}
             >
                 <Input placeholder="Наименование контрагента" />
@@ -90,10 +90,10 @@ let Insert4 = React.memo((props) => {
                 labelCol={{ span: 24 }}
                 className='form-checkbox'
                 rules={[
-                    {
-                        required: true,
-                        message: 'Необходимо для заполнения!',
-                    },
+                  {
+                    required: true,
+                    message: 'Необходимо для заполнения!'
+                  }
                 ]}
             >
                 <Radio.Group disabled={props.disabled} onChange={RadioOnChange} options={radioOptions} className='form-radio' value={radioState} />
@@ -103,18 +103,18 @@ let Insert4 = React.memo((props) => {
                 label="Общая сумма договора"
                 labelCol={{ span: 24 }}
                 rules={[
-                    {
-                        required: true,
-                        message: 'Необходимо для заполнения!',
-                    },
-                    {
-                        pattern: price_pattern,
-                        message: 'Можно использовать только цифры!',
-                    },
-                    {
-                        pattern:price_max_count,
-                        message:'Общая сумма договора не должна привышать 99999999'
-                    }
+                  {
+                    required: true,
+                    message: 'Необходимо для заполнения!'
+                  },
+                  {
+                    pattern: price_pattern,
+                    message: 'Можно использовать только цифры!'
+                  },
+                  {
+                    pattern: price_max_count,
+                    message: 'Общая сумма договора не должна привышать 99999999'
+                  }
                 ]}
             >
                 <Input disabled={props.disabled} placeholder="Общая сумма договора" />
@@ -124,10 +124,10 @@ let Insert4 = React.memo((props) => {
                 label="Валюта платежа"
                 labelCol={{ span: 24 }}
                 rules={[
-                    {
-                        required: true,
-                        message: 'Необходимо для заполнения!',
-                    }
+                  {
+                    required: true,
+                    message: 'Необходимо для заполнения!'
+                  }
                 ]}
             >
                 <Input disabled={props.disabled} placeholder="Валюта платежа" />
@@ -137,10 +137,10 @@ let Insert4 = React.memo((props) => {
                 label='Наименование подразделения, фамилия ответственного исполнителя'
                 labelCol={{ span: 24 }}
                 rules={[
-                    {
-                        required: true,
-                        message: 'Необходимо для заполнения!',
-                    }
+                  {
+                    required: true,
+                    message: 'Необходимо для заполнения!'
+                  }
                 ]}
             >
                 <Input disabled={props.disabled} placeholder="Наименование подразделения, фамилия ответственного исполнителя" />
@@ -150,10 +150,10 @@ let Insert4 = React.memo((props) => {
                 label='Телефон исполнителя'
                 labelCol={{ span: 24 }}
                 rules={[
-                    {
-                        required: true,
-                        message: 'Необходимо для заполнения!',
-                    }
+                  {
+                    required: true,
+                    message: 'Необходимо для заполнения!'
+                  }
                 ]}
             >
                 <Input disabled={props.disabled} placeholder="Телефон исполнителя" />
@@ -163,10 +163,10 @@ let Insert4 = React.memo((props) => {
                 label='Контакты контрагента'
                 labelCol={{ span: 24 }}
                 rules={[
-                    {
-                        required: true,
-                        message: 'Необходимо для заполнения!',
-                    }
+                  {
+                    required: true,
+                    message: 'Необходимо для заполнения!'
+                  }
                 ]}
             >
                 <Input disabled={props.disabled} placeholder="Контакты контрагента" />
@@ -176,28 +176,28 @@ let Insert4 = React.memo((props) => {
                 label="Файлы"
                 labelCol={{ span: 24 }}
                 rules={[
-                    {
-                        required: true,
-                        message: 'Необходимо загрузить хотя бы один файл.',
-                    }
+                  {
+                    required: true,
+                    message: 'Необходимо загрузить хотя бы один файл.'
+                  }
                 ]}
             >
                 <UploadFile
                     showUploadList={true}
-                    action={"https://" + constants.host + ":" + constants.port + "/document-control/orders"}
+                    action={'https://' + constants.host + ':' + constants.port + '/document-control/orders'}
                     multiple={true}
                     maxCount={50}
-                    /*accept={".doc,.docx,.xls,.xlsx,.ppt,.pptx,image/*,*.pdf"}*/
+                    /* accept={".doc,.docx,.xls,.xlsx,.ppt,.pptx,image/*,*.pdf"} */
                     onChange={(info) => {
-                        const { status } = info.file;
-                        if (status !== 'uploading') {
-                            console.log('info.file', info.file, info.fileList);
-                        }
-                        if (status === 'done') {
-                            message.success(`${info.file.name} - загружен успешно.`);
-                        } else if (status === 'error') {
-                            message.error(`${info.file.name} - ошибка при загрузке.`);
-                        }
+                      const { status } = info.file
+                      if (status !== 'uploading') {
+                        console.log('info.file', info.file, info.fileList)
+                      }
+                      if (status === 'done') {
+                        message.success(`${info.file.name} - загружен успешно.`)
+                      } else if (status === 'error') {
+                        message.error(`${info.file.name} - ошибка при загрузке.`)
+                      }
                     }}
                 />
             </Form.Item>
@@ -227,7 +227,7 @@ let Insert4 = React.memo((props) => {
             >
             </Form.Item>
         </Form>
-    )
+  )
 })
 
-export default Insert4;
+export default Insert4

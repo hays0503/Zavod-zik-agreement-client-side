@@ -1,21 +1,21 @@
-import { gql } from '@apollo/client';
+import { gql } from '@apollo/client'
 
-let AllDocumentsGQL = {
-    exemplar: 'document',
-    table: 'documents',
-    options: {
-        all: {
-            variables: {
-                documents: { global: { } }
-            },
-            fetchPolicy: 'cache-only'
-        },
-        one: {
-            fetchPolicy: 'standby'
-        }
+const AllDocumentsGQL = {
+  exemplar: 'document',
+  table: 'documents',
+  options: {
+    all: {
+      variables: {
+
+      },
+      fetchPolicy: 'cache-only'
     },
-    select: {
-        all: gql`
+    one: {
+      fetchPolicy: 'standby'
+    }
+  },
+  select: {
+    all: gql`
         query documents ($documents: JSON) {
             documents(documents:$documents) {
                 id
@@ -110,7 +110,7 @@ let AllDocumentsGQL = {
                 route_data
             }
         }`,
-        one: gql`
+    one: gql`
         query documents ($documents: JSON) {
             documents(documents:$documents) {
                 id
@@ -220,9 +220,9 @@ let AllDocumentsGQL = {
             }
         }
     `
-    },
-    subscription: {
-        all: [gql`
+  },
+  subscription: {
+    all: [gql`
     subscription documents ($documents: JSON){
         documents(documents: $documents){
             id
@@ -272,9 +272,9 @@ let AllDocumentsGQL = {
             route_data
         }
     }`
-        ]
-    },
-    insert: gql`
+    ]
+  },
+  insert: gql`
    mutation insertDocument($document: JSON) {
     insertDocument(document: $document) {
         type
@@ -282,7 +282,7 @@ let AllDocumentsGQL = {
     }
 }
 `,
-    update: gql`
+  update: gql`
     mutation updateDocument($document: JSON) {
     updateDocument(document: $document) {
         type
@@ -290,7 +290,7 @@ let AllDocumentsGQL = {
     }
 }
 `,
-    delete: gql`
+  delete: gql`
     mutation deleteDocument($document: JSON) {
     deleteDocument(document: $document) {
         type
@@ -298,13 +298,14 @@ let AllDocumentsGQL = {
     }
 }
 `,
-    setIsReadTrue: gql`
+  setIsReadTrue: gql`
     mutation setIsReadTrue($document: JSON) {
     setIsReadTrue(document: $document) {
         type
         message
     }
 }
-`};
+`
+}
 
 export default AllDocumentsGQL

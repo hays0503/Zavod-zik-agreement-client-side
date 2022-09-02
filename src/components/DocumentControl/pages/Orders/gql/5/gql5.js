@@ -1,20 +1,20 @@
-import { gql } from '@apollo/client';
-let variables = {};
+import { gql } from '@apollo/client'
+const variables = {}
 
-let gql5 = {
-    exemplar: 'document',
-    table: 'documents',
-    options: {
-        all: {
-            variables: variables,
-            fetchPolicy: 'cache-only'
-        },
-        one: {
-            fetchPolicy: 'standby'
-        }
+const gql5 = {
+  exemplar: 'document',
+  table: 'documents',
+  options: {
+    all: {
+      variables,
+      fetchPolicy: 'cache-only'
     },
-    select: {
-        all: gql`
+    one: {
+      fetchPolicy: 'standby'
+    }
+  },
+  select: {
+    all: gql`
         query documents ($documents: JSON) {
             documents(documents:$documents) {
                 id
@@ -49,7 +49,7 @@ let gql5 = {
                 route_data
             }
         }`,
-        one: gql`
+    one: gql`
             query documents ($documents: JSON) {
                 documents(documents:$documents) {
                     id
@@ -98,9 +98,9 @@ let gql5 = {
                 }
             }
         `
-    },
-    subscription: {
-        all: [gql`
+  },
+  subscription: {
+    all: [gql`
         subscription documents ($documents: JSON){
             documents(documents: $documents){
                 id
@@ -137,9 +137,9 @@ let gql5 = {
                 route_data
             }
         }`
-        ]
-    },
-    insert: gql`
+    ]
+  },
+  insert: gql`
        mutation insertDocument($document: JSON) {
         insertDocument(document: $document) {
             type
@@ -147,7 +147,7 @@ let gql5 = {
         }
     }
     `,
-    update: gql`
+  update: gql`
         mutation updateDocument($document: JSON) {
         updateDocument(document: $document) {
             type
@@ -155,7 +155,7 @@ let gql5 = {
         }
     }
     `,
-    delete: gql`
+  delete: gql`
         mutation deleteDocument($document: JSON) {
         deleteDocument(document: $document) {
             type
@@ -163,6 +163,6 @@ let gql5 = {
         }
     }
     `
-};
+}
 
-export default gql5;
+export default gql5

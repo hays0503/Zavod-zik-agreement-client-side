@@ -1,28 +1,27 @@
-import React, { useEffect, useState } from 'react';
-import { gql, useMutation } from '@apollo/client';
-import { handlerQuery, getDDMMYYYHHmm } from '../../../core/functions';
-import { Modal, Popconfirm, Select, Button, Form, DatePicker, Input } from 'antd';
-import 'moment/locale/ru';
-import locale from 'antd/es/date-picker/locale/ru_RU';
+import React, { useEffect, useState } from 'react'
+import { gql, useMutation } from '@apollo/client'
+import { handlerQuery, getDDMMYYYHHmm } from '../../../core/functions'
+import { Modal, Popconfirm, Select, Button, Form, DatePicker, Input } from 'antd'
+import 'moment/locale/ru'
+import locale from 'antd/es/date-picker/locale/ru_RU'
 
-let TasksDoneDialog = React.memo((props) => {
-
-    let users = {
-        exemplar: 'user',
-        table: 'users',
-        options: {
-            all: {
-                variables: {
-                    users: { global: { ORDER_BY: ['username asc'] } }
-                },
-                fetchPolicy: 'cache-only'
-            },
-            one: {
-                fetchPolicy: 'standby'
-            }
+const TasksDoneDialog = React.memo((props) => {
+  const users = {
+    exemplar: 'user',
+    table: 'users',
+    options: {
+      all: {
+        variables: {
+          users: { global: { ORDER_BY: ['username asc'] } }
         },
-        select: {
-            all: gql`
+        fetchPolicy: 'cache-only'
+      },
+      one: {
+        fetchPolicy: 'standby'
+      }
+    },
+    select: {
+      all: gql`
             query users ($users: JSON) {
                 users(users: $users) {
                     id
@@ -36,7 +35,7 @@ let TasksDoneDialog = React.memo((props) => {
                 }
             }
         `,
-            one: gql`
+      one: gql`
             query users ($users: JSON) {
                 users(users: $users) {
                     id
@@ -51,9 +50,9 @@ let TasksDoneDialog = React.memo((props) => {
                 }
             }
         `
-        },
-        subscription: {
-            all: gql`
+    },
+    subscription: {
+      all: gql`
             subscription users ($users: JSON) {
                 users(users: $users) {
                     id
@@ -67,35 +66,35 @@ let TasksDoneDialog = React.memo((props) => {
                 }
             }
         `
-        }
     }
+  }
 
-    const { loading, data, refetch } = handlerQuery(users, 'all')();
-    useEffect(() => { refetch() }, []);
+  const { loading, data, refetch } = handlerQuery(users, 'all')()
+  useEffect(() => { refetch() }, [])
 
-    /*const [mutateAddTask, { loading: loadingMutation, error: errorMutation }] = useMutation(updateDocumentRoutePosition, {
+  /* const [mutateAddTask, { loading: loadingMutation, error: errorMutation }] = useMutation(updateDocumentRoutePosition, {
         onCompleted: (data) => console.log("Data from mutation", data),
         onError: (error) => console.error("Error creating a post", error)
-    });*/
+    }); */
 
-    const [state, setState] = useState({});
+  const [state, setState] = useState({})
 
-    let onFinish = (values) => {
-        console.log('values', values)
-        console.log('datef', getDDMMYYYHHmm(values.deadline._d));
-    }
+  const onFinish = (values) => {
+    console.log('values', values)
+    console.log('datef', getDDMMYYYHHmm(values.deadline._d))
+  }
 
-    console.log('propsS', props)
+  console.log('propsS', props)
 
-    const [form] = Form.useForm();
-    useEffect(() => { form.setFieldsValue(state) }, [state]);
+  const [form] = Form.useForm()
+  useEffect(() => { form.setFieldsValue(state) }, [state])
 
-    //date & time utils
-    const onChangeDatePicker = (date, dateString) => {
-        console.log('datep',date, dateString);
-    };
+  // date & time utils
+  const onChangeDatePicker = (date, dateString) => {
+    console.log('datep', date, dateString)
+  }
 
-    return (
+  return (
         <>
             <Modal
                 title={'Создание поручения'}
@@ -112,9 +111,9 @@ let TasksDoneDialog = React.memo((props) => {
                     <Popconfirm
                         title={'Отправить поручение?'}
                         placement="topLeft"
-                        disabled={state.recepient ? false : true}
+                        disabled={!state.recepient}
                         onConfirm={async () => {
-                            await form.submit();
+                          await form.submit()
                         }}
                         okText="Да"
                         cancelText="Нет">
@@ -132,7 +131,7 @@ let TasksDoneDialog = React.memo((props) => {
                     onFinish={onFinish}
                     scrollToFirstError
                     autoComplete="off"
-                    onValuesChange={(changedValues, allValues) => { setState(Object.assign({}, state, { ...allValues, })) }}
+                    onValuesChange={(changedValues, allValues) => { setState(Object.assign({}, state, { ...allValues })) }}
                 >
                     <Form.Item
                         label="Выберите получателя"
@@ -141,22 +140,22 @@ let TasksDoneDialog = React.memo((props) => {
                         wrapperCol={{ span: 12 }}
                         name="recepient"
                         rules={[
-                            {
-                                required: true,
-                                message: 'Необходимо для заполнения!'
-                            },
+                          {
+                            required: true,
+                            message: 'Необходимо для заполнения!'
+                          }
                         ]}
                     >
                         <Select
-                            style={{ width: 100 + "%" }}
+                            style={{ width: 100 + '%' }}
                             showSearch
                             optionFilterProp="children"
                             filterOption
                             {...props}
                         >
                             <Select.Option key={null} value={null}></Select.Option>
-                            {data?.users?.map((item,i) => {
-                                return (
+                            {data?.users?.map((item, i) => {
+                              return (
                                     <Select.Option key={item.id} value={item.fio}>
                                         {data?.users[i]?.fio}
                                     </Select.Option>)
@@ -171,16 +170,16 @@ let TasksDoneDialog = React.memo((props) => {
                         wrapperCol={{ span: 12 }}
                         name="deadline"
                         rules={[
-                            {
-                                required: true,
-                                message: 'Необходимо для заполнения!'
-                            },
+                          {
+                            required: true,
+                            message: 'Необходимо для заполнения!'
+                          }
                         ]}
                     >
                         <DatePicker
                             locale={locale}
-                            format={"DD-MM-YYYY HH:mm"}
-                            showTime={{ format: "HH:mm" }}
+                            format={'DD-MM-YYYY HH:mm'}
+                            showTime={{ format: 'HH:mm' }}
                             onChange={onChangeDatePicker}
                         />
                     </Form.Item>
@@ -191,10 +190,10 @@ let TasksDoneDialog = React.memo((props) => {
                         wrapperCol={{ span: 12 }}
                         name="note"
                         rules={[
-                            {
-                                required: true,
-                                message: 'Необходимо для заполнения!'
-                            },
+                          {
+                            required: true,
+                            message: 'Необходимо для заполнения!'
+                          }
                         ]}
                     >
                         <Input.TextArea rows={5}/>
@@ -202,7 +201,7 @@ let TasksDoneDialog = React.memo((props) => {
                 </Form>
             </Modal>
         </>
-    );
-});
+  )
+})
 
-export default TasksDoneDialog;
+export default TasksDoneDialog

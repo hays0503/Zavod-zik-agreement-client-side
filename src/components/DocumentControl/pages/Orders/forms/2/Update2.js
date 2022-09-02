@@ -1,121 +1,120 @@
-import { EyeOutlined } from '@ant-design/icons';
-import { Button, Form, Input, Divider, Row, Col, Typography,Steps } from 'antd';
-import React, { useEffect, useState } from 'react';
-import { useUser, formatDate, getDiffHours } from '../../../../../../core/functions';
+import { EyeOutlined } from '@ant-design/icons'
+import { Button, Form, Input, Divider, Row, Col, Typography, Steps } from 'antd'
+import React, { useEffect, useState } from 'react'
+import { useUser, formatDate, getDiffHours } from '../../../../../../core/functions'
 
-import SelectReplacementDialog from '../../../../dialogs/SelectReplacementDialog';
+import SelectReplacementDialog from '../../../../dialogs/SelectReplacementDialog'
 
-let Update2 = React.memo((props) => {
-    let user = useUser();
-    const price_pattern = /^\d+$/;
-    const { Title, Link } = Typography;
+const Update2 = React.memo((props) => {
+  const user = useUser()
+  const price_pattern = /^\d+$/
+  const { Title, Link } = Typography
 
-    const { Step } = Steps;
-    const [visible, setVisible] = useState(false);
-    let [routesList, setRoutesList] = useState([{ positionName: 'Тип договора не выбран.' }])
-    let [stepCount, setStepCount] = useState({ step: '0' })
+  const { Step } = Steps
+  const [visible, setVisible] = useState(false)
+  const [routesList, setRoutesList] = useState([{ positionName: 'Тип договора не выбран.' }])
+  const [stepCount, setStepCount] = useState({ step: '0' })
 
-    const [state, setState] = useState({
-        log_username: user.username,
-    });
+  const [state, setState] = useState({
+    log_username: user.username
+  })
 
-    let OpenDocument = async (item) => {
-        console.log("PROPS", item.id)
-        const tmp = await fetch('/api/files', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(
-                { user:Number(user.id),item:item.id }
-            )
-        })
-        const content = await tmp.json();
-        if (content != undefined) {
-            console.log("RESULT", content)
-        }
+  const OpenDocument = async (item) => {
+    console.log('PROPS', item.id)
+    const tmp = await fetch('/api/files', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(
+        { user: Number(user.id), item: item.id }
+      )
+    })
+    const content = await tmp.json()
+    if (content != undefined) {
+      console.log('RESULT', content)
     }
+  }
 
-    useEffect(() => { props.form2.setFieldsValue(state) }, [state]);
+  useEffect(() => { props.form2.setFieldsValue(state) }, [state])
 
-    useEffect(() => {
-        if (props.initialValues2) {
-            console.log('props.initialValues 22222', props.initialValues2)
-            setState({
-                id: props.initialValues2.documents[0].id,
-                title: props.initialValues2.documents[0].title,
-                position: props.initialValues2.documents[0].position,
-                username: props.initialValues2.documents[0].username,
-                fio: props.initialValues2.documents[0].fio,
+  useEffect(() => {
+    if (props.initialValues2) {
+      console.log('props.initialValues 22222', props.initialValues2)
+      setState({
+        id: props.initialValues2.documents[0].id,
+        title: props.initialValues2.documents[0].title,
+        position: props.initialValues2.documents[0].position,
+        username: props.initialValues2.documents[0].username,
+        fio: props.initialValues2.documents[0].fio,
 
-                price: props.initialValues2.documents[0].data_agreement_list[0].price,
-                subject: props.initialValues2.documents[0].data_agreement_list[0].subject,
+        price: props.initialValues2.documents[0].data_agreement_list[0].price,
+        subject: props.initialValues2.documents[0].data_agreement_list[0].subject,
 
-                currency_price: props.initialValues2.documents[0].data_agreement_list[0].currency_price,
-                executor_name_division: props.initialValues2.documents[0].data_agreement_list[0].executor_name_division,
-                sider_signatures_date: props.initialValues2.documents[0].data_agreement_list[0].sider_signatures_date,
-                received_from_counteragent_date: props.initialValues2.documents[0].data_agreement_list[0].received_from_counteragent_date,
+        currency_price: props.initialValues2.documents[0].data_agreement_list[0].currency_price,
+        executor_name_division: props.initialValues2.documents[0].data_agreement_list[0].executor_name_division,
+        sider_signatures_date: props.initialValues2.documents[0].data_agreement_list[0].sider_signatures_date,
+        received_from_counteragent_date: props.initialValues2.documents[0].data_agreement_list[0].received_from_counteragent_date,
 
-                date_created: props.initialValues2.documents[0].date_created,
-                date_modified: props.initialValues2.documents[0].date_modified,
-                route_id: props.initialValues2.documents[0].route_id.id,
-                status_in_process: props.initialValues2.documents[0].route_id.status_in_process,
-                status_cancelled: props.initialValues2.documents[0].route_id.status_cancelled,
-                status_finished: props.initialValues2.documents[0].route_id.status_finished,
-                status_id: props.initialValues2.documents[0].status_id,
-                route: props.initialValues2.documents[0].route_data,
-                step: props.initialValues2.documents[0].step,
-                comments: props.initialValues2.documents[0].comments,
-                signatures: props.initialValues2.documents[0].signatures,
-                files: props.initialValues2.documents[0].files,
-                log_username: state.log_username
-            });
-            console.log('props.initialValues 2', props.initialValues2)
-            setStepCount({ step: props.initialValues2.documents[0].step })
-            setRoutesList(props.initialValues2.documents[0].route_data)
-        }
-    }, [props.initialValues2]);
-
-
-    let onFinish = (values) => {
-        props.onFinish2(state);
-        console.log('+++++++++++++++++++++++', values);
+        date_created: props.initialValues2.documents[0].date_created,
+        date_modified: props.initialValues2.documents[0].date_modified,
+        route_id: props.initialValues2.documents[0].route_id.id,
+        status_in_process: props.initialValues2.documents[0].route_id.status_in_process,
+        status_cancelled: props.initialValues2.documents[0].route_id.status_cancelled,
+        status_finished: props.initialValues2.documents[0].route_id.status_finished,
+        status_id: props.initialValues2.documents[0].status_id,
+        route: props.initialValues2.documents[0].route_data,
+        step: props.initialValues2.documents[0].step,
+        comments: props.initialValues2.documents[0].comments,
+        signatures: props.initialValues2.documents[0].signatures,
+        files: props.initialValues2.documents[0].files,
+        log_username: state.log_username
+      })
+      console.log('props.initialValues 2', props.initialValues2)
+      setStepCount({ step: props.initialValues2.documents[0].step })
+      setRoutesList(props.initialValues2.documents[0].route_data)
     }
+  }, [props.initialValues2])
 
-    let download = async (e) => {
-        let id = e.target.dataset.fileid
-        await fetch("/get-file", {
-            method: "POST",
-            body: JSON.stringify({ id: e.target.dataset.fileid }),
-            headers: {
-                "Content-Type": "application/json"
-            }
-        }).then(response => {
-            return response.json()
-        }).then(response => {
-            let result = response.result
-            let link = document.createElement('a')
-            link.href = result.data_file /*result.data_file.slice(result.data_file.indexOf(',')+1) */
-            link.download = result.filename
-            link.click()
-        })
-    }
+  const onFinish = (values) => {
+    props.onFinish2(state)
+    console.log('+++++++++++++++++++++++', values)
+  }
 
-    let radioOptions = [
-        {label:'Закупки товаров, работ и услуг', value:'1'},
-        {label:'Поставка продукции (выполнение работ, оказание услуг) заказчикам',value:'2'},
-        {label:'Передача имущества в аренду (бесплатное пользование)',value:'3'},
-        {label:'Совместная деятельность',value:'4'},
-        {label:'Финансирование (кредитование, обеспечение исполнения обязательств)',value:'5'},
-        {label:'Прочие обязательства',value:'6'}
-    ]
-    const[radioState, setRadioState] = useState(props?.initialValues2?.documents[0]?.data_agreement_list[0]?.subject);
+  const download = async (e) => {
+    const id = e.target.dataset.fileid
+    await fetch('/get-file', {
+      method: 'POST',
+      body: JSON.stringify({ id: e.target.dataset.fileid }),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then(response => {
+      return response.json()
+    }).then(response => {
+      const result = response.result
+      const link = document.createElement('a')
+      link.href = result.data_file /* result.data_file.slice(result.data_file.indexOf(',')+1) */
+      link.download = result.filename
+      link.click()
+    })
+  }
 
-    const RadioOnChange = (radioValue) => {
-        setRadioState(radioValue.target.value);
-    };
+  const radioOptions = [
+    { label: 'Закупки товаров, работ и услуг', value: '1' },
+    { label: 'Поставка продукции (выполнение работ, оказание услуг) заказчикам', value: '2' },
+    { label: 'Передача имущества в аренду (бесплатное пользование)', value: '3' },
+    { label: 'Совместная деятельность', value: '4' },
+    { label: 'Финансирование (кредитование, обеспечение исполнения обязательств)', value: '5' },
+    { label: 'Прочие обязательства', value: '6' }
+  ]
+  const [radioState, setRadioState] = useState(props?.initialValues2?.documents[0]?.data_agreement_list[0]?.subject)
 
-    return (
+  const RadioOnChange = (radioValue) => {
+    setRadioState(radioValue.target.value)
+  }
+
+  return (
         <Form
             form={props.form2}
             name="DocumentsForm2"
@@ -123,7 +122,7 @@ let Update2 = React.memo((props) => {
             scrollToFirstError
             autoComplete="off"
 
-            onValuesChange={(changedValues, allValues) => { setState(Object.assign({}, state, { ...allValues, })) }}
+            onValuesChange={(changedValues, allValues) => { setState(Object.assign({}, state, { ...allValues })) }}
 
         >
             <h4><b>Тип договора:</b> Лист согласования на реализацию готовой продукции</h4>
@@ -170,7 +169,7 @@ let Update2 = React.memo((props) => {
                 labelCol={{ span: 24 }}
             >
                 {props?.initialValues2?.documents[0].files.map((item) => {
-                    return (<>
+                  return (<>
                         <div className='document-view-wrap'>
                             <Link><a data-fileid={item.id} onClick={download}>{item.filename}</a></Link> <Button onClick={() => { OpenDocument(item) }} shape="circle" icon={<EyeOutlined />}/> <br />
                         </div>
@@ -184,8 +183,8 @@ let Update2 = React.memo((props) => {
                 label="Подписи"
                 labelCol={{ span: 24 }}
             >
-                {props?.initialValues2?.documents[0].signatures.map((item) => {  //remove commentsList
-                    return (<>
+                {props?.initialValues2?.documents[0].signatures.map((item) => { // remove commentsList
+                  return (<>
                         <div className='signature-view-wrap'>
                             <span className='signature-view-position'>
                                 {item.position}
@@ -204,35 +203,35 @@ let Update2 = React.memo((props) => {
                 <Steps labelPlacement="vertical" size="small" current={stepCount.step - 1} className="steps-form-update">
                     {
                         props?.initialValues2?.documents[0].route_data.map((item, i) => {
-                            return (
+                          return (
                                 <>
                                     <Step
                                         title={item.positionName}
                                         onClick={() => {
-                                            console.log('step click', item);
-                                            if (props.initialValues2.documents[0].step == i + 1) {
-                                                setVisible(true)
-                                            }
+                                          console.log('step click', item)
+                                          if (props.initialValues2.documents[0].step == i + 1) {
+                                            setVisible(true)
+                                          }
                                         }}
                                         subTitle={
-                                            i == stepCount.step - 1 && state?.signatures?.length > 0 || stepCount.step == 1 ?
-                                                (() => {
-                                                    if (stepCount.step == 1 && i == 0) {
-                                                        let tmpD = getDiffHours(new Date(state.date_created), new Date());
-                                                        console.log('tmpD1', tmpD)
-                                                        return tmpD?.toString()
-                                                    }
-                                                    if (i != 0 && state?.signatures[i - 1]?.date_signature) {
-                                                        let tmpD = getDiffHours(new Date(state.signatures[state.signatures.length - 1].date_signature), new Date());
-                                                        console.log('tmpD2', tmpD)
-                                                        return tmpD?.toString()
-                                                    }
+                                            i == stepCount.step - 1 && state?.signatures?.length > 0 || stepCount.step == 1
+                                              ? (() => {
+                                                  if (stepCount.step == 1 && i == 0) {
+                                                    const tmpD = getDiffHours(new Date(state.date_created), new Date())
+                                                    console.log('tmpD1', tmpD)
+                                                    return tmpD?.toString()
+                                                  }
+                                                  if (i != 0 && state?.signatures[i - 1]?.date_signature) {
+                                                    const tmpD = getDiffHours(new Date(state.signatures[state.signatures.length - 1].date_signature), new Date())
+                                                    console.log('tmpD2', tmpD)
+                                                    return tmpD?.toString()
+                                                  }
                                                 })()
-                                                : null
+                                              : null
                                         }
                                     />
                                 </>
-                            )
+                          )
                         })
                     }
                 </Steps>
@@ -247,10 +246,10 @@ let Update2 = React.memo((props) => {
             </Form.Item>
             <div>
                 {props?.initialValues2?.documents[0]?.reason?.map((item) => {
-                    return (<span>
+                  return (<span>
                         <span>{item.text + '-' + item.userPosition}</span><br />
                         </span>
-                    )
+                  )
                 })}
             </div>
             {/* <Row>
@@ -286,7 +285,7 @@ let Update2 = React.memo((props) => {
                 <Input.TextArea rows={7} name='comment' onChange={props.HandleCommentOnChange}/>
                 <Button onClick={props.HandleComment} className="marginTop">Оставить комментарий</Button>
                 {props.commentsList.map((item) => {
-                    return (
+                  return (
                         <div className='comments'>
                             <li className='comment-item'>
                                 <span className='user-position-comment'>{item.position}</span>
@@ -296,11 +295,11 @@ let Update2 = React.memo((props) => {
                             </li>
                         </div>
 
-                    )
+                  )
                 })}
 
             </Form.Item>
-            
+
             <Form.Item
                 name="date_created"
                 hidden={true}
@@ -327,9 +326,7 @@ let Update2 = React.memo((props) => {
             >
             </Form.Item>
         </Form>
-    )
-});
+  )
+})
 
-
-
-export default Update2;
+export default Update2

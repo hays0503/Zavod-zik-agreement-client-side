@@ -1,30 +1,30 @@
-import { DeleteOutlined, QuestionCircleOutlined } from '@ant-design/icons';
-import { gql, useMutation } from '@apollo/client';
-import { Button, Form, Input, Popconfirm, Tree } from 'antd';
-import React, { useEffect, useState } from 'react';
-import { handlerQuery, handlerMutation, useUser } from '../../../core/functions';
-import ModalInsert from '../../../core/modal/ModalInsert';
-import ModalUpdate from '../../../core/modal/ModalUpdate';
-import TableContainer from '../../../core/TableContainer';
-import TitleMenu from '../../../core/TitleMenu';
-import test from "../../../core/functions/test";
+import { DeleteOutlined, QuestionCircleOutlined } from '@ant-design/icons'
+import { gql, useMutation } from '@apollo/client'
+import { Button, Form, Input, Popconfirm, Tree } from 'antd'
+import React, { useEffect, useState } from 'react'
+import { handlerQuery, handlerMutation, useUser } from '../../../core/functions'
+import ModalInsert from '../../../core/modal/ModalInsert'
+import ModalUpdate from '../../../core/modal/ModalUpdate'
+import TableContainer from '../../../core/TableContainer'
+import TitleMenu from '../../../core/TitleMenu'
+import test from '../../../core/functions/test'
 
-let users = {
-    exemplar: 'user',
-    table: 'users',
-    options: {
-        all: {
-            variables: {
-                users: { global: { ORDER_BY: ['username asc'] } }
-            },
-            fetchPolicy: 'cache-only'
-        },
-        one: {
-            fetchPolicy: 'standby'
-        }
+const users = {
+  exemplar: 'user',
+  table: 'users',
+  options: {
+    all: {
+      variables: {
+        users: { global: { ORDER_BY: ['username asc'] } }
+      },
+      fetchPolicy: 'cache-only'
     },
-    select: {
-        all: gql`
+    one: {
+      fetchPolicy: 'standby'
+    }
+  },
+  select: {
+    all: gql`
             query users ($users: JSON) {
                 users(users: $users) {
                     id
@@ -37,7 +37,7 @@ let users = {
                 }
             }
         `,
-        one: gql`
+    one: gql`
             query users ($users: JSON) {
                 users(users: $users) {
                     id
@@ -51,9 +51,9 @@ let users = {
                 }
             }
         `
-    },
-    subscription: {
-        all: gql`
+  },
+  subscription: {
+    all: gql`
             subscription users ($users: JSON) {
                 users(users: $users) {
                     id
@@ -66,8 +66,8 @@ let users = {
                 }
             }
         `
-    },
-    insert: gql`
+  },
+  insert: gql`
         mutation insertUser($user: JSON) {
             insertUser(user: $user) {
                 message
@@ -75,7 +75,7 @@ let users = {
             }
         }
     `,
-    update: gql`
+  update: gql`
         mutation updateUser($user: JSON) {
             updateUser(user: $user) {
                 message
@@ -83,7 +83,7 @@ let users = {
             }
         }
     `,
-    delete: gql`
+  delete: gql`
         mutation deleteUser($user: JSON) {
             deleteUser(user: $user) {
                 message
@@ -94,22 +94,22 @@ let users = {
 
 }
 
-let positions = {
-    exemplar: 'positions',
-    table: 'positions',
-    options: {
-        all: {
-            variables: {
-                positions: { global: { ORDER_BY: ['name asc'] } }
-            },
-            fetchPolicy: 'cache-only'
-        },
-        one: {
-            fetchPolicy: 'standby'
-        }
+const positions = {
+  exemplar: 'positions',
+  table: 'positions',
+  options: {
+    all: {
+      variables: {
+        positions: { global: { ORDER_BY: ['name asc'] } }
+      },
+      fetchPolicy: 'cache-only'
     },
-    select: {
-        all: gql`
+    one: {
+      fetchPolicy: 'standby'
+    }
+  },
+  select: {
+    all: gql`
             query positions ($positions: JSON) {
                 positions (positions: $positions) {
                     id
@@ -118,7 +118,7 @@ let positions = {
                 }
             }
         `,
-        one: gql`
+    one: gql`
             query positions($positions: JSON) {
                 positions(positions: $positions) {
                     id
@@ -127,9 +127,9 @@ let positions = {
                 }
             }
         `
-    },
-    subscription: {
-        all: gql`
+  },
+  subscription: {
+    all: gql`
             subscription positions ($positions: JSON){
                 positions (positions: $positions) {
                     id
@@ -138,22 +138,22 @@ let positions = {
                 }
             }
         `
-    },
-    insert: gql`
+  },
+  insert: gql`
         mutation insertPosition($positions: JSON) {
             insertPosition(positions: $positions){
                 message
             }
         }
     `,
-    update: gql`
+  update: gql`
         mutation updatePosition($positions: JSON) {
             updatePosition(positions: $positions){
                 message
             }
         }
     `,
-	delete: gql`
+  delete: gql`
         mutation deletePosition($positions: JSON) {
             deletePosition(positions: $positions){
                 message
@@ -162,43 +162,44 @@ let positions = {
     `
 }
 
+const DocumentPositionsPage = React.memo((props) => {
+  const user = useUser()
+  const visibleModalUpdate = useState(false)
 
-let DocumentPositionsPage = React.memo((props) => {
-	let user = useUser();
-    const visibleModalUpdate = useState(false);
-	
-    const [remove, { loading: loadingRemove }] = handlerMutation(useMutation(positions.delete))();
+  const [remove, { loading: loadingRemove }] = handlerMutation(useMutation(positions.delete))()
 
-    const { loading, data, refetch } = handlerQuery(positions, 'all')();
-    useEffect(() => { refetch() }, []);
+  const { loading, data, refetch } = handlerQuery(positions, 'all')()
+  useEffect(() => { refetch() }, [])
 
-    const { loading:loadingUsers, data:usersData, refetch:refetchUsers } = handlerQuery(users, 'all')();
-    useEffect(() => { refetchUsers() }, []);
+  const { loading: loadingUsers, data: usersData, refetch: refetchUsers } = handlerQuery(users, 'all')()
+  useEffect(() => { refetchUsers() }, [])
 
-    let list = (data && data[Object.keys(data)[0]] != null) ? data[Object.keys(data)[0]].map((item) => {
-        return {
-            id: item.id,
-            key: item.id,
-            name: item.name,
-            accesses: item.accesses,
-            count: usersData?.users?.filter(e => e.positions == item.id).length
-        }
-    }) : [];
-    //console.log('list', list, usersData)
-    let dict = test([
-        { title: 'ID', dataIndex: 'id', width: '15px', type:'search', tooltip: true },
-        { title: 'Название', dataIndex: 'name', width: '150px', type: 'search', tooltip: true },
-        { title: 'Кол-во польз.', dataIndex: 'count', width: '50px', tooltip: true }
-    ]);
-    let titleMenu = (tableProps) => {
-        return (<TitleMenu
+  const list = (data && data[Object.keys(data)[0]] != null)
+    ? data[Object.keys(data)[0]].map((item) => {
+      return {
+        id: item.id,
+        key: item.id,
+        name: item.name,
+        accesses: item.accesses,
+        count: usersData?.users?.filter(e => e.positions == item.id).length
+      }
+    })
+    : []
+  // console.log('list', list, usersData)
+  const dict = test([
+    { title: 'ID', dataIndex: 'id', width: '15px', type: 'search', tooltip: true },
+    { title: 'Название', dataIndex: 'name', width: '150px', type: 'search', tooltip: true },
+    { title: 'Кол-во польз.', dataIndex: 'count', width: '50px', tooltip: true }
+  ])
+  const titleMenu = (tableProps) => {
+    return (<TitleMenu
             title='Редактирование должностей'
             buttons={[
                 <ModalInsert title='Добавление должности' GQL={positions} InsertForm={DocumentPositionsForm} />,
                 <ModalUpdate visibleModalUpdate={visibleModalUpdate} title='Редактирование должности' selectedRowKeys={tableProps.selectedRowKeys} GQL={positions} UpdateForm={DocumentPositionsForm} update={true} />,
 				<Popconfirm
                     title="Вы уверены?"
-                    onConfirm={() => { let variables = {}; variables[positions.exemplar] = { id: Number(tableProps.selectedRowKeys[0]), log_username: user.username }; remove({ variables }) }}
+                    onConfirm={() => { const variables = {}; variables[positions.exemplar] = { id: Number(tableProps.selectedRowKeys[0]), log_username: user.username }; remove({ variables }) }}
                     okText="Да"
                     cancelText="Нет"
                     icon={<QuestionCircleOutlined style={{ color: 'red' }} />}
@@ -209,41 +210,41 @@ let DocumentPositionsPage = React.memo((props) => {
             ]}
             selectedRowKeys={tableProps.selectedRowKeys}
         />)
-    };
+  }
 
-    return (
+  return (
         <TableContainer
             data={{ dict, records: list }}
             loading={loading}
             title={titleMenu}
             visibleModalUpdate={visibleModalUpdate}
         />
-    )
-});
+  )
+})
 
-let DocumentPositionsForm = React.memo((props) => {
-	let user = useUser();
+const DocumentPositionsForm = React.memo((props) => {
+  const user = useUser()
   const [state, setState] = useState({
-		log_username:user.username
-    });
+    log_username: user.username
+  })
 
-    useEffect(() => { props.form.setFieldsValue(state) }, [state]);
+  useEffect(() => { props.form.setFieldsValue(state) }, [state])
 
-    useEffect(() => {
-        if (props.initialValues) {
-            setState({
-                id: props.initialValues.positions[0].id,
-                name: props.initialValues.positions[0].name,
-                accesses: props.initialValues.positions[0].accesses,
-			    log_username:state.log_username
-			});
-		}
-    }, [props.initialValues]);
-	
-	let onFinish = (values) => {
-        props.onFinish(state)
+  useEffect(() => {
+    if (props.initialValues) {
+      setState({
+        id: props.initialValues.positions[0].id,
+        name: props.initialValues.positions[0].name,
+        accesses: props.initialValues.positions[0].accesses,
+			    log_username: state.log_username
+      })
     }
-    return (
+  }, [props.initialValues])
+
+  const onFinish = (values) => {
+    props.onFinish(state)
+  }
+  return (
         <Form
             form={props.form}
             name="DocumentPositionsForm"
@@ -251,17 +252,17 @@ let DocumentPositionsForm = React.memo((props) => {
             scrollToFirstError
             autoComplete="off"
 
-            onValuesChange={(changedValues, allValues) => { setState(Object.assign({}, state, { ...allValues, })) }}
-            
+            onValuesChange={(changedValues, allValues) => { setState(Object.assign({}, state, { ...allValues })) }}
+
         >
             <Form.Item
                 name="name"
                 rules={[
-                    {
-                        required: true,
-                        message: 'Необходимо для заполнения!',
-                        whitespace: true,
-                    },
+                  {
+                    required: true,
+                    message: 'Необходимо для заполнения!',
+                    whitespace: true
+                  }
                 ]}
             >
                 <Input disabled={props.disabled} placeholder="Название должности" />
@@ -270,11 +271,11 @@ let DocumentPositionsForm = React.memo((props) => {
             <Form.Item
                 name='accesses'
                 rules={[
-                    {
-                        type: 'array',
-                        required: true,
-                        message: 'Необходимо для заполнения!'
-                    },
+                  {
+                    type: 'array',
+                    required: true,
+                    message: 'Необходимо для заполнения!'
+                  }
                 ]}
             >
                 <PositionsPermissionsTree disabled={props.disabled} />
@@ -286,265 +287,263 @@ let DocumentPositionsForm = React.memo((props) => {
                 <Input disabled={props.disabled}/>
             </Form.Item>
         </Form>
-    )
-});
+  )
+})
 
-let PositionsPermissionsTree = React.memo((props) => {
+const PositionsPermissionsTree = React.memo((props) => {
+  const [autoExpandParent, setAutoExpandParent] = useState(true)
+  const [expandedKeys, setExpandedKeys] = useState([])
 
-    const [autoExpandParent, setAutoExpandParent] = useState(true);
-    const [expandedKeys, setExpandedKeys] = useState([]);
-
-    const treeData = [
+  const treeData = [
+    {
+      title: 'Договора',
+      key: '/document-control-p',
+      children: [
         {
-            title: "Договора",
-            key: "/document-control-p",
-            children: [
-                {
-                    title: "Просмотр",
-                    key: "/document-control-p/select"
-                },
-                {
-                    title: "Добавление",
-                    key: "/document-control-p/insert"
-                },
-                {
-                    title: "Изменение",
-                    key: "/document-control-p/update"
-                },
-                {
-                    title: "Удаление",
-                    key: "/document-control-p/delete"
-                },
-                {
-                    title: "Изменение статуса документа",
-                    key: "/document-control-p/document-status-change"
-                },
-                {
-                    title: "Изменение статуса элементов",
-                    key: "/document-control-p/item-status-change"
-                },
-                {
-                    title: "Мои договора",
-                    key: "/document-control-p/orders-p",
-                    children: [
-                        {
-                            title: "Просмотр",
-                            key: "/document-control-p/orders-p/select"
-                        }
-                    ]
-                },
-                {
-                    title: "На доработку",
-                    key: "/document-control-p/reviseduser-p",
-                    children: [
-                        {
-                            title: "Просмотр",
-                            key: "/document-control-p/reviseduser-p/select"
-                        }
-                    ]
-                },
-                {
-                    title: "Исполненные",
-                    key: "/document-control-p/approveduser-p",
-                    children: [
-                        {
-                            title: "Просмотр",
-                            key: "/document-control-p/approveduser-p/select"
-                        }
-                    ]
-                },
-                {
-                    title: "Отклоненные",
-                    key: "/document-control-p/rejecteduser-p",
-                    children: [
-                        {
-                            title: "Просмотр",
-                            key: "/document-control-p/rejecteduser-p/select"
-                        }
-                    ]
-                },
-                {
-                    title: "На подпись",
-                    key: "/document-control-p/on-approval-p",
-                    children: [
-                        {
-                            title: "Просмотр",
-                            key: "/document-control-p/on-approval-p/select"
-                        }
-                    ]
-                },
-                {
-                    title: "Подписанные",
-                    key: "/document-control-p/on-approval-list-p",
-                    children: [
-                        {
-                            title: "Просмотр",
-                            key: "/document-control-p/on-approval-list-p/select"
-                        }
-                    ]
-                },
-                {
-                    title: "На исполнение",
-                    key: "/document-control-p/for-execution-inbox-p",
-                    children: [
-                        {
-                            title: "Просмотр",
-                            key: "/document-control-p/for-execution-inbox-p/select"
-                        }
-                    ]
-                },
-                {
-                    title: "Все утвеждённые",
-                    key: "/document-control-p/approved-p",
-                    children: [
-                        {
-                            title: "Просмотр",
-                            key: "/document-control-p/approved-p/select"
-                        }
-                    ]
-                },
-                {
-                    title: "Все отклоеннённые",
-                    key: "/document-control-p/rejected-p",
-                    children: [
-                        {
-                            title: "Просмотр",
-                            key: "/document-control-p/rejected-p/select"
-                        }
-                    ]
-                },
-            ]
+          title: 'Просмотр',
+          key: '/document-control-p/select'
         },
         {
-            title: "Отчеты",
-            key: "/document-report-p",
-            children: [
-                {
-                    title: "Просмотр",
-                    key: "/document-report-p/select"
-                },
-                {
-                    title: "Добавление",
-                    key: "/document-report-p/insert"
-                },
-                {
-                    title: "Изменение",
-                    key: "/document-report-p/update"
-                },
-                {
-                    title: "Удаление",
-                    key: "/document-report-p/delete"
-                },
-                {
-                    title: "Изменение статуса документа",
-                    key: "/document-report-p/document-status-change"
-                },
-                {
-                    title: "Изменение статуса элементов",
-                    key: "/document-report-p/item-status-change"
-                },
-            ]
+          title: 'Добавление',
+          key: '/document-control-p/insert'
         },
         {
-            title: "История",
-            key: "/document-hitory-p",
-            children: [
-                {
-                    title: "Просмотр",
-                    key: "/document-hitory-p/select"
-                },
-                {
-                    title: "Добавление",
-                    key: "/document-hitory-p/insert"
-                },
-                {
-                    title: "Изменение",
-                    key: "/document-hitory-p/update"
-                },
-                {
-                    title: "Удаление",
-                    key: "/document-hitory-p/delete"
-                },
-                {
-                    title: "Изменение статуса документа",
-                    key: "/document-hitory-p/document-status-change"
-                },
-                {
-                    title: "Изменение статуса элементов",
-                    key: "/document-hitory-p/item-status-change"
-                },
-
-            ]
+          title: 'Изменение',
+          key: '/document-control-p/update'
         },
         {
-            title: "Поиск",
-            key: "/document-search-p",
-            children: [
-                {
-                    title: "Просмотр",
-                    key: "/document-search-p/select"
-                },
-                {
-                    title: "Добавление",
-                    key: "/document-search-p/insert"
-                },
-                {
-                    title: "Изменение",
-                    key: "/document-search-p/update"
-                },
-                {
-                    title: "Удаление",
-                    key: "/document-search-p/delete"
-                },
-                {
-                    title: "Изменение статуса документа",
-                    key: "/document-search-p/document-status-change"
-                },
-                {
-                    title: "Изменение статуса элементов",
-                    key: "/document-search-p/item-status-change"
-                },
-            ]
+          title: 'Удаление',
+          key: '/document-control-p/delete'
         },
         {
-            title: "Администрация",
-            key: "/admin-p",
-            children: [
-                {
-                    title: "Просмотр",
-                    key: "/admin-p/select"
-                },
-                {
-                    title: "Добавление",
-                    key: "/admin-p/insert"
-                },
-                {
-                    title: "Изменение",
-                    key: "/admin-p/update"
-                },
-                {
-                    title: "Удаление",
-                    key: "/admin-p/delete"
-                },
-                {
-                    title: "Изменение статуса документа",
-                    key: "/admin-p/document-status-change"
-                },
-                {
-                    title: "Изменение статуса элементов",
-                    key: "/admin-p/item-status-change"
-                },
-            ]
+          title: 'Изменение статуса документа',
+          key: '/document-control-p/document-status-change'
+        },
+        {
+          title: 'Изменение статуса элементов',
+          key: '/document-control-p/item-status-change'
+        },
+        {
+          title: 'Мои договора',
+          key: '/document-control-p/orders-p',
+          children: [
+            {
+              title: 'Просмотр',
+              key: '/document-control-p/orders-p/select'
+            }
+          ]
+        },
+        {
+          title: 'На доработку',
+          key: '/document-control-p/reviseduser-p',
+          children: [
+            {
+              title: 'Просмотр',
+              key: '/document-control-p/reviseduser-p/select'
+            }
+          ]
+        },
+        {
+          title: 'Исполненные',
+          key: '/document-control-p/approveduser-p',
+          children: [
+            {
+              title: 'Просмотр',
+              key: '/document-control-p/approveduser-p/select'
+            }
+          ]
+        },
+        {
+          title: 'Отклоненные',
+          key: '/document-control-p/rejecteduser-p',
+          children: [
+            {
+              title: 'Просмотр',
+              key: '/document-control-p/rejecteduser-p/select'
+            }
+          ]
+        },
+        {
+          title: 'На подпись',
+          key: '/document-control-p/on-approval-p',
+          children: [
+            {
+              title: 'Просмотр',
+              key: '/document-control-p/on-approval-p/select'
+            }
+          ]
+        },
+        {
+          title: 'Подписанные',
+          key: '/document-control-p/on-approval-list-p',
+          children: [
+            {
+              title: 'Просмотр',
+              key: '/document-control-p/on-approval-list-p/select'
+            }
+          ]
+        },
+        {
+          title: 'На исполнение',
+          key: '/document-control-p/for-execution-inbox-p',
+          children: [
+            {
+              title: 'Просмотр',
+              key: '/document-control-p/for-execution-inbox-p/select'
+            }
+          ]
+        },
+        {
+          title: 'Все утвеждённые',
+          key: '/document-control-p/approved-p',
+          children: [
+            {
+              title: 'Просмотр',
+              key: '/document-control-p/approved-p/select'
+            }
+          ]
+        },
+        {
+          title: 'Все отклоеннённые',
+          key: '/document-control-p/rejected-p',
+          children: [
+            {
+              title: 'Просмотр',
+              key: '/document-control-p/rejected-p/select'
+            }
+          ]
         }
-    ];
+      ]
+    },
+    {
+      title: 'Отчеты',
+      key: '/document-report-p',
+      children: [
+        {
+          title: 'Просмотр',
+          key: '/document-report-p/select'
+        },
+        {
+          title: 'Добавление',
+          key: '/document-report-p/insert'
+        },
+        {
+          title: 'Изменение',
+          key: '/document-report-p/update'
+        },
+        {
+          title: 'Удаление',
+          key: '/document-report-p/delete'
+        },
+        {
+          title: 'Изменение статуса документа',
+          key: '/document-report-p/document-status-change'
+        },
+        {
+          title: 'Изменение статуса элементов',
+          key: '/document-report-p/item-status-change'
+        }
+      ]
+    },
+    {
+      title: 'История',
+      key: '/document-hitory-p',
+      children: [
+        {
+          title: 'Просмотр',
+          key: '/document-hitory-p/select'
+        },
+        {
+          title: 'Добавление',
+          key: '/document-hitory-p/insert'
+        },
+        {
+          title: 'Изменение',
+          key: '/document-hitory-p/update'
+        },
+        {
+          title: 'Удаление',
+          key: '/document-hitory-p/delete'
+        },
+        {
+          title: 'Изменение статуса документа',
+          key: '/document-hitory-p/document-status-change'
+        },
+        {
+          title: 'Изменение статуса элементов',
+          key: '/document-hitory-p/item-status-change'
+        }
 
+      ]
+    },
+    {
+      title: 'Поиск',
+      key: '/document-search-p',
+      children: [
+        {
+          title: 'Просмотр',
+          key: '/document-search-p/select'
+        },
+        {
+          title: 'Добавление',
+          key: '/document-search-p/insert'
+        },
+        {
+          title: 'Изменение',
+          key: '/document-search-p/update'
+        },
+        {
+          title: 'Удаление',
+          key: '/document-search-p/delete'
+        },
+        {
+          title: 'Изменение статуса документа',
+          key: '/document-search-p/document-status-change'
+        },
+        {
+          title: 'Изменение статуса элементов',
+          key: '/document-search-p/item-status-change'
+        }
+      ]
+    },
+    {
+      title: 'Администрация',
+      key: '/admin-p',
+      children: [
+        {
+          title: 'Просмотр',
+          key: '/admin-p/select'
+        },
+        {
+          title: 'Добавление',
+          key: '/admin-p/insert'
+        },
+        {
+          title: 'Изменение',
+          key: '/admin-p/update'
+        },
+        {
+          title: 'Удаление',
+          key: '/admin-p/delete'
+        },
+        {
+          title: 'Изменение статуса документа',
+          key: '/admin-p/document-status-change'
+        },
+        {
+          title: 'Изменение статуса элементов',
+          key: '/admin-p/item-status-change'
+        }
+      ]
+    }
+  ]
 
-    return (
+  return (
         <Tree
             checkable
             onExpand={(expandedKeys) => {
-                setExpandedKeys(expandedKeys);
-                setAutoExpandParent(false);
+              setExpandedKeys(expandedKeys)
+              setAutoExpandParent(false)
             }}
             expandedKeys={expandedKeys}
             autoExpandParent={autoExpandParent}
@@ -553,7 +552,7 @@ let PositionsPermissionsTree = React.memo((props) => {
             treeData={treeData}
             disabled={props.disabled}
         />
-    );
-});
+  )
+})
 
-export default DocumentPositionsPage;
+export default DocumentPositionsPage

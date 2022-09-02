@@ -1,27 +1,24 @@
-import { EyeOutlined } from '@ant-design/icons';
-import { useMutation, useQuery, gql } from '@apollo/client';
-import { Button, Form, Modal, message } from 'antd';
-import React, { useEffect, useState, useRef } from 'react';
-import { handlerQuery, handlerMutation, useUser } from '../../../../../core/functions';
+import { EyeOutlined } from '@ant-design/icons'
+import { useMutation, useQuery, gql } from '@apollo/client'
+import { Button, Form, Modal, message } from 'antd'
+import React, { useEffect, useState, useRef } from 'react'
+import { handlerQuery, handlerMutation, useUser } from '../../../../../core/functions'
 
-
-
-let ModalUpdate = React.memo(({ GQL, GQL2, GQL3, GQL4, GQL5, UpdateForm, UpdateForm2, UpdateForm3, UpdateForm4, UpdateForm5, ...props }) => {
-
-    const document = {
-        exemplar: 'document',
-        table: 'documents',
-        options: {
-            all: {
-                variables: { documents: { global: { id: `=${props.selectedRowKeys[1]}`, ORDER_BY: ['date_created desc'] } } },
-                fetchPolicy: 'cache-only'
-            },
-            one: {
-                fetchPolicy: 'standby'
-            }
-        },
-        select: {
-            all: gql`
+const ModalUpdate = React.memo(({ GQL, GQL2, GQL3, GQL4, GQL5, UpdateForm, UpdateForm2, UpdateForm3, UpdateForm4, UpdateForm5, ...props }) => {
+  const document = {
+    exemplar: 'document',
+    table: 'documents',
+    options: {
+      all: {
+        variables: { documents: { global: { id: `=${props.selectedRowKeys[1]}`, ORDER_BY: ['date_created desc'] } } },
+        fetchPolicy: 'cache-only'
+      },
+      one: {
+        fetchPolicy: 'standby'
+      }
+    },
+    select: {
+      all: gql`
         query documents ($documents: JSON) {
             documents(documents:$documents) {
                 id
@@ -103,7 +100,7 @@ let ModalUpdate = React.memo(({ GQL, GQL2, GQL3, GQL4, GQL5, UpdateForm, UpdateF
                 route_data
             }
         }`,
-            one: gql`
+      one: gql`
             query documents ($documents: JSON) {
                 documents(documents:$documents) {
                     id
@@ -199,9 +196,9 @@ let ModalUpdate = React.memo(({ GQL, GQL2, GQL3, GQL4, GQL5, UpdateForm, UpdateF
                 }
             }
         `
-        },
-        subscription: {
-            all: [gql`
+    },
+    subscription: {
+      all: [gql`
         subscription documents ($documents: JSON){
             documents(documents: $documents){
                 id
@@ -236,9 +233,9 @@ let ModalUpdate = React.memo(({ GQL, GQL2, GQL3, GQL4, GQL5, UpdateForm, UpdateF
                 route_data
             }
         }`
-            ]
-        },
-        insert: gql`
+      ]
+    },
+    insert: gql`
        mutation insertDocument($document: JSON) {
         insertDocument(document: $document) {
             type
@@ -246,7 +243,7 @@ let ModalUpdate = React.memo(({ GQL, GQL2, GQL3, GQL4, GQL5, UpdateForm, UpdateF
         }
     }
     `,
-        update: gql`
+    update: gql`
         mutation updateDocument($document: JSON) {
         updateDocument(document: $document) {
             type
@@ -254,7 +251,7 @@ let ModalUpdate = React.memo(({ GQL, GQL2, GQL3, GQL4, GQL5, UpdateForm, UpdateF
         }
     }
     `,
-        delete: gql`
+    delete: gql`
         mutation deleteDocument($document: JSON) {
         deleteDocument(document: $document) {
             type
@@ -262,7 +259,7 @@ let ModalUpdate = React.memo(({ GQL, GQL2, GQL3, GQL4, GQL5, UpdateForm, UpdateF
         }
     }
     `,
-        setIsReadTrue: gql`
+    setIsReadTrue: gql`
     mutation setIsReadTrue($document: JSON) {
     setIsReadTrue(document: $document) {
         type
@@ -270,78 +267,77 @@ let ModalUpdate = React.memo(({ GQL, GQL2, GQL3, GQL4, GQL5, UpdateForm, UpdateF
     }
     }
     `
-    };
+  }
 
-    let uploadDocuments = async (files) => {
+  const uploadDocuments = async (files) => {
+    console.log(files)
+    const filePromises = files.map((file) => {
+      // Return a promise per file
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader()
+        reader.onload = async (e) => {
+          resolve({ dataFile: e.target.result, fileName: file.name })
+        }
+        reader.onerror = (error) => {
+          reject(error)
+        }
+        reader.readAsDataURL(file.originFileObj)
+      })
+    })
 
-        console.log(files)
-        const filePromises = files.map((file) => {
-            // Return a promise per file
-            return new Promise((resolve, reject) => {
-                const reader = new FileReader();
-                reader.onload = async (e) => {
-                    resolve({ dataFile: e.target.result, fileName: file.name })
-                };
-                reader.onerror = (error) => {
-                    reject(error);
-                };
-                reader.readAsDataURL(file.originFileObj);
-            });
-        });
+    // Wait for all promises to be resolved
+    const fileInfos = await Promise.all(filePromises)
 
-        // Wait for all promises to be resolved
-        const fileInfos = await Promise.all(filePromises);
+    console.log('COMPLETED')
 
-        console.log('COMPLETED');
+    // Profit
+    return fileInfos
+  }
 
-        // Profit
-        return fileInfos;
-    };
+  const [form] = Form.useForm()
+  const [form2] = Form.useForm()
+  const [form3] = Form.useForm()
+  const [form4] = Form.useForm()
+  const [form5] = Form.useForm()
 
-    const [form] = Form.useForm();
-    const [form2] = Form.useForm();
-    const [form3] = Form.useForm();
-    const [form4] = Form.useForm();
-    const [form5] = Form.useForm();
+  const [viewMode, setViewMode] = useState(true)
+  const [visible, setVisible] = props.visibleModalUpdate ? props.visibleModalUpdate : []
+  const [visible2, setVisible2] = props.visibleModalUpdate2 ? props.visibleModalUpdate2 : []
+  const [visible3, setVisible3] = props.visibleModalUpdate3 ? props.visibleModalUpdate3 : []
+  const [visible4, setVisible4] = props.visibleModalUpdate4 ? props.visibleModalUpdate4 : []
+  const [visible5, setVisible5] = props.visibleModalUpdate5 ? props.visibleModalUpdate5 : []
 
-    const [viewMode, setViewMode] = useState(true);
-    const [visible, setVisible] = props.visibleModalUpdate ? props.visibleModalUpdate : [];
-    const [visible2, setVisible2] = props.visibleModalUpdate2 ? props.visibleModalUpdate2 : [];
-    const [visible3, setVisible3] = props.visibleModalUpdate3 ? props.visibleModalUpdate3 : [];
-    const [visible4, setVisible4] = props.visibleModalUpdate4 ? props.visibleModalUpdate4 : [];
-    const [visible5, setVisible5] = props.visibleModalUpdate5 ? props.visibleModalUpdate5: [];
+  const variables1 = {}; variables1[GQL.table] = GQL.table ? { global: { id: `= ${props.selectedRowKeys[0]}` } } : {}
 
-    let variables1 = {}; variables1[GQL.table] = GQL.table ? { global: { id: `= ${props.selectedRowKeys[0]}` } } : {};
+  const { loading: loadingOne, data, refetch } = handlerQuery(GQL, 'one', { variables1 })()
+  const { loading: loadingTwo, data: data2, refetch: refetch2 } = handlerQuery(GQL, 'one', { variables1 })()
+  const { loading: loadingThree, data: data3, refetch: refetch3 } = handlerQuery(GQL, 'one', { variables1 })()
+  const { loading: loadingFour, data: data4, refetch: refetch4 } = handlerQuery(GQL, 'one', { variables1 })()
+  const { loading: loadingFive, data: data5, refetch: refetch5 } = handlerQuery(GQL, 'one', { variables1 })()
 
-    const { loading: loadingOne, data, refetch } = handlerQuery(GQL, 'one', { variables1 })();
-    const { loading: loadingTwo, data: data2, refetch: refetch2 } = handlerQuery(GQL, 'one', { variables1 })();
-    const { loading: loadingThree, data: data3, refetch: refetch3 } = handlerQuery(GQL, 'one', { variables1 })();
-    const { loading: loadingFour, data: data4, refetch: refetch4 } = handlerQuery(GQL, 'one', { variables1 })();
-    const { loading: loadingFive, data: data5, refetch: refetch5 } = handlerQuery(GQL, 'one', { variables1 })();
+  useEffect(() => { if (visible) { refetch(variables1) }; }, [visible])
+  useEffect(() => { if (visible2) { refetch2(variables1) }; }, [visible2])
+  useEffect(() => { if (visible3) { refetch3(variables1) }; }, [visible3])
+  useEffect(() => { if (visible4) { refetch4(variables1) }; }, [visible4])
+  useEffect(() => { if (visible5) { refetch5(variables1) }; }, [visible5])
 
-    useEffect(() => { if (visible) { refetch(variables1) }; }, [visible]);
-    useEffect(() => { if (visible2) { refetch2(variables1) }; }, [visible2]);
-    useEffect(() => { if (visible3) { refetch3(variables1) }; }, [visible3]);
-    useEffect(() => { if (visible4) { refetch4(variables1) }; }, [visible4]);
-    useEffect(() => { if (visible5) { refetch5(variables1) }; }, [visible5]);
+  // ------------documents
+  const documentVariables = { documents: { global: { id: `=${props.selectedRowKeys[1]}`, ORDER_BY: ['date_created desc'] } } }
+  const { loading: loadingData, data: documentData, refetch: refetchData } = handlerQuery(document, 'one', { variables1 })()
+  const { loading: loadingData2, data: documentData2, refetch: refetchData2 } = handlerQuery(document, 'one', { variables1 })()
+  const { loading: loadingData3, data: documentData3, refetch: refetchData3 } = handlerQuery(document, 'one', { variables1 })()
+  const { loading: loadingData4, data: documentData4, refetch: refetchData4 } = handlerQuery(document, 'one', { variables1 })()
+  const { loading: loadingData5, data: documentData5, refetch: refetchData5 } = handlerQuery(document, 'one', { variables1 })()
 
-    //------------documents
-    let documentVariables = { documents: { global: { id: `=${props.selectedRowKeys[1]}`, ORDER_BY: ['date_created desc'] } } }
-    const { loading: loadingData, data: documentData, refetch: refetchData } = handlerQuery(document, 'one', { variables1 })();
-    const { loading: loadingData2, data: documentData2, refetch: refetchData2 } = handlerQuery(document, 'one', { variables1 })();
-    const { loading: loadingData3, data: documentData3, refetch: refetchData3 } = handlerQuery(document, 'one', { variables1 })();
-    const { loading: loadingData4, data: documentData4, refetch: refetchData4 } = handlerQuery(document, 'one', { variables1 })();
-    const { loading: loadingData5, data: documentData5, refetch: refetchData5 } = handlerQuery(document, 'one', { variables1 })();
+  useEffect(() => { if (visible) { refetchData(documentVariables) } }, [visible])
+  useEffect(() => { if (visible2) { refetchData2(documentVariables) } }, [visible2])
+  useEffect(() => { if (visible3) { refetchData3(documentVariables) } }, [visible3])
+  useEffect(() => { if (visible4) { refetchData4(documentVariables) } }, [visible4])
+  useEffect(() => { if (visible5) { refetchData5(documentVariables) } }, [visible5])
 
-    useEffect(() => { if (visible) { refetchData(documentVariables) } }, [visible]);
-    useEffect(() => { if (visible2) { refetchData2(documentVariables) } }, [visible2]);
-    useEffect(() => { if (visible3) { refetchData3(documentVariables) } }, [visible3])
-    useEffect(() => { if (visible4) { refetchData4(documentVariables) } }, [visible4])
-    useEffect(() => { if (visible5) { refetchData5(documentVariables) } }, [visible5])
-
-    //------------mutations
-    const [update, { loading: loadingUpdate }] = handlerMutation(useMutation(GQL.update), () => { setVisible(false) })();
-    return (
+  // ------------mutations
+  const [update, { loading: loadingUpdate }] = handlerMutation(useMutation(GQL.update), () => { setVisible(false) })()
+  return (
         <>
             <Button
                 type="primary"
@@ -362,17 +358,17 @@ let ModalUpdate = React.memo(({ GQL, GQL2, GQL3, GQL4, GQL5, UpdateForm, UpdateF
                     initialValues={data}
                     form={form}
                     onFinish={async (values) => {
-                        let variables = {};
-                        let base64 = [];
-                        if (values?.files?.fileList) {
-                            await uploadDocuments(values.files.fileList).then(result => {
-                                base64 = result
-                            });
-                        };
-                        setVisible(false);
-                        variables[GQL.exemplar] = { id: props.selectedRowKeys[0], status: 2, user_id: values.user_id_created, docs: base64 ? base64 : [], report: values.report }
-                        console.log('variables-------123', variables)
-                        update({ variables })
+                      const variables = {}
+                      let base64 = []
+                      if (values?.files?.fileList) {
+                        await uploadDocuments(values.files.fileList).then(result => {
+                          base64 = result
+                        })
+                      };
+                      setVisible(false)
+                      variables[GQL.exemplar] = { id: props.selectedRowKeys[0], status: 2, user_id: values.user_id_created, docs: base64 || [], report: values.report }
+                      console.log('variables-------123', variables)
+                      update({ variables })
                     }}
                 />
             </Modal>
@@ -388,17 +384,17 @@ let ModalUpdate = React.memo(({ GQL, GQL2, GQL3, GQL4, GQL5, UpdateForm, UpdateF
                     initialValues={data2}
                     form={form2}
                     onFinish={async (values) => {
-                        let variables = {};
-                        let base64 = [];
-                        if (values?.files?.fileList) {
-                            await uploadDocuments(values.files.fileList).then(result => {
-                                base64 = result
-                            });
-                        };
-                        setVisible2(false)
-                        variables[GQL.exemplar] = { id: props.selectedRowKeys[0], status: 2, user_id: values.user_id_created, docs: base64 ? base64 : [], report: values.report }
-                        console.log('variables-------123', variables)
-                        update({ variables })
+                      const variables = {}
+                      let base64 = []
+                      if (values?.files?.fileList) {
+                        await uploadDocuments(values.files.fileList).then(result => {
+                          base64 = result
+                        })
+                      };
+                      setVisible2(false)
+                      variables[GQL.exemplar] = { id: props.selectedRowKeys[0], status: 2, user_id: values.user_id_created, docs: base64 || [], report: values.report }
+                      console.log('variables-------123', variables)
+                      update({ variables })
                     }}
                 />
             </Modal>
@@ -414,17 +410,17 @@ let ModalUpdate = React.memo(({ GQL, GQL2, GQL3, GQL4, GQL5, UpdateForm, UpdateF
                     initialValues={data3}
                     form={form3}
                     onFinish={async (values) => {
-                        let variables = {};
-                        let base64 = [];
-                        if (values?.files?.fileList) {
-                            await uploadDocuments(values.files.fileList).then(result => {
-                                base64 = result
-                            });
-                        };
-                        setVisible3(false)
-                        variables[GQL.exemplar] = { id: props.selectedRowKeys[0], status: 2, user_id: values.user_id_created, docs: base64 ? base64 : [], report: values.report }
-                        console.log('variables-------123', variables)
-                        update({ variables })
+                      const variables = {}
+                      let base64 = []
+                      if (values?.files?.fileList) {
+                        await uploadDocuments(values.files.fileList).then(result => {
+                          base64 = result
+                        })
+                      };
+                      setVisible3(false)
+                      variables[GQL.exemplar] = { id: props.selectedRowKeys[0], status: 2, user_id: values.user_id_created, docs: base64 || [], report: values.report }
+                      console.log('variables-------123', variables)
+                      update({ variables })
                     }}
                 />
             </Modal>
@@ -440,17 +436,17 @@ let ModalUpdate = React.memo(({ GQL, GQL2, GQL3, GQL4, GQL5, UpdateForm, UpdateF
                     initialValues={data4}
                     form={form4}
                     onFinish={async (values) => {
-                        let variables = {};
-                        let base64 = [];
-                        if (values?.files?.fileList) {
-                            await uploadDocuments(values.files.fileList).then(result => {
-                                base64 = result
-                            });
-                        };
-                        setVisible4(false)
-                        variables[GQL.exemplar] = { id: props.selectedRowKeys[0], status: 2, user_id: values.user_id_created, docs: base64 ? base64 : [], report: values.report }
-                        console.log('variables-------123', variables)
-                        update({ variables })
+                      const variables = {}
+                      let base64 = []
+                      if (values?.files?.fileList) {
+                        await uploadDocuments(values.files.fileList).then(result => {
+                          base64 = result
+                        })
+                      };
+                      setVisible4(false)
+                      variables[GQL.exemplar] = { id: props.selectedRowKeys[0], status: 2, user_id: values.user_id_created, docs: base64 || [], report: values.report }
+                      console.log('variables-------123', variables)
+                      update({ variables })
                     }}
                 />
             </Modal>
@@ -466,22 +462,22 @@ let ModalUpdate = React.memo(({ GQL, GQL2, GQL3, GQL4, GQL5, UpdateForm, UpdateF
                     initialValues={data5}
                     form={form5}
                     onFinish={async (values) => {
-                        let variables = {};
-                        let base64 = [];
-                        if (values?.files?.fileList) {
-                            await uploadDocuments(values.files.fileList).then(result => {
-                                base64 = result
-                            });
-                        };
-                        setVisible5(false)
-                        variables[GQL.exemplar] = { id: props.selectedRowKeys[0], status: 2, user_id: values.user_id_created, docs: base64 ? base64 : [], report: values.report }
-                        console.log('variables-------123', variables)
-                        update({ variables })
+                      const variables = {}
+                      let base64 = []
+                      if (values?.files?.fileList) {
+                        await uploadDocuments(values.files.fileList).then(result => {
+                          base64 = result
+                        })
+                      };
+                      setVisible5(false)
+                      variables[GQL.exemplar] = { id: props.selectedRowKeys[0], status: 2, user_id: values.user_id_created, docs: base64 || [], report: values.report }
+                      console.log('variables-------123', variables)
+                      update({ variables })
                     }}
                 />
             </Modal>
         </>
-    )
+  )
 })
 
 export default ModalUpdate

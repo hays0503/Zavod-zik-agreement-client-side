@@ -1,48 +1,48 @@
-import { Form, Input, message } from "antd";
-import React, { useEffect, useState } from "react";
-import { useUser } from "../../../../../../core/functions";
-import constants from "../../../../../../config/constants";
-import UploadFile from "../../../../modals/UploadFile";
+import { Form, Input, message } from 'antd'
+import React, { useEffect, useState } from 'react'
+import { useUser } from '../../../../../../core/functions'
+import constants from '../../../../../../config/constants'
+import UploadFile from '../../../../modals/UploadFile'
 
-let Insert1 = React.memo((props) => {
-	let user = useUser();
-	const price_pattern = /^\d+$/;
-	const price_max_count = /^.{1,8}$/;
-	const [state, setState] = useState({
-		log_username: user.username,
-	});
+const Insert1 = React.memo((props) => {
+  const user = useUser()
+  const price_pattern = /^\d+$/
+  const price_max_count = /^.{1,8}$/
+  const [state, setState] = useState({
+    log_username: user.username
+  })
 
-	useEffect(() => {
-		props.form.setFieldsValue(state);
-	}, [state]);
+  useEffect(() => {
+    props.form.setFieldsValue(state)
+  }, [state])
 
-	useEffect(() => {
-		if (props.initialValues) {
-			setState({
-				id: props.initialValues.documents[0].id,
-				title: props.initialValues.documents[0].title,
-				price: props.initialValues.documents[0].data_one[0].price,
-				supllier: props.initialValues.documents[0].data_one[0].supllier,
-				subject: props.initialValues.documents[0].data_one[0].subject,
-				date_created: props.initialValues.documents[0].date_created,
-				date_modified: props.initialValues.documents[0].date_modified,
-				route_id: props.initialValues.documents[0].route_id.id,
-				status_in_process:
+  useEffect(() => {
+    if (props.initialValues) {
+      setState({
+        id: props.initialValues.documents[0].id,
+        title: props.initialValues.documents[0].title,
+        price: props.initialValues.documents[0].data_one[0].price,
+        supllier: props.initialValues.documents[0].data_one[0].supllier,
+        subject: props.initialValues.documents[0].data_one[0].subject,
+        date_created: props.initialValues.documents[0].date_created,
+        date_modified: props.initialValues.documents[0].date_modified,
+        route_id: props.initialValues.documents[0].route_id.id,
+        status_in_process:
 					props.initialValues.documents[0].route_id.status_in_process,
-				status_id: props.initialValues.documents[0].status_id,
-				step: props.initialValues.documents[0].step,
-				comments: props.initialValues.documents[0].comments,
-				files: props.initialValues.documents[0].files,
-				log_username: state.log_username,
-			});
-		}
-	}, [props.initialValues]);
+        status_id: props.initialValues.documents[0].status_id,
+        step: props.initialValues.documents[0].step,
+        comments: props.initialValues.documents[0].comments,
+        files: props.initialValues.documents[0].files,
+        log_username: state.log_username
+      })
+    }
+  }, [props.initialValues])
 
-	let onFinish = (values) => {
-		props.onFinish(state);
-	};
+  const onFinish = (values) => {
+    props.onFinish(state)
+  }
 
-	return (
+  return (
 		<Form
 			form={props.form}
 			name="DocumentsForm"
@@ -50,7 +50,7 @@ let Insert1 = React.memo((props) => {
 			scrollToFirstError
 			autoComplete="off"
 			onValuesChange={(changedValues, allValues) => {
-				setState(Object.assign({}, state, { ...allValues }));
+			  setState(Object.assign({}, state, { ...allValues }))
 			}}
 		>
 			<Form.Item
@@ -58,10 +58,10 @@ let Insert1 = React.memo((props) => {
 				label="Наименование ТРУ"
 				labelCol={{ span: 24 }}
 				rules={[
-					{
-						required: true,
-						message: "Необходимо для заполнения!",
-					},
+				  {
+				    required: true,
+				    message: 'Необходимо для заполнения!'
+				  }
 				]}
 			>
 				<Input disabled={props.disabled} placeholder="Наименование ТРУ" />
@@ -71,10 +71,10 @@ let Insert1 = React.memo((props) => {
 				label="Поставщик ТРУ"
 				labelCol={{ span: 24 }}
 				rules={[
-					{
-						required: true,
-						message: "Необходимо для заполнения!",
-					},
+				  {
+				    required: true,
+				    message: 'Необходимо для заполнения!'
+				  }
 				]}
 			>
 				<Input disabled={props.disabled} placeholder="Поставщик ТРУ" />
@@ -84,10 +84,10 @@ let Insert1 = React.memo((props) => {
 				label="Основание"
 				labelCol={{ span: 24 }}
 				rules={[
-					{
-						required: true,
-						message: "Необходимо для заполнения!",
-					},
+				  {
+				    required: true,
+				    message: 'Необходимо для заполнения!'
+				  }
 				]}
 			>
 				<Input.TextArea
@@ -101,18 +101,18 @@ let Insert1 = React.memo((props) => {
 				label="Общая сумма договора"
 				labelCol={{ span: 24 }}
 				rules={[
-					{
-						required: true,
-						message: "Необходимо для заполнения!",
-					},
-					{
-						pattern: price_pattern,
-						message: "Можно использовать только цифры!",
-					},
-					{
-						pattern: price_max_count,
-						message: "Общая сумма договора не должна превышать 99999999",
-					},
+				  {
+				    required: true,
+				    message: 'Необходимо для заполнения!'
+				  },
+				  {
+				    pattern: price_pattern,
+				    message: 'Можно использовать только цифры!'
+				  },
+				  {
+				    pattern: price_max_count,
+				    message: 'Общая сумма договора не должна превышать 99999999'
+				  }
 				]}
 			>
 				<Input disabled={props.disabled} placeholder="Общая сумма договора" />
@@ -122,34 +122,34 @@ let Insert1 = React.memo((props) => {
 				label="Файлы"
 				labelCol={{ span: 24 }}
 				rules={[
-					{
-						required: true,
-						message: "Необходимо загрузить хотя бы один файл.",
-					},
+				  {
+				    required: true,
+				    message: 'Необходимо загрузить хотя бы один файл.'
+				  }
 				]}
 			>
 				<UploadFile
 					showUploadList={true}
 					action={
-						"https://" +
+						'https://' +
 						constants.host +
-						":" +
+						':' +
 						constants.port +
-						"/document-control/orders"
+						'/document-control/orders'
 					}
 					multiple={true}
 					maxCount={50}
-					/*accept={".doc,.docx,.xls,.xlsx,.ppt,.pptx,image/*,*.pdf"}*/
+					/* accept={".doc,.docx,.xls,.xlsx,.ppt,.pptx,image/*,*.pdf"} */
 					onChange={(info) => {
-						const { status } = info.file;
-						if (status !== "uploading") {
-							console.log("info.file", info.file, info.fileList);
-						}
-						if (status === "done") {
-							message.success(`${info.file.name} - загружен успешно.`);
-						} else if (status === "error") {
-							message.error(`${info.file.name} - ошибка при загрузке.`);
-						}
+					  const { status } = info.file
+					  if (status !== 'uploading') {
+					    console.log('info.file', info.file, info.fileList)
+					  }
+					  if (status === 'done') {
+					    message.success(`${info.file.name} - загружен успешно.`)
+					  } else if (status === 'error') {
+					    message.error(`${info.file.name} - ошибка при загрузке.`)
+					  }
 					}}
 				/>
 			</Form.Item>
@@ -159,7 +159,7 @@ let Insert1 = React.memo((props) => {
 			<Form.Item name="step" hidden={true}></Form.Item>
 			<Form.Item name="log_username" hidden={true}></Form.Item>
 		</Form>
-	);
-});
+  )
+})
 
-export default Insert1;
+export default Insert1

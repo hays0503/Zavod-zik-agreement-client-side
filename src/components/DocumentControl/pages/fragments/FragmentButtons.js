@@ -1,9 +1,8 @@
 
-import { Row, Col, Divider, Space, Button } from 'antd';
-
+import { Row, Col, Divider, Space, Button } from 'antd'
 
 /**
- * Фрагмент antd с кнопками для форм 
+ * Фрагмент antd с кнопками для форм
  * @param {func} ApproveConfirm
  * @param {func} ReturnToSenderConfirm
  * @param {func} ReturnStepBackConfirm
@@ -13,8 +12,8 @@ import { Row, Col, Divider, Space, Button } from 'antd';
  * @param {func} setState
  * @param {func} user
  */
-export const FragmentButtons = (props) =>{
-    return (
+export const FragmentButtons = (props) => {
+  return (
         <>
         <Row>
                 <Col span={24}>
@@ -39,5 +38,5 @@ export const FragmentButtons = (props) =>{
                 </Col>
             </Row>
         </>
-    )
+  )
 }

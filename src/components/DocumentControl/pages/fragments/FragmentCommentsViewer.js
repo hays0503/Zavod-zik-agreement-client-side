@@ -1,19 +1,19 @@
-import { Form, Steps, Input, Button } from 'antd';
-import React from 'react';
-import { formatDate } from '../../../../core/functions';
+import { Form, Steps, Input, Button } from 'antd'
+import React from 'react'
+import { formatDate } from '../../../../core/functions'
 
- const { Step } = Steps;
+const { Step } = Steps
 
 /**
- * Фрагмент antd дающую возможность просматривать комментарии к документам 
- * @param HandleCommentOnChange 
+ * Фрагмент antd дающую возможность просматривать комментарии к документам
+ * @param HandleCommentOnChange
  * @param disabled
  * @param HandleComment
  * @param commentsList
  * @param item
  */
-let FragmentCommentsViewer = (props) => {
-    return (     
+const FragmentCommentsViewer = (props) => {
+  return (
         <Form.Item
         className='font-form-header'
         name="comments"
@@ -23,7 +23,7 @@ let FragmentCommentsViewer = (props) => {
         <Input.TextArea rows={7} name='comment' onChange={props.HandleCommentOnChange} disabled={props.disabled} />
         <Button disabled={props.disabled} onClick={() => { props.HandleComment(props.form) }} className="marginTop">Оставить комментарий</Button>
         {props?.commentsList.map((item) => {
-            return (
+          return (
                 <div className='comments'>
                     <li className='comment-item'>
                         <span className='user-position-comment'>{item.position}</span>
@@ -33,14 +33,9 @@ let FragmentCommentsViewer = (props) => {
                     </li>
                 </div>
 
-            )
+          )
         })}
     </Form.Item>
-)
+  )
 }
 export default FragmentCommentsViewer
-
-
-
-
-

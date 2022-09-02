@@ -1,133 +1,131 @@
-import { EyeOutlined } from '@ant-design/icons';
-import { Button, Form, Input, Typography, Space, Divider, Row, Col, Steps, Checkbox, Popconfirm, message, Radio } from 'antd';
-import React, { useEffect, useState } from 'react';
-import { useUser, formatDate } from '../../../../core/functions';
+import { EyeOutlined } from '@ant-design/icons'
+import { Button, Form, Input, Typography, Space, Divider, Row, Col, Steps, Checkbox, Popconfirm, message, Radio } from 'antd'
+import React, { useEffect, useState } from 'react'
+import { useUser, formatDate } from '../../../../core/functions'
 
+import ApproveConfirm from './dialogs/ApproveConfirm'
+import RejectConfirm from './dialogs/RejectConfirm'
+import ReturnStepBackConfirm from './dialogs/ReturnStepBackConfirm'
+import ReturnToSenderConfirm from './dialogs/ReturnToSenderConfirm'
 
-import ApproveConfirm from './dialogs/ApproveConfirm';
-import RejectConfirm from './dialogs/RejectConfirm';
-import ReturnStepBackConfirm from './dialogs/ReturnStepBackConfirm';
-import ReturnToSenderConfirm from './dialogs/ReturnToSenderConfirm';
+const Update3 = React.memo((props) => {
+  const user = useUser()
+  const price_pattern = /^\d+$/
+  const { Title, Link } = Typography
+  const { Step } = Steps
 
+  const [state, setState] = useState({
+    log_username: user.username
+  })
 
-let Update3 = React.memo((props) => {
-    let user = useUser();
-    const price_pattern = /^\d+$/;
-    const { Title, Link } = Typography;
-    const { Step } = Steps;
-
-    const [state, setState] = useState({
-        log_username: user.username,
-    });
-
-    let OpenDocument = async (item) => {
-        // setBtnLoad(true)
-        console.log("PROPS", item.id)
-        // console.log('RECORD',props.record)
-        const tmp = await fetch('/api/files', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(
-                { user:Number(user.id),item:item.id }
-            )
-        })
-        const content = await tmp.json();
-        if (content != undefined) {
-            console.log("RESULT", content)
-        }
+  const OpenDocument = async (item) => {
+    // setBtnLoad(true)
+    console.log('PROPS', item.id)
+    // console.log('RECORD',props.record)
+    const tmp = await fetch('/api/files', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(
+        { user: Number(user.id), item: item.id }
+      )
+    })
+    const content = await tmp.json()
+    if (content != undefined) {
+      console.log('RESULT', content)
     }
+  }
 
-    useEffect(() => {
-        props.form3.setFieldsValue(state);
-        console.log("state3 form", state)
-    }, [state]);
-    let [routesList, setRoutesList] = useState([{ positionName: 'Тип договора не выбран.' }])
-    let [stepCount, setStepCount] = useState({ step: '0' })
-    useEffect(() => {
-        if (props.initialValues3) {
-            setState({
-                id: props.initialValues3.documents[0].id,
-                title: props.initialValues3.documents[0].title,
-                position: props.initialValues3.documents[0].position,
-                username: props.initialValues3.documents[0].username,
-                fio: props.initialValues3.documents[0].fio,
+  useEffect(() => {
+    props.form3.setFieldsValue(state)
+    console.log('state3 form', state)
+  }, [state])
+  const [routesList, setRoutesList] = useState([{ positionName: 'Тип договора не выбран.' }])
+  const [stepCount, setStepCount] = useState({ step: '0' })
+  useEffect(() => {
+    if (props.initialValues3) {
+      setState({
+        id: props.initialValues3.documents[0].id,
+        title: props.initialValues3.documents[0].title,
+        position: props.initialValues3.documents[0].position,
+        username: props.initialValues3.documents[0].username,
+        fio: props.initialValues3.documents[0].fio,
 
-                price: props.initialValues3.documents[0].data_agreement_list_production[0].price,
-                subject: props.initialValues3.documents[0].data_agreement_list_production[0].subject,
-                currency: props.initialValues3.documents[0].data_agreement_list_production[0].currency,
-                executor_name_division: props.initialValues3.documents[0].data_agreement_list_production[0].executor_name_division,
-                executor_phone_number: props.initialValues3.documents[0].data_agreement_list_production[0].executor_phone_number,
-                counteragent_contacts: props.initialValues3.documents[0].data_agreement_list_production[0].counteragent_contacts,
+        price: props.initialValues3.documents[0].data_agreement_list_production[0].price,
+        subject: props.initialValues3.documents[0].data_agreement_list_production[0].subject,
+        currency: props.initialValues3.documents[0].data_agreement_list_production[0].currency,
+        executor_name_division: props.initialValues3.documents[0].data_agreement_list_production[0].executor_name_division,
+        executor_phone_number: props.initialValues3.documents[0].data_agreement_list_production[0].executor_phone_number,
+        counteragent_contacts: props.initialValues3.documents[0].data_agreement_list_production[0].counteragent_contacts,
 
-                date_created: props.initialValues3.documents[0].date_created,
-                date_modified: props.initialValues3.documents[0].date_modified,
-                route_id: props.initialValues3.documents[0].route_id.id,
-                status_in_process: props.initialValues3.documents[0].route_id.status_in_process,
-                status_cancelled: props.initialValues3.documents[0].route_id.status_cancelled,
-                status_finished: props.initialValues3.documents[0].route_id.status_finished,
-                status_id: props.initialValues3.documents[0].status_id,
-                route: props.initialValues3.documents[0].route_data,
-                step: props.initialValues3.documents[0].step,
-                comments: props.initialValues3.documents[0].comments,
-                signatures: props.initialValues3.documents[0].signatures,
-                files: props.initialValues3.documents[0].files,
-                log_username: state.log_username
-            });
-            setStepCount({ step: props.initialValues3.documents[0].step })
-            setRoutesList(props.initialValues3.documents[0].route_data)
-        }
-    }, [props.initialValues3]);
-
-    let download = async (e) => {
-        let id = e.target.dataset.fileid
-        await fetch("/get-file", {
-            method: "POST",
-            body: JSON.stringify({ id: e.target.dataset.fileid }),
-            headers: {
-                "Content-Type": "application/json"
-            }
-        }).then(response => {
-            return response.json()
-        }).then(response => {
-            let result = response.result
-            let link = document.createElement('a')
-            link.href = result.data_file /*result.data_file.slice(result.data_file.indexOf(',')+1) */
-            link.download = result.filename
-            link.click()
-        })
+        date_created: props.initialValues3.documents[0].date_created,
+        date_modified: props.initialValues3.documents[0].date_modified,
+        route_id: props.initialValues3.documents[0].route_id.id,
+        status_in_process: props.initialValues3.documents[0].route_id.status_in_process,
+        status_cancelled: props.initialValues3.documents[0].route_id.status_cancelled,
+        status_finished: props.initialValues3.documents[0].route_id.status_finished,
+        status_id: props.initialValues3.documents[0].status_id,
+        route: props.initialValues3.documents[0].route_data,
+        step: props.initialValues3.documents[0].step,
+        comments: props.initialValues3.documents[0].comments,
+        signatures: props.initialValues3.documents[0].signatures,
+        files: props.initialValues3.documents[0].files,
+        log_username: state.log_username
+      })
+      setStepCount({ step: props.initialValues3.documents[0].step })
+      setRoutesList(props.initialValues3.documents[0].route_data)
     }
+  }, [props.initialValues3])
 
-    let onFinish = (values) => {
-        props.onFinish3(state);
-        console.log('+++++++++++++++++++++++', values);
+  const download = async (e) => {
+    const id = e.target.dataset.fileid
+    await fetch('/get-file', {
+      method: 'POST',
+      body: JSON.stringify({ id: e.target.dataset.fileid }),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then(response => {
+      return response.json()
+    }).then(response => {
+      const result = response.result
+      const link = document.createElement('a')
+      link.href = result.data_file /* result.data_file.slice(result.data_file.indexOf(',')+1) */
+      link.download = result.filename
+      link.click()
+    })
+  }
+
+  const onFinish = (values) => {
+    props.onFinish3(state)
+    console.log('+++++++++++++++++++++++', values)
+  }
+
+  const [reasonText, setReasonText] = useState(props?.initialValues3?.documents[0]?.reason)
+  const ReasonInputChange = (all, change) => {
+    if (all.target.value.length > 0) {
+      setReasonText(all.target.value)
+    } else {
+      setReasonText(all.target.value)
     }
+  }
 
-    const [reasonText, setReasonText] = useState(props?.initialValues3?.documents[0]?.reason);
-    let ReasonInputChange = (all, change) => {
-        if (all.target.value.length > 0) {
-            setReasonText(all.target.value)
-        } else {
-            setReasonText(all.target.value)
-        }
-    }
+  const radioOptions = [
+    { label: 'Закупки товаров, работ и услуг', value: '1' },
+    { label: 'Поставка продукции (выполнение работ, оказание услуг) заказчикам', value: '2' },
+    { label: 'Передача имущества в аренду (бесплатное пользование)', value: '3' },
+    { label: 'Совместная деятельность', value: '4' },
+    { label: 'Финансирование (кредитование, обеспечение исполнения обязательств)', value: '5' },
+    { label: 'Прочие обязательства', value: '6' }
+  ]
+  const [radioState, setRadioState] = useState(props?.initialValues3?.documents[0]?.data_agreement_list_production[0]?.subject)
 
-    let radioOptions = [
-        {label:'Закупки товаров, работ и услуг', value:'1'},
-        {label:'Поставка продукции (выполнение работ, оказание услуг) заказчикам',value:'2'},
-        {label:'Передача имущества в аренду (бесплатное пользование)',value:'3'},
-        {label:'Совместная деятельность',value:'4'},
-        {label:'Финансирование (кредитование, обеспечение исполнения обязательств)',value:'5'},
-        {label:'Прочие обязательства',value:'6'}
-    ]
-    const[radioState, setRadioState] = useState(props?.initialValues3?.documents[0]?.data_agreement_list_production[0]?.subject);
+  const RadioOnChange = (radioValue) => {
+    setRadioState(radioValue.target.value)
+  }
 
-    const RadioOnChange = (radioValue) => {
-        setRadioState(radioValue.target.value);
-    };
-
-    return(
+  return (
         <Form
         form={props.form3}
             name="DocumentsForm3"
@@ -135,8 +133,8 @@ let Update3 = React.memo((props) => {
             scrollToFirstError
             autoComplete="off"
 
-            onValuesChange={(changedValues, allValues) => { setState(Object.assign({}, state, { ...allValues, })); console.log('UPDATE3 values',allValues)}}
-        
+            onValuesChange={(changedValues, allValues) => { setState(Object.assign({}, state, { ...allValues })); console.log('UPDATE3 values', allValues) }}
+
         >
             <b>От:</b> {props?.initialValues3?.documents[0].fio} <br/>
             <b>Должность:</b> {props?.initialValues3?.documents[0].position}
@@ -185,7 +183,7 @@ let Update3 = React.memo((props) => {
                 labelCol={{ span: 24 }}
             >
                 {props?.initialValues3?.documents[0].files.map((item) => {
-                    return (<>
+                  return (<>
                         <div className='document-view-wrap'>
                             <Link><a data-fileid={item.id} onClick={download}>{item.filename}</a></Link> <Button onClick={() => { OpenDocument(item) }} shape="circle" icon={<EyeOutlined />}/> <br />
                         </div>
@@ -199,8 +197,8 @@ let Update3 = React.memo((props) => {
                 label="Подписи"
                 labelCol={{ span: 24 }}
             >
-                {props?.initialValues3?.documents[0].signatures.map((item) => {  //remove commentsList
-                    return (<>
+                {props?.initialValues3?.documents[0].signatures.map((item) => { // remove commentsList
+                  return (<>
                         <div className='signature-view-wrap'>
                             <span className='signature-view-position'>
                                 {item.position}
@@ -252,10 +250,10 @@ let Update3 = React.memo((props) => {
                     onChange={ReasonInputChange}
                     placeholder="Замечание" /> */}
                 {props?.initialValues3?.documents[0]?.reason?.map((item) => {
-                    return (<span>
+                  return (<span>
                         <span>{item.text + '-' + item.userPosition}</span><br />
                     </span>
-                    )
+                  )
                 })}
             </div>
             <Divider type={'horizontal'} />
@@ -268,7 +266,7 @@ let Update3 = React.memo((props) => {
                 {/* <Input.TextArea rows={7} name='comment' onChange={props.HandleCommentOnChange} disabled={props.disabled} />
                 <Button disabled={props.disabled} onClick={props.HandleComment} className="marginTop">Оставить комментарий</Button> */}
                 {props.commentsList.map((item) => {
-                    return (
+                  return (
                         <div className='comments'>
                             <li className='comment-item'>
                                 <span className='user-position-comment'>{item.position}</span>
@@ -278,7 +276,7 @@ let Update3 = React.memo((props) => {
                             </li>
                         </div>
 
-                    )
+                  )
                 })}
 
             </Form.Item>
@@ -308,7 +306,7 @@ let Update3 = React.memo((props) => {
             >
             </Form.Item>
         </Form>
-    )
+  )
 })
 
 export default Update3
