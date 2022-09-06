@@ -6,7 +6,7 @@ let AllDocumentsGQL = {
     options: {
         all: {
             variables: {
-                
+                documents: { global: { } }
             },
             fetchPolicy: 'cache-only'
         },
