@@ -1,5 +1,5 @@
+import { useMutation } from '@apollo/client';
 import { Button, Popconfirm } from 'antd';
-import { gql } from '@apollo/client';
 import React, { useEffect, useState } from 'react';
 import { handlerQuery, handlerMutation, useUser } from '../../../../core/functions';
 import ModalUpdate from '../../modals/ModalUpdate';
@@ -329,50 +329,16 @@ let RegistrationDocuments = React.memo((props) => {
     const visibleModalUpdate4 = useState(false);
     const visibleModalUpdate5 = useState(false);
 
-    const { loading, data, refetch } = handlerQuery(documents, 'all')();
-    useEffect(() => { refetch() }, [])
-
-    //Возвращает объект с данными для таблицы договоров
-    let list = (data && data[Object.keys(data)[0]] != null) ? data[Object.keys(data)[0]].map((item) => {
-        return {
-            id: item.id,
-            key: item.id,
-            title: item.title,
-            date_created: item.date_created,
-            date_modified: item.date_modified,
-            status_id: item.status_id,
-            status: item.document_statuses?.name ? item.document_statuses.name : 'Без статуса',
-            route_id: item.route_id.id,
-            route: item.route_id?.name ? item.route_id.name : 'Не задан',
-            route_data: item.route_data,
-            route_step: item.route_data ? item.route_data.findIndex(item => item.positionId == positionsVariable) + 1 : [],
-            step: item.step,
-            step_count: item.step + ' из ' + item.route_data?.length,
-            step_name: item.route_data?.length > 0 ? item.route_data[item.step - 1].positionName : '',
-        }
-    }) : [];
-
-    //Столбцы для таблицы договоров
-    let dict = test([
-        { title: 'Наименование договора', dataIndex: 'title', width: '214px', type: 'search', tooltip: true, sorter: (a, b) => a.title.localeCompare(b.title), sortDirections: ['ascend', 'descend'] },
-        { title: 'Дата и время создания', dataIndex: 'date_created', width: '114px', type: 'search', tooltip: true, sorter: true, sorter: (a, b) => new Date(a.date_created) - new Date(b.date_created) },
-        { title: 'Последние изменение', dataIndex: 'date_modified', width: '114px', type: 'search', tooltip: true, sorter: true, sorter: (a, b) => new Date(a.date_modified) - new Date(b.date_modified) },
-        { title: 'Тип договора', dataIndex: 'route', width: '114px', type: 'search', tooltip: true, sorter: (a, b) => a.route.localeCompare(b.route), sortDirections: ['ascend', 'descend'] },
-        { title: 'Статус', dataIndex: 'status', width: '80px' },
-        { title: 'На подписи', dataIndex: 'step_name', width: '114px' },
-        { title: 'Этап', dataIndex: 'step_count', width: '55px' },
-    ]);
-
     let titleMenu = (tableProps) => {
         return (
             <TitleMenu
                 buttons={[
                     <ModalUpdate
-                        visibleModalUpdate={visibleModalUpdate} GQL={documents}
-                        visibleModalUpdate2={visibleModalUpdate2} GQL2={documents}
-                        visibleModalUpdate3={visibleModalUpdate3} GQL3={documents}
-                        visibleModalUpdate4={visibleModalUpdate4} GQL4={documents}
-                        visibleModalUpdate5={visibleModalUpdate5} GQL5={documents}
+                        visibleModalUpdate={visibleModalUpdate} GQL={AllDocumentsGQL}
+                        visibleModalUpdate2={visibleModalUpdate2} GQL2={AllDocumentsGQL}
+                        visibleModalUpdate3={visibleModalUpdate3} GQL3={AllDocumentsGQL}
+                        visibleModalUpdate4={visibleModalUpdate4} GQL4={AllDocumentsGQL}
+                        visibleModalUpdate5={visibleModalUpdate5} GQL5={AllDocumentsGQL}
                         title='Просмотр договора' selectedRowKeys={tableProps.selectedRowKeys} update={true} width={750} />
                 ]}
                 selectedRowKeys={tableProps.selectedRowKeys}
@@ -382,8 +348,8 @@ let RegistrationDocuments = React.memo((props) => {
     return (
         <>
             <TableContainer
-                data={{ dict, records: list }}
-                loading={loading}
+                // data={{ dict, records: list }}
+                // loading={loading}
                 title={titleMenu}
                 visibleModalUpdate={visibleModalUpdate}
                 visibleModalUpdate2={visibleModalUpdate2}
