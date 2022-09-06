@@ -1,14 +1,14 @@
-import {EyeOutlined } from '@ant-design/icons';
+import { EyeOutlined } from '@ant-design/icons';
 import { Button, Form, Input, Typography, Space, Divider, Row, Col, Steps } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useUser, formatDate } from '../../../../../../core/functions';
 
-import  Print from '../../../../../../core/print/Print'
+import Print from '../../../../../../core/print/Print'
 
 const { Title, Link } = Typography;
 const { Step } = Steps;
 
-const price_pattern= /^\d+$/;
+const price_pattern = /^\d+$/;
 
 let Update1 = React.memo((props) => {
     let user = useUser();
@@ -27,7 +27,7 @@ let Update1 = React.memo((props) => {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(
-                { user:Number(user.id),item:item.id }
+                { user: Number(user.id), item: item.id }
             )
         })
         const content = await tmp.json();
@@ -65,7 +65,7 @@ let Update1 = React.memo((props) => {
                 signatures: props.initialValues.documents[0].signatures,
                 files: props.initialValues.documents[0].files,
                 //document_logs: props.initialValues.documents[0].document_logs,
-                document_logs: {is_read:true},
+                document_logs: { is_read: true },
                 log_username: state.log_username
             });
             console.log('props.initialValues', props.initialValues)
@@ -109,7 +109,7 @@ let Update1 = React.memo((props) => {
             onValuesChange={(changedValues, allValues) => { setState(Object.assign({}, state, { ...allValues, })) }}
 
         >
-            <b>От:</b> {props?.initialValues?.documents[0].fio} <br/>
+            <b>От:</b> {props?.initialValues?.documents[0].fio} <br />
             <b>Должность:</b> {props?.initialValues?.documents[0].position}
             <h4><b>Тип договора:</b> Закуп ТРУ</h4>
 
@@ -144,14 +144,14 @@ let Update1 = React.memo((props) => {
                 {props?.initialValues?.documents[0].files.map((item) => {
                     return (<>
                         <div className='document-view-wrap'>
-                            <Link><a data-fileid={item.id} onClick={download}>{item.filename}</a></Link> <Button onClick={() => { OpenDocument(item) }} shape="circle" icon={<EyeOutlined />}/> <br />
+                            <Link><a data-fileid={item.id} onClick={download}>{item.filename}</a></Link> <Button onClick={() => { OpenDocument(item) }} shape="circle" icon={<EyeOutlined />} /> <br />
                         </div>
                     </>)
                 })}
             </Form.Item>
             <Divider type={'horizontal'} />
             <h3><b>Файл согласованного договора</b></h3>
-            <Print printData={props?.initialValues?.documents[0]?.id} documentData={props?.initialValues}/>
+            <Print printData={props?.initialValues?.documents[0]?.id} documentData={props?.initialValues} />
             <Divider type={'horizontal'} />
             <Form.Item
                 className='font-form-header'
@@ -160,7 +160,7 @@ let Update1 = React.memo((props) => {
                 labelCol={{ span: 24 }}
             >
                 {props?.initialValues?.documents[0].signatures.map((item) => {  //remove commentsList
-                    return (<> 
+                    return (<>
                         <div className='signature-view-wrap'>
                             <span className='signature-view-position'>
                                 {item.position}
@@ -172,12 +172,18 @@ let Update1 = React.memo((props) => {
                                 {formatDate(item.date_signature)}
                             </span>
                         </div>
-                     </>)
+                    </>)
                 })}
-
-
             </Form.Item>
+
             <Divider type={'horizontal'} />
+
+            <Button type='primary' onClick={()=>{
+                console.log('state-----------',state)
+            }}>Отправить на регистрацию</Button>
+            
+            <Divider type={'horizontal'} />
+
             <Form.Item
                 className='font-form-header'
                 name="reason"
@@ -189,7 +195,7 @@ let Update1 = React.memo((props) => {
                 {props?.initialValues?.documents[0]?.reason?.map((item) => {
                     return (<span>
                         <span>{item.text + '-' + item.userPosition}</span><br />
-                        </span>
+                    </span>
                     )
                 })}
             </div>
