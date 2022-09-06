@@ -1,4 +1,4 @@
-import { useMutation } from '@apollo/client';
+import { useMutation, gql } from '@apollo/client';
 import { Button, Popconfirm } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { handlerQuery, handlerMutation, useUser } from '../../../../core/functions';
@@ -6,6 +6,7 @@ import ModalUpdate from '../../modals/ModalUpdate';
 import TableContainer from '../../tableContainers/TableContainer';
 import TitleMenu from '../../../../core/TitleMenu';
 import test from "../../../../core/functions/test";
+import AllDocumentsGQL from './../../gql/AllDocumentsGQL';
 
 /**
  * Страница для регистрации договора сотрудниками ООПЗ
