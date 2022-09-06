@@ -7,6 +7,9 @@ import TableContainer from '../../tableContainers/TableContainer';
 import TitleMenu from '../../../../core/TitleMenu';
 import test from "../../../../core/functions/test";
 
+/**
+ * Страница для регистрации договора сотрудниками ООПЗ
+ */
 let RegistrationDocuments = React.memo((props) => {
 
     let user = useUser();
@@ -19,7 +22,7 @@ let RegistrationDocuments = React.memo((props) => {
         options: {
             all: {
                 variables: {
-                    documents: { global: { status_id: '=4', ORDER_BY: ['date_created desc'] } }
+                    documents: { global: { status_id: '=8', ORDER_BY: ['date_created desc'] } }
                 },
                 fetchPolicy: 'cache-only'
             },
