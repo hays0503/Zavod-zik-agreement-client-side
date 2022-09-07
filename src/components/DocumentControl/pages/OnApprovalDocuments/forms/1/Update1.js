@@ -47,41 +47,39 @@ const Update1 = React.memo((props) => {
 		log_username: user.username,
 	});
 
-	/**
-	 * Отобразить новое состояние компонентов после обновление (файлов / по поручению)
-	 */
-	const [ReRender, setRerender] = useState(false);
-	useEffect(() => {
-		console.log("Обновилось состояние !");
-		GetIDNameTaskFile(iniValue?.id).then((value) => {
-			setFileTask(value.result);
-		});
-	}, [ReRender]);
 
-	/**
-	 * Cтейт для таблиц файлов по поручением
-	 */
-	const [FileTask, setFileTask] = useState([]);
-	/**
-	 * Инициализация стейта для таблиц файлов по поручением
-	 */
-	useEffect(() => {
-		if (props.initialValues) {
-			GetIDNameTaskFile(iniValue?.id).then((value) => {
-				setFileTask(value.result);
-			});
-		}
-	}, [props.initialValues]);
-
+//////////////////////////////////////////////////////////////////////////////////////////
+	/**																					//
+	 * Отобразить новое состояние компонентов после обновление (файлов / по поручению)	//
+	 */																					//
+																						//
+	/**																					//
+	 * Cтейт для таблиц файлов по поручением											//
+	 */																					//
+	const [FileTask, setFileTask] = useState([]);										//
+																						//
+	const [ReRender, setRerender] = useState(false);									//
+	useEffect(() => {																		//
+		if (iniValue?.id) {																//
+			GetIDNameTaskFile(iniValue?.id).then((value) => {							//
+				setFileTask(value.result);												//
+			});																			//
+	}																					//
+	}, [iniValue,ReRender]);															//
+//////////////////////////////////////////////////////////////////////////////////////////
 	useEffect(() => {
 		if (iniValue?.route_data?.length > 1)
 			stepsDirection.current =
 				iniValue?.route_data?.length <= 7 ? "horizontal" : "vertical";
 	}, [props]);
 
+	/**
+	 * Инициализация стейта для таблиц файлов по поручением
+	 */
 	useEffect(() => {
 		props.form.setFieldsValue(state);
 	}, [state]);
+	
 	useEffect(() => {
 		if (props.initialValues) {
 			setState({

@@ -42,31 +42,25 @@ const Update4 = React.memo((props) => {
 		log_username: user.username,
 	});
 
-	/**
-	 * Отобразить новое состояние компонентов после обновление (файлов / по поручению)
-	 */
-	const [ReRender, setRerender] = useState(false);
-	useEffect(() => {
-		console.log("Обновилось состояние !");
-		GetIDNameTaskFile(iniValue?.id).then((value) => {
-			setFileTask(value.result);
-		});
-	}, [ReRender]);
-
-	/**
-	 * Cтейт для таблиц файлов по поручением
-	 */
-	const [FileTask, setFileTask] = useState([]);
-	/**
-	 * Инициализация стейта для таблиц файлов по поручением
-	 */
-	useEffect(() => {
-		if (props.initialValues4) {
-			GetIDNameTaskFile(iniValue?.id).then((value) => {
-				setFileTask(value.result);
-			});
-		}
-	}, [props.initialValues4]);
+//////////////////////////////////////////////////////////////////////////////////////////
+	/**																					//
+	 * Отобразить новое состояние компонентов после обновление (файлов / по поручению)	//
+	 */																					//
+																						//
+	/**																					//
+	 * Cтейт для таблиц файлов по поручением											//
+	 */																					//
+	const [FileTask, setFileTask] = useState([]);										//
+	 																					//
+	const [ReRender, setRerender] = useState(false);									//
+	useEffect(() => {																	//
+		if (iniValue?.id) {																//
+			GetIDNameTaskFile(iniValue?.id).then((value) => {							//
+			setFileTask(value.result);													//
+		});																				//
+	}																					//
+	}, [iniValue,ReRender]);															//
+//////////////////////////////////////////////////////////////////////////////////////////
 
 	useEffect(() => {
 		props.form4.setFieldsValue(state);

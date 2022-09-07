@@ -43,31 +43,25 @@ const Update5 = React.memo((props) => {
 	]);
 	const [stepCount, setStepCount] = useState({ step: "0" });
 
-	/**
-	 * Отобразить новое состояние компонентов после обновление (файлов / по поручению)
-	 */
-	const [ReRender, setRerender] = useState(false);
-	useEffect(() => {
-		console.log("Обновилось состояние !");
-		GetIDNameTaskFile(iniValue?.id).then((value) => {
-			setFileTask(value.result);
-		});
-	}, [ReRender]);
-
-	/**
-	 * Cтейт для таблиц файлов по поручением
-	 */
-	const [FileTask, setFileTask] = useState([]);
-	/**
-	 * Инициализация стейта для таблиц файлов по поручением
-	 */
-	useEffect(() => {
-		if (props.initialValues5) {
-			GetIDNameTaskFile(iniValue?.id).then((value) => {
-				setFileTask(value.result);
-			});
-		}
-	}, [props.initialValues5]);
+//////////////////////////////////////////////////////////////////////////////////////////
+	/**																					//
+	 * Отобразить новое состояние компонентов после обновление (файлов / по поручению)	//
+	 */																					//
+																						//
+	/**																					//
+	 * Cтейт для таблиц файлов по поручением											//
+	 */																					//
+	const [FileTask, setFileTask] = useState([]);										//
+	 																					//
+	const [ReRender, setRerender] = useState(false);									//
+	useEffect(() => {																	//
+		if (iniValue?.id) {																//
+			GetIDNameTaskFile(iniValue?.id).then((value) => {							//
+			setFileTask(value.result);													//
+		});																				//
+	}																					//
+	}, [iniValue,ReRender]);															//
+//////////////////////////////////////////////////////////////////////////////////////////
 
 	useEffect(() => {
 		if (iniValue?.route_data?.length > 1)
