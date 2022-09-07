@@ -1,5 +1,5 @@
 import { Form, Steps } from "antd";
-import React from "react";
+import React, { Children } from "react";
 import { formatDate } from "../../../../core/functions";
 import { getDiffHours } from "./../../../../core/functions";
 const { Step } = Steps;
@@ -62,7 +62,8 @@ FragmentStepViewer.defaultProps = { stepsDirection: "vertical" };
  */
 
 export const FragmentStepViewerReplacementDialog = (props) => {
-	const { signatures, setVisible, stepCount, routeData, date_created,step } = props;
+	const { signatures, setVisible, stepCount, routeData, date_created, step, children} =
+		props;
 	return (
 		<Form.Item
 			className="font-form-header"
@@ -85,6 +86,7 @@ export const FragmentStepViewerReplacementDialog = (props) => {
 				);
 			})}
 
+			{children}
 
 			<Steps
 				labelPlacement="vertical"
@@ -124,7 +126,7 @@ export const FragmentStepViewerReplacementDialog = (props) => {
 													);
 													return tmpD?.toString();
 												}
-										  })()
+										})()
 										: null
 								}
 							/>
@@ -132,6 +134,7 @@ export const FragmentStepViewerReplacementDialog = (props) => {
 					);
 				})}
 			</Steps>
+
 		</Form.Item>
 	);
 };

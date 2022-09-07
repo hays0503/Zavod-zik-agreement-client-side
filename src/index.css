@@ -248,6 +248,7 @@ body {
 }
 /* Step Items */
 .steps-form-update{
+  display: block;
   margin-top: 40px;
 }
 .ant-steps-item-finish .ant-steps-item-icon{
