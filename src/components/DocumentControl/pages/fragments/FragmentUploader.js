@@ -11,7 +11,6 @@ let FragmentUploader = (props) => {
 		<>
 			<Form.Item
 				name="files"
-				className="font-form-header"
 				label="Файлы"
 				labelCol={{ span: 24 }}
 				rules={[
