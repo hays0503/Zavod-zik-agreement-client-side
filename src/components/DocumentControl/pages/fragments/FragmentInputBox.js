@@ -5,6 +5,12 @@ const price_pattern = /^\d+$/;
 const price_max_count = /^.{1,8}$/;
 const phone_pattern = /^!*([0-9]!*){11,11}$/g;
 
+/**
+ * 
+ * @param {string} label Метка заполняемой области
+ * @param {string} placeholder Подсказка для области заполнение 
+ * @returns {Form.Item} Form.Item Возвращает фрагмент формы
+ */
 export const FragmentInputBoxTitle = (props) => {
 	return (
 		<Form.Item
@@ -22,7 +28,12 @@ export const FragmentInputBoxTitle = (props) => {
 		</Form.Item>
 	);
 };
-
+/**
+ * 
+ * @param {string} label Метка заполняемой области
+ * @param {string} placeholder Подсказка для области заполнение 
+ * @returns {Form.Item} Form.Item Возвращает фрагмент формы
+ */
 export const FragmentInputBoxRemark = (props) => {
 	return (
 		<Form.Item
@@ -40,7 +51,12 @@ export const FragmentInputBoxRemark = (props) => {
 		</Form.Item>
 	);
 };
-
+/**
+ * 
+ * @param {string} label Метка заполняемой области
+ * @param {string} placeholder Подсказка для области заполнение 
+ * @returns {Form.Item} Form.Item Возвращает фрагмент формы
+ */
 export const FragmentInputBoxSupllier = (props) => {
 	return (
 		<Form.Item
@@ -58,7 +74,12 @@ export const FragmentInputBoxSupllier = (props) => {
 		</Form.Item>
 	);
 };
-
+/**
+ * 
+ * @param {string} label Метка заполняемой области
+ * @param {string} placeholder Подсказка для области заполнение 
+ * @returns {Form.Item} Form.Item Возвращает фрагмент формы
+ */
 export const FragmentInputBoxSubject = (props) => {
 	return (
 		<Form.Item
@@ -81,7 +102,12 @@ export const FragmentInputBoxSubject = (props) => {
 	);
 };
 
-
+/**
+ * 
+ * @param {string} label Метка заполняемой области
+ * @param {string} placeholder Подсказка для области заполнение 
+ * @returns {Form.Item} Form.Item Возвращает фрагмент формы
+ */
 export const FragmentInputBoxSubjectRadio = (props) => {
 	let radioOptions = [
 		{
@@ -132,6 +158,12 @@ export const FragmentInputBoxSubjectRadio = (props) => {
 	);
 };
 
+/**
+ * 
+ * @param {string} label Метка заполняемой области
+ * @param {string} placeholder Подсказка для области заполнение 
+ * @returns {Form.Item} Form.Item Возвращает фрагмент формы
+ */
 export const FragmentInputBoxPrice = (props) => {
 	return (
 		<Form.Item
@@ -162,6 +194,12 @@ export const FragmentInputBoxPrice = (props) => {
 	);
 };
 
+/**
+ * 
+ * @param {string} label Метка заполняемой области
+ * @param {string} placeholder Подсказка для области заполнение 
+ * @returns {Form.Item} Form.Item Возвращает фрагмент формы
+ */
 export const FragmentInputBoxCurrency = (props) => {
 	return (
 		<Form.Item
@@ -183,6 +221,12 @@ export const FragmentInputBoxCurrency = (props) => {
 	);
 };
 
+/**
+ * 
+ * @param {string} label Метка заполняемой области
+ * @param {string} placeholder Подсказка для области заполнение 
+ * @returns {Form.Item} Form.Item Возвращает фрагмент формы
+ */
 export const FragmentInputBoxCurrencyPrice = (props) => {
 	return (
 		<Form.Item
@@ -212,6 +256,12 @@ export const FragmentInputBoxCurrencyPrice = (props) => {
 	);
 };
 
+/**
+ * 
+ * @param {string} label Метка заполняемой области
+ * @param {string} placeholder Подсказка для области заполнение 
+ * @returns {Form.Item} Form.Item Возвращает фрагмент формы
+ */
 export const FragmentInputBoxExecutorNameDivision = (props) => {
 	return (
 		<Form.Item
@@ -233,6 +283,12 @@ export const FragmentInputBoxExecutorNameDivision = (props) => {
 	);
 };
 
+/**
+ * 
+ * @param {string} label Метка заполняемой области
+ * @param {string} placeholder Подсказка для области заполнение 
+ * @returns {Form.Item} Form.Item Возвращает фрагмент формы
+ */
 export const FragmentInputBoxExecutorSiderSignaturesDate = (props) => {
 	return (
 		<Form.Item
@@ -254,6 +310,12 @@ export const FragmentInputBoxExecutorSiderSignaturesDate = (props) => {
 	);
 };
 
+/**
+ * 
+ * @param {string} label Метка заполняемой области
+ * @param {string} placeholder Подсказка для области заполнение 
+ * @returns {Form.Item} Form.Item Возвращает фрагмент формы
+ */
 export const FragmentInputBoxExecutorReceivedFromCounteragentDate = (props) => {
 	return (
 		<Form.Item
@@ -275,6 +337,12 @@ export const FragmentInputBoxExecutorReceivedFromCounteragentDate = (props) => {
 	);
 };
 
+/**
+ * 
+ * @param {string} label Метка заполняемой области
+ * @param {string} placeholder Подсказка для области заполнение 
+ * @returns {Form.Item} Form.Item Возвращает фрагмент формы
+ */
 export const FragmentInputBoxExecutorPhoneNumber = (props) => {
 	return (
 		<Form.Item
@@ -300,6 +368,12 @@ export const FragmentInputBoxExecutorPhoneNumber = (props) => {
 	);
 };
 
+/**
+ * 
+ * @param {string} label Метка заполняемой области
+ * @param {string} placeholder Подсказка для области заполнение 
+ * @returns {Form.Item} Form.Item Возвращает фрагмент формы
+ */
 export const FragmentInputBoxCounteragentContacts = (props) => {
 	return (
 		<Form.Item
