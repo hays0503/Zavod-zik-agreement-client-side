@@ -118,6 +118,7 @@ let ModalInsert = React.memo(({ GQL, GQL2, GQL3, GQL4, GQL5, Form1, Form2, Form3
     });
 
     const user = useUser();
+    console.log('user--------',user)
 
     const [formRouteSelect] = Form.useForm();
     const [visible, setVisible] = useState(false);
@@ -166,7 +167,6 @@ let ModalInsert = React.memo(({ GQL, GQL2, GQL3, GQL4, GQL5, Form1, Form2, Form3
             }
             if (state.route_id == 29) {
                 if(state.routes&&state.routes[0]){
-                    console.log('state route-----',state)
                     formRouteSelect.submit();
                     setVisible(false)
                     showModalForm5();
