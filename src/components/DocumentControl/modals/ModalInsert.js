@@ -165,9 +165,17 @@ let ModalInsert = React.memo(({ GQL, GQL2, GQL3, GQL4, GQL5, Form1, Form2, Form3
                 showModalForm4();
             }
             if (state.route_id == 29) {
-                formRouteSelect.submit();
-                setVisible(false)
-                showModalForm5();
+                if(state.routes&&state.routes[0]){
+                    console.log('state route-----',state)
+                    formRouteSelect.submit();
+                    setVisible(false)
+                    showModalForm5();
+                } else formRouteSelect.setFields([
+                    {
+                        name: 'route_id',
+                        errors: ['Необходимо построить маршрут'],
+                    }
+                ])
             }
         }
         else formRouteSelect.setFields([
@@ -357,6 +365,12 @@ let ModalInsert = React.memo(({ GQL, GQL2, GQL3, GQL4, GQL5, Form1, Form2, Form3
                                                             name={[field.name, "positionId"]}
                                                             fieldKey={[field.fieldKey, "positionId"]}
                                                             className='anotherForm'
+                                                            rules={[
+                                                                {
+                                                                    required: true,
+                                                                    message: "Необходимо для заполнения!",
+                                                                },
+                                                            ]}
                                                         >
                                                             <IndependentSelect
                                                                 disabled={props.disabled}
