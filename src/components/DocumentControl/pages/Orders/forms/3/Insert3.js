@@ -5,6 +5,11 @@ import constants from "../../../../../../config/constants";
 import UploadFile from '../../../../modals/UploadFile';
 
 let Insert3 = React.memo((props) => {
+    /**
+     * Деструктаризация (начального значение)
+     */
+    const iniValue = props?.initialValues3?.documents[0];
+
     let user = useUser();
     const price_pattern = /^\d+$/;
     const phone_pattern= /^!*([0-9]!*){11,11}$/g;
@@ -16,30 +21,30 @@ let Insert3 = React.memo((props) => {
     useEffect(() => { props.form3.setFieldsValue(state) }, [state]);
 
     useEffect(() => {
-        if (props.initialValues3) {
+        if (iniValue) {
             setState({
-                id: props.initialValues3.documents[0].id,
-                title: props.initialValues3.documents[0].title,
+                id: iniValue.id,
+                title: iniValue.title,
 
-                price: props.initialValues3.documents[0].data_agreement_list_production[0].price,
-                subject: props.initialValues3.documents[0].data_agreement_list_production[0].subject,
-                currency: props.initialValues3.documents[0].data_agreement_list_production[0].currency,
-                executor_name_division: props.initialValues3.documents[0].data_agreement_list_production[0].executor_name_division,
-                executor_phone_number: props.initialValues3.documents[0].data_agreement_list_production[0].executor_phone_number,
-                counteragent_contacts: props.initialValues3.documents[0].data_agreement_list_production[0].counteragent_contacts,
+                price: iniValue.data_agreement_list_production[0].price,
+                subject: iniValue.data_agreement_list_production[0].subject,
+                currency: iniValue.data_agreement_list_production[0].currency,
+                executor_name_division: iniValue.data_agreement_list_production[0].executor_name_division,
+                executor_phone_number: iniValue.data_agreement_list_production[0].executor_phone_number,
+                counteragent_contacts: iniValue.data_agreement_list_production[0].counteragent_contacts,
 
-                date_created: props.initialValues3.documents[0].date_created,
-                date_modified: props.initialValues3.documents[0].date_modified,
-                route_id: props.initialValues3.documents[0].route_id.id,
-                status_in_process: props.initialValues3.documents[0].route_id.status_in_process,
-                status_id: props.initialValues3.documents[0].status_id,
-                step: props.initialValues3.documents[0].step,
-                comments: props.initialValues3.documents[0].comments,
-                files: props.initialValues3.documents[0].files,
+                date_created: iniValue.date_created,
+                date_modified: iniValue.date_modified,
+                route_id: iniValue.route_id.id,
+                status_in_process: iniValue.route_id.status_in_process,
+                status_id: iniValue.status_id,
+                step: iniValue.step,
+                comments: iniValue.comments,
+                files: iniValue.files,
                 log_username: state.log_username
             });
         }
-    }, [props.initialValues3]);
+    }, [iniValue]);
 
     let onFinish = (values) => {
         props.onFinish3(state)

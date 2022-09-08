@@ -5,6 +5,11 @@ import constants from "../../../../../../config/constants";
 import UploadFile from '../../../../modals/UploadFile';
 
 let Insert5 = React.memo((props) => {
+    /**
+     * Деструктаризация (начального значение)
+     */
+     const iniValue = props?.initialValues5?.documents[0];
+
     let user = useUser();
     const price_pattern = /^\d+$/;
     const [state, setState] = useState({
@@ -14,30 +19,30 @@ let Insert5 = React.memo((props) => {
     useEffect(() => { props.form5.setFieldsValue(state) }, [state]);
 
     useEffect(() => {
-        if (props.initialValues5) {
+        if (iniValue) {
             setState({
-                id: props.initialValues5.documents[0].id,
-                title: props.initialValues5.documents[0].title,
+                id: iniValue.id,
+                title: iniValue.title,
 
-                subject: props.initialValues5.documents[0].data_custom[0].subject,
-                remark: props.initialValues5.documents[0].data_custom[0].remark,
+                subject: iniValue.data_custom[0].subject,
+                remark: iniValue.data_custom[0].remark,
 
-                date_created: props.initialValues5.documents[0].date_created,
-                date_modified: props.initialValues5.documents[0].date_modified,
-                route_id: props.initialValues5.documents[0].route_id.id,
-                status_in_process: props.initialValues5.documents[0].route_id.status_in_process,
-                status_id: props.initialValues5.documents[0].status_id,
-                step: props.initialValues5.documents[0].step,
-                comments: props.initialValues5.documents[0].comments,
-                files: props.initialValues5.documents[0].files,
+                date_created: iniValue.date_created,
+                date_modified: iniValue.date_modified,
+                route_id: iniValue.route_id.id,
+                status_in_process: iniValue.route_id.status_in_process,
+                status_id: iniValue.status_id,
+                step: iniValue.step,
+                comments: iniValue.comments,
+                files: iniValue.files,
                 log_username: state.log_username
             });
         }
-    }, [props.initialValues5]);
+    }, [iniValue]);
 
     let onFinish = (values) => {
         props.onFinish5(state)
-        console.log('-------------------------------------------', values);
+
     }
 
     return (
