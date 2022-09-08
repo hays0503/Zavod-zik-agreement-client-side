@@ -3,6 +3,15 @@ import React, { useEffect, useState } from "react";
 import { useUser } from "../../../../../../core/functions";
 import constants from "../../../../../../config/constants";
 import UploadFile from "../../../../modals/UploadFile";
+import { 
+import { FragmentInputBoxExecutorReceivedFromCounteragentDate } from './../../../fragments/FragmentInputBox';
+	FragmentInputBoxExecutorNameDivision,
+	FragmentInputBoxCurrencyPrice,
+	FragmentInputBoxPrice,
+	FragmentInputBoxSubjectRadio,
+	FragmentInputBoxTitle,
+	FragmentInputBoxExecutorSiderSignaturesDate
+	} from "../../../fragments/FragmentInputBox";
 
 let Insert2 = React.memo((props) => {
 	/**
@@ -26,10 +35,8 @@ let Insert2 = React.memo((props) => {
 			setState({
 				id: iniValue.id,
 				title: iniValue.title,
-
 				price: iniValue.data_agreement_list[0].price,
 				subject: iniValue.data_agreement_list[0].subject,
-
 				currency_price: iniValue.data_agreement_list[0].currency_price,
 				executor_name_division:
 					iniValue.data_agreement_list[0].executor_name_division,
@@ -37,7 +44,6 @@ let Insert2 = React.memo((props) => {
 					iniValue.data_agreement_list[0].sider_signatures_date,
 				received_from_counteragent_date:
 					iniValue.data_agreement_list[0].received_from_counteragent_date,
-
 				date_created: iniValue.date_created,
 				date_modified: iniValue.date_modified,
 				route_id: iniValue.route_id.id,
@@ -55,33 +61,6 @@ let Insert2 = React.memo((props) => {
 		props.onFinish2(state);
 	};
 
-	let radioOptions = [
-		{
-			label: "Закупки товаров, работ и услуг",
-			value: "Закупки товаров, работ и услуг",
-		},
-		{
-			label: "Поставка продукции (выполнение работ, оказание услуг) заказчикам",
-			value: "Поставка продукции (выполнение работ, оказание услуг) заказчикам",
-		},
-		{
-			label: "Передача имущества в аренду (бесплатное пользование)",
-			value: "Передача имущества в аренду (бесплатное пользование)",
-		},
-		{ label: "Совместная деятельность", value: "Совместная деятельность" },
-		{
-			label:
-				"Финансирование (кредитование, обеспечение исполнения обязательств)",
-			value:
-				"Финансирование (кредитование, обеспечение исполнения обязательств)",
-		},
-		{ label: "Прочие обязательства", value: "Прочие обязательства" },
-	];
-	const [radioState, setRadioState] = useState(1);
-
-	const RadioOnChange = (radioValue) => {
-		setRadioState(radioValue.target.value);
-	};
 	return (
 		<Form
 			form={props.form2}
@@ -94,175 +73,45 @@ let Insert2 = React.memo((props) => {
 			}}
 		>
 			<h4>ЛИСТ СОГЛАСОВАНИЯ НА РЕАЛИЗАЦИЮ ГОТОВОЙ ПРОДУКЦИИ</h4>
-			<Form.Item
-				name="title"
-				label="Наименование контрагента"
-				labelCol={{ span: 24 }}
-				rules={[
-					{
-						required: true,
-						message: "Необходимо для заполнения!",
-					},
-				]}
-			>
-				<Input
-					disabled={props.disabled}
-					placeholder="Наименование контрагента"
-				/>
-			</Form.Item>
-			<Form.Item
-				name="subject"
-				label="Предмет договора"
-				labelCol={{ span: 24 }}
-				className="form-checkbox"
-				rules={[
-					{
-						required: true,
-						message: "Необходимо для заполнения!",
-					},
-				]}
-			>
-				<Radio.Group
-					disabled={props.disabled}
-					onChange={RadioOnChange}
-					options={radioOptions}
-					className="form-radio"
-					value={radioState}
-				/>
-			</Form.Item>
-			<Form.Item
-				name="price"
-				label="Общая сумма договора в валюте цены договора"
-				labelCol={{ span: 24 }}
-				rules={[
-					{
-						required: true,
-						message: "Необходимо для заполнения!",
-					},
-					{
-						pattern: price_pattern,
-						message: "Можно использовать только цифры!",
-					},
-				]}
-			>
-				<Input
-					disabled={props.disabled}
-					placeholder="Общая сумма договора в валюте цены договора"
-				/>
-			</Form.Item>
-			<Form.Item
-				name="currency_price"
-				label="Общая сумма договора в тенге, по курсу НБ РК"
-				labelCol={{ span: 24 }}
-				rules={[
-					{
-						required: true,
-						message: "Необходимо для заполнения!",
-					},
-					{
-						pattern: price_pattern,
-						message: "Можно использовать только цифры!",
-					},
-					{
-						pattern: price_max_count,
-						message: "Общая сумма договора не должна превышать 99999999",
-					},
-				]}
-			>
-				<Input
-					disabled={props.disabled}
-					placeholder="Общая сумма договора в тенге, по курсу НБ РК"
-				/>
-			</Form.Item>
-			<Form.Item
-				name="executor_name_division"
-				label="Наименование подразделения, фамилия ответственного исполнителя"
-				labelCol={{ span: 24 }}
-				rules={[
-					{
-						required: true,
-						message: "Необходимо для заполнения!",
-					},
-				]}
-			>
-				<Input
-					disabled={props.disabled}
-					placeholder="Наименование подразделения, фамилия ответственного исполнителя"
-				/>
-			</Form.Item>
-			<Form.Item
-				name="sider_signatures_date"
-				label="Подписанный сторонами оригинал договора получен, дата, способ получения от контрагента"
-				labelCol={{ span: 24 }}
-				rules={[
-					{
-						required: true,
-						message: "Необходимо для заполнения!",
-					},
-				]}
-			>
-				<Input
-					disabled={props.disabled}
-					placeholder="Подписанный сторонами оригинал договора получен, дата, способ получения от контрагента"
-				/>
-			</Form.Item>
-			<Form.Item
-				name="received_from_counteragent_date"
-				label="Дата получение проекта договора, способ получения от контрагента"
-				labelCol={{ span: 24 }}
-				rules={[
-					{
-						required: true,
-						message: "Необходимо для заполнения!",
-					},
-				]}
-			>
-				<Input
-					disabled={props.disabled}
-					placeholder="Дата получение проекта договора, способ получения от контрагента"
-				/>
-			</Form.Item>
-			<Form.Item
-				name="files"
-				label="Файлы"
-				labelCol={{ span: 24 }}
-				rules={[
-					{
-						required: true,
-						message: "Необходимо загрузить хотя бы один файл.",
-					},
-				]}
-			>
-				<UploadFile
-					showUploadList={true}
-					action={
-						"https://" +
-						constants.host +
-						":" +
-						constants.port +
-						"/document-control/orders"
-					}
-					multiple={true}
-					maxCount={50}
-					/*accept={".doc,.docx,.xls,.xlsx,.ppt,.pptx,image/*,*.pdf"}*/
-					onChange={(info) => {
-						const { status } = info.file;
-						if (status !== "uploading") {
-							console.log("info.file", info.file, info.fileList);
-						}
-						if (status === "done") {
-							message.success(`${info.file.name} - загружен успешно.`);
-						} else if (status === "error") {
-							message.error(`${info.file.name} - ошибка при загрузке.`);
-						}
-					}}
-				/>
-			</Form.Item>
-			<Form.Item name="date_created" hidden={true}></Form.Item>
-			<Form.Item name="route_id" hidden={true}></Form.Item>
-			<Form.Item name="status_id" hidden={true}></Form.Item>
-			<Form.Item name="step" hidden={true}></Form.Item>
-			<Form.Item name="log_username" hidden={true}></Form.Item>
+
+			<FragmentInputBoxTitle
+				label={"Наименование контрагента"}
+				placeholder={"Наименование контрагента"}
+			/>
+
+			<FragmentInputBoxSubjectRadio
+				label={"Предмет договора"}
+				placeholder={"Предмет договора"}
+			/>
+
+			<FragmentInputBoxPrice
+				label={"Общая сумма договора в валюте цены договора"}
+				placeholder={"Общая сумма договора в валюте цены договора"}
+			/>
+
+			<FragmentInputBoxCurrencyPrice
+				label={"Общая сумма договора в тенге, по курсу НБ РК"}
+				placeholder={"Общая сумма договора в тенге, по курсу НБ РК"}
+			/>
+
+			<FragmentInputBoxExecutorNameDivision
+				label={"Наименование подразделения, фамилия ответственного исполнителя"}
+				placeholder={"Наименование подразделения, фамилия ответственного исполнителя"}
+			/>
+
+			<FragmentInputBoxExecutorSiderSignaturesDate
+				label={"Подписанный сторонами оригинал договора получен, дата, способ получения от контрагента"}
+				placeholder={"Подписанный сторонами оригинал договора получен, дата, способ получения от контрагента"}
+			/>
+
+			<FragmentInputBoxExecutorReceivedFromCounteragentDate
+				label={"Подписанный сторонами оригинал договора получен, дата, способ получения от контрагента"}
+				placeholder={"Подписанный сторонами оригинал договора получен, дата, способ получения от контрагента"}
+			/>
+
+			<FragmentUploader url={"/document-control/orders"} />
+
+			<FragmentAnyItems />
 		</Form>
 	);
 });
