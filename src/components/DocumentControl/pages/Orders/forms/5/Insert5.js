@@ -1,15 +1,13 @@
-import { Form, Input, message } from "antd";
+import { Form } from "antd";
 import React, { useEffect, useState } from "react";
 import { useUser } from "../../../../../../core/functions";
-import constants from "../../../../../../config/constants";
-import UploadFile from "../../../../modals/UploadFile";
+import { FragmentAnyItems } from "../../../fragments/FragmentAnyItems";
 import {
 	FragmentInputBoxRemark,
 	FragmentInputBoxTitle,
 } from "../../../fragments/FragmentInputBox";
-import { FragmentInputBoxSubject } from "./../../../fragments/FragmentInputBox";
 import FragmentUploader from "../../../fragments/FragmentUploader";
-import { FragmentAnyItems } from "../../../fragments/FragmentAnyItems";
+import { FragmentInputBoxSubject } from "./../../../fragments/FragmentInputBox";
 
 let Insert5 = React.memo((props) => {
 	/**

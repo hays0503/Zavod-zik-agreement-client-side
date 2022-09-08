@@ -3,7 +3,15 @@ import React, { useEffect, useState } from "react";
 import { useUser } from "../../../../../../core/functions";
 import FragmentUploader from "../../../fragments/FragmentUploader";
 import { FragmentAnyItems } from "../../../fragments/FragmentAnyItems";
-import { FragmentInputBoxCounteragentContacts, FragmentInputBoxCurrency, FragmentInputBoxExecutorNameDivision, FragmentInputBoxExecutorPhoneNumber, FragmentInputBoxPrice, FragmentInputBoxSubjectRadio, FragmentInputBoxTitle } from "../../../fragments/FragmentInputBox";
+import {
+	FragmentInputBoxCounteragentContacts,
+	FragmentInputBoxCurrency,
+	FragmentInputBoxExecutorNameDivision,
+	FragmentInputBoxExecutorPhoneNumber,
+	FragmentInputBoxPrice,
+	FragmentInputBoxSubjectRadio,
+	FragmentInputBoxTitle,
+} from "../../../fragments/FragmentInputBox";
 
 let Insert4 = React.memo((props) => {
 	/**
@@ -79,35 +87,36 @@ let Insert4 = React.memo((props) => {
 				placeholder={"Предмет договора"}
 			/>
 
-            <FragmentInputBoxPrice
-                label={"Общая сумма договора"}
-                placeholder={"Общая сумма договора"}
-            />
+			<FragmentInputBoxPrice
+				label={"Общая сумма договора"}
+				placeholder={"Общая сумма договора"}
+			/>
 
-            <FragmentInputBoxCurrency
-                label={"Валюта платежа"}
-                placeholder={"Валюта платежа"}
-            />
+			<FragmentInputBoxCurrency
+				label={"Валюта платежа"}
+				placeholder={"Валюта платежа"}
+			/>
 
-            <FragmentInputBoxExecutorNameDivision
-                label={"Наименование подразделения, фамилия ответственного исполнителя"}
-                placeholder={"Наименование подразделения, фамилия ответственного исполнителя"}
-            />
+			<FragmentInputBoxExecutorNameDivision
+				label={"Наименование подразделения, фамилия ответственного исполнителя"}
+				placeholder={
+					"Наименование подразделения, фамилия ответственного исполнителя"
+				}
+			/>
 
-            <FragmentInputBoxExecutorPhoneNumber
-                label={"Телефон исполнителя"}
-                placeholder={"Телефон исполнителя"}
-            />
+			<FragmentInputBoxExecutorPhoneNumber
+				label={"Телефон исполнителя"}
+				placeholder={"Телефон исполнителя"}
+			/>
 
-            <FragmentInputBoxCounteragentContacts
-                label={"Контакты контрагента"}
-                placeholder={"Контакты контрагента"}
-            />
+			<FragmentInputBoxCounteragentContacts
+				label={"Контакты контрагента"}
+				placeholder={"Контакты контрагента"}
+			/>
 
 			<FragmentUploader url={"/document-control/orders"} />
 
 			<FragmentAnyItems />
-
 		</Form>
 	);
 });
