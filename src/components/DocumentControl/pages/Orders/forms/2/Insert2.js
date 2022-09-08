@@ -1,17 +1,15 @@
-import { Form, Input, message, Radio } from "antd";
+import { Form } from "antd";
 import React, { useEffect, useState } from "react";
 import { useUser } from "../../../../../../core/functions";
-import constants from "../../../../../../config/constants";
-import UploadFile from "../../../../modals/UploadFile";
-import { 
-import { FragmentInputBoxExecutorReceivedFromCounteragentDate } from './../../../fragments/FragmentInputBox';
+import {
+	FragmentInputBoxExecutorReceivedFromCounteragentDate,
 	FragmentInputBoxExecutorNameDivision,
 	FragmentInputBoxCurrencyPrice,
 	FragmentInputBoxPrice,
 	FragmentInputBoxSubjectRadio,
 	FragmentInputBoxTitle,
-	FragmentInputBoxExecutorSiderSignaturesDate
-	} from "../../../fragments/FragmentInputBox";
+	FragmentInputBoxExecutorSiderSignaturesDate,
+} from "../../../fragments/FragmentInputBox";
 
 let Insert2 = React.memo((props) => {
 	/**
@@ -96,17 +94,27 @@ let Insert2 = React.memo((props) => {
 
 			<FragmentInputBoxExecutorNameDivision
 				label={"Наименование подразделения, фамилия ответственного исполнителя"}
-				placeholder={"Наименование подразделения, фамилия ответственного исполнителя"}
+				placeholder={
+					"Наименование подразделения, фамилия ответственного исполнителя"
+				}
 			/>
 
 			<FragmentInputBoxExecutorSiderSignaturesDate
-				label={"Подписанный сторонами оригинал договора получен, дата, способ получения от контрагента"}
-				placeholder={"Подписанный сторонами оригинал договора получен, дата, способ получения от контрагента"}
+				label={
+					"Подписанный сторонами оригинал договора получен, дата, способ получения от контрагента"
+				}
+				placeholder={
+					"Подписанный сторонами оригинал договора получен, дата, способ получения от контрагента"
+				}
 			/>
 
 			<FragmentInputBoxExecutorReceivedFromCounteragentDate
-				label={"Подписанный сторонами оригинал договора получен, дата, способ получения от контрагента"}
-				placeholder={"Подписанный сторонами оригинал договора получен, дата, способ получения от контрагента"}
+				label={
+					"Подписанный сторонами оригинал договора получен, дата, способ получения от контрагента"
+				}
+				placeholder={
+					"Подписанный сторонами оригинал договора получен, дата, способ получения от контрагента"
+				}
 			/>
 
 			<FragmentUploader url={"/document-control/orders"} />
