@@ -104,6 +104,58 @@ let positions = {
     }
 }
 
+let userGql = {
+    exemplar: 'user',
+    table: 'users',
+    options:{
+
+    },
+    select:{
+        all: gql`
+        query users($users:JSON){
+            users(users:$users){
+              id
+              fio
+            }
+            get_boss_depart(users:$users){
+              id
+              username
+              fio
+              positions
+              boss_position_name
+            }
+          }`,
+        one: gql`
+        query users($users:JSON){
+            users(users:$users){
+              id
+              fio
+            }
+            get_boss_depart(users:$users){
+              id
+              username
+              fio
+              positions
+              boss_position_name
+            }
+          }`
+    },
+    subscription:{
+        all:gql`
+        query users($users:JSON){
+            users(users:$users){
+              id
+              fio
+            }
+            get_boss_depart(users:$users){
+              id
+              username
+              fio
+            }
+          }`
+    }
+}
+
 const { Step } = Steps;
 
 let ModalInsert = React.memo(({ GQL, GQL2, GQL3, GQL4, GQL5, Form1, Form2, Form3, Form4, Form5, ...props }) => {
@@ -118,7 +170,6 @@ let ModalInsert = React.memo(({ GQL, GQL2, GQL3, GQL4, GQL5, Form1, Form2, Form3
     });
 
     const user = useUser();
-    console.log('user--------',user)
 
     const [formRouteSelect] = Form.useForm();
     const [visible, setVisible] = useState(false);
@@ -194,6 +245,19 @@ let ModalInsert = React.memo(({ GQL, GQL2, GQL3, GQL4, GQL5, Form1, Form2, Form3
         setsixthModalVisible(false);
     };
 
+    const {loading:loadingBoss, data: dataBoss, refetch: refetchBoss} = useQuery(userGql.select.all,{
+        variables:{
+            users:{
+                global:{
+                    id: `=${user.id}`
+                }
+            }
+        }
+    })
+    useEffect(()=>{
+        refetchBoss()
+    },[])
+
     //routes manipulation
     const { loading: loadingRoutes, data: dataRoutes, refetch: refetchRoutes } = useQuery(document_routes.select.all, {
         variables: {
@@ -204,16 +268,60 @@ let ModalInsert = React.memo(({ GQL, GQL2, GQL3, GQL4, GQL5, Form1, Form2, Form3
             }
         }
     });
+    console.log('dataBoss------',dataBoss)
+    console.log('dataRoutes/////////', dataRoutes)
+    console.log('routesList++++++++++',routesList)
 
     useEffect(() => {
         if (state.route_id != null) {
             refetchRoutes();
-            console.log('stateEffect',dataRoutes,state)
+            console.log('stateEffect',state)
         }
     }, [state]);
+
+
     let [routesList,setRoutesList]= useState([{positionName:'Тип договора не выбран.'}])
     let routesMap = []
     useEffect(() => {
+
+        if (dataRoutes && dataRoutes[Object.keys(dataRoutes)[0]] != null && state.route_id > 0) {
+            let boss = dataRoutes.document_routes[0].routes.find((route, index )=>{
+                // console.log(route.positionId,'---',dataBoss.get_boss_depart[0].positions[0])
+                return route.positionId == dataBoss.get_boss_depart[0].positions[0]
+            })
+            let routes = [...dataRoutes.document_routes[0].routes]
+            if(boss){
+                let bossRouteData = {...boss,step:1}
+                routes.unshift(bossRouteData)
+                for(let i=0; i<routes.length; i++){
+                    routes[i].step=i+1
+                    if(bossRouteData.positionId==routes[i].positionId && routes[i].step != 1){
+                        routes.splice(i,1)
+                    }
+                }
+                console.log('Начальник в маршруте*-*-*-*',boss)
+                console.log('routes!!!!!!!!!!+++',routes)
+                setRouteData(routes)
+                setRoutesList(routes)
+
+            }else{
+                let bossRouteData = {
+                    positionName:dataBoss.get_boss_depart[0].boss_position_name,
+                    step:1,
+                    positionId:dataBoss.get_boss_depart[0].positions[0],
+                    statuses:['5','2','4']
+                }
+                routes.unshift(bossRouteData)
+                for(let i=0; i<routes.length; i++){
+                    routes[i].step=i+1
+                }
+                console.log('Начальник вне маршрута*-*-*-*',dataBoss)
+                console.log('routes!!!!!!!!!!',routes)
+                setRouteData(routes)
+                setRoutesList(routes)
+            }
+        }
+
         if (dataRoutes && dataRoutes[Object.keys(dataRoutes)[0]] != null && state.route_id > 0) {
             form.setFieldsValue({
                 route_id: dataRoutes.document_routes[0].id,
@@ -240,12 +348,12 @@ let ModalInsert = React.memo(({ GQL, GQL2, GQL3, GQL4, GQL5, Form1, Form2, Form3
                 step: 1,
                 status_id: dataRoutes.document_routes[0].status_in_process
             })
-            setRoutesList(routesMap = (dataRoutes.document_routes[0].routes !== undefined )? dataRoutes.document_routes[0].routes.map((item)=>{
-                return{
-                    positionName:item.positionName
-                }
-            }) :[])
-            setRouteData(dataRoutes.document_routes[0].routes.filter((el) => { return el.step == 1 }))
+            // setRoutesList(routesMap = (dataRoutes.document_routes[0].routes !== undefined )? dataRoutes.document_routes[0].routes.map((item)=>{
+            //     return{
+            //         positionName:item.positionName
+            //     }
+            // }) :[])
+            // setRouteData(dataRoutes.document_routes[0].routes.filter((el) => { return el.step == 1 }))
         }
     }, [dataRoutes]);
 
@@ -315,7 +423,7 @@ let ModalInsert = React.memo(({ GQL, GQL2, GQL3, GQL4, GQL5, Form1, Form2, Form3
                         form5RouteData.current = values.routes
                         console.log('ROUTE 5', values)
                     }}
-                    onValuesChange={(changedValues, allValues) => { setState(Object.assign({}, state, { ...allValues, })); console.log('state', state) }}
+                    onValuesChange={(changedValues, allValues) => { setState(Object.assign({}, state, { ...allValues, }))}}
                 >
                     <Form.Item
                         name="route_id"
@@ -580,10 +688,9 @@ let ModalInsert = React.memo(({ GQL, GQL2, GQL3, GQL4, GQL5, Form1, Form2, Form3
                         values.is_read = false;
                         values.fio = user.fio;
                         values.positionId = routeData[0].positionId
-                        console.log('TEST', variables)
-                        // console.log('TEST', Object.assign(variables,))
+                        console.log('values---', values)
                         variables[GQL4.exemplar] = values;
-                        insert4({ variables })
+                        // insert4({ variables })
 
                     }}
                 />
