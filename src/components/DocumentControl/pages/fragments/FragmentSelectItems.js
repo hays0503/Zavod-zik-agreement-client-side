@@ -1,8 +1,6 @@
 import { Divider, Select, Spin } from "antd";
-import {
-	useQuery,
-	gql,
-} from "@apollo/client";
+import { useQuery, gql } from "@apollo/client";
+import { useEffect, useState } from "react";
 
 const positions = gql`
 	query positions($positions: JSON) {
@@ -23,17 +21,30 @@ const DepartamentDictionary = gql`
 	}
 `;
 
-const  GetPosition = async (id) => {
-	// const { loading, error, data } = useQuery(positions);
-	// return { loading, error, data };
-};
-
 /**
  * @function FragmentSelectItems Выпадающий список элементов antd
  * @param {Array} Items Массив с элементами
  * @return {Index} Возвращает индекс выбранного элемента
  */
 export const FragmentSelectItems = (props) => {
+	console.log("props.valueprops.valueprops.valueprops.value", props.value);
+
+	const [idDepartment, setIdDepartment] = useState(0);
+
+	const QueryDepartment = useQuery(positions, {
+		onCompleted: (Data) => {
+			console.log("onCompleted:(Data)", Data);
+			console.log("onCompleted:(Data)", QueryDepartment.data);
+		},
+		variables: {
+			positions: {
+				global: {
+					id_depart: `=${idDepartment}`,
+				},
+			},
+		},
+	});
+
 	// Запрос словаря с наименованием департаментов
 	const { loading, error, data } = useQuery(DepartamentDictionary);
 	// Возникла ошибка
@@ -50,11 +61,7 @@ export const FragmentSelectItems = (props) => {
 
 	const onChange = (value) => {
 		console.log(`selected ${value}`);
-		const PositionDataObject = GetPosition(value);
-		console.log(
-			"console.log(PositionDataObject.data)",
-			PositionDataObject.data
-		);
+		setIdDepartment(value);
 	};
 
 	return (
@@ -99,14 +106,17 @@ export const FragmentSelectItems = (props) => {
 						.toLowerCase()
 						.localeCompare(optionB.children.toLowerCase())
 				}
-				onChange={onChange}
+				disabled={
+					QueryDepartment?.data?.positions !== undefined &&
+					QueryDepartment?.data?.positions.length === 0
+				}
+				onChange={(value) => {
+					console.log("Второй выпадающий список", value);
+					props.onChange([value]);
+				}}
 			>
-				{data.departament_dictionary.map((Item) => {
-					return (
-						<Select.Option value={Item.id}>
-							{Item.departament_name}
-						</Select.Option>
-					);
+				{QueryDepartment.data?.positions.map((Item) => {
+					return <Select.Option value={Item.id}>{Item.name}</Select.Option>;
 				})}
 			</Select>
 		</>
