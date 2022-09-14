@@ -100,7 +100,8 @@ import DocumentSearch from './components/DocumentSearch/DocumentSearch'
 	// инициализация клиента
 	const client = new ApolloClient({
 		link: ApolloLink.from([errorLink, splitLink]),
-		cache: new InMemoryCache()
+		cache: new InMemoryCache(),
+		connectToDevTools: true
 	});
 
 
