@@ -268,9 +268,6 @@ let ModalInsert = React.memo(({ GQL, GQL2, GQL3, GQL4, GQL5, Form1, Form2, Form3
             }
         }
     });
-    console.log('dataBoss------',dataBoss)
-    console.log('dataRoutes/////////', dataRoutes)
-    console.log('routesList++++++++++',routesList)
 
     useEffect(() => {
         if (state.route_id != null) {
@@ -400,7 +397,6 @@ let ModalInsert = React.memo(({ GQL, GQL2, GQL3, GQL4, GQL5, Form1, Form2, Form3
     const cRef = useRef('displayNone')
 
     let form5RouteData = useRef()
-    // let routeStatus = { "statuses": ["5", "4", "2", "7"] }
     
     return (
         <>
@@ -573,6 +569,7 @@ let ModalInsert = React.memo(({ GQL, GQL2, GQL3, GQL4, GQL5, Form1, Form2, Form3
                         values.position = user.position_names[0];
                         values.is_read = false;
                         values.fio = user.fio;
+                        values.route_data = routeData
                         values.positionId = routeData[0].positionId
                         console.log('TEST', variables)
                         variables[GQL.exemplar] = values;
@@ -609,6 +606,7 @@ let ModalInsert = React.memo(({ GQL, GQL2, GQL3, GQL4, GQL5, Form1, Form2, Form3
                         values.position = user.position_names[0];
                         values.is_read = false;
                         values.fio = user.fio;
+                        values.route_data = routeData
                         values.positionId = routeData[0].positionId
                         console.log('TEST', variables)
                         // console.log('TEST', Object.assign(variables,))
@@ -648,6 +646,9 @@ let ModalInsert = React.memo(({ GQL, GQL2, GQL3, GQL4, GQL5, Form1, Form2, Form3
                         values.position = user.position_names[0];
                         values.is_read = false;
                         values.fio = user.fio;
+
+                        values.route_data = routeData
+
                         values.positionId = routeData[0].positionId
                         console.log('TEST', variables)
                         // console.log('TEST', Object.assign(variables,))
@@ -689,8 +690,9 @@ let ModalInsert = React.memo(({ GQL, GQL2, GQL3, GQL4, GQL5, Form1, Form2, Form3
                         values.fio = user.fio;
                         values.positionId = routeData[0].positionId
                         console.log('values---', values)
+                        values.route_data = routeData
                         variables[GQL4.exemplar] = values;
-                        // insert4({ variables })
+                        insert4({ variables })
 
                     }}
                 />
@@ -719,7 +721,8 @@ let ModalInsert = React.memo(({ GQL, GQL2, GQL3, GQL4, GQL5, Form1, Form2, Form3
                         await uploadDocuments(values.files.fileList).then(result => {
                             base64 = result
                         })
-                        values.route_data = form5RouteData.current
+                        //values.route_data = form5RouteData.current
+                        values.route_data = routeData
                         values.docs = base64;
                         values.user_id = user.id;
                         values.username = user.username;
