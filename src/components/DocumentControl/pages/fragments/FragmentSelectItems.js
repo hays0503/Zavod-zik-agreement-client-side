@@ -3,8 +3,8 @@ import { useQuery, gql } from "@apollo/client";
 import { useEffect, useState } from "react";
 
 const positions = gql`
-	query positions($positions: JSON) {
-		positions(positions: $positions) {
+	query get_free_position($positions: JSON) {
+		get_free_position(positions: $positions) {
 			id
 			name
 			id_depart
@@ -29,7 +29,7 @@ const DepartamentDictionary = gql`
 export const FragmentSelectItems = (props) => {
 	console.log("props.valueprops.valueprops.valueprops.value", props.value);
 
-	const [idDepartment, setIdDepartment] = useState(0);
+	const [idDepartment, setIdDepartment] = useState(1);
 
 	const QueryDepartment = useQuery(positions, {
 		onCompleted: (Data) => {
@@ -107,15 +107,15 @@ export const FragmentSelectItems = (props) => {
 						.localeCompare(optionB.children.toLowerCase())
 				}
 				disabled={
-					QueryDepartment?.data?.positions !== undefined &&
-					QueryDepartment?.data?.positions.length === 0
+					QueryDepartment?.data?.get_free_position !== undefined &&
+					QueryDepartment?.data?.get_free_position.length === 0
 				}
 				onChange={(value) => {
 					console.log("Второй выпадающий список", value);
 					props.onChange([value]);
 				}}
 			>
-				{QueryDepartment.data?.positions.map((Item) => {
+				{QueryDepartment.data?.get_free_position.map((Item) => {
 					return <Select.Option value={Item.id}>{Item.name}</Select.Option>;
 				})}
 			</Select>
