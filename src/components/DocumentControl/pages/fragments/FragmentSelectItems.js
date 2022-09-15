@@ -31,6 +31,8 @@ export const FragmentSelectItems = (props) => {
 
 	const [idDepartment, setIdDepartment] = useState(1);
 
+	const [isClick, setClick] = useState(true);
+
 	const QueryDepartment = useQuery(positions, {
 		onCompleted: (Data) => {
 			console.log("onCompleted:(Data)", Data);
@@ -62,6 +64,7 @@ export const FragmentSelectItems = (props) => {
 	const onChange = (value) => {
 		console.log(`selected ${value}`);
 		setIdDepartment(value);
+		setClick(false);
 	};
 
 	return (
@@ -90,8 +93,12 @@ export const FragmentSelectItems = (props) => {
 					);
 				})}
 			</Select>
-
 			<Divider type="vertical" />
+			{console.log(
+				(QueryDepartment?.data?.get_free_position !== undefined &&
+					QueryDepartment?.data?.get_free_position.length === 0) ||
+					isClick
+			)}
 
 			<Select
 				showSearch
@@ -107,8 +114,9 @@ export const FragmentSelectItems = (props) => {
 						.localeCompare(optionB.children.toLowerCase())
 				}
 				disabled={
-					QueryDepartment?.data?.get_free_position !== undefined &&
-					QueryDepartment?.data?.get_free_position.length === 0
+					(QueryDepartment?.data?.get_free_position !== undefined &&
+						QueryDepartment?.data?.get_free_position.length === 0) ||
+					isClick
 				}
 				onChange={(value) => {
 					console.log("Второй выпадающий список", value);
