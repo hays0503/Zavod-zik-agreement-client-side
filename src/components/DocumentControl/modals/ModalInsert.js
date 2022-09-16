@@ -136,7 +136,6 @@ let userGql = {
               username
               fio
               positions
-              boss_position_name
             }
           }`
     },
@@ -268,6 +267,8 @@ let ModalInsert = React.memo(({ GQL, GQL2, GQL3, GQL4, GQL5, Form1, Form2, Form3
             }
         }
     });
+
+    console.log('dataBoss--------',dataBoss)
 
     useEffect(() => {
         if (state.route_id != null) {
