@@ -1,10 +1,10 @@
 import { PlusCircleOutlined, MinusCircleOutlined } from '@ant-design/icons';
-import { useMutation,useQuery } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import { Button, Form, Modal, Steps, Divider, Input, Row, Col } from 'antd';
 import React, { useState, useEffect, useRef } from 'react';
 import { handlerMutation, useUser } from '../../../core/functions';
 
-import { gql} from '@apollo/client';
+import { gql } from '@apollo/client';
 import IndependentSelect from '../../../core/IndependentSelect';
 
 let document_routes = {
@@ -107,10 +107,10 @@ let positions = {
 let userGql = {
     exemplar: 'user',
     table: 'users',
-    options:{
+    options: {
 
     },
-    select:{
+    select: {
         all: gql`
         query users($users:JSON){
             users(users:$users){
@@ -136,12 +136,11 @@ let userGql = {
               username
               fio
               positions
-              boss_position_name
             }
           }`
     },
-    subscription:{
-        all:gql`
+    subscription: {
+        all: gql`
         query users($users:JSON){
             users(users:$users){
               id
@@ -166,7 +165,7 @@ let ModalInsert = React.memo(({ GQL, GQL2, GQL3, GQL4, GQL5, Form1, Form2, Form3
     const [fifthModalVisible, setFifthModalVisible] = useState(false)
     const [sixthModalVisible, setsixthModalVisible] = useState(false)
     const [routeData, setRouteData] = useState();
-    const [state, setState] = useState({        
+    const [state, setState] = useState({
     });
 
     const user = useUser();
@@ -200,24 +199,24 @@ let ModalInsert = React.memo(({ GQL, GQL2, GQL3, GQL4, GQL5, Form1, Form2, Form3
     };
     const handleOk = () => {
         if (state.route_id != null) {
-            if(state.route_id == 10){
+            if (state.route_id == 10) {
                 setVisible(false)
                 showModalForm1();
             }
-            if(state.route_id == 24){
+            if (state.route_id == 24) {
                 setVisible(false)
                 showModalForm2();
             }
-            if(state.route_id == 26){
+            if (state.route_id == 26) {
                 setVisible(false)
                 showModalForm3();
             }
-            if(state.route_id == 27){
+            if (state.route_id == 27) {
                 setVisible(false)
                 showModalForm4();
             }
             if (state.route_id == 29) {
-                if(state.routes&&state.routes[0]){
+                if (state.routes && state.routes[0]) {
                     formRouteSelect.submit();
                     setVisible(false)
                     showModalForm5();
@@ -245,18 +244,18 @@ let ModalInsert = React.memo(({ GQL, GQL2, GQL3, GQL4, GQL5, Form1, Form2, Form3
         setsixthModalVisible(false);
     };
 
-    const {loading:loadingBoss, data: dataBoss, refetch: refetchBoss} = useQuery(userGql.select.all,{
-        variables:{
-            users:{
-                global:{
+    const { loading: loadingBoss, data: dataBoss, refetch: refetchBoss } = useQuery(userGql.select.all, {
+        variables: {
+            users: {
+                global: {
                     id: `=${user.id}`
                 }
             }
         }
     })
-    useEffect(()=>{
+    useEffect(() => {
         refetchBoss()
-    },[])
+    }, [])
 
     //routes manipulation
     const { loading: loadingRoutes, data: dataRoutes, refetch: refetchRoutes } = useQuery(document_routes.select.all, {
@@ -269,89 +268,91 @@ let ModalInsert = React.memo(({ GQL, GQL2, GQL3, GQL4, GQL5, Form1, Form2, Form3
         }
     });
 
+    console.log('dataBoss--------', dataBoss)
+
     useEffect(() => {
         if (state.route_id != null) {
             refetchRoutes();
-            console.log('stateEffect',state)
+            console.log('stateEffect', state)
         }
     }, [state]);
 
 
-    let [routesList,setRoutesList]= useState([{positionName:'Тип договора не выбран.'}])
+    let [routesList, setRoutesList] = useState([{ positionName: 'Тип договора не выбран.' }])
     let routesMap = []
     useEffect(() => {
 
         if (dataRoutes && dataRoutes[Object.keys(dataRoutes)[0]] != null && state.route_id > 0) {
-            let boss = dataRoutes.document_routes[0].routes.find((route, index )=>{
+            let boss = dataRoutes.document_routes[0].routes.find((route, index) => {
                 // console.log(route.positionId,'---',dataBoss.get_boss_depart[0].positions[0])
                 return route.positionId == dataBoss.get_boss_depart[0].positions[0]
             })
             let routes = [...dataRoutes.document_routes[0].routes]
-            if(boss){
-                let bossRouteData = {...boss,step:1}
+            if (boss) {
+                let bossRouteData = { ...boss, step: 1 }
                 routes.unshift(bossRouteData)
-                for(let i=0; i<routes.length; i++){
-                    routes[i].step=i+1
-                    if(bossRouteData.positionId==routes[i].positionId && routes[i].step != 1){
-                        routes.splice(i,1)
+                for (let i = 0; i < routes.length; i++) {
+                    routes[i].step = i + 1
+                    if (bossRouteData.positionId == routes[i].positionId && routes[i].step != 1) {
+                        routes.splice(i, 1)
                     }
                 }
-                console.log('Начальник в маршруте*-*-*-*',boss)
-                console.log('routes!!!!!!!!!!+++',routes)
+                console.log('Начальник в маршруте*-*-*-*', boss)
+                console.log('routes!!!!!!!!!!+++', routes)
                 setRouteData(routes)
                 setRoutesList(routes)
 
-            }else{
+            } else {
                 let bossRouteData = {
-                    positionName:dataBoss.get_boss_depart[0].boss_position_name,
-                    step:1,
-                    positionId:dataBoss.get_boss_depart[0].positions[0],
-                    statuses:['5','2','4']
+                    positionName: dataBoss.get_boss_depart[0].boss_position_name,
+                    step: 1,
+                    positionId: dataBoss.get_boss_depart[0].positions[0],
+                    statuses: ['5', '2', '4']
                 }
                 routes.unshift(bossRouteData)
-                for(let i=0; i<routes.length; i++){
-                    routes[i].step=i+1
+                for (let i = 0; i < routes.length; i++) {
+                    routes[i].step = i + 1
                 }
-                console.log('Начальник вне маршрута*-*-*-*',dataBoss)
-                console.log('routes!!!!!!!!!!',routes)
+                console.log('Начальник вне маршрута*-*-*-*', dataBoss)
+                console.log('routes!!!!!!!!!!', routes)
                 setRouteData(routes)
                 setRoutesList(routes)
             }
         }
 
-        if (dataRoutes && dataRoutes[Object.keys(dataRoutes)[0]] != null && state.route_id > 0) {
-            form.setFieldsValue({
-                route_id: dataRoutes.document_routes[0].id,
-                step: 1,
-                status_id: dataRoutes.document_routes[0].status_in_process
-            })
-            form2.setFieldsValue({
-                route_id: dataRoutes.document_routes[0].id,
-                step: 1,
-                status_id: dataRoutes.document_routes[0].status_in_process
-            })
-            form3.setFieldsValue({
-                route_id: dataRoutes.document_routes[0].id,
-                step: 1,
-                status_id: dataRoutes.document_routes[0].status_in_process
-            })
-            form4.setFieldsValue({
-                route_id: dataRoutes.document_routes[0].id,
-                step: 1,
-                status_id: dataRoutes.document_routes[0].status_in_process
-            })
-            form5.setFieldsValue({
-                route_id: dataRoutes.document_routes[0].id,
-                step: 1,
-                status_id: dataRoutes.document_routes[0].status_in_process
-            })
-            // setRoutesList(routesMap = (dataRoutes.document_routes[0].routes !== undefined )? dataRoutes.document_routes[0].routes.map((item)=>{
-            //     return{
-            //         positionName:item.positionName
-            //     }
-            // }) :[])
-            // setRouteData(dataRoutes.document_routes[0].routes.filter((el) => { return el.step == 1 }))
-        }
+        // if (dataRoutes && dataRoutes[Object.keys(dataRoutes)[0]] != null && state.route_id > 0) {
+        //     form.setFieldsValue({
+        //         route_id: dataRoutes.document_routes[0].id,
+        //         step: 1,
+        //         status_id: dataRoutes.document_routes[0].status_in_process
+        //     })
+        //     form2.setFieldsValue({
+        //         route_id: dataRoutes.document_routes[0].id,
+        //         step: 1,
+        //         status_id: dataRoutes.document_routes[0].status_in_process
+        //     })
+        //     form3.setFieldsValue({
+        //         route_id: dataRoutes.document_routes[0].id,
+        //         step: 1,
+        //         status_id: dataRoutes.document_routes[0].status_in_process
+        //     })
+        //     form4.setFieldsValue({
+        //         route_id: dataRoutes.document_routes[0].id,
+        //         step: 1,
+        //         status_id: dataRoutes.document_routes[0].status_in_process
+        //     })
+        //     form5.setFieldsValue({
+        //         route_id: dataRoutes.document_routes[0].id,
+        //         step: 1,
+        //         status_id: dataRoutes.document_routes[0].status_in_process
+        //     })
+        // setRoutesList(routesMap = (dataRoutes.document_routes[0].routes !== undefined )? dataRoutes.document_routes[0].routes.map((item)=>{
+        //     return{
+        //         positionName:item.positionName
+        //     }
+        // }) :[])
+        // setRouteData(dataRoutes.document_routes[0].routes.filter((el) => { return el.step == 1 }))
+        // }
     }, [dataRoutes]);
 
 
@@ -397,7 +398,7 @@ let ModalInsert = React.memo(({ GQL, GQL2, GQL3, GQL4, GQL5, Form1, Form2, Form3
     const cRef = useRef('displayNone')
 
     let form5RouteData = useRef()
-    
+
     return (
         <>
             <Button
@@ -419,7 +420,7 @@ let ModalInsert = React.memo(({ GQL, GQL2, GQL3, GQL4, GQL5, Form1, Form2, Form3
                         form5RouteData.current = values.routes
                         console.log('ROUTE 5', values)
                     }}
-                    onValuesChange={(changedValues, allValues) => { setState(Object.assign({}, state, { ...allValues, }))}}
+                    onValuesChange={(changedValues, allValues) => { setState(Object.assign({}, state, { ...allValues, })) }}
                 >
                     <Form.Item
                         name="route_id"
@@ -497,7 +498,7 @@ let ModalInsert = React.memo(({ GQL, GQL2, GQL3, GQL4, GQL5, Form1, Form2, Form3
                                                 </Col>
                                                 <Col span={5}>
                                                     <i style={{ marginLeft: "20px" }}>Убрать</i>
-                                                    <MinusCircleOutlined onClick={() => {remove(field.name)}} disabled={props.disabled} style={{ marginLeft: 5 }} />
+                                                    <MinusCircleOutlined onClick={() => { remove(field.name) }} disabled={props.disabled} style={{ marginLeft: 5 }} />
                                                 </Col>
 
                                                 <Form.Item
@@ -526,7 +527,7 @@ let ModalInsert = React.memo(({ GQL, GQL2, GQL3, GQL4, GQL5, Form1, Form2, Form3
                                     ))}
                                     <Button
                                         type="dashed"
-                                        onClick={() => {add()}}
+                                        onClick={() => { add() }}
                                         disabled={props.disabled}
                                         block
                                     >
@@ -615,7 +616,7 @@ let ModalInsert = React.memo(({ GQL, GQL2, GQL3, GQL4, GQL5, Form1, Form2, Form3
 
                     }}
                 />
-                
+
             </Modal>
             <Modal
                 title={props.title}
@@ -657,7 +658,7 @@ let ModalInsert = React.memo(({ GQL, GQL2, GQL3, GQL4, GQL5, Form1, Form2, Form3
 
                     }}
                 />
-                
+
             </Modal>
             <Modal
                 title={props.title}
@@ -696,7 +697,7 @@ let ModalInsert = React.memo(({ GQL, GQL2, GQL3, GQL4, GQL5, Form1, Form2, Form3
 
                     }}
                 />
-                
+
             </Modal>
             <Modal
                 title={props.title}
