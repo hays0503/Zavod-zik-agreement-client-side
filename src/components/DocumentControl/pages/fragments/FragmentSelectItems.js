@@ -2,6 +2,9 @@ import { Divider, Select, Spin } from "antd";
 import { useQuery, gql } from "@apollo/client";
 import { useEffect, useState } from "react";
 
+/**
+ *	@description C помощью этого `gql` запроса будут запрашиваться свободные вакансии в каком либо департаменте
+ */
 const positions = gql`
 	query get_free_position($positions: JSON) {
 		get_free_position(positions: $positions) {
@@ -11,20 +14,22 @@ const positions = gql`
 		}
 	}
 `;
-
-const DepartamentDictionary = gql`
-	query departament_dictionary($departament_dictionary: JSON) {
-		departament_dictionary(departament_dictionary: $departament_dictionary) {
+/**
+ * @description С помощью этого `gql` запроса будут запрашиваться словари с названием департаментов
+ */
+const DepartmentDictionary = gql`
+	query department_dictionary($department_dictionary: JSON) {
+		department_dictionary(department_dictionary: $department_dictionary) {
 			id
-			departament_name
+			department_name
 		}
 	}
 `;
 
 /**
- * @function FragmentSelectItems Выпадающий список элементов antd
+ * @function `FragmentSelectItems` Выпадающий список элементов antd
  * @param {Array} Items Массив с элементами
- * @return {Index} Возвращает индекс выбранного элемента
+ * @return {Int} `Index` Возвращает индекс выбранного элемента
  */
 export const FragmentSelectItems = (props) => {
 	console.log("props.valueprops.valueprops.valueprops.value", props.value);
@@ -48,7 +53,7 @@ export const FragmentSelectItems = (props) => {
 	});
 
 	// Запрос словаря с наименованием департаментов
-	const { loading, error, data } = useQuery(DepartamentDictionary);
+	const { loading, error, data } = useQuery(DepartmentDictionary);
 	// Возникла ошибка
 	if (error) return <p>Ошибка: {error.message}</p>;
 	// Если загрузка показываем прелоадер
@@ -62,7 +67,6 @@ export const FragmentSelectItems = (props) => {
 	// Отображение списка с наименованием департаментов
 
 	const onChange = (value) => {
-		console.log(`selected ${value}`);
 		setIdDepartment(value);
 		setClick(false);
 	};
@@ -85,10 +89,10 @@ export const FragmentSelectItems = (props) => {
 				}
 				onChange={onChange}
 			>
-				{data.departament_dictionary.map((Item) => {
+				{data.department_dictionary.map((Item) => {
 					return (
 						<Select.Option value={Item.id}>
-							{Item.departament_name}
+							{Item.department_name}
 						</Select.Option>
 					);
 				})}
