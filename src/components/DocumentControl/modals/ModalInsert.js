@@ -335,7 +335,7 @@ let ModalInsert = React.memo(
 						}
 					}
 					// console.log("Начальник в маршруте*-*-*-*", boss);
-					// console.log("routes!!!!!!!!!!+++", routes);
+					console.log("routes!!!!!!!!!!+++", routes);
 					setRouteData(routes);
 					setRoutesList(routes);
 				} else {
@@ -350,13 +350,11 @@ let ModalInsert = React.memo(
 						routes[i].step = i + 1;
 					}
 					// console.log("Начальник вне маршрута*-*-*-*", dataBoss);
-					// console.log("routes!!!!!!!!!!", routes);
+					console.log("routes!!!!!!!!!!", routes);
 					setRouteData(routes);
 					setRoutesList(routes);
 				}
-			}
 
-			if (dataRoutes && dataRoutes[Object.keys(dataRoutes)[0]] != null && state.route_id > 0) {
 			    form.setFieldsValue({
 			        route_id: dataRoutes.document_routes[0].id,
 			        step: 1,
@@ -387,6 +385,7 @@ let ModalInsert = React.memo(
 			        positionName:item.positionName
 			    }
 			}) :[])
+			setRouteData(routes);
 			// setRouteData(dataRoutes.document_routes[0].routes.filter((el) => { return el.step == 1 }))
 			}
 		}, [dataRoutes]);
