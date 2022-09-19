@@ -1,5 +1,5 @@
 import { Divider, Select, Spin } from "antd";
-import { useQuery, gql } from "@apollo/client";
+import { useQuery, gql, useSubscription } from "@apollo/client";
 import { useEffect, useState } from "react";
 
 /**
@@ -32,8 +32,6 @@ const DepartmentDictionary = gql`
  * @return {Int} `Index` Возвращает индекс выбранного элемента
  */
 export const FragmentSelectItems = (props) => {
-	console.log("props.valueprops.valueprops.valueprops.value", props.value);
-
 	const [idDepartment, setIdDepartment] = useState(1);
 
 	const [isClick, setClick] = useState(true);
@@ -132,5 +130,68 @@ export const FragmentSelectItems = (props) => {
 				})}
 			</Select>
 		</>
+	);
+};
+
+/**
+ * @function `FragmentSelectDepartment ` Выводит список департаментов
+ * @param   {value} `stateValue` функция по установки стейта
+ * @param  {setFunc} `setStateValue` функция по установки стейта
+ */
+export const FragmentSelectDepartment = (props) => {
+	// Запрос словаря с наименованием департаментов
+	const { loading, error, data } = useQuery(DepartmentDictionary);
+	// Возникла ошибка
+	if (error) return <p>Ошибка: {error.message}</p>;
+	// Если загрузка показываем прелоадер
+	if (loading || !data)
+		return (
+			<>
+				<Spin />
+				"Загрузка FragmentSelectItems !"
+			</>
+		);
+	// Отображение списка с наименованием департаментов
+
+	const onChange = (value) => {
+		const newState = {
+			id: props.stateValue.id,
+			name: props.stateValue.name,
+			accesses: props.stateValue.accesses,
+			log_username: props.stateValue.log_username,
+			is_boss: props.stateValue.is_boss,
+			is_vice_director: props.stateValue.is_vice_director,
+			is_user: props.stateValue.is_user,
+			id_depart: value,
+		};
+		props.setStateValue(newState);
+		console.log("console.log(value)", value);
+	};
+
+	return (
+		<Select
+			showSearch
+			style={{
+				width: 400,
+			}}
+			placeholder="Search to Select"
+			optionFilterProp="children"
+			filterOption={(input, option) => option.children.includes(input)}
+			filterSort={(optionA, optionB) =>
+				optionA.children
+					.toLowerCase()
+					.localeCompare(optionB.children.toLowerCase())
+			}
+			defaultValue={
+				props?.stateValue !== undefined ? props?.stateValue.id_depart : 0
+			}
+			onChange={onChange}
+		>
+			{data.department_dictionary.map((Item) => {
+				return (
+					<Select.Option value={Item.id}>{Item.department_name}</Select.Option>
+				);
+			})}
+		</Select>
 	);
 };

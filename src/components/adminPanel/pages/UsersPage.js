@@ -463,7 +463,7 @@ let WorkersWorkerdForm = React.memo((props) => {
 						<FragmentSelectItems />
 					</Form.Item>
 
-					{state.admin ? null : <Divider>Должности</Divider>}
+					{/* {state.admin ? null : <Divider>Должности</Divider>} */}
 
 					{/* 
                     <Form.Item
