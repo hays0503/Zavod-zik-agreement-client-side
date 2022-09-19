@@ -32,8 +32,7 @@ import Update5 from './forms/5/Update5';
 let Orders = React.memo((props) => {
     let user = useUser();
     let positionsVariable = user.positions.toString();
-    let userVariable = user.id;
-    let variables = { documents: { global: { user_id: `=${userVariable}`, ORDER_BY: ['date_created desc'] } } };
+    let variables = { documents: { global: { user_id: `=${user.id}`, ORDER_BY: ['date_created desc'] } } };
     gql1.options.all.variables = variables;
     gql2.options.all.variables = variables;
     gql3.options.all.variables = variables;

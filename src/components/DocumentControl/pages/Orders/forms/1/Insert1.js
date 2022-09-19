@@ -15,7 +15,6 @@ let Insert1 = React.memo((props) => {
 	 * Деструктаризация (начального значение)
 	 */
 	const iniValue = props?.initialValues?.documents[0];
-	console.log('props-----------------',props)
 	let user = useUser();
 	const [state, setState] = useState({
 		log_username: user.username,

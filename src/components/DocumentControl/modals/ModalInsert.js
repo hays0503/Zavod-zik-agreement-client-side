@@ -297,18 +297,16 @@ let ModalInsert = React.memo(
 			},
 		});
 
-		console.log("dataBoss--------", dataBoss);
-
 		useEffect(() => {
 			if (state.route_id != null) {
 				refetchRoutes();
-				console.log("stateEffect", state);
 			}
 		}, [state]);
 
 		let [routesList, setRoutesList] = useState([
 			{ positionName: "Тип договора не выбран." },
 		]);
+		let routesMap = []
 
 		useEffect(() => {
 			if (
@@ -336,8 +334,8 @@ let ModalInsert = React.memo(
 							routes.splice(i, 1);
 						}
 					}
-					console.log("Начальник в маршруте*-*-*-*", boss);
-					console.log("routes!!!!!!!!!!+++", routes);
+					// console.log("Начальник в маршруте*-*-*-*", boss);
+					// console.log("routes!!!!!!!!!!+++", routes);
 					setRouteData(routes);
 					setRoutesList(routes);
 				} else {
@@ -351,46 +349,46 @@ let ModalInsert = React.memo(
 					for (let i = 0; i < routes.length; i++) {
 						routes[i].step = i + 1;
 					}
-					console.log("Начальник вне маршрута*-*-*-*", dataBoss);
-					console.log("routes!!!!!!!!!!", routes);
+					// console.log("Начальник вне маршрута*-*-*-*", dataBoss);
+					// console.log("routes!!!!!!!!!!", routes);
 					setRouteData(routes);
 					setRoutesList(routes);
 				}
 			}
 
-			// if (dataRoutes && dataRoutes[Object.keys(dataRoutes)[0]] != null && state.route_id > 0) {
-			//     form.setFieldsValue({
-			//         route_id: dataRoutes.document_routes[0].id,
-			//         step: 1,
-			//         status_id: dataRoutes.document_routes[0].status_in_process
-			//     })
-			//     form2.setFieldsValue({
-			//         route_id: dataRoutes.document_routes[0].id,
-			//         step: 1,
-			//         status_id: dataRoutes.document_routes[0].status_in_process
-			//     })
-			//     form3.setFieldsValue({
-			//         route_id: dataRoutes.document_routes[0].id,
-			//         step: 1,
-			//         status_id: dataRoutes.document_routes[0].status_in_process
-			//     })
-			//     form4.setFieldsValue({
-			//         route_id: dataRoutes.document_routes[0].id,
-			//         step: 1,
-			//         status_id: dataRoutes.document_routes[0].status_in_process
-			//     })
-			//     form5.setFieldsValue({
-			//         route_id: dataRoutes.document_routes[0].id,
-			//         step: 1,
-			//         status_id: dataRoutes.document_routes[0].status_in_process
-			//     })
-			// setRoutesList(routesMap = (dataRoutes.document_routes[0].routes !== undefined )? dataRoutes.document_routes[0].routes.map((item)=>{
-			//     return{
-			//         positionName:item.positionName
-			//     }
-			// }) :[])
+			if (dataRoutes && dataRoutes[Object.keys(dataRoutes)[0]] != null && state.route_id > 0) {
+			    form.setFieldsValue({
+			        route_id: dataRoutes.document_routes[0].id,
+			        step: 1,
+			        status_id: dataRoutes.document_routes[0].status_in_process
+			    })
+			    form2.setFieldsValue({
+			        route_id: dataRoutes.document_routes[0].id,
+			        step: 1,
+			        status_id: dataRoutes.document_routes[0].status_in_process
+			    })
+			    form3.setFieldsValue({
+			        route_id: dataRoutes.document_routes[0].id,
+			        step: 1,
+			        status_id: dataRoutes.document_routes[0].status_in_process
+			    })
+			    form4.setFieldsValue({
+			        route_id: dataRoutes.document_routes[0].id,
+			        step: 1,
+			        status_id: dataRoutes.document_routes[0].status_in_process
+			    })
+			    form5.setFieldsValue({
+			        route_id: dataRoutes.document_routes[0].id,
+			        step: 1,
+			        status_id: dataRoutes.document_routes[0].status_in_process
+			    })
+			setRoutesList(routesMap = (dataRoutes.document_routes[0].routes !== undefined )? dataRoutes.document_routes[0].routes.map((item)=>{
+			    return{
+			        positionName:item.positionName
+			    }
+			}) :[])
 			// setRouteData(dataRoutes.document_routes[0].routes.filter((el) => { return el.step == 1 }))
-			// }
+			}
 		}, [dataRoutes]);
 
 		const [form] = Form.useForm();
@@ -672,7 +670,7 @@ let ModalInsert = React.memo(
 							values.fio = user.fio;
 							values.route_data = routeData;
 							values.positionId = routeData[0].positionId;
-							console.log("TEST", variables);
+							console.log("Variables", variables);
 							variables[GQL.exemplar] = values;
 							insert({ variables });
 						}}
