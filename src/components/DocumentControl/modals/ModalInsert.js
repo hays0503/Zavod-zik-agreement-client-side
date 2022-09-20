@@ -380,12 +380,12 @@ let ModalInsert = React.memo(
 			        step: 1,
 			        status_id: dataRoutes.document_routes[0].status_in_process
 			    })
-			setRoutesList(routesMap = (dataRoutes.document_routes[0].routes !== undefined )? dataRoutes.document_routes[0].routes.map((item)=>{
-			    return{
-			        positionName:item.positionName
-			    }
-			}) :[])
-			setRouteData(routes);
+			// setRoutesList(routesMap = (dataRoutes.document_routes[0].routes !== undefined )? dataRoutes.document_routes[0].routes.map((item)=>{
+			//     return{
+			//         positionName:item.positionName
+			//     }
+			// }) :[])
+			// setRouteData(routes);
 			// setRouteData(dataRoutes.document_routes[0].routes.filter((el) => { return el.step == 1 }))
 			}
 		}, [dataRoutes]);
