@@ -23,7 +23,7 @@ import { setContext } from '@apollo/client/link/context';
 
 import { ConfigProvider, Layout, Row, notification, Button, Tooltip, Col } from 'antd';
 import ru_RU from 'antd/lib/locale/ru_RU';
-import {  Route, Redirect, Switch, BrowserRouter, useLocation, NavLink  } from 'react-router-dom';
+import {  Route, Switch, BrowserRouter,  NavLink  } from 'react-router-dom';
 import { accessRedirect, useUser } from "./core/functions";
 import Header1 from "./core/Header1";
 import Error404 from "./modules/Error404";

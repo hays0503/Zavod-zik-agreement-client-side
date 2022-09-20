@@ -15,7 +15,6 @@ import test from "../../../core/functions/test";
 import { FragmentRadioButton } from "../../DocumentControl/pages/fragments/FragmentRadioButton";
 import { FragmentSelectDepartment } from "../../DocumentControl/pages/fragments/FragmentSelectItems";
 
-
 let positions = {
 	exemplar: "positions",
 	table: "positions",
@@ -141,22 +140,28 @@ let department_dictionary = {
 		`,
 	},
 	insert: gql`
-		mutation insertPosition($department_dictionary: JSON) {
-			insertPosition(department_dictionary: $department_dictionary) {
+		mutation insertDepartmentDictionary($department_dictionary: JSON) {
+			insertDepartmentDictionary(
+				department_dictionary: $department_dictionary
+			) {
 				message
 			}
 		}
 	`,
 	update: gql`
-		mutation updatePosition($department_dictionary: JSON) {
-			updatePosition(department_dictionary: $department_dictionary) {
+		mutation updateDepartmentDictionary($department_dictionary: JSON) {
+			updateDepartmentDictionary(
+				department_dictionary: $department_dictionary
+			) {
 				message
 			}
 		}
 	`,
 	delete: gql`
-		mutation deletePosition($department_dictionary: JSON) {
-			deletePosition(department_dictionary: $department_dictionary) {
+		mutation deleteDepartmentDictionary($department_dictionary: JSON) {
+			deleteDepartmentDictionary(
+				department_dictionary: $department_dictionary
+			) {
 				message
 			}
 		}
@@ -164,7 +169,6 @@ let department_dictionary = {
 };
 
 let DocumentDepartPage = React.memo((props) => {
-	let user = useUser();
 	const visibleModalUpdate = useState(false);
 
 	const [remove, { loading: loadingRemove }] = handlerMutation(
@@ -179,17 +183,20 @@ let DocumentDepartPage = React.memo((props) => {
 		refetch();
 	}, []);
 
-
+	console.log("console.log(data)", data);
 
 	let list =
 		data && data[Object.keys(data)[0]] != null
 			? data[Object.keys(data)[0]].map((item) => {
 					return {
 						id: item.id,
-						department_name: item.department_name
+						key: item.id,
+						department_name: item.department_name,
 					};
-			})
+			  })
 			: [];
+
+	console.log("console.log(list)", list);
 
 	let dict = test([
 		{
@@ -231,7 +238,6 @@ let DocumentDepartPage = React.memo((props) => {
 							let variables = {};
 							variables[department_dictionary.exemplar] = {
 								id: Number(tableProps.selectedRowKeys[0]),
-								log_username: user.username,
 							};
 							remove({ variables });
 						}}
@@ -268,9 +274,11 @@ let DocumentDepartPage = React.memo((props) => {
 });
 
 let DocumentDepartForm = React.memo((props) => {
-	let user = useUser();
+	console.log("props?.initialValues", props?.initialValues);
+	console.log("props", props);
+
 	const [state, setState] = useState({
-		log_username: user.username,
+		id: props?.initialValues?.department_dictionary[0]?.id,
 	});
 
 	useEffect(() => {
@@ -289,6 +297,7 @@ let DocumentDepartForm = React.memo((props) => {
 
 	let onFinish = (values) => {
 		props.onFinish(state);
+		console.log("onFinishValues", values);
 		console.log("onFinish", state);
 	};
 
@@ -315,13 +324,12 @@ let DocumentDepartForm = React.memo((props) => {
 			>
 				<Input disabled={props.disabled} placeholder="Название должности" />
 			</Form.Item>
-			
+
 			<Form.Item name="log_username" hidden={true}>
 				<Input disabled={props.disabled} />
 			</Form.Item>
 		</Form>
 	);
 });
-
 
 export default DocumentDepartPage;
