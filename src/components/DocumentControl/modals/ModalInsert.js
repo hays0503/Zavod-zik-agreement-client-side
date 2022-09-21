@@ -238,6 +238,7 @@ let ModalInsert = React.memo(
 				if (state.route_id == 29) {
 					if (state.routes && state.routes[0]) {
 						formRouteSelect.submit();
+						console.log('formRouteSelect------',formRouteSelect)
 						setVisible(false);
 						showModalForm5();
 					} else
@@ -813,8 +814,8 @@ let ModalInsert = React.memo(
 							await uploadDocuments(values.files.fileList).then((result) => {
 								base64 = result;
 							});
-							//values.route_data = form5RouteData.current
-							values.route_data = routeData;
+							values.route_data = form5RouteData.current
+							// values.route_data = routeData;
 							values.docs = base64;
 							values.user_id = user.id;
 							values.username = user.username;
