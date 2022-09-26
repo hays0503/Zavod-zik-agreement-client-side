@@ -100,25 +100,6 @@ let ModalUpdate = React.memo(({ GQL, UpdateForm, ...props }) => {
 					),
 				]}
 			>
-				{/*{<div style={{ position: 'fixed', zIndex: '100' }}>
-                    <Button
-                        type="primary"
-                        disabled={props.selectedRowKeys.length !== 1}
-                        onClick={() => { setVisible(true) }}
-                        className="form-button"
-                    >
-                        <EyeOutlined />Просмотр
-                    </Button>
-                    <Button
-                        type="primary"
-                        disabled={props.selectedRowKeys.length !== 1}
-                        onClick={() => { setVisible(true) }}
-                        className="form-button"
-                    >
-                        <EyeOutlined />Просмотр
-                    </Button>
-                </div>}*/}
-				{console.log("ModalUpdateData", data)}
 				<Spin spinning={loadingOne}>
 					<UpdateForm
 						form={form}

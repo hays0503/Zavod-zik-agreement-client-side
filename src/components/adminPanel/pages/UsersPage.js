@@ -38,10 +38,10 @@ let users = {
 			variables: {
 				users: { global: { ORDER_BY: ["username asc"] } },
 			},
-			fetchPolicy: "cache-only",
+			fetchPolicy: "cache-and-network",
 		},
 		one: {
-			fetchPolicy: "standby",
+			fetchPolicy: "cache-and-network",
 		},
 	},
 	select: {
@@ -56,6 +56,9 @@ let users = {
 					domain_username
 					fio
 					email
+					department_relationship {
+						id_department
+					}
 				}
 			}
 		`,
@@ -71,6 +74,9 @@ let users = {
 					domain_username
 					fio
 					email
+					department_relationship {
+						id_department
+					}
 				}
 			}
 		`,
@@ -87,6 +93,9 @@ let users = {
 					domain_username
 					fio
 					email
+					department_relationship {
+						id_department
+					}
 				}
 			}
 		`,
@@ -164,8 +173,8 @@ let positions = {
 		}
 	`,
 	update: gql`
-		mutation updatetPosition($positions: JSON) {
-			updatetPosition(positions: $positions) {
+		mutation updatePosition($positions: JSON) {
+			updatePosition(positions: $positions) {
 				message
 			}
 		}
@@ -214,12 +223,15 @@ let UsersPage = React.memo((props) => {
 						positions: item.positions,
 						fio: item.fio,
 						email: item.email,
+						department_relationship: item.department_relationship?.id_department,
 						positionName: positionsData.positions
 							.filter((e) => e.id == item.positions)
 							.map((obj) => obj.name)[0],
 					};
 			  })
 			: [];
+
+
 
 	//Шапка таблицы
 	let dict = test([
@@ -317,6 +329,7 @@ let UsersPage = React.memo((props) => {
 });
 
 let WorkersWorkerdForm = React.memo((props) => {
+
 	let user = useUser();
 	const [state, setState] = useState({
 		username: "",
@@ -353,7 +366,6 @@ let WorkersWorkerdForm = React.memo((props) => {
 
 	let onFinish = (values) => {
 		props.onFinish(state);
-		console.log(state,values);
 	};
 
 	return (
@@ -460,26 +472,8 @@ let WorkersWorkerdForm = React.memo((props) => {
 					</Form.Item>
 
 					<Form.Item name="positions">
-						<FragmentSelectItems />
+						<FragmentSelectItems disabled={props.disabled} idDepartment={props?.initialValues?.users[0]?.department_relationship?.id_department}/>
 					</Form.Item>
-
-					{/* {state.admin ? null : <Divider>Должности</Divider>} */}
-
-					{/* 
-                    <Form.Item
-						name="positions"
-						rules={[
-							{
-								type: "array",
-								required: !state.admin,
-								message: "Необходимо для заполнения!",
-							},
-						]}
-						hidden={state.admin}
-					>
-						<PositionsTransfer disabled={props.disabled} />
-					</Form.Item> 
-                    */}
 
 					<Form.Item name="log_username" hidden={true}>
 						<Input disabled={props.disabled} />

@@ -28,18 +28,20 @@ const DepartmentDictionary = gql`
 
 /**
  * @function `FragmentSelectItems` Выпадающий список элементов antd
- * @param {Array} Items Массив с элементами
+ * @param {Array} `Items` Массив с элементами
+ * @param {Boolean} `disabled` Включены ли эти элементы
+ * @param {Int} `idDepartment` Номер департамента в котором состоит пользователь
  * @return {Int} `Index` Возвращает индекс выбранного элемента
  */
 export const FragmentSelectItems = (props) => {
-	const [idDepartment, setIdDepartment] = useState(1);
+	const [idDepartment, setIdDepartment] = useState(props?.idDepartment);
 
 	const [isClick, setClick] = useState(true);
 
 	const QueryDepartment = useQuery(positions, {
 		onCompleted: (Data) => {
 			console.log("onCompleted:(Data)", Data);
-			console.log("onCompleted:(Data)", QueryDepartment.data);
+			console.log("onCompleted:(Data)", QueryDepartment?.data);
 		},
 		variables: {
 			positions: {
@@ -86,6 +88,8 @@ export const FragmentSelectItems = (props) => {
 						.localeCompare(optionB.children.toLowerCase())
 				}
 				onChange={onChange}
+				disabled={props.disabled}
+				defaultValue={data?.department_dictionary[idDepartment+1]?.department_name}
 			>
 				{data.department_dictionary.map((Item) => {
 					return (
@@ -96,11 +100,6 @@ export const FragmentSelectItems = (props) => {
 				})}
 			</Select>
 			<Divider type="vertical" />
-			{console.log(
-				(QueryDepartment?.data?.get_free_position !== undefined &&
-					QueryDepartment?.data?.get_free_position.length === 0) ||
-					isClick
-			)}
 
 			<Select
 				showSearch
@@ -121,9 +120,9 @@ export const FragmentSelectItems = (props) => {
 					isClick
 				}
 				onChange={(value) => {
-					console.log("Второй выпадающий список", value);
 					props.onChange([value]);
 				}}
+				defaultValue={props.value}
 			>
 				{QueryDepartment.data?.get_free_position.map((Item) => {
 					return <Select.Option value={Item.id}>{Item.name}</Select.Option>;
@@ -165,7 +164,6 @@ export const FragmentSelectDepartment = (props) => {
 			id_depart: value,
 		};
 		props.setStateValue(newState);
-		console.log("console.log(value)", value);
 	};
 
 	return (
