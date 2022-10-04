@@ -33,3 +33,23 @@ export const FormItem = (Title,Text) =>{
     </> : null
     
 }
+
+
+/**
+ * Фрагмент antd вёрстки для вывода текста c дочерними компонентами
+ * @param Title Строка с Наименованием
+ * @param Component Дочерние компоненты
+ */
+ export const FormItemWithProps = (props) =>{
+    const {Title,Component} = props;
+    return (Title !==undefined && Text !==undefined) ?
+    <>
+        <Col span={8}> 
+            <b>{Title}</b>
+        </Col>
+        <Col span={16}>
+            {Component}
+        </Col>
+    </> : null
+    
+}

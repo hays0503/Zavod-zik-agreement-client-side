@@ -8,6 +8,8 @@ import TitleMenu from '../../../../core/TitleMenu';
 import test from "../../../../core/functions/test";
 import AllDocumentsGQL from './../../gql/AllDocumentsGQL';
 
+import Update1 from './forms/1/Update1';
+
 /**
  * Страница для регистрации договора сотрудниками ООПЗ
  */
@@ -324,6 +326,60 @@ let RegistrationDocuments = React.memo((props) => {
     }
     `};
 
+    const { loading, data, refetch } = handlerQuery(AllDocumentsGQL, 'all')();
+    useEffect(() => { refetch() }, []);
+
+    
+
+    let list = (data && data[Object.keys(data)[0]] != null) ? data[Object.keys(data)[0]].map((item) => {
+        return {
+            id: item.id,
+            key: item.id,
+            title: item.title,
+            date_created: item.date_created,
+            date_modified: item.date_modified,
+            status_id: item.status_id,
+            status: item.document_statuses?.name ? item.document_statuses.name : 'Без статуса',
+            route_id: item.route_id.id,
+            route: item.route_id?.name ? item.route_id.name : 'Не задан',
+            route_data: item.route_data,
+            route_step: item.route_data ? item.route_data.findIndex(item => item.positionId == positionsVariable) + 1 : [],
+            step: item.step,
+            step_count: item.step + ' из ' + item.route_data?.length,            
+            step_name: item.route_data?.length > 0 ? item.route_data[item.step - 1].positionName : '',
+            mitwork_number: item.mitwork_number
+        }
+    }) : [];
+
+    let dict = test([
+        { title: 'Наименование договора', dataIndex: 'title', width: '214px', type: 'search', tooltip: true, sorter: (a, b) => a.title.localeCompare(b.title), sortDirections: ['ascend', 'descend'] },
+        { title: 'Дата и время создания', dataIndex: 'date_created', width: '114px', type: 'search', tooltip: true, sorter: true, sorter: (a, b) => new Date(a.date_created) - new Date(b.date_created) },
+        { title: 'Последние изменение', dataIndex: 'date_modified', width: '114px', type: 'search', tooltip: true, sorter: true, sorter: (a, b) => new Date(a.date_modified) - new Date(b.date_modified) },
+        { title: 'Тип договора', dataIndex: 'route', width: '114px', type: 'search', tooltip: true, sorter: (a, b) => a.route.localeCompare(b.route), sortDirections: ['ascend', 'descend'] },
+        { title: 'Статус', dataIndex: 'status', width: '80px', tooltip: true, sorter: (a, b) => a.status.localeCompare(b.status),sortDirections: ['ascend', 'descend'],
+        filters:[
+            {
+                text:'Утверждён',
+                value:'Утверждён'
+            },
+            {
+                text:'В работе',
+                value:'В работе'
+            },
+            {
+                text:'Отклонён',
+                value:'Отклонён'
+            }
+        ],onFilter: (value, record) => record.status.indexOf(value) === 0},
+
+        { title: 'На подписи', dataIndex: 'step_name', width: '114px' },
+        { title: 'Этап', dataIndex: 'step_count', width: '55px' },
+        // { title: 'Шаг п.', dataIndex: 'route_step', width: '55px'}
+    ]);
+
+    console.log("RegistrationDocuments data",data)
+    console.log("RegistrationDocuments list",list)
+
     const visibleModalUpdate = useState(false);
     const visibleModalUpdate2 = useState(false);
     const visibleModalUpdate3 = useState(false);
@@ -335,7 +391,7 @@ let RegistrationDocuments = React.memo((props) => {
             <TitleMenu
                 buttons={[
                     <ModalUpdate
-                        visibleModalUpdate={visibleModalUpdate} GQL={AllDocumentsGQL}
+                        visibleModalUpdate={visibleModalUpdate} GQL={AllDocumentsGQL} UpdateForm={Update1}
                         visibleModalUpdate2={visibleModalUpdate2} GQL2={AllDocumentsGQL}
                         visibleModalUpdate3={visibleModalUpdate3} GQL3={AllDocumentsGQL}
                         visibleModalUpdate4={visibleModalUpdate4} GQL4={AllDocumentsGQL}
@@ -349,8 +405,8 @@ let RegistrationDocuments = React.memo((props) => {
     return (
         <>
             <TableContainer
-                // data={{ dict, records: list }}
-                // loading={loading}
+                data={{ dict, records: list }}
+                loading={loading}
                 title={titleMenu}
                 visibleModalUpdate={visibleModalUpdate}
                 visibleModalUpdate2={visibleModalUpdate2}

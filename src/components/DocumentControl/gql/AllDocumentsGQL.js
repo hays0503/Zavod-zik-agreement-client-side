@@ -31,6 +31,8 @@ let AllDocumentsGQL = {
                 date_modified
                 status_id
                 reason
+                mitwork_number
+                mitwork_data
                 document_tasks{
                     id
                     document_id
@@ -126,6 +128,8 @@ let AllDocumentsGQL = {
                 date_modified
                 status_id
                 reason
+                mitwork_number
+                mitwork_data
                 data_one{
                     id
                     document_id
@@ -238,6 +242,8 @@ let AllDocumentsGQL = {
             date_created
             date_modified
             status_id
+            mitwork_number
+            mitwork_data
             document_logs{
                 id
                 document_id
