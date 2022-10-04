@@ -6,6 +6,7 @@ import SiderMenu from './SiderMenu';
 import { Redirect, Route, useLocation, withRouter } from 'react-router-dom';
 import Orders from './pages/Orders/Orders';
 import RegistrationDocuments from './pages/RegistrationDocuments/RegistrationDocuments';
+import FulfilledDocuments from './pages/FulfilledDocuments/FulfilledDocuments';
 
 //user
 import RevisedPageUser from './pages/RevisedPageUser/RevisedPageUser';
@@ -86,6 +87,7 @@ let DocumentControl = (props) => {
                             <Route path={'/document-control/rejecteduser'} component={accessRedirect(RejectedDocumentsUser)} />
 
                         <Route path={'/document-control/registration'} component={accessRedirect(RegistrationDocuments)}/>
+                        <Route path={'/document-control/fulfilled'} component={accessRedirect(FulfilledDocuments)}/>
                         <Route exact path="/document-control/on-approval" render={(props) => <OnApprovalDocuments {...props} title={`Props through render`} />} setCountManager={setCountManager}/>
                         <Route path={'/document-control/on-approval-list'} component={accessRedirect(OnApprovalDocumentsList)} />
 
