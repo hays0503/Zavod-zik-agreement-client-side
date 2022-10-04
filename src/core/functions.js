@@ -275,6 +275,11 @@ export const useUser = () => {
 					? true
 					: accesses.includes("/document-control-p/registration-p/select"),
 			},
+			fulfilledDocuments: {
+				select: admin
+					? true
+					: accesses.includes("/document-control-p/fulfilled-p/select"),
+			},
 			onApproval: {
 				select: admin
 					? true
@@ -423,6 +428,12 @@ export const accessRedirect = (Component) => {
 			case "/admin/registration/":
 				if (!user.admin) {
 					return <Redirect />;
+				}
+				break;
+			case "/admin/fulfilled":
+			case "/admin/fulfilled/":
+				if(!user.admin){
+					return <Redirect />
 				}
 				break;
 			case "/admin/positions-page":
