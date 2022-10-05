@@ -45,7 +45,7 @@ let AdminPanel = (props) => {
 			return <Redirect to="/admin/department-page" />;
 		}
 	}
-	console.log(path, pathname);
+	//console.log(path, pathname);
 
 	return (
 		<Layout className="main-layout">

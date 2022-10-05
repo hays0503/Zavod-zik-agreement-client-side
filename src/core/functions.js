@@ -432,8 +432,8 @@ export const accessRedirect = (Component) => {
 				break;
 			case "/admin/fulfilled":
 			case "/admin/fulfilled/":
-				if(!user.admin){
-					return <Redirect />
+				if (!user.admin) {
+					return <Redirect />;
 				}
 				break;
 			case "/admin/positions-page":
@@ -592,7 +592,7 @@ export const download = async (url, filename) => {
 		elm.click(); // TRIGGER ELEMENT TO DOWNLOAD
 		elm.remove();
 	} catch (err) {
-		console.log(err);
+		//console.log(err);
 	}
 };
 
@@ -666,7 +666,7 @@ export const formatDate = (timestamp = new Date()) => {
 export const getDiffHours = (date1, date2) => {
 	let diff = (date2.getTime() - date1.getTime()) / 1000;
 	diff /= 60 * 60;
-	console.log("diff", diff);
+	//console.log("diff", diff);
 	if (diff < 1) return "менее часа назад";
 	if (diff < 12 && diff >= 1) return Math.abs(Math.round(diff)) + " ч. назад";
 	if (diff > 12 && diff < 24) return "Вчера";
@@ -675,7 +675,7 @@ export const getDiffHours = (date1, date2) => {
 
 export const notifyMe = (text) => {
 	if (!window.Notification) {
-		console.log("Browser does not support notifications.");
+		//console.log("Browser does not support notifications.");
 	} else if (text) {
 		// check if permission is already granted
 		if (Notification.permission === "granted") {
@@ -705,7 +705,7 @@ export const notifyMe = (text) => {
 							notify.close();
 						}, 3000);
 					} else {
-						console.log("User blocked notifications.");
+						//console.log("User blocked notifications.");
 					}
 				})
 				.catch(function (err) {

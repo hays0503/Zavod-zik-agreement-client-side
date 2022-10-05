@@ -40,8 +40,8 @@ export const FragmentSelectItems = (props) => {
 
 	const QueryDepartment = useQuery(positions, {
 		onCompleted: (Data) => {
-			console.log("onCompleted:(Data)", Data);
-			console.log("onCompleted:(Data)", QueryDepartment?.data);
+			//console.log("onCompleted:(Data)", Data);
+			//console.log("onCompleted:(Data)", QueryDepartment?.data);
 		},
 		variables: {
 			positions: {
@@ -89,7 +89,9 @@ export const FragmentSelectItems = (props) => {
 				}
 				onChange={onChange}
 				disabled={props.disabled}
-				defaultValue={data?.department_dictionary[idDepartment+1]?.department_name}
+				defaultValue={
+					data?.department_dictionary[idDepartment + 1]?.department_name
+				}
 			>
 				{data.department_dictionary.map((Item) => {
 					return (

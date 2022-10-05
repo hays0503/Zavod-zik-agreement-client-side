@@ -15,7 +15,6 @@ const { Panel } = Collapse;
  */
 
 export const FragmentMitWork = (props) => {
-
 	//gql мутация для установки данных через бэк в бд
 	const SET_MITWORK_DATA = gql`
 		mutation UpdateMitWork(
@@ -65,9 +64,14 @@ export const FragmentMitWork = (props) => {
 	const IfDef = (props) => {
 		const { variable, Text, Component } = props;
 
-		console.log("variable",variable)
+		//console.log("variable", variable);
 
-		if (variable === undefined || variable === null || variable === "Invalid date"||editState)
+		if (
+			variable === undefined ||
+			variable === null ||
+			variable === "Invalid date" ||
+			editState
+		)
 			return (
 				<>
 					{Text}
@@ -104,21 +108,24 @@ export const FragmentMitWork = (props) => {
 					key="1"
 					extra={
 						<>
-							<Button
-								onClick={(event) => {
-									event.stopPropagation();
-									setMitworkData({
-										variables: {
-											id: parseInt(ID),
-											mitworkNumber: InputNumber,
-											mitworkData: now(InputData),
-										},
-									});
-									setEditState(!editState);									
-								}}
-							>
-								Сохранить
-							</Button>
+							{editState ? (
+								<Button
+									onClick={(event) => {
+										// Остановить "проброс" события дальше
+										event.stopPropagation();
+										setMitworkData({
+											variables: {
+												id: parseInt(ID),
+												mitworkNumber: InputNumber,
+												mitworkData: now(InputData),
+											},
+										});
+										setEditState(!editState);
+									}}
+								>
+									Сохранить
+								</Button>
+							) : null}
 							<Button
 								onClick={(event) => {
 									// Остановить "проброс" события дальше

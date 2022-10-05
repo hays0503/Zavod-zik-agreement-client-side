@@ -183,7 +183,7 @@ let DocumentDepartPage = React.memo((props) => {
 		refetch();
 	}, []);
 
-	console.log("console.log(data)", data);
+	//console.log("console.log(data)", data);
 
 	let list =
 		data && data[Object.keys(data)[0]] != null
@@ -196,7 +196,7 @@ let DocumentDepartPage = React.memo((props) => {
 			  })
 			: [];
 
-	console.log("console.log(list)", list);
+	//console.log("console.log(list)", list);
 
 	let dict = test([
 		{
@@ -274,8 +274,8 @@ let DocumentDepartPage = React.memo((props) => {
 });
 
 let DocumentDepartForm = React.memo((props) => {
-	console.log("props?.initialValues", props?.initialValues);
-	console.log("props", props);
+	//console.log("props?.initialValues", props?.initialValues);
+	//console.log("props", props);
 
 	const [state, setState] = useState({
 		id: props?.initialValues?.department_dictionary[0]?.id,
@@ -297,8 +297,8 @@ let DocumentDepartForm = React.memo((props) => {
 
 	let onFinish = (values) => {
 		props.onFinish(state);
-		console.log("onFinishValues", values);
-		console.log("onFinish", state);
+		//console.log("onFinishValues", values);
+		//console.log("onFinish", state);
 	};
 
 	return (

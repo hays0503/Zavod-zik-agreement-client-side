@@ -7,15 +7,15 @@ export const FragmentRadioButton = (props) => {
 
 	const returnValuePosition = () => {
 		if (props.is_boss) {
-			console.log("IsBoss");
+			//console.log("IsBoss");
 			return 1;
 		}
 		if (props.is_vice_director) {
-			console.log("is_vice_director");
+			//console.log("is_vice_director");
 			return 2;
 		}
 		if (props.is_user) {
-			console.log("IsUser");
+			//console.log("IsUser");
 			return 3;
 		}
 		return -1;
@@ -56,7 +56,7 @@ export const FragmentRadioButton = (props) => {
 					break;
 				default:
 			}
-			console.log("newState", newState);
+			//console.log("newState", newState);
 			props.setStateValue(newState);
 		};
 

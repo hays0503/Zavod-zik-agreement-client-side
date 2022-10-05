@@ -8,8 +8,7 @@ import {
 import { FormItem, FormWrap } from "../../../fragments/FragmentItemWrap";
 
 let Update2 = React.memo((props) => {
-
-	console.log(props)
+	//console.log(props)
 
 	/**
 	 * Деструктаризация (начального значение)

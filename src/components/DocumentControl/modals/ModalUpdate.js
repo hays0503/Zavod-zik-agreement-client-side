@@ -835,7 +835,7 @@ let ModalUpdate = React.memo(
 			});
 
 		let uploadDocuments = async (files) => {
-			console.log(files);
+			//console.log(files);
 			const filePromises = files.map((file) => {
 				// Return a promise per file
 				return new Promise((resolve, reject) => {
@@ -853,7 +853,7 @@ let ModalUpdate = React.memo(
 			// Wait for all promises to be resolved
 			const fileInfos = await Promise.all(filePromises);
 
-			console.log("COMPLETED");
+			//console.log("COMPLETED");
 
 			// Profit
 			return fileInfos;
@@ -926,10 +926,10 @@ let ModalUpdate = React.memo(
 							modalEnableEditHandler={modalEnableEditHandler}
 							form={form}
 							onFinish={async (values) => {
-								console.log("Обновляю форму номер 1 ");
+								//console.log("Обновляю форму номер 1 ");
 								let variables = {};
 								let base64 = [];
-								console.log("values?.files?.fileList", values?.files?.fileList);
+								//console.log("values?.files?.fileList", values?.files?.fileList);
 								if (values?.files?.fileList) {
 									await uploadDocuments(values.files.fileList).then(
 										(result) => {
@@ -950,7 +950,7 @@ let ModalUpdate = React.memo(
 								}
 								values.route_id = 10;
 								variables[GQL.exemplar] = values;
-								console.log("variables-------", variables);
+								//console.log("variables-------", variables);
 								update({ variables });
 							}}
 							initialValues={data}
@@ -993,17 +993,17 @@ let ModalUpdate = React.memo(
 						modalEnableEditHandler={modalEnableEditHandler}
 						form2={form2}
 						onFinish2={async (values) => {
-							console.log("Обновляю форму номер 2 ");
+							//console.log("Обновляю форму номер 2 ");
 							let variables = {};
 							let base64 = [];
-							console.log("values?.files?.fileList", values?.files?.fileList);
+							//console.log("values?.files?.fileList", values?.files?.fileList);
 							if (values?.files?.fileList) {
 								await uploadDocuments(values.files.fileList).then((result) => {
 									base64 = result;
 								});
 							}
 							values.docs = base64 ? base64 : [];
-							console.log("values on finish", values);
+							//console.log("values on finish", values);
 							if (step) {
 								values.step = step;
 							}
@@ -1056,17 +1056,17 @@ let ModalUpdate = React.memo(
 						modalEnableEditHandler={modalEnableEditHandler}
 						form3={form3}
 						onFinish3={async (values) => {
-							console.log("Обновляю форму номер 3 ");
+							//console.log("Обновляю форму номер 3 ");
 							let variables = {};
 							let base64 = [];
-							console.log("values?.files?.fileList", values?.files?.fileList);
+							//console.log("values?.files?.fileList", values?.files?.fileList);
 							if (values?.files?.fileList) {
 								await uploadDocuments(values.files.fileList).then((result) => {
 									base64 = result;
 								});
 							}
 							values.docs = base64 ? base64 : [];
-							console.log("values on finish", values);
+							//console.log("values on finish", values);
 							if (step) {
 								values.step = step;
 							}
@@ -1119,17 +1119,17 @@ let ModalUpdate = React.memo(
 						modalEnableEditHandler={modalEnableEditHandler}
 						form4={form4}
 						onFinish4={async (values) => {
-							console.log("Обновляю форму номер 4 ");
+							//console.log("Обновляю форму номер 4 ");
 							let variables = {};
 							let base64 = [];
-							console.log("onFinish4.fileList", values?.files?.fileList);
+							//console.log("onFinish4.fileList", values?.files?.fileList);
 							if (values?.files?.fileList) {
 								await uploadDocuments(values.files.fileList).then((result) => {
 									base64 = result;
 								});
 							}
 							values.docs = base64 ? base64 : [];
-							console.log("values on finish", values);
+							//console.log("values on finish", values);
 							if (step) {
 								values.step = step;
 							}
@@ -1182,17 +1182,17 @@ let ModalUpdate = React.memo(
 						modalEnableEditHandler={modalEnableEditHandler}
 						form5={form5}
 						onFinish5={async (values) => {
-							console.log("Обновляю форму номер 5 ");
+							//console.log("Обновляю форму номер 5 ");
 							let variables = {};
 							let base64 = [];
-							console.log("values?.files?.fileList", values?.files?.fileList);
+							//console.log("values?.files?.fileList", values?.files?.fileList);
 							if (values?.files?.fileList) {
 								await uploadDocuments(values.files.fileList).then((result) => {
 									base64 = result;
 								});
 							}
 							values.docs = base64 ? base64 : [];
-							console.log("values on finish", values);
+							//console.log("values on finish", values);
 							if (step) {
 								values.step = step;
 							}

@@ -52,7 +52,7 @@ let TableContainer = React.memo((props) => {
 					return {
 						onClick: (event) => {
 							setSelectedRowKeys([record.key, record.route_id]);
-							console.log("SelectedRowKeys", selectedRowKeys);
+							//console.log("SelectedRowKeys", selectedRowKeys);
 						},
 						onDoubleClick: (event) => {
 							if (record.route_id == 10) {

@@ -328,7 +328,7 @@ let DocumentPositionsForm = React.memo((props) => {
 
 	let onFinish = (values) => {
 		props.onFinish(state);
-		console.log("onFinish", state);
+		//console.log("onFinish", state);
 	};
 
 	return (

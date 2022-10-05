@@ -16,7 +16,7 @@ export const FragmentReasonsViewer = (props) => {
 				labelCol={{ span: 24 }}
 			></Form.Item>
 			<div>
-				{console.log(`${props?.disabled} ${props?.ReasonInputChange}`)}
+				{/* {console.log(`${props?.disabled} ${props?.ReasonInputChange}`)} */}
 				{
 					//Если определены флаг disable и callback функция то выводим Input
 					props?.disabled != undefined &&

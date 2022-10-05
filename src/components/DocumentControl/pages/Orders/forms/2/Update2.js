@@ -1,13 +1,6 @@
-import {
-	Form,
-	Divider,
-	Typography,
-	Steps,
-} from "antd";
+import { Form, Divider, Typography, Steps } from "antd";
 import React, { useEffect, useState } from "react";
-import {
-	useUser,
-} from "../../../../../../core/functions";
+import { useUser } from "../../../../../../core/functions";
 
 import SelectReplacementDialog from "../../../../dialogs/SelectReplacementDialog";
 import { GetIDNameTaskFile } from "../../../api/CRU_Document";
@@ -57,7 +50,7 @@ let Update2 = React.memo((props) => {
 	}, [state]);
 
 	useEffect(() => {
-		console.log("visible", visible);
+		//console.log("visible", visible);
 	}, [visible]);
 
 	useEffect(() => {

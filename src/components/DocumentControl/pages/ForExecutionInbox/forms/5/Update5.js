@@ -82,7 +82,7 @@ let Update5 = React.memo((props) => {
                 <FormWrap>{FormItem ("Основание: ",props?.document?.data_custom[0]?.subject)}</FormWrap>: null
             }
             {/* /////////////////////////////////// */}
-            {console.log(props?.document?.data_custom[0]?.remark)}
+            {/*console.log(props?.document?.data_custom[0]?.remark)*/}
             {state?.document_options?.remark ?/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                 <FormWrap>{FormItem ("Примечание: ",props?.document?.data_custom[0]?.remark)}</FormWrap>: null
             }

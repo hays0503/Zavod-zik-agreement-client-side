@@ -28,7 +28,7 @@ let TableContainer = React.memo((props) => {
 		);
 	}, [props.data]);
 
-	//console.log('props TableContainer', props)
+	////console.log('props TableContainer', props)
 
 	return (
 		<>

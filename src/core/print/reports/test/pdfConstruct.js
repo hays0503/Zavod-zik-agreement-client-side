@@ -104,7 +104,7 @@ color: rgb(0, 0.53, 0.71),
     // })
 
     const pdfBytes = await pdfDoc.save()
-    console.log(pdfBytes);
+    //console.log(pdfBytes);
     // // Trigger the browser to download the PDF document
     // download(pdfBytes, "pdf-lib_creation_example.pdf", "application/pdf");
 

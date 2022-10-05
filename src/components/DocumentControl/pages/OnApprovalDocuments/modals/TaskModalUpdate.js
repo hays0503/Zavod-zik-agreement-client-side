@@ -324,7 +324,7 @@ let TaskModalUpdate = React.memo(({ GQL, UpdateForm, ...props }) => {
 	}, [visible]);
 
 	let uploadDocuments = async (files) => {
-		console.log(files);
+		//console.log(files);
 		const filePromises = files.map((file) => {
 			// Return a promise per file
 			return new Promise((resolve, reject) => {
@@ -342,7 +342,7 @@ let TaskModalUpdate = React.memo(({ GQL, UpdateForm, ...props }) => {
 		// Wait for all promises to be resolved
 		const fileInfos = await Promise.all(filePromises);
 
-		console.log("COMPLETED");
+		//console.log("COMPLETED");
 
 		// Profit
 		return fileInfos;

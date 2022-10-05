@@ -33,7 +33,7 @@ let Update1 = React.memo((props) => {
 	/////////////////////////////////////////////////////////
 	useEffect(() => {
 		if (props.initialValues) {
-			console.log("props.initialValues", props.initialValues);
+			//console.log("props.initialValues", props.initialValues);
 			setState({
 				id: iniTask.id,
 				document_id: iniTask.document_id,

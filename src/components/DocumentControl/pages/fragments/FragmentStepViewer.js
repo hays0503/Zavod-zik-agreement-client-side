@@ -62,8 +62,15 @@ FragmentStepViewer.defaultProps = { stepsDirection: "vertical" };
  */
 
 export const FragmentStepViewerReplacementDialog = (props) => {
-	const { signatures, setVisible, stepCount, routeData, date_created, step, children} =
-		props;
+	const {
+		signatures,
+		setVisible,
+		stepCount,
+		routeData,
+		date_created,
+		step,
+		children,
+	} = props;
 	return (
 		<Form.Item
 			className="font-form-header"
@@ -100,9 +107,9 @@ export const FragmentStepViewerReplacementDialog = (props) => {
 							<Step
 								title={item.positionName}
 								onClick={() => {
-									console.log("step click", item);
+									//console.log("step click", item);
 									if (step == i + 1) {
-										console.log("setVisible(true);");
+										//console.log("setVisible(true);");
 										setVisible(true);
 									}
 								}}
@@ -126,7 +133,7 @@ export const FragmentStepViewerReplacementDialog = (props) => {
 													);
 													return tmpD?.toString();
 												}
-										})()
+										  })()
 										: null
 								}
 							/>
@@ -134,7 +141,6 @@ export const FragmentStepViewerReplacementDialog = (props) => {
 					);
 				})}
 			</Steps>
-
 		</Form.Item>
 	);
 };

@@ -96,7 +96,7 @@ let Update3 = React.memo((props) => {
 				files: iniValue.files,
 				log_username: state.log_username,
 			});
-			console.log("props.initialValues 3", iniValue);
+			//console.log("props.initialValues 3", iniValue);
 			setStepCount({ step: iniValue.step });
 			setRoutesList(iniValue.route_data);
 		}

@@ -14,7 +14,7 @@ import TaskModalUpdate from "../../modals/TaskModalUpdate";
 import UpdateTask5 from "./UpdateTask5";
 import { FormWrap, FormItem } from "./../../../fragments/FragmentItemWrap";
 import FragmentUploader from "../../../fragments/FragmentUploader";
-import {FragmentStepViewer} from "../../../fragments/FragmentStepViewer";
+import { FragmentStepViewer } from "../../../fragments/FragmentStepViewer";
 import { FragmentButtons } from "../../../fragments/FragmentButtons";
 import { FragmentReasonsViewer } from "../../../fragments/FragmentReasonsViewer";
 import { FragmentTaskList } from "../../../fragments/FragmentTaskList";
@@ -43,25 +43,28 @@ const Update5 = React.memo((props) => {
 	]);
 	const [stepCount, setStepCount] = useState({ step: "0" });
 
-//////////////////////////////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////////////////////////////
 	/**																					//
 	 * Отобразить новое состояние компонентов после обновление (файлов / по поручению)	//
-	 */																					//
-																						//
+	 */ //
+	//
 	/**																					//
 	 * Cтейт для таблиц файлов по поручением											//
-	 */																					//
-	const [FileTask, setFileTask] = useState([]);										//
-	 																					//
-	const [ReRender, setRerender] = useState(false);									//
-	useEffect(() => {																	//
-		if (iniValue?.id) {																//
-			GetIDNameTaskFile(iniValue?.id).then((value) => {							//
-			setFileTask(value.result);													//
-		});																				//
-	}																					//
-	}, [iniValue,ReRender]);															//
-//////////////////////////////////////////////////////////////////////////////////////////
+	 */ //
+	const [FileTask, setFileTask] = useState([]); //
+	//
+	const [ReRender, setRerender] = useState(false); //
+	useEffect(() => {
+		//
+		if (iniValue?.id) {
+			//
+			GetIDNameTaskFile(iniValue?.id).then((value) => {
+				//
+				setFileTask(value.result); //
+			}); //
+		} //
+	}, [iniValue, ReRender]); //
+	//////////////////////////////////////////////////////////////////////////////////////////
 
 	useEffect(() => {
 		if (iniValue?.route_data?.length > 1)
@@ -151,7 +154,7 @@ const Update5 = React.memo((props) => {
 			autoComplete="off"
 			onValuesChange={(changedValues, allValues) => {
 				setState(Object.assign({}, state, { ...allValues }));
-				console.log("UPDATE4 values", allValues);
+				//console.log("UPDATE4 values", allValues);
 			}}
 		>
 			{/* /////////////////////////////////// */}

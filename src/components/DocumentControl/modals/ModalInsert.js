@@ -238,7 +238,7 @@ let ModalInsert = React.memo(
 				if (state.route_id == 29) {
 					if (state.routes && state.routes[0]) {
 						formRouteSelect.submit();
-						console.log('formRouteSelect------',formRouteSelect)
+						//console.log('formRouteSelect------',formRouteSelect)
 						setVisible(false);
 						showModalForm5();
 					} else
@@ -307,7 +307,7 @@ let ModalInsert = React.memo(
 		let [routesList, setRoutesList] = useState([
 			{ positionName: "Тип договора не выбран." },
 		]);
-		let routesMap = []
+		let routesMap = [];
 
 		useEffect(() => {
 			if (
@@ -336,7 +336,7 @@ let ModalInsert = React.memo(
 						}
 					}
 					// console.log("Начальник в маршруте*-*-*-*", boss);
-					console.log("routes!!!!!!!!!!+++", routes);
+					//console.log("routes!!!!!!!!!!+++", routes);
 					setRouteData(routes);
 					setRoutesList(routes);
 				} else {
@@ -351,43 +351,43 @@ let ModalInsert = React.memo(
 						routes[i].step = i + 1;
 					}
 					// console.log("Начальник вне маршрута*-*-*-*", dataBoss);
-					console.log("routes!!!!!!!!!!", routes);
+					//console.log("routes!!!!!!!!!!", routes);
 					setRouteData(routes);
 					setRoutesList(routes);
 				}
 
-			    form.setFieldsValue({
-			        route_id: dataRoutes.document_routes[0].id,
-			        step: 1,
-			        status_id: dataRoutes.document_routes[0].status_in_process
-			    })
-			    form2.setFieldsValue({
-			        route_id: dataRoutes.document_routes[0].id,
-			        step: 1,
-			        status_id: dataRoutes.document_routes[0].status_in_process
-			    })
-			    form3.setFieldsValue({
-			        route_id: dataRoutes.document_routes[0].id,
-			        step: 1,
-			        status_id: dataRoutes.document_routes[0].status_in_process
-			    })
-			    form4.setFieldsValue({
-			        route_id: dataRoutes.document_routes[0].id,
-			        step: 1,
-			        status_id: dataRoutes.document_routes[0].status_in_process
-			    })
-			    form5.setFieldsValue({
-			        route_id: dataRoutes.document_routes[0].id,
-			        step: 1,
-			        status_id: dataRoutes.document_routes[0].status_in_process
-			    })
-			// setRoutesList(routesMap = (dataRoutes.document_routes[0].routes !== undefined )? dataRoutes.document_routes[0].routes.map((item)=>{
-			//     return{
-			//         positionName:item.positionName
-			//     }
-			// }) :[])
-			// setRouteData(routes);
-			// setRouteData(dataRoutes.document_routes[0].routes.filter((el) => { return el.step == 1 }))
+				form.setFieldsValue({
+					route_id: dataRoutes.document_routes[0].id,
+					step: 1,
+					status_id: dataRoutes.document_routes[0].status_in_process,
+				});
+				form2.setFieldsValue({
+					route_id: dataRoutes.document_routes[0].id,
+					step: 1,
+					status_id: dataRoutes.document_routes[0].status_in_process,
+				});
+				form3.setFieldsValue({
+					route_id: dataRoutes.document_routes[0].id,
+					step: 1,
+					status_id: dataRoutes.document_routes[0].status_in_process,
+				});
+				form4.setFieldsValue({
+					route_id: dataRoutes.document_routes[0].id,
+					step: 1,
+					status_id: dataRoutes.document_routes[0].status_in_process,
+				});
+				form5.setFieldsValue({
+					route_id: dataRoutes.document_routes[0].id,
+					step: 1,
+					status_id: dataRoutes.document_routes[0].status_in_process,
+				});
+				// setRoutesList(routesMap = (dataRoutes.document_routes[0].routes !== undefined )? dataRoutes.document_routes[0].routes.map((item)=>{
+				//     return{
+				//         positionName:item.positionName
+				//     }
+				// }) :[])
+				// setRouteData(routes);
+				// setRouteData(dataRoutes.document_routes[0].routes.filter((el) => { return el.step == 1 }))
 			}
 		}, [dataRoutes]);
 
@@ -435,7 +435,7 @@ let ModalInsert = React.memo(
 
 		//------------------files upload func
 		let uploadDocuments = async (files) => {
-			console.log(files);
+			//console.log(files);
 			const filePromises = files.map((file) => {
 				// Return a promise per file
 				return new Promise((resolve, reject) => {
@@ -453,7 +453,7 @@ let ModalInsert = React.memo(
 			// Wait for all promises to be resolved
 			const fileInfos = await Promise.all(filePromises);
 
-			console.log("COMPLETED");
+			//console.log("COMPLETED");
 
 			// Profit
 			return fileInfos;
@@ -487,7 +487,7 @@ let ModalInsert = React.memo(
 						name="Route_select"
 						onFinish={(values) => {
 							form5RouteData.current = values.routes;
-							console.log("ROUTE 5", values);
+							//console.log("ROUTE 5", values);
 						}}
 						onValuesChange={(changedValues, allValues) => {
 							setState(Object.assign({}, state, { ...allValues }));
@@ -568,10 +568,10 @@ let ModalInsert = React.memo(
 																	onChange={(value, LabeledValue) => {
 																		setState((prevState) => {
 																			let old = Object.assign({}, prevState);
-																			console.log(
-																				"field.fieldKey",
-																				field.fieldKey
-																			);
+																			// //console.log(
+																			// 	"field.fieldKey",
+																			// 	field.fieldKey
+																			// );
 																			old.routes[field.name].positionName =
 																				LabeledValue.children;
 																			old.routes[field.name].step =
@@ -670,7 +670,7 @@ let ModalInsert = React.memo(
 							values.fio = user.fio;
 							values.route_data = routeData;
 							values.positionId = routeData[0].positionId;
-							console.log("Variables", variables);
+							//console.log("Variables", variables);
 							variables[GQL.exemplar] = values;
 							insert({ variables });
 						}}
@@ -707,7 +707,7 @@ let ModalInsert = React.memo(
 							values.fio = user.fio;
 							values.route_data = routeData;
 							values.positionId = routeData[0].positionId;
-							console.log("TEST", variables);
+							//console.log("TEST", variables);
 							// console.log('TEST', Object.assign(variables,))
 							variables[GQL2.exemplar] = values;
 							insert2({ variables });
@@ -747,7 +747,7 @@ let ModalInsert = React.memo(
 							values.route_data = routeData;
 
 							values.positionId = routeData[0].positionId;
-							console.log("TEST", variables);
+							//console.log("TEST", variables);
 							// console.log('TEST', Object.assign(variables,))
 							variables[GQL3.exemplar] = values;
 							insert3({ variables });
@@ -784,7 +784,7 @@ let ModalInsert = React.memo(
 							values.is_read = false;
 							values.fio = user.fio;
 							values.positionId = routeData[0].positionId;
-							console.log("values---", values);
+							//console.log("values---", values);
 							values.route_data = routeData;
 							variables[GQL4.exemplar] = values;
 							insert4({ variables });
@@ -814,7 +814,7 @@ let ModalInsert = React.memo(
 							await uploadDocuments(values.files.fileList).then((result) => {
 								base64 = result;
 							});
-							values.route_data = form5RouteData.current
+							values.route_data = form5RouteData.current;
 							// values.route_data = routeData;
 							values.docs = base64;
 							values.user_id = user.id;
@@ -823,7 +823,7 @@ let ModalInsert = React.memo(
 							values.is_read = false;
 							values.fio = user.fio;
 							values.positionId = routeData[0].positionId;
-							console.log("TEST", variables);
+							//console.log("TEST", variables);
 							// console.log('TEST', Object.assign(variables,))
 							variables[GQL5.exemplar] = values;
 							insert5({ variables });
