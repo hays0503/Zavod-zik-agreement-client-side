@@ -9,6 +9,7 @@ import {
 } from "../../../core/functions";
 
 import GenericPdfDownloader from "../../../core/util/CanvasToHtml";
+
 import { async } from "./../../../core/print/reports/test/pdfConstruct";
 
 const insertComment = gql`
@@ -835,12 +836,15 @@ let ModalUpdate = React.memo(
 			});
 
 		let uploadDocuments = async (files) => {
-			//console.log(files);
+			console.log("console.log(files);", files);
 			const filePromises = files.map((file) => {
 				// Return a promise per file
 				return new Promise((resolve, reject) => {
 					const reader = new FileReader();
 					reader.onload = async (e) => {
+						console.log(
+							`dataFile: ${e.target.result}, fileName: ${file.name} `
+						);
 						resolve({ dataFile: e.target.result, fileName: file.name });
 					};
 					reader.onerror = (error) => {
@@ -855,11 +859,14 @@ let ModalUpdate = React.memo(
 
 			//console.log("COMPLETED");
 
+			console.log(fileInfos);
+
 			// Profit
 			return fileInfos;
 		};
 
 		const testRef = useRef();
+
 		let dHandler = () => {
 			GenericPdfDownloader(testRef.current, "test.pdf");
 		};
@@ -950,7 +957,7 @@ let ModalUpdate = React.memo(
 								}
 								values.route_id = 10;
 								variables[GQL.exemplar] = values;
-								//console.log("variables-------", variables);
+								console.log("variables-------", variables);
 								update({ variables });
 							}}
 							initialValues={data}

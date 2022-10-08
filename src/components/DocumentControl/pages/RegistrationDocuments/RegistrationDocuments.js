@@ -12,6 +12,10 @@ import TitleMenu from "../../../../core/TitleMenu";
 import test from "../../../../core/functions/test";
 
 import Update1 from "./forms/1/Update1";
+import Update2 from "./forms/2/Update2";
+import Update3 from "./forms/3/Update3";
+import Update4 from "./forms/4/Update4";
+import Update5 from "./forms/5/Update5";
 
 /**
  * Страница для регистрации договора сотрудниками ООПЗ
@@ -362,7 +366,7 @@ let RegistrationDocuments = React.memo((props) => {
 						route_step: item.route_data
 							? item.route_data.findIndex(
 									(item) => item.positionId == positionsVariable
-							  ) + 1
+							) + 1
 							: [],
 						step: item.step,
 						step_count: item.step + " из " + item.route_data?.length,
@@ -372,7 +376,7 @@ let RegistrationDocuments = React.memo((props) => {
 								: "",
 						mitwork_number: item.mitwork_number,
 					};
-			  })
+			})
 			: [];
 
 	let dict = test([
@@ -435,14 +439,9 @@ let RegistrationDocuments = React.memo((props) => {
 			],
 			onFilter: (value, record) => record.status.indexOf(value) === 0,
 		},
-
 		{ title: "На подписи", dataIndex: "step_name", width: "114px" },
 		{ title: "Этап", dataIndex: "step_count", width: "55px" },
-		// { title: 'Шаг п.', dataIndex: 'route_step', width: '55px'}
 	]);
-
-	//console.log("RegistrationDocuments data", data);
-	//console.log("RegistrationDocuments list", list);
 
 	const visibleModalUpdate = useState(false);
 	const visibleModalUpdate2 = useState(false);
@@ -460,16 +459,20 @@ let RegistrationDocuments = React.memo((props) => {
 						UpdateForm={Update1}
 						visibleModalUpdate2={visibleModalUpdate2}
 						GQL2={documents}
+						UpdateForm2={Update2}
 						visibleModalUpdate3={visibleModalUpdate3}
 						GQL3={documents}
+						UpdateForm3={Update3}
 						visibleModalUpdate4={visibleModalUpdate4}
 						GQL4={documents}
+						UpdateForm4={Update4}
 						visibleModalUpdate5={visibleModalUpdate5}
 						GQL5={documents}
+						UpdateForm5={Update5}
 						title="Просмотр договора"
 						selectedRowKeys={tableProps.selectedRowKeys}
 						update={true}
-						width={750}
+						width={850}
 					/>,
 				]}
 				selectedRowKeys={tableProps.selectedRowKeys}

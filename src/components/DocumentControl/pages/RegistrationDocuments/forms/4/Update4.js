@@ -1,22 +1,27 @@
-import { Form, Divider, Button, Collapse } from "antd";
+import { Form, Divider, Collapse, Button } from "antd";
 import React, { useEffect, useState } from "react";
 import { useUser } from "../../../../../../core/functions";
-import SelectReplacementDialog from "../../../../dialogs/SelectReplacementDialog";
-import { GetIDNameTaskFile } from "../../../api/CRU_Document";
-import FragmentCommentsViewer from "../../../fragments/FragmentCommentsViewer";
-import { FragmentTaskAndFileViewer } from "../../../fragments/FragmentFileViewer";
-import { FragmentReasonsViewer } from "../../../fragments/FragmentReasonsViewer";
-import { FragmentStepViewerReplacementDialog } from "../../../fragments/FragmentStepViewer";
-import { FormItem, FormWrap } from "./../../../fragments/FragmentItemWrap";
-import { FragmentAnyItems } from "./../../../fragments/FragmentAnyItems";
-import { FragmentMitWork } from "../../../fragments/FragmentMitWork";
-import FragmentUploader from "../../../fragments/FragmentUploader";
 
-const Update1 = React.memo((props) => {
+
+//Tasks
+import { FormWrap, FormItem } from "./../../../fragments/FragmentItemWrap";
+import FragmentUploader from "./../../../fragments/FragmentUploader";
+import {
+	FragmentStepViewerReplacementDialog,
+} from "../../../fragments/FragmentStepViewer";
+import { FragmentReasonsViewer } from "../../../fragments/FragmentReasonsViewer";
+import FragmentCommentsViewer from "../../../fragments/FragmentCommentsViewer";
+import { FragmentAnyItems } from "../../../fragments/FragmentAnyItems";
+import { GetIDNameTaskFile } from "./../../../api/CRU_Document";
+import { FragmentTaskAndFileViewer } from "./../../../fragments/FragmentFileViewer";
+import SelectReplacementDialog from "../../../../dialogs/SelectReplacementDialog";
+import { FragmentMitWork } from "../../../fragments/FragmentMitWork";
+
+const Update4 = React.memo((props) => {
 	/**
 	 * Деструктаризация (начального значение)
 	 */
-	const iniValue = props?.initialValues?.documents[0];
+	const iniValue = props?.initialValues4?.documents[0];
 
 	const user = useUser();
 	const [visible, setVisible] = useState(false);
@@ -24,14 +29,13 @@ const Update1 = React.memo((props) => {
 		{ positionName: "Тип договора не выбран." },
 	]);
 	const [stepCount, setStepCount] = useState({ step: "0" });
-
 	const [state, setState] = useState({
 		log_username: user.username,
 	});
 
 	//////////////////////////////////////////////////////////////////////////////////////////
 	/**
-	 * Отобразить новое состояние компонентов после обновление (файлов / по поручению)
+	 * Отобразить новое состояние компонентов после обновление (файлов / по поручению)	
 	 */
 	/**
 	 * Cтейт для таблиц файлов по поручением
@@ -47,20 +51,28 @@ const Update1 = React.memo((props) => {
 	//////////////////////////////////////////////////////////////////////////////////////////
 
 	useEffect(() => {
-		props.form.setFieldsValue(state);
+		props.form4.setFieldsValue(state);
 	}, [state]);
 
 	useEffect(() => {
-		if (iniValue) {
+		if (props.initialValues4) {
 			setState({
 				id: iniValue.id,
 				title: iniValue.title,
 				position: iniValue.position,
 				username: iniValue.username,
 				fio: iniValue.fio,
-				price: iniValue.data_one[0].price,
-				supllier: iniValue.data_one[0].supllier,
-				subject: iniValue.data_one[0].subject,
+
+				price: iniValue.data_agreement_list_internal_needs[0].price,
+				subject: iniValue.data_agreement_list_internal_needs[0].subject,
+				currency: iniValue.data_agreement_list_internal_needs[0].currency,
+				executor_name_division:
+					iniValue.data_agreement_list_internal_needs[0].executor_name_division,
+				executor_phone_number:
+					iniValue.data_agreement_list_internal_needs[0].executor_phone_number,
+				counteragent_contacts:
+					iniValue.data_agreement_list_internal_needs[0].counteragent_contacts,
+
 				date_created: iniValue.date_created,
 				date_modified: iniValue.date_modified,
 				route_id: iniValue.route_id.id,
@@ -80,35 +92,78 @@ const Update1 = React.memo((props) => {
 			setStepCount({ step: iniValue.step });
 			setRoutesList(iniValue.route_data);
 		}
-	}, [iniValue]);
+	}, [props.initialValues4]);
 
-	let onFinish = () => {
-		props.onFinish(state);
+	const onFinish = () => {
+		props.onFinish4(state);
 	};
+
+	//collapse
+
 
 	return (
 		<Form
-			form={props.form}
-			name="DocumentsForm"
+			form={props.form4}
+			name="DocumentsForm4"
 			onFinish={onFinish}
 			scrollToFirstError
 			autoComplete="off"
-			onValuesChange={(_changedValues, allValues) => {
+			onValuesChange={(changedValues, allValues) => {
 				setState(Object.assign({}, state, { ...allValues }));
+				//console.log("UPDATE4 values", allValues);
 			}}
 		>
-			<h4>
-				<b>Тип договора:</b> Закуп ТРУ
-			</h4>
+			{/* /////////////////////////////////// */}
+			<FormWrap>{FormItem("От: ", state?.fio)}</FormWrap>
+			{/* /////////////////////////////////// */}
+			<FormWrap>{FormItem("Должность: ", state?.position)}</FormWrap>
+			{/* /////////////////////////////////// */}
+			<FormWrap>
+				{FormItem(
+					"Тип договора: ",
+					"Лист согласования на реализацию готовой продукции"
+				)}
+			</FormWrap>
+			{/* /////////////////////////////////// */}
+
+			<Divider type={"horizontal"} />
 
 			{/* /////////////////////////////////// */}
-			<FormWrap>{FormItem("Наименование ТРУ: ", state?.title)}</FormWrap>
+			<FormWrap>
+				{FormItem("Наименование контрагента: ", state?.title)}
+			</FormWrap>
 			{/* /////////////////////////////////// */}
-			<FormWrap>{FormItem("Поставщик ТРУ: ", state?.supllier)}</FormWrap>
-			{/* /////////////////////////////////// */}
-			<FormWrap>{FormItem("Основание: ", state?.subject)}</FormWrap>
+			<FormWrap>{FormItem("Предмет договора: ", state?.subject)}</FormWrap>
 			{/* /////////////////////////////////// */}
 			<FormWrap>{FormItem("Общая сумма договора: ", state?.price)}</FormWrap>
+			{/* /////////////////////////////////// */}
+			<FormWrap>{FormItem("Валюта платежа: ", state?.currency)}</FormWrap>
+			{/* /////////////////////////////////// */}
+			<FormWrap>
+				{FormItem(
+					"Наименование подразделения, фамилия ответственного исполнителя: ",
+					state?.executor_name_division
+				)}
+			</FormWrap>
+			{/* /////////////////////////////////// */}
+			<FormWrap>
+				{FormItem("Телефон исполнителя: ", state?.executor_phone_number)}
+			</FormWrap>
+			{/* /////////////////////////////////// */}
+			<FormWrap>
+				{FormItem(
+					"Наименование подразделения, фамилия ответственного исполнителя: ",
+					state?.counteragent_contacts
+				)}
+			</FormWrap>
+			{/* /////////////////////////////////// */}
+			<Divider type={"horizontal"} />
+
+			{/* Фрагмент antd дающую возможность загружать файлы */}
+			<FragmentUploader />
+			{/* /////////////////////////////////// */}
+
+			<Divider type={"horizontal"} />
 
 			<FragmentMitWork
 				id={iniValue?.id}
@@ -176,7 +231,6 @@ const Update1 = React.memo((props) => {
 
 			<Collapse>
 				<Collapse.Panel header={<b>Замечание</b>}>
-
 					{/* Фрагмент antd для вывода Замечаний по документу */}
 					<FragmentReasonsViewer Reason={iniValue?.reason} />
 					{/* /////////////////////////////////// */}
@@ -214,4 +268,4 @@ const Update1 = React.memo((props) => {
 	);
 });
 
-export default Update1;
+export default Update4;

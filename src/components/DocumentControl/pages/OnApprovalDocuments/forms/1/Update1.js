@@ -47,26 +47,28 @@ const Update1 = React.memo((props) => {
 		log_username: user.username,
 	});
 
-
-//////////////////////////////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////////////////////////////
 	/**																					//
 	 * Отобразить новое состояние компонентов после обновление (файлов / по поручению)	//
-	 */																					//
-																						//
+	 */ //
+	//
 	/**																					//
 	 * Cтейт для таблиц файлов по поручением											//
-	 */																					//
-	const [FileTask, setFileTask] = useState([]);										//
-																						//
-	const [ReRender, setRerender] = useState(false);									//
-	useEffect(() => {																		//
-		if (iniValue?.id) {																//
-			GetIDNameTaskFile(iniValue?.id).then((value) => {							//
-				setFileTask(value.result);												//
-			});																			//
-	}																					//
-	}, [iniValue,ReRender]);															//
-//////////////////////////////////////////////////////////////////////////////////////////
+	 */ //
+	const [FileTask, setFileTask] = useState([]); //
+	//
+	const [ReRender, setRerender] = useState(false); //
+	useEffect(() => {
+		//
+		if (iniValue?.id) {
+			//
+			GetIDNameTaskFile(iniValue?.id).then((value) => {
+				//
+				setFileTask(value.result); //
+			}); //
+		} //
+	}, [iniValue, ReRender]); //
+	//////////////////////////////////////////////////////////////////////////////////////////
 	useEffect(() => {
 		if (iniValue?.route_data?.length > 1)
 			stepsDirection.current =
@@ -79,7 +81,7 @@ const Update1 = React.memo((props) => {
 	useEffect(() => {
 		props.form.setFieldsValue(state);
 	}, [state]);
-	
+
 	useEffect(() => {
 		if (props.initialValues) {
 			setState({
@@ -113,6 +115,7 @@ const Update1 = React.memo((props) => {
 	}, [props.initialValues]);
 
 	let onFinish = (values) => {
+		console.log(state);
 		props.onFinish(state);
 	};
 

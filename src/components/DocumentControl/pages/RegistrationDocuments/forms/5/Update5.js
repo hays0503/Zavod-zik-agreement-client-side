@@ -1,33 +1,38 @@
-import { Form, Divider, Button, Collapse } from "antd";
-import React, { useEffect, useState } from "react";
+import { Form, Divider, Collapse, Button } from "antd";
+import React, { useEffect, useState, useRef } from "react";
 import { useUser } from "../../../../../../core/functions";
-import SelectReplacementDialog from "../../../../dialogs/SelectReplacementDialog";
-import { GetIDNameTaskFile } from "../../../api/CRU_Document";
-import FragmentCommentsViewer from "../../../fragments/FragmentCommentsViewer";
-import { FragmentTaskAndFileViewer } from "../../../fragments/FragmentFileViewer";
-import { FragmentReasonsViewer } from "../../../fragments/FragmentReasonsViewer";
-import { FragmentStepViewerReplacementDialog } from "../../../fragments/FragmentStepViewer";
-import { FormItem, FormWrap } from "./../../../fragments/FragmentItemWrap";
-import { FragmentAnyItems } from "./../../../fragments/FragmentAnyItems";
-import { FragmentMitWork } from "../../../fragments/FragmentMitWork";
-import FragmentUploader from "../../../fragments/FragmentUploader";
 
-const Update1 = React.memo((props) => {
+
+//Tasks
+import { FormWrap, FormItem } from "./../../../fragments/FragmentItemWrap";
+import FragmentUploader from "../../../fragments/FragmentUploader";
+import {
+	FragmentStepViewerReplacementDialog,
+} from "../../../fragments/FragmentStepViewer";
+import { FragmentReasonsViewer } from "../../../fragments/FragmentReasonsViewer";
+import FragmentCommentsViewer from "../../../fragments/FragmentCommentsViewer";
+import { FragmentAnyItems } from "../../../fragments/FragmentAnyItems";
+import { GetIDNameTaskFile } from "./../../../api/CRU_Document";
+import { FragmentTaskAndFileViewer } from "./../../../fragments/FragmentFileViewer";
+import SelectReplacementDialog from "../../../../dialogs/SelectReplacementDialog";
+import { FragmentMitWork } from "../../../fragments/FragmentMitWork";
+
+const Update5 = React.memo((props) => {
 	/**
 	 * Деструктаризация (начального значение)
 	 */
-	const iniValue = props?.initialValues?.documents[0];
+	const iniValue = props?.initialValues5?.documents[0];
 
 	const user = useUser();
+	const stepsDirection = useRef("vertical");
 	const [visible, setVisible] = useState(false);
+	const [state, setState] = useState({
+		log_username: user.username,
+	});
 	const [routesList, setRoutesList] = useState([
 		{ positionName: "Тип договора не выбран." },
 	]);
 	const [stepCount, setStepCount] = useState({ step: "0" });
-
-	const [state, setState] = useState({
-		log_username: user.username,
-	});
 
 	//////////////////////////////////////////////////////////////////////////////////////////
 	/**
@@ -47,20 +52,27 @@ const Update1 = React.memo((props) => {
 	//////////////////////////////////////////////////////////////////////////////////////////
 
 	useEffect(() => {
-		props.form.setFieldsValue(state);
+		if (iniValue?.route_data?.length > 1)
+			stepsDirection.current =
+				iniValue?.route_data?.length <= 7 ? "horizontal" : "vertical";
+	}, [props]);
+
+	useEffect(() => {
+		props.form5.setFieldsValue(state);
 	}, [state]);
 
 	useEffect(() => {
-		if (iniValue) {
+		if (props.initialValues5) {
 			setState({
 				id: iniValue.id,
 				title: iniValue.title,
 				position: iniValue.position,
 				username: iniValue.username,
 				fio: iniValue.fio,
-				price: iniValue.data_one[0].price,
-				supllier: iniValue.data_one[0].supllier,
-				subject: iniValue.data_one[0].subject,
+
+				subject: iniValue.data_custom[0].subject,
+				remark: iniValue.data_custom[0].remark,
+
 				date_created: iniValue.date_created,
 				date_modified: iniValue.date_modified,
 				route_id: iniValue.route_id.id,
@@ -80,35 +92,41 @@ const Update1 = React.memo((props) => {
 			setStepCount({ step: iniValue.step });
 			setRoutesList(iniValue.route_data);
 		}
-	}, [iniValue]);
+	}, [props.initialValues5]);
 
-	let onFinish = () => {
-		props.onFinish(state);
+	const onFinish = () => {
+		props.onFinish5(state);
 	};
 
 	return (
 		<Form
-			form={props.form}
-			name="DocumentsForm"
+			form={props.form5}
+			name="DocumentsForm5"
 			onFinish={onFinish}
 			scrollToFirstError
 			autoComplete="off"
-			onValuesChange={(_changedValues, allValues) => {
+			onValuesChange={(changedValues, allValues) => {
 				setState(Object.assign({}, state, { ...allValues }));
+				//console.log("UPDATE4 values", allValues);
 			}}
 		>
-			<h4>
-				<b>Тип договора:</b> Закуп ТРУ
-			</h4>
+			{/* /////////////////////////////////// */}
+			<FormWrap>{FormItem("От: ", state?.fio)}</FormWrap>
+			{/* /////////////////////////////////// */}
+			<FormWrap>{FormItem("Должность: ", state?.position)}</FormWrap>
+			{/* /////////////////////////////////// */}
+			<FormWrap>{FormItem("Тип договора: ", "Другой")}</FormWrap>
+			{/* /////////////////////////////////// */}
 
+			<Divider type={"horizontal"} />
 			{/* /////////////////////////////////// */}
-			<FormWrap>{FormItem("Наименование ТРУ: ", state?.title)}</FormWrap>
+			<FormWrap>{FormItem("Наименование: ", state?.title)}</FormWrap>
 			{/* /////////////////////////////////// */}
-			<FormWrap>{FormItem("Поставщик ТРУ: ", state?.supllier)}</FormWrap>
+			<FormWrap>{FormItem("Примечание: ", state?.supllier)}</FormWrap>
 			{/* /////////////////////////////////// */}
 			<FormWrap>{FormItem("Основание: ", state?.subject)}</FormWrap>
 			{/* /////////////////////////////////// */}
-			<FormWrap>{FormItem("Общая сумма договора: ", state?.price)}</FormWrap>
+			<Divider type={"horizontal"} />
 
 			<FragmentMitWork
 				id={iniValue?.id}
@@ -176,7 +194,6 @@ const Update1 = React.memo((props) => {
 
 			<Collapse>
 				<Collapse.Panel header={<b>Замечание</b>}>
-
 					{/* Фрагмент antd для вывода Замечаний по документу */}
 					<FragmentReasonsViewer Reason={iniValue?.reason} />
 					{/* /////////////////////////////////// */}
@@ -214,4 +231,4 @@ const Update1 = React.memo((props) => {
 	);
 });
 
-export default Update1;
+export default Update5;
