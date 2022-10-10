@@ -366,7 +366,7 @@ let RegistrationDocuments = React.memo((props) => {
 						route_step: item.route_data
 							? item.route_data.findIndex(
 									(item) => item.positionId == positionsVariable
-							) + 1
+							  ) + 1
 							: [],
 						step: item.step,
 						step_count: item.step + " из " + item.route_data?.length,
@@ -376,7 +376,7 @@ let RegistrationDocuments = React.memo((props) => {
 								: "",
 						mitwork_number: item.mitwork_number,
 					};
-			})
+			  })
 			: [];
 
 	let dict = test([
