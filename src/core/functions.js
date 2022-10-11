@@ -220,21 +220,25 @@ export const useUser = () => {
 	} = useQuery(positions);
 
 	let user = query.data ? query.data.authMe[0] : undefined;
+	console.log("user", user);
 	let positionNames = user ? query.data.authMe[0].position_names : [];
 
 	//let accesses = user ? query.data.authMe[0].accesses : [];
-	let accessesData =
-		user && user.positions
-			? positionsData?.positions.filter((el) => {
-					return el.id == user.positions[0];
-			  })
-			: [];
+	// let accessesData =
+	// 	user && user.positions
+	// 		? positionsData?.positions.filter((el) => {
+	// 				return el.id == user.positions[0];
+	// 		  })
+	// 		: [];
+
 	//let accesses = accessesData && accessesData[0] ? accessesData[0].accesses : [];
 	let accesses = user ? query.data.authMe[0].position_accesses : [];
+	console.log("accesses", accesses);
 
 	let admin = user ? user.admin : undefined;
-	//console.log('positionNames', positionNames)
-	return {
+	console.log("admin", admin);
+
+	const UserObject = {
 		query,
 		id: user ? user.id : undefined,
 		username: user ? user.username : undefined,
@@ -368,6 +372,9 @@ export const useUser = () => {
 				: accesses.includes("/admin-p/item-status-change"),
 		},
 	};
+
+	console.log("UserObject", UserObject);
+	return UserObject;
 };
 
 export const accessRedirect = (Component) => {

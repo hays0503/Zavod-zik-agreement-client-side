@@ -9,7 +9,6 @@ import {
 import ModalUpdate from "../../modals/ModalUpdate";
 import TableContainer from "../../tableContainers/TableContainer";
 import TitleMenu from "../../../../core/TitleMenu";
-import test from "../../../../core/functions/test";
 import AllDocumentsGQL from "./../../gql/AllDocumentsGQL";
 
 let FulfilledDocuments = React.memo((props) => {

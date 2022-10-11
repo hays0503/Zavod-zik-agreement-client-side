@@ -430,6 +430,10 @@ const PositionsPermissionsTree = React.memo((props) => {
 						{
 							title: "Просмотр",
 							key: "/document-control-p/orders-p/select",
+						},						
+						{
+							title: "Регистрация документов",
+							key: "/document-control-p/registration-p/select",
 						},
 					],
 				},
