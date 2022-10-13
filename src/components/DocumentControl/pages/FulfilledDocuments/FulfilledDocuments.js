@@ -9,12 +9,17 @@ import {
 import ModalUpdate from "../../modals/ModalUpdate";
 import TableContainer from "../../tableContainers/TableContainer";
 import TitleMenu from "../../../../core/TitleMenu";
-import AllDocumentsGQL from "./../../gql/AllDocumentsGQL";
+import test from "../../../../core/functions/test";
+
+import Update1 from "./forms/1/Update1";
+import Update2 from "./forms/2/Update2";
+import Update3 from "./forms/3/Update3";
+import Update4 from "./forms/4/Update4";
+import Update5 from "./forms/5/Update5";
 
 let FulfilledDocuments = React.memo((props) => {
 	let user = useUser();
-
-	//console.log(user)
+	let positionsVariable = user.positions.toString();
 
 	let documents = {
 		exemplar: "document",
@@ -22,7 +27,9 @@ let FulfilledDocuments = React.memo((props) => {
 		options: {
 			all: {
 				variables: {
-					documents: { global: { ORDER_BY: ["date_created desc"] } },
+					documents: {
+						global: { status_id: "=9", ORDER_BY: ["date_created desc"] },
+					},
 				},
 				fetchPolicy: "cache-only",
 			},
@@ -47,6 +54,8 @@ let FulfilledDocuments = React.memo((props) => {
 						date_modified
 						status_id
 						reason
+						mitwork_number
+						mitwork_data
 						document_tasks {
 							id
 							document_id
@@ -143,6 +152,8 @@ let FulfilledDocuments = React.memo((props) => {
 						date_modified
 						status_id
 						reason
+						mitwork_number
+						mitwork_data
 						data_one {
 							id
 							document_id
@@ -255,6 +266,8 @@ let FulfilledDocuments = React.memo((props) => {
 							date_created
 							date_modified
 							status_id
+							mitwork_number
+							mitwork_data
 							document_logs {
 								id
 								document_id
@@ -326,6 +339,107 @@ let FulfilledDocuments = React.memo((props) => {
 		`,
 	};
 
+	const { loading, data, refetch } = handlerQuery(documents, "all")();
+	useEffect(() => {
+		refetch();
+	}, []);
+
+	let list =
+		data && data[Object.keys(data)[0]] != null
+			? data[Object.keys(data)[0]].map((item) => {
+					return {
+						id: item.id,
+						key: item.id,
+						title: item.title,
+						date_created: item.date_created,
+						date_modified: item.date_modified,
+						status_id: item.status_id,
+						status: item.document_statuses?.name
+							? item.document_statuses.name
+							: "Без статуса",
+						route_id: item.route_id.id,
+						route: item.route_id?.name ? item.route_id.name : "Не задан",
+						route_data: item.route_data,
+						route_step: item.route_data
+							? item.route_data.findIndex(
+									(item) => item.positionId == positionsVariable
+							  ) + 1
+							: [],
+						step: item.step,
+						step_count: item.step + " из " + item.route_data?.length,
+						step_name:
+							item.route_data?.length > 0
+								? item.route_data[item.step - 1].positionName
+								: "",
+						mitwork_number: item.mitwork_number,
+					};
+			  })
+			: [];
+
+	let dict = test([
+		{
+			title: "Наименование договора",
+			dataIndex: "title",
+			width: "214px",
+			type: "search",
+			tooltip: true,
+			sorter: (a, b) => a.title.localeCompare(b.title),
+			sortDirections: ["ascend", "descend"],
+		},
+		{
+			title: "Дата и время создания",
+			dataIndex: "date_created",
+			width: "114px",
+			type: "search",
+			tooltip: true,
+			sorter: true,
+			sorter: (a, b) => new Date(a.date_created) - new Date(b.date_created),
+		},
+		{
+			title: "Последние изменение",
+			dataIndex: "date_modified",
+			width: "114px",
+			type: "search",
+			tooltip: true,
+			sorter: true,
+			sorter: (a, b) => new Date(a.date_modified) - new Date(b.date_modified),
+		},
+		{
+			title: "Тип договора",
+			dataIndex: "route",
+			width: "114px",
+			type: "search",
+			tooltip: true,
+			sorter: (a, b) => a.route.localeCompare(b.route),
+			sortDirections: ["ascend", "descend"],
+		},
+		{
+			title: "Статус",
+			dataIndex: "status",
+			width: "80px",
+			tooltip: true,
+			sorter: (a, b) => a.status.localeCompare(b.status),
+			sortDirections: ["ascend", "descend"],
+			filters: [
+				{
+					text: "Утверждён",
+					value: "Утверждён",
+				},
+				{
+					text: "В работе",
+					value: "В работе",
+				},
+				{
+					text: "Отклонён",
+					value: "Отклонён",
+				},
+			],
+			onFilter: (value, record) => record.status.indexOf(value) === 0,
+		},
+		{ title: "На подписи", dataIndex: "step_name", width: "114px" },
+		{ title: "Этап", dataIndex: "step_count", width: "55px" },
+	]);
+
 	const visibleModalUpdate = useState(false);
 	const visibleModalUpdate2 = useState(false);
 	const visibleModalUpdate3 = useState(false);
@@ -338,19 +452,24 @@ let FulfilledDocuments = React.memo((props) => {
 				buttons={[
 					<ModalUpdate
 						visibleModalUpdate={visibleModalUpdate}
-						GQL={AllDocumentsGQL}
+						GQL={documents}
+						UpdateForm={Update1}
 						visibleModalUpdate2={visibleModalUpdate2}
-						GQL2={AllDocumentsGQL}
+						GQL2={documents}
+						UpdateForm2={Update2}
 						visibleModalUpdate3={visibleModalUpdate3}
-						GQL3={AllDocumentsGQL}
+						GQL3={documents}
+						UpdateForm3={Update3}
 						visibleModalUpdate4={visibleModalUpdate4}
-						GQL4={AllDocumentsGQL}
+						GQL4={documents}
+						UpdateForm4={Update4}
 						visibleModalUpdate5={visibleModalUpdate5}
-						GQL5={AllDocumentsGQL}
+						GQL5={documents}
+						UpdateForm5={Update5}
 						title="Просмотр договора"
 						selectedRowKeys={tableProps.selectedRowKeys}
 						update={true}
-						width={750}
+						width={850}
 					/>,
 				]}
 				selectedRowKeys={tableProps.selectedRowKeys}
@@ -361,8 +480,8 @@ let FulfilledDocuments = React.memo((props) => {
 	return (
 		<>
 			<TableContainer
-				// data={{ dict, records: list }}
-				// loading={loading}
+				data={{ dict, records: list }}
+				loading={loading}
 				title={titleMenu}
 				visibleModalUpdate={visibleModalUpdate}
 				visibleModalUpdate2={visibleModalUpdate2}

@@ -233,7 +233,15 @@ export const useUser = () => {
 
 	//let accesses = accessesData && accessesData[0] ? accessesData[0].accesses : [];
 	let accesses = user ? query.data.authMe[0].position_accesses : [];
+	console.log(
+		"---!!!query.data.authMe[0].position_accesses!!!---",
+		query?.data?.authMe[0]?.position_accesses
+	);
 	console.log("accesses", accesses);
+	console.log(
+		"accesses registrationDocuments",
+		accesses.includes("/document-control-p/registration-p/select")
+	);
 
 	let admin = user ? user.admin : undefined;
 	console.log("admin", admin);
@@ -508,6 +516,12 @@ export const accessRedirect = (Component) => {
 			case "/document-control/registration":
 			case "/document-control/registration/":
 				if (!user.documentControl.registrationDocuments.select) {
+					return <Redirect />;
+				}
+				break;
+			case "/document-control/fulfilled":
+			case "/document-control/fulfilled/":
+				if (!user.documentControl.fulfilledDocuments.select) {
 					return <Redirect />;
 				}
 				break;

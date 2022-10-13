@@ -9,7 +9,7 @@ import { FragmentReasonsViewer } from "../../../fragments/FragmentReasonsViewer"
 import { FragmentStepViewerReplacementDialog } from "../../../fragments/FragmentStepViewer";
 import { FormItem, FormWrap } from "./../../../fragments/FragmentItemWrap";
 import { FragmentAnyItems } from "./../../../fragments/FragmentAnyItems";
-import { FragmentMitWork } from "../../../fragments/FragmentMitWork";
+import { FragmentMitWorkEdit } from "./../../../fragments/FragmentMitWork";
 import FragmentUploader from "../../../fragments/FragmentUploader";
 
 const Update1 = React.memo((props) => {
@@ -110,7 +110,7 @@ const Update1 = React.memo((props) => {
 			{/* /////////////////////////////////// */}
 			<FormWrap>{FormItem("Общая сумма договора: ", state?.price)}</FormWrap>
 
-			<FragmentMitWork
+			<FragmentMitWorkEdit
 				id={iniValue?.id}
 				mitwork_number={state?.mitwork_number}
 				mitwork_data={state?.mitwork_data}
@@ -176,7 +176,6 @@ const Update1 = React.memo((props) => {
 
 			<Collapse>
 				<Collapse.Panel header={<b>Замечание</b>}>
-
 					{/* Фрагмент antd для вывода Замечаний по документу */}
 					<FragmentReasonsViewer Reason={iniValue?.reason} />
 					{/* /////////////////////////////////// */}

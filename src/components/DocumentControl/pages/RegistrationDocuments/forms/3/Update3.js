@@ -2,7 +2,6 @@ import { Form, Divider, Collapse, Button } from "antd";
 import React, { useEffect, useState } from "react";
 import { useUser } from "../../../../../../core/functions";
 
-
 //Tasks
 import { FormWrap, FormItem } from "./../../../fragments/FragmentItemWrap";
 import FragmentUploader from "./../../../fragments/FragmentUploader";
@@ -13,7 +12,7 @@ import { FragmentAnyItems } from "../../../fragments/FragmentAnyItems";
 import { GetIDNameTaskFile } from "./../../../api/CRU_Document";
 import { FragmentTaskAndFileViewer } from "./../../../fragments/FragmentFileViewer";
 import SelectReplacementDialog from "../../../../dialogs/SelectReplacementDialog";
-import { FragmentMitWork } from "../../../fragments/FragmentMitWork";
+import { FragmentMitWorkEdit } from './../../../fragments/FragmentMitWork';
 
 /**
  * Форма 3 Лист согласования на закуп ТРУ для производства продукции
@@ -37,10 +36,10 @@ let Update3 = React.memo((props) => {
 
 	//////////////////////////////////////////////////////////////////////////////////////////
 	/**
-	 * Отобразить новое состояние компонентов после обновление (файлов / по поручению)	
+	 * Отобразить новое состояние компонентов после обновление (файлов / по поручению)
 	 */
 	/**
-	 * Cтейт для таблиц файлов по поручением											
+	 * Cтейт для таблиц файлов по поручением
 	 */
 	const [FileTask, setFileTask] = useState([]);
 	useEffect(() => {
@@ -152,8 +151,7 @@ let Update3 = React.memo((props) => {
 			</FormWrap>
 			{/* /////////////////////////////////// */}
 
-
-			<FragmentMitWork
+			<FragmentMitWorkEdit
 				id={iniValue?.id}
 				mitwork_number={state?.mitwork_number}
 				mitwork_data={state?.mitwork_data}
@@ -219,7 +217,6 @@ let Update3 = React.memo((props) => {
 
 			<Collapse>
 				<Collapse.Panel header={<b>Замечание</b>}>
-
 					{/* Фрагмент antd для вывода Замечаний по документу */}
 					<FragmentReasonsViewer Reason={iniValue?.reason} />
 					{/* /////////////////////////////////// */}
@@ -253,7 +250,6 @@ let Update3 = React.memo((props) => {
 			{/* Фрагмент antd элементами для хранение данных (ну или типо того) */}
 			<FragmentAnyItems />
 			{/* /////////////////////////////////// */}
-
 		</Form>
 	);
 });

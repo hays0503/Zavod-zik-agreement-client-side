@@ -2,20 +2,18 @@ import { Form, Divider, Collapse, Button } from "antd";
 import React, { useEffect, useState, useRef } from "react";
 import { useUser } from "../../../../../../core/functions";
 
-
 //Tasks
 import { FormWrap, FormItem } from "./../../../fragments/FragmentItemWrap";
 import FragmentUploader from "../../../fragments/FragmentUploader";
-import {
-	FragmentStepViewerReplacementDialog,
-} from "../../../fragments/FragmentStepViewer";
+import { FragmentStepViewerReplacementDialog } from "../../../fragments/FragmentStepViewer";
 import { FragmentReasonsViewer } from "../../../fragments/FragmentReasonsViewer";
 import FragmentCommentsViewer from "../../../fragments/FragmentCommentsViewer";
 import { FragmentAnyItems } from "../../../fragments/FragmentAnyItems";
 import { GetIDNameTaskFile } from "./../../../api/CRU_Document";
 import { FragmentTaskAndFileViewer } from "./../../../fragments/FragmentFileViewer";
 import SelectReplacementDialog from "../../../../dialogs/SelectReplacementDialog";
-import { FragmentMitWork } from "../../../fragments/FragmentMitWork";
+import { FragmentMitWorkEdit } from './../../../fragments/FragmentMitWork';
+
 
 const Update5 = React.memo((props) => {
 	/**
@@ -128,7 +126,7 @@ const Update5 = React.memo((props) => {
 			{/* /////////////////////////////////// */}
 			<Divider type={"horizontal"} />
 
-			<FragmentMitWork
+			<FragmentMitWorkEdit
 				id={iniValue?.id}
 				mitwork_number={state?.mitwork_number}
 				mitwork_data={state?.mitwork_data}

@@ -12,7 +12,7 @@ import { FragmentAnyItems } from "../../../fragments/FragmentAnyItems";
 import { GetIDNameTaskFile } from "./../../../api/CRU_Document";
 import { FragmentTaskAndFileViewer } from "./../../../fragments/FragmentFileViewer";
 import SelectReplacementDialog from "../../../../dialogs/SelectReplacementDialog";
-import { FragmentMitWork, FragmentMitWorkEdit } from './../../../fragments/FragmentMitWork';
+import { FragmentMitWork } from "../../../fragments/FragmentMitWork";
 
 const Update4 = React.memo((props) => {
 	/**
@@ -161,7 +161,7 @@ const Update4 = React.memo((props) => {
 
 			<Divider type={"horizontal"} />
 
-			<FragmentMitWorkEdit
+			<FragmentMitWork
 				id={iniValue?.id}
 				mitwork_number={state?.mitwork_number}
 				mitwork_data={state?.mitwork_data}
@@ -250,11 +250,11 @@ const Update4 = React.memo((props) => {
 				danger={true}
 				htmlType="submit"
 				onClick={() => {
-					setState({ ...state, status_id: "9" });
+					setState({ ...state, status_id: "10" });
 					console.log(state);
 				}}
 			>
-				Документ подписан в ООПЗ
+				Документ исполнен
 			</Button>
 
 			{/* Фрагмент antd элементами для хранение данных (ну или типо того) */}
