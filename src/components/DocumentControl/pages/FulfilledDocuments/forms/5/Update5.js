@@ -1,10 +1,10 @@
 import { Form, Divider, Collapse, Button } from "antd";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useUser } from "../../../../../../core/functions";
 
 //Tasks
 import { FormWrap, FormItem } from "./../../../fragments/FragmentItemWrap";
-import FragmentUploader from "./../../../fragments/FragmentUploader";
+import FragmentUploader from "../../../fragments/FragmentUploader";
 import { FragmentStepViewerReplacementDialog } from "../../../fragments/FragmentStepViewer";
 import { FragmentReasonsViewer } from "../../../fragments/FragmentReasonsViewer";
 import FragmentCommentsViewer from "../../../fragments/FragmentCommentsViewer";
@@ -12,23 +12,24 @@ import { FragmentAnyItems } from "../../../fragments/FragmentAnyItems";
 import { GetIDNameTaskFile } from "./../../../api/CRU_Document";
 import { FragmentTaskAndFileViewer } from "./../../../fragments/FragmentFileViewer";
 import SelectReplacementDialog from "../../../../dialogs/SelectReplacementDialog";
-import { FragmentMitWork, FragmentMitWorkEdit } from './../../../fragments/FragmentMitWork';
+import { FragmentMitWork } from "../../../fragments/FragmentMitWork";
 
-const Update4 = React.memo((props) => {
+const Update5 = React.memo((props) => {
 	/**
 	 * Деструктаризация (начального значение)
 	 */
-	const iniValue = props?.initialValues4?.documents[0];
+	const iniValue = props?.initialValues5?.documents[0];
 
 	const user = useUser();
+	const stepsDirection = useRef("vertical");
 	const [visible, setVisible] = useState(false);
+	const [state, setState] = useState({
+		log_username: user.username,
+	});
 	const [routesList, setRoutesList] = useState([
 		{ positionName: "Тип договора не выбран." },
 	]);
 	const [stepCount, setStepCount] = useState({ step: "0" });
-	const [state, setState] = useState({
-		log_username: user.username,
-	});
 
 	//////////////////////////////////////////////////////////////////////////////////////////
 	/**
@@ -48,11 +49,17 @@ const Update4 = React.memo((props) => {
 	//////////////////////////////////////////////////////////////////////////////////////////
 
 	useEffect(() => {
-		props.form4.setFieldsValue(state);
+		if (iniValue?.route_data?.length > 1)
+			stepsDirection.current =
+				iniValue?.route_data?.length <= 7 ? "horizontal" : "vertical";
+	}, [props]);
+
+	useEffect(() => {
+		props.form5.setFieldsValue(state);
 	}, [state]);
 
 	useEffect(() => {
-		if (props.initialValues4) {
+		if (props.initialValues5) {
 			setState({
 				id: iniValue.id,
 				title: iniValue.title,
@@ -60,15 +67,8 @@ const Update4 = React.memo((props) => {
 				username: iniValue.username,
 				fio: iniValue.fio,
 
-				price: iniValue.data_agreement_list_internal_needs[0].price,
-				subject: iniValue.data_agreement_list_internal_needs[0].subject,
-				currency: iniValue.data_agreement_list_internal_needs[0].currency,
-				executor_name_division:
-					iniValue.data_agreement_list_internal_needs[0].executor_name_division,
-				executor_phone_number:
-					iniValue.data_agreement_list_internal_needs[0].executor_phone_number,
-				counteragent_contacts:
-					iniValue.data_agreement_list_internal_needs[0].counteragent_contacts,
+				subject: iniValue.data_custom[0].subject,
+				remark: iniValue.data_custom[0].remark,
 
 				date_created: iniValue.date_created,
 				date_modified: iniValue.date_modified,
@@ -89,18 +89,16 @@ const Update4 = React.memo((props) => {
 			setStepCount({ step: iniValue.step });
 			setRoutesList(iniValue.route_data);
 		}
-	}, [props.initialValues4]);
+	}, [props.initialValues5]);
 
 	const onFinish = () => {
-		props.onFinish4(state);
+		props.onFinish5(state);
 	};
-
-	//collapse
 
 	return (
 		<Form
-			form={props.form4}
-			name="DocumentsForm4"
+			form={props.form5}
+			name="DocumentsForm5"
 			onFinish={onFinish}
 			scrollToFirstError
 			autoComplete="off"
@@ -114,54 +112,20 @@ const Update4 = React.memo((props) => {
 			{/* /////////////////////////////////// */}
 			<FormWrap>{FormItem("Должность: ", state?.position)}</FormWrap>
 			{/* /////////////////////////////////// */}
-			<FormWrap>
-				{FormItem(
-					"Тип договора: ",
-					"Лист согласования на реализацию готовой продукции"
-				)}
-			</FormWrap>
+			<FormWrap>{FormItem("Тип договора: ", "Другой")}</FormWrap>
 			{/* /////////////////////////////////// */}
 
 			<Divider type={"horizontal"} />
-
 			{/* /////////////////////////////////// */}
-			<FormWrap>
-				{FormItem("Наименование контрагента: ", state?.title)}
-			</FormWrap>
+			<FormWrap>{FormItem("Наименование: ", state?.title)}</FormWrap>
 			{/* /////////////////////////////////// */}
-			<FormWrap>{FormItem("Предмет договора: ", state?.subject)}</FormWrap>
+			<FormWrap>{FormItem("Примечание: ", state?.supllier)}</FormWrap>
 			{/* /////////////////////////////////// */}
-			<FormWrap>{FormItem("Общая сумма договора: ", state?.price)}</FormWrap>
-			{/* /////////////////////////////////// */}
-			<FormWrap>{FormItem("Валюта платежа: ", state?.currency)}</FormWrap>
-			{/* /////////////////////////////////// */}
-			<FormWrap>
-				{FormItem(
-					"Наименование подразделения, фамилия ответственного исполнителя: ",
-					state?.executor_name_division
-				)}
-			</FormWrap>
-			{/* /////////////////////////////////// */}
-			<FormWrap>
-				{FormItem("Телефон исполнителя: ", state?.executor_phone_number)}
-			</FormWrap>
-			{/* /////////////////////////////////// */}
-			<FormWrap>
-				{FormItem(
-					"Наименование подразделения, фамилия ответственного исполнителя: ",
-					state?.counteragent_contacts
-				)}
-			</FormWrap>
+			<FormWrap>{FormItem("Основание: ", state?.subject)}</FormWrap>
 			{/* /////////////////////////////////// */}
 			<Divider type={"horizontal"} />
 
-			{/* Фрагмент antd дающую возможность загружать файлы */}
-			<FragmentUploader />
-			{/* /////////////////////////////////// */}
-
-			<Divider type={"horizontal"} />
-
-			<FragmentMitWorkEdit
+			<FragmentMitWork
 				id={iniValue?.id}
 				mitwork_number={state?.mitwork_number}
 				mitwork_data={state?.mitwork_data}
@@ -250,11 +214,11 @@ const Update4 = React.memo((props) => {
 				danger={true}
 				htmlType="submit"
 				onClick={() => {
-					setState({ ...state, status_id: "9" });
+					setState({ ...state, status_id: "10" });
 					console.log(state);
 				}}
 			>
-				Документ подписан в ООПЗ
+				Документ исполнен
 			</Button>
 
 			{/* Фрагмент antd элементами для хранение данных (ну или типо того) */}
@@ -264,4 +228,4 @@ const Update4 = React.memo((props) => {
 	);
 });
 
-export default Update4;
+export default Update5;

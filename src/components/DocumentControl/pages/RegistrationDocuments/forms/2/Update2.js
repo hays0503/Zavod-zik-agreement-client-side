@@ -10,7 +10,7 @@ import { FragmentStepViewerReplacementDialog } from "../../../fragments/Fragment
 
 import { GetIDNameTaskFile } from "../../../api/CRU_Document";
 import { FragmentTaskAndFileViewer } from "../../../fragments/FragmentFileViewer";
-import { FragmentMitWork } from "../../../fragments/FragmentMitWork";
+import { FragmentMitWorkEdit } from './../../../fragments/FragmentMitWork';
 import SelectReplacementDialog from "../../../../dialogs/SelectReplacementDialog";
 
 //Реализация готовой продукции
@@ -32,18 +32,18 @@ const Update2 = React.memo((props) => {
 	const [stepCount, setStepCount] = useState({ step: "0" });
 	//////////////////////////////////////////////////////////////////////////////////////////
 	/**
-	 * Отобразить новое состояние компонентов после обновление (файлов / по поручению)	
+	 * Отобразить новое состояние компонентов после обновление (файлов / по поручению)
 	 */
 	/**
 	 * Cтейт для таблиц файлов по поручением
-	 */ 
+	 */
 	const [FileTask, setFileTask] = useState([]);
 	useEffect(() => {
 		if (iniValue?.id) {
 			GetIDNameTaskFile(iniValue?.id).then((value) => {
 				setFileTask(value.result);
-			}); 
-		} 
+			});
+		}
 	}, [iniValue]);
 	//////////////////////////////////////////////////////////////////////////////////////////
 
@@ -90,7 +90,6 @@ const Update2 = React.memo((props) => {
 			setRoutesList(iniValue.route_data);
 		}
 	}, [props.initialValues2]);
-
 
 	let onFinish = () => {
 		props.onFinish2(state);
@@ -163,7 +162,7 @@ const Update2 = React.memo((props) => {
 				)}
 			</FormWrap>
 
-			<FragmentMitWork
+			<FragmentMitWorkEdit
 				id={iniValue?.id}
 				mitwork_number={state?.mitwork_number}
 				mitwork_data={state?.mitwork_data}

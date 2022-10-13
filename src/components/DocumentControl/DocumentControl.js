@@ -82,9 +82,9 @@ let DocumentControl = (props) => {
                         }}>
 
                         <Route path={'/document-control/orders'} component={accessRedirect(Orders)} />
-                            <Route path={'/document-control/reviseduser'} component={accessRedirect(RevisedPageUser)} />
-                            <Route path={'/document-control/approveduser'} component={accessRedirect(ApprovedPageUser)} />
-                            <Route path={'/document-control/rejecteduser'} component={accessRedirect(RejectedDocumentsUser)} />
+                        <Route path={'/document-control/reviseduser'} component={accessRedirect(RevisedPageUser)} />
+                        <Route path={'/document-control/approveduser'} component={accessRedirect(ApprovedPageUser)} />
+                        <Route path={'/document-control/rejecteduser'} component={accessRedirect(RejectedDocumentsUser)} />
 
                         <Route path={'/document-control/registration'} component={accessRedirect(RegistrationDocuments)}/>
                         <Route path={'/document-control/fulfilled'} component={accessRedirect(FulfilledDocuments)}/>
