@@ -424,6 +424,10 @@ const PositionsPermissionsTree = React.memo((props) => {
 					key: "/document-control-p/item-status-change",
 				},
 				{
+					title: "Исполненные",
+					key: "/document-control-p/documents-finals",
+				},
+				{
 					title: "Документы подписанные в ООПЗ",
 					key: "/document-control-p/fulfilled-p",
 					children: [

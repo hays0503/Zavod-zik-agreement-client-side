@@ -144,3 +144,34 @@ export const FragmentStepViewerReplacementDialog = (props) => {
 		</Form.Item>
 	);
 };
+
+/**
+ * Фрагмент antd дающую возможность просматривать состояние движений документов без цепочки последовательности
+ * @param props.signatures
+ */
+
+export const FragmentStepViewerRaw = (props) => {
+	return (
+		<Form.Item
+			className="font-form-header"
+			name="signatures"
+			label="Подписи"
+			labelCol={{ span: 24 }}
+		>
+			{props?.signatures.map((item) => {
+				//remove commentsList
+				return (
+					<>
+						<div className="signature-view-wrap">
+							<span className="signature-view-position">{item.position}</span>
+							<span className="signature-view-username">{item.fio}</span>
+							<span className="signature-view-date">
+								{formatDate(item.date_signature)}
+							</span>
+						</div>
+					</>
+				);
+			})}
+		</Form.Item>
+	);
+};

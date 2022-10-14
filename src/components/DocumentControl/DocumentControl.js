@@ -23,6 +23,7 @@ import ForExecutionInbox from './pages/ForExecutionInbox/ForExecutionInbox.js';
 //Admin
 import AdminAllPage from './pages/XAdminPageAll/AdminPageAll';
 import RejectedDocuments from './pages/RejectedDocuments'
+import { DocumentsFinals } from './pages/DocumentsFinals/DocumentsFinals';
 
 
 const { Content } = Layout
@@ -83,6 +84,7 @@ let DocumentControl = (props) => {
 
                         <Route path={'/document-control/orders'} component={accessRedirect(Orders)} />
                         <Route path={'/document-control/reviseduser'} component={accessRedirect(RevisedPageUser)} />
+                        <Route path={'/document-control/documents-finals'} component={accessRedirect(DocumentsFinals)} />
                         <Route path={'/document-control/approveduser'} component={accessRedirect(ApprovedPageUser)} />
                         <Route path={'/document-control/rejecteduser'} component={accessRedirect(RejectedDocumentsUser)} />
 

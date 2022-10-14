@@ -147,6 +147,9 @@ let SiderMenu = (props) => {
 			case "/document-control/registration":
 				props.setHeaderTitle("Регистрация документов");
 				break;
+			case "/document-control/documents-finals":
+				props.setHeaderTitle("Исполненные");
+				break;
 			case "/document-control/fulfilled":
 				props.setHeaderTitle("Документы подписанные в ООПЗ");
 				break;
@@ -211,6 +214,18 @@ let SiderMenu = (props) => {
 							</NavLink>
 						</Menu.Item>
 					) : null}
+
+					{user.documentControl.documentsFinals.select ? (
+						<Menu.Item key={"/document-control/documents-finals"}>
+							<NavLink to={"/document-control/documents-finals"}>
+								Исполненные{" "}
+								<sup>
+									<Badge count={con.approved} />
+								</sup>
+							</NavLink>
+						</Menu.Item>
+					) : null}
+
 					{user.documentControl.rejectedUser.select ? (
 						<Menu.Item key={"/document-control/rejecteduser"}>
 							<Link to={"/document-control/rejecteduser"}>

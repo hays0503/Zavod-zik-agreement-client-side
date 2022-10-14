@@ -277,6 +277,11 @@ export const useUser = () => {
 					? true
 					: accesses.includes("/document-control-p/approveduser-p/select"),
 			},
+			documentsFinals: {
+				select: admin
+					? true
+					: accesses.includes("/document-control-p/documents-finals/select"),
+			},
 			rejectedUser: {
 				select: admin
 					? true
@@ -507,6 +512,14 @@ export const accessRedirect = (Component) => {
 					return <Redirect />;
 				}
 				break;
+
+			case "/document-control/documents-finals":
+			case "/document-control/documents-finals/":
+				if (!user.documentControl.documentsFinals.select) {
+					return <Redirect />;
+				}
+				break;
+
 			case "/document-control/rejecteduser":
 			case "/document-control/rejecteduser/":
 				if (!user.documentControl.rejectedUser.select) {
