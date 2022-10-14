@@ -69,7 +69,7 @@ let Header1 = React.memo(({ title, user, ...props }) => {
 
                                 let a = document.createElement('a');
                                 a.target = '_blank';
-                                a.title = 'IUPC-WEB';
+                                a.title = 'СД-ВЕБ';
                                 a.href = '/help/admin';
                                 a.click();
                             }} style={{ textAlign: 'center' }}><ReadOutlined />Справка</Menu.Item>}
