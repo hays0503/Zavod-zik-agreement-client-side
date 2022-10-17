@@ -9,7 +9,6 @@ import FragmentCommentsViewer from "../../../fragments/FragmentCommentsViewer";
 import { FragmentTaskAndFileViewer } from "../../../fragments/FragmentFileViewer";
 import { FormItem, FormWrap } from "../../../fragments/FragmentItemWrap";
 import { FragmentMitWork } from "../../../fragments/FragmentMitWork";
-import { FragmentStepViewerRaw } from "../../../fragments/FragmentStepViewer";
 import { FragmentReasonsViewer } from "./../../../fragments/FragmentReasonsViewer";
 
 const { Title, Link } = Typography;
@@ -48,11 +47,6 @@ let Update1 = React.memo((props) => {
 		props.form.setFieldsValue(state);
 	}, [state]);
 
-	let [routesList, setRoutesList] = useState([
-		{ positionName: "Тип договора не выбран." },
-	]);
-
-	let [stepCount, setStepCount] = useState({ step: "0" });
 
 	useEffect(() => {
 		if (iniValue) {
@@ -81,14 +75,11 @@ let Update1 = React.memo((props) => {
 				mitwork_number: iniValue.mitwork_number,
 				mitwork_data: iniValue.mitwork_data,
 			});
-			setStepCount({ step: iniValue.step });
-			setRoutesList(iniValue.route_data);
 		}
 	}, [iniValue]);
 
 	let onFinish = () => {
 		props.onFinish(state);
-		//console.log("+++++++++++++++++++++++", values);
 	};
 
 	return (
