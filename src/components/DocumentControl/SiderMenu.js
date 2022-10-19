@@ -236,7 +236,6 @@ let SiderMenu = (props) => {
 							</Link>
 						</Menu.Item>
 					) : null}
-					{console.log("user.documentControl", user.documentControl)}
 					{user.documentControl.registrationDocuments.select ? (
 						<Menu.Item key={"/document-control/registration"}>
 							<Link to={"/document-control/registration"}>

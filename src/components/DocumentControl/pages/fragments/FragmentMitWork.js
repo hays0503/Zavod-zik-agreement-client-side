@@ -131,6 +131,7 @@ export const FragmentMitWorkEdit = (props) => {
 									// Остановить "проброс" события дальше
 									event.stopPropagation();
 									setEditState(!editState);
+									setInputNumber(props?.mitwork_number);
 								}}
 							>
 								{editState ? "Отмена" : "Редактировать"}
@@ -190,12 +191,7 @@ export const FragmentMitWorkEdit = (props) => {
 													style={{
 														width: 350,
 													}}
-													value={
-														props?.mitwork_number === undefined ||
-														props?.mitwork_number === null
-															? InputNumber
-															: props?.mitwork_number
-													}
+													defaultValue={InputNumber}
 													placeholder={"Внесите номер договора на `Митворге`"}
 													onChange={(value) => {
 														setInputNumber(value.target.value);

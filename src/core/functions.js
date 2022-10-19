@@ -220,7 +220,7 @@ export const useUser = () => {
 	} = useQuery(positions);
 
 	let user = query.data ? query.data.authMe[0] : undefined;
-	console.log("user", user);
+
 	let positionNames = user ? query.data.authMe[0].position_names : [];
 
 	//let accesses = user ? query.data.authMe[0].accesses : [];
@@ -233,18 +233,8 @@ export const useUser = () => {
 
 	//let accesses = accessesData && accessesData[0] ? accessesData[0].accesses : [];
 	let accesses = user ? query.data.authMe[0].position_accesses : [];
-	console.log(
-		"---!!!query.data.authMe[0].position_accesses!!!---",
-		query?.data?.authMe[0]?.position_accesses
-	);
-	console.log("accesses", accesses);
-	console.log(
-		"accesses registrationDocuments",
-		accesses.includes("/document-control-p/registration-p/select")
-	);
 
 	let admin = user ? user.admin : undefined;
-	console.log("admin", admin);
 
 	const UserObject = {
 		query,
@@ -386,7 +376,6 @@ export const useUser = () => {
 		},
 	};
 
-	console.log("UserObject", UserObject);
 	return UserObject;
 };
 
