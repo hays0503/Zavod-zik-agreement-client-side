@@ -26,79 +26,79 @@ let SiderMenu = (props) => {
 	const [con1, setCon1] = useState({});
 
 	// //subscription try
-	// const testLogs = gql`
-	// query document_logs($document_logs: JSON){
-	//     document_logs(document_logs: $document_logs){
-	//         id
-	//         document_id
-	//         is_read
-	//         user_id
-	//         type
-	//     }
-	// }`;
-	// let testSub = gql`
-	//     subscription document_logs ($document_logs: JSON){
-	//         document_logs(document_logs: $document_logs){
-	//             id
-	//             document_id
-	//             is_read
-	//             user_id
-	//             type
-	//         }
-	//     }`;
+	const testLogs = gql`
+	query document_logs($document_logs: JSON){
+	    document_logs(document_logs: $document_logs){
+	        id
+	        document_id
+	        is_read
+	        user_id
+	        type
+	    }
+	}`;
+	let testSub = gql`
+	    subscription document_logs ($document_logs: JSON){
+	        document_logs(document_logs: $document_logs){
+	            id
+	            document_id
+	            is_read
+	            user_id
+	            type
+	        }
+	    }`;
 
 	//tasks logs gql
-	// const tasksLogs = gql`
-	// query document_tasks_logs($document_tasks_logs: JSON){
-	//     document_tasks_logs(document_tasks_logs: $document_tasks_logs){
-	//         id
-	//         task_id
-	//         is_read
-	//         user_id
-	//         type
-	//     }
-	// }`;
-	// let tasksSub = gql`
-	//     subscription document_tasks_logs ($document_tasks_logs: JSON){
-	//         document_tasks_logs(document_tasks_logs: $document_tasks_logs){
-	//             id
-	//             task_id
-	//             is_read
-	//             user_id
-	//             type
-	//         }
-	//     }`;
+	const tasksLogs = gql`
+	query document_tasks_logs($document_tasks_logs: JSON){
+	    document_tasks_logs(document_tasks_logs: $document_tasks_logs){
+	        id
+	        task_id
+	        is_read
+	        user_id
+	        type
+	    }
+	}`;
+	let tasksSub = gql`
+	    subscription document_tasks_logs ($document_tasks_logs: JSON){
+	        document_tasks_logs(document_tasks_logs: $document_tasks_logs){
+	            id
+	            task_id
+	            is_read
+	            user_id
+	            type
+	        }
+	    }`;
 
-	// const { loading, data, refetch } = useQuery(testLogs, {
-	//     variables: { document_logs: { global: { is_read: '=false', user_id: '=' + user.id, ORDER_BY: ['date'] } } },
-	//     onCompleted: (data) => {
-	//         let subData = {};
-	//         subData.revised = data.document_logs.filter(el => { return el.type == 4 && el.is_read == false }).length;
-	//         subData.approved = data.document_logs.filter(el => { return el.type == 1 && el.is_read == false }).length;
-	//         subData.rejected = data.document_logs.filter(el => { return el.type == 3 && el.is_read == false }).length;
-	//         subData.onaproval = data.document_logs.filter(el => { return el.type == 2 && el.is_read == false }).length;
-	//         setCon(subData);
-	//     }
-	// });
+	const { loading, data, refetch } = useQuery(testLogs, {
+	    variables: { document_logs: { global: { is_read: '=false', user_id: '=' + user.id, ORDER_BY: ['date'] } } },
+	    onCompleted: (data) => {
+	        let subData = {};
+	        subData.revised = data.document_logs.filter(el => { return el.type == 4 && el.is_read == false }).length;
+	        subData.approved = data.document_logs.filter(el => { return el.type == 1 && el.is_read == false }).length;
+	        subData.rejected = data.document_logs.filter(el => { return el.type == 3 && el.is_read == false }).length;
+	        subData.onaproval = data.document_logs.filter(el => { return el.type == 2 && el.is_read == false }).length;
+	        setCon(subData);
+	    }
+	});
 
-	// const { data: countData, loading: countLoading } = useSubscription(testSub, {
-	//     variables: { document_logs: { global: { is_read: '=false', user_id: '=' + user.id, ORDER_BY: ['date'] } } },
-	//     onSubscriptionData: ({ subscriptionData: { data } }) => {
-	//         let subData = {};
-	//         subData.revised = data.document_logs.filter(el => { return el.type == 4 && el.is_read == false }).length;
-	//         subData.approved = data.document_logs.filter(el => { return el.type == 1 && el.is_read == false }).length;
-	//         subData.rejected = data.document_logs.filter(el => { return el.type == 3 && el.is_read == false }).length;
-	//         subData.onaproval = data.document_logs.filter(el => { return el.type == 2 && el.is_read == false }).length;
-	//         //console.log('testSub', data);
-	//         //console.log('testSub2', subData);
-	//         setCon(subData);
-	//         if (subData.revised > 0 || subData.approved > 0 || subData.rejected > 0 || subData.onaproval > 0) {
-	//             //sendAgentNotification(user.email);
-	//             notifyMe('Есть новые входящие сообщения.');
-	//         }
-	//     }
-	// }
-	// );
+	const { data: countData, loading: countLoading } = useSubscription(testSub, {
+	    variables: { document_logs: { global: { is_read: '=false', user_id: '=' + user.id, ORDER_BY: ['date'] } } },
+	    onSubscriptionData: ({ subscriptionData: { data } }) => {
+	        let subData = {};
+	        subData.revised = data.document_logs.filter(el => { return el.type == 4 && el.is_read == false }).length;
+	        subData.approved = data.document_logs.filter(el => { return el.type == 1 && el.is_read == false }).length;
+	        subData.rejected = data.document_logs.filter(el => { return el.type == 3 && el.is_read == false }).length;
+	        subData.onaproval = data.document_logs.filter(el => { return el.type == 2 && el.is_read == false }).length;
+	        //console.log('testSub', data);
+	        //console.log('testSub2', subData);
+	        setCon(subData);
+	        if (subData.revised > 0 || subData.approved > 0 || subData.rejected > 0 || subData.onaproval > 0) {
+	            //sendAgentNotification(user.email);
+	            notifyMe('Есть новые входящие сообщения.');
+	        }
+	    }
+	}
+	);
 
 	useEffect(() => {
 		(() => {
@@ -106,26 +106,26 @@ let SiderMenu = (props) => {
 		})();
 	}, []);
 
-	// //tasks logs part
-	// const { loading: taskLoading, data: taskData, refetch: taskRefetch } = useQuery(tasksLogs, {
-	//     variables: { document_tasks_logs: { global: { is_read: '=false', user_id: '=' + user.id, ORDER_BY: ['date'] } } },
-	//     onCompleted: (data) => {
-	//         setCon1(data.document_tasks_logs.length);
-	//     }
-	// });
+	//tasks logs part
+	const { loading: taskLoading, data: taskData, refetch: taskRefetch } = useQuery(tasksLogs, {
+	    variables: { document_tasks_logs: { global: { is_read: '=false', user_id: '=' + user.id, ORDER_BY: ['date'] } } },
+	    onCompleted: (data) => {
+	        setCon1(data.document_tasks_logs.length);
+	    }
+	});
 
-	// const { data: countData1, loading: countLoading1 } = useSubscription(tasksSub, {
-	//     variables: { document_tasks_logs: { global: { is_read: '=false', user_id: '=' + user.id, ORDER_BY: ['date'] } } },
-	//     onSubscriptionData: ({ subscriptionData: { data } }) => {
-	//         setCon1(data.document_tasks_logs.length);
-	//         if (con1 > 0) {
-	//             //sendAgentNotification(user.email);
-	//             notifyMe('Есть новые входящие сообщения.');
-	//         }
-	//     }
-	// }
+	const { data: countData1, loading: countLoading1 } = useSubscription(tasksSub, {
+	    variables: { document_tasks_logs: { global: { is_read: '=false', user_id: '=' + user.id, ORDER_BY: ['date'] } } },
+	    onSubscriptionData: ({ subscriptionData: { data } }) => {
+	        setCon1(data.document_tasks_logs.length);
+	        if (con1 > 0) {
+	            //sendAgentNotification(user.email);
+	            notifyMe('Есть новые входящие сообщения.');
+	        }
+	    }
+	}
 
-	// );
+	);
 
 	useEffect(() => {
 		switch (pathname) {
@@ -174,7 +174,7 @@ let SiderMenu = (props) => {
 		console.log(collapsed);
 		setCollapsedState(collapsed);
 	};
-
+	console.log("user ");
 	return (
 		<Sider
 			theme="dark"
@@ -277,15 +277,7 @@ let SiderMenu = (props) => {
 						) : null}
 					</SubMenu>
 				) : null}
-				{/* {user.documentControl.forExecutionInbox.select ?
-                    <SubMenu key="forExecution" icon={<SafetyCertificateOutlined />} title='Исполнение'> Переименовать модуль Исполнение на Задачи
-                        {user.documentControl.forExecutionInbox.select ?
-                            <Menu.Item key="/document-control/for-execution-inbox">
-                                <Link to={'/document-control/for-execution-inbox'}>Входящие<sup><Badge count={con1} /></sup></Link>
-                            </Menu.Item>
-                            : null}
-                    </SubMenu>
-                    : null} */}
+
 				{user.documentControl.forExecutionInbox.select ? (
 					<SubMenu
 						key="forExecution"
