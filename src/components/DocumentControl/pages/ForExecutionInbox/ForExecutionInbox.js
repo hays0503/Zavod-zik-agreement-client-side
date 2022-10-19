@@ -447,6 +447,20 @@ let ForExecutionInbox = React.memo((props) => {
         `
     }
 
+    // const onVisibilityChange = () => {
+    //     if (document.visibilityState === 'visible') {
+    //         console.log("Tab visible, refetch the data!");
+    //     };
+    //     if (document.visibilityState === 'hidden') {
+    //         console.log("Tab hidden, refetch the data!");
+    //     };
+
+    // };
+    // useLayoutEffect(() => {
+    //     document.addEventListener("visibilitychange", onVisibilityChange);
+    // }, []);
+
+    // const count = useRef(0);
 
     const visibleModalUpdate = useState(false);
     const visibleModalUpdate2 = useState(false)
@@ -455,6 +469,8 @@ let ForExecutionInbox = React.memo((props) => {
     const visibleModalUpdate5 = useState(false)
 
     const { loading: loadingTasks, data: dataTasks, refetch: refetchTasks } = handlerQuery(DocumentTasks, 'all')();
+
+    // useEffect(() => { refetch() }, [])
 
     useEffect(() => { refetchTasks() }, []);
 
@@ -475,13 +491,13 @@ let ForExecutionInbox = React.memo((props) => {
             route_id: item.route_id ? item.route_id : 10,
             document_options: item.document_options,
             task_files: item.task_files ? item.task_files : {},
-            task_statuses: item?.task_statuses?.name,
+            task_statuses: item.task_statuses.name,
             document_tasks_logs: item.document_tasks_logs ? item.document_tasks_logs[item.document_tasks_logs.findIndex(item => item.user_id == user.id)] : []
         }
     }) : []
 
     let listFiltered = list.filter((el) => {
-        return el.status_id === 4
+        return el.status_id == 4
     });
     window.localStorage['rows_approved'] = listFiltered.length;
 
