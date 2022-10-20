@@ -1,11 +1,10 @@
-import { Form, Input, Button, Row, Col, Space } from "antd";
+import { Form, Input, Button, Row, Col} from "antd";
 import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
-import "antd/dist/antd.less";
+//import "antd/dist/antd.less";
 import React, { useEffect, useState } from "react";
 import { gql, useMutation } from "@apollo/client";
 import { handlerMutation } from "../core/functions";
 import constants from "../config/constants";
-import Layout from "antd/lib/layout/layout";
 import "./style.css";
 
 const loginGQL = gql`

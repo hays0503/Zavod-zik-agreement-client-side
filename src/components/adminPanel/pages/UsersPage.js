@@ -24,7 +24,7 @@ import ModalInsert from "../../../core/modal/ModalInsert";
 import ModalUpdate from "../../../core/modal/ModalUpdate";
 import TitleMenu from "../../../core/TitleMenu";
 import TableContainer from "../../../core/TableContainer";
-import test from "../../../core/functions/test";
+import test from "../../../core/functions/TrashComponent1";
 import { FragmentSelectItems } from "./../../DocumentControl/pages/fragments/FragmentSelectItems";
 
 const modalFormWidth = 650;
@@ -223,15 +223,14 @@ let UsersPage = React.memo((props) => {
 						positions: item.positions,
 						fio: item.fio,
 						email: item.email,
-						department_relationship: item.department_relationship?.id_department,
+						department_relationship:
+							item.department_relationship?.id_department,
 						positionName: positionsData.positions
 							.filter((e) => e.id == item.positions)
 							.map((obj) => obj.name)[0],
 					};
 			  })
 			: [];
-
-
 
 	//Шапка таблицы
 	let dict = test([
@@ -329,7 +328,6 @@ let UsersPage = React.memo((props) => {
 });
 
 let WorkersWorkerdForm = React.memo((props) => {
-
 	let user = useUser();
 	const [state, setState] = useState({
 		username: "",
@@ -472,7 +470,13 @@ let WorkersWorkerdForm = React.memo((props) => {
 					</Form.Item>
 
 					<Form.Item name="positions">
-						<FragmentSelectItems disabled={props.disabled} idDepartment={props?.initialValues?.users[0]?.department_relationship?.id_department}/>
+						<FragmentSelectItems
+							disabled={props.disabled}
+							idDepartment={
+								props?.initialValues?.users[0]?.department_relationship
+									?.id_department
+							}
+						/>
 					</Form.Item>
 
 					<Form.Item name="log_username" hidden={true}>
