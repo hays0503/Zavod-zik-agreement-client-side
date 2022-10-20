@@ -474,7 +474,7 @@ const PositionsPermissionsTree = React.memo((props) => {
 					],
 				},
 				{
-					title: "Исполненные",
+					title: "Согласованные",
 					key: "/document-control-p/approveduser-p",
 					children: [
 						{
@@ -504,7 +504,7 @@ const PositionsPermissionsTree = React.memo((props) => {
 					],
 				},
 				{
-					title: "Подписанные",
+					title: "Подписанные пользователям",
 					key: "/document-control-p/on-approval-list-p",
 					children: [
 						{
@@ -514,7 +514,7 @@ const PositionsPermissionsTree = React.memo((props) => {
 					],
 				},
 				{
-					title: "На исполнение",
+					title: "Задачи",
 					key: "/document-control-p/for-execution-inbox-p",
 					children: [
 						{
