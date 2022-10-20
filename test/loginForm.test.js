@@ -1,6 +1,6 @@
 import React from "react";
 import fetch from "cross-fetch";
-import { cleanup, screen, render } from "@testing-library/react";
+import { cleanup, fireEvent, screen, render } from "@testing-library/react";
 import Login from "./../src/modules/Login";
 
 import { ApolloProvider } from "@apollo/client";
@@ -32,6 +32,8 @@ Object.defineProperty(window, "matchMedia", {
 // Note: running cleanup afterEach is done automatically for you in @testing-library/react@9.0.0 or higher
 // unmount and cleanup DOM after the test is finished.
 afterEach(cleanup);
+
+let pageRender = null; 
 
 //Рендерим компонент `Login`
 beforeEach(() => {
@@ -102,7 +104,7 @@ beforeEach(() => {
 	});
 
 	//Совершаем рендер компонента
-	render(
+	pageRender = render(
 		<BrowserRouter>
 			<ApolloProvider client={client}>
 				<ConfigProvider locale={ru_RU}>
@@ -136,4 +138,18 @@ describe("Тестируем компонент `[Login]`", () => {
 			const contain = await screen.getByPlaceholderText(/Пароль/i);
 			expect(contain.classList[0]).toBe("ant-input");
 		});
+
+	it("Печатаем в поля ввода `Имя пользователя` Текст `admin` ", async () => {
+
+		const contain = await screen.getByPlaceholderText(/Имя пользователя/i);
+		fireEvent.change(contain,{target: {value:"admin"}})
+		expect(contain.value).toBe('admin')
+	});
+
+	it("Печатаем в поля ввода `Пароль` Текст `Пароль` ", async () => {
+
+		const contain = await screen.getByPlaceholderText(/Пароль/i);
+		fireEvent.change(contain,{target: {value:"1447"}})
+		expect(contain.value).toBe('1447')
+	});
 });
