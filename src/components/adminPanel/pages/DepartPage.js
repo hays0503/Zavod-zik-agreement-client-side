@@ -11,7 +11,7 @@ import ModalInsert from "../../../core/modal/ModalInsert";
 import ModalUpdate from "../../../core/modal/ModalUpdate";
 import TableContainer from "../../../core/TableContainer";
 import TitleMenu from "../../../core/TitleMenu";
-import test from "../../../core/functions/test";
+import test from "../../../core/functions/TrashComponent1";
 import { FragmentRadioButton } from "../../DocumentControl/pages/fragments/FragmentRadioButton";
 import { FragmentSelectDepartment } from "../../DocumentControl/pages/fragments/FragmentSelectItems";
 

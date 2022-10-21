@@ -26,7 +26,7 @@ import {
 import ModalUpdate from "../modals/ModalUpdate";
 import TableContainer from "../tableContainers/TableContainer";
 import TitleMenu from "../../../core/TitleMenu";
-import test from "../../../core/functions/test";
+import test from "../../../core/functions/TrashComponent1";
 
 const { Title, Link } = Typography;
 const { Step } = Steps;
