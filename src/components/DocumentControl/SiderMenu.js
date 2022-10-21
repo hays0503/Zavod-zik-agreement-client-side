@@ -312,7 +312,7 @@ let SiderMenu = (props) => {
 						) : null}
 						{user.documentControl.rejected.select ? (
 							<Menu.Item key={"/document-control/rejected"}>
-								<Link to={"/document-control/rejected"}>Все отклонённые</Link>
+								<NavLink to={"/document-control/rejected"}>Все отклонённые</NavLink>
 							</Menu.Item>
 						) : null}
 					</SubMenu>

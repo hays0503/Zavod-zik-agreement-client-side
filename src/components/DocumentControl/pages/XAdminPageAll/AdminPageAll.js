@@ -424,6 +424,22 @@ let AdminPageAll = React.memo((props) => {
 			width: "80px",
 			tooltip: true,
 			sorter: (a, b) => a.status.localeCompare(b.status),
+			sortDirections: ['ascend', 'descend'],
+			filters:[
+				{
+					text:'Подписан',
+					value:'Подписан'
+				},
+				{
+					text:'В работе',
+					value:'В работе'
+				},
+				{
+					text:'Отклонён',
+					value:'Отклонён'
+				}
+			],
+			onFilter: (value, record) => record.status.indexOf(value) === 0
 		},
 		{ title: "На подписи", dataIndex: "step_name", width: "114px" },
 		{ title: "Этап", dataIndex: "step_count", width: "55px" },
