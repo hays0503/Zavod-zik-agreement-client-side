@@ -309,11 +309,6 @@ export const useUser = () => {
 					? true
 					: accesses.includes("/document-control-p/approved-p/select"),
 			},
-			rejected: {
-				select: admin
-					? true
-					: accesses.includes("/document-control-p/rejected-p/select"),
-			},
 			isDocumentStatusChangeAllowed: admin
 				? true
 				: accesses.includes("/document-control-p/document-status-change"),
@@ -551,12 +546,6 @@ export const accessRedirect = (Component) => {
 			case "/document-control/approved":
 			case "/document-control/approved/":
 				if (!user.documentControl.approved.select) {
-					return <Redirect />;
-				}
-				break;
-			case "/document-control/rejected":
-			case "/document-control/rejected/":
-				if (!user.documentControl.rejected.select) {
 					return <Redirect />;
 				}
 				break;
