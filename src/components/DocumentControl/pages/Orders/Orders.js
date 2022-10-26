@@ -81,12 +81,24 @@ let Orders = React.memo((props) => {
         { title: 'Статус', dataIndex: 'status', width: '80px', tooltip: true, sorter: (a, b) => a.status.localeCompare(b.status),sortDirections: ['ascend', 'descend'],
         filters:[
             {
-                text:'Подписан',
-                value:'Подписан'
-            },
-            {
                 text:'В работе',
                 value:'В работе'
+            },
+            {
+                text:'На доработке',
+                value:'На доработке'
+            },
+            {
+                text:'Согласован',
+                value:'Согласован'
+            },
+            {
+                text:'На регистрации',
+                value:'На регистрации'
+            },
+            {
+                text:'Исполнен',
+                value:'Исполнен'
             },
             {
                 text:'Отклонён',

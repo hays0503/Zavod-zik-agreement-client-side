@@ -427,12 +427,24 @@ let AdminPageAll = React.memo((props) => {
 			sortDirections: ['ascend', 'descend'],
 			filters:[
 				{
-					text:'Подписан',
-					value:'Подписан'
-				},
-				{
 					text:'В работе',
 					value:'В работе'
+				},
+				{
+					text:'На доработке',
+					value:'На доработке'
+				},
+				{
+					text:'Согласован',
+					value:'Согласован'
+				},
+				{
+					text:'На регистрации',
+					value:'На регистрации'
+				},
+				{
+					text:'Исполнен',
+					value:'Исполнен'
 				},
 				{
 					text:'Отклонён',

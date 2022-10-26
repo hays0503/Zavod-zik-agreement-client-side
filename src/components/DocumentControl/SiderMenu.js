@@ -160,7 +160,7 @@ let SiderMenu = (props) => {
 				props.setHeaderTitle("Все документы");
 				break;
 			case "/document-control/for-execution-inbox":
-				props.setHeaderTitle("На исполнение");
+				props.setHeaderTitle("Входящие задачи");
 				break;
 			default:
 				break;
