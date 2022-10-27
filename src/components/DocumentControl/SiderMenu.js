@@ -93,7 +93,7 @@ let SiderMenu = (props) => {
 	        //console.log('testSub2', subData);
 	        setCon(subData);
 	        if (subData.revised > 0 || subData.approved > 0 || subData.rejected > 0 || subData.onaproval > 0) {
-	            //sendAgentNotification(user.email);
+	            sendAgentNotification(user.email);
 	            notifyMe('Есть новые входящие сообщения.');
 	        }
 	    }
@@ -119,7 +119,7 @@ let SiderMenu = (props) => {
 	    onSubscriptionData: ({ subscriptionData: { data } }) => {
 	        setCon1(data.document_tasks_logs.length);
 	        if (con1 > 0) {
-	            //sendAgentNotification(user.email);
+	            sendAgentNotification(user.email);
 	            notifyMe('Есть новые входящие сообщения.');
 	        }
 	    }

@@ -15,8 +15,11 @@ const loginGQL = gql`
 	}
 `;
 const Login = () => {
+
 	let [user, setUser] = useState();
+	
 	const [login, { loading, data }] = handlerMutation(useMutation(loginGQL))();
+	
 	useEffect(() => {
 		if (user) {
 			login({ variables: { user } });
@@ -45,6 +48,7 @@ const Login = () => {
 			});
 		}
 	}, [data]);
+
 	const onFinish = (values) => {};
 
 	const onFinishFailed = (errorInfo) => {

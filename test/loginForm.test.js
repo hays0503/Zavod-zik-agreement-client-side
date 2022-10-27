@@ -152,4 +152,23 @@ describe("Тестируем компонент `[Login]`", () => {
 		fireEvent.change(contain,{target: {value:"1447"}})
 		expect(contain.value).toBe('1447')
 	});
+
+	// it("Пробуем авторизоваться `admin` ", async () => {
+
+	// 	const login = await screen.getByPlaceholderText(/Имя пользователя/i);
+	// 	fireEvent.change(login,{target: {value:"admin"}})
+	// 	expect(login.value).toBe('admin')	
+
+	// 	const password = await screen.getByPlaceholderText(/Пароль/i);
+	// 	fireEvent.change(password,{target: {value:"1447"}})
+	// 	expect(password.value).toBe('1447')
+
+
+	// 	// const result = render(<SomeComponent />);
+	// 	// const someElement = result.container.querySelector('#some-id');
+
+
+	// 	// const form = pageRender.container.querySelector('basic')
+	// 	// fireEvent.submit(form)
+	// });
 });
