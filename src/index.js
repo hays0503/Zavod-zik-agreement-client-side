@@ -66,7 +66,7 @@ import DocumentSearch from './components/DocumentSearch/DocumentSearch'
 		if (networkError) {
 			console.log(`[Network error]: ${JSON.stringify(networkError)}`);
 			notification['info']({
-				message: <div id="ant_notification">Ошибка соединения с сервером ZiK-Договора.
+				message: <div id="ant_notification">Ошибка соединения с сервером ZiK-Договоры.
 				<br />Обновите страницу. Если проблема не устранилась через 5 минут, свяжитесь с вашей службой IT.</div>,
 				duration: 10, placement: 'bottomRight'
 			})
@@ -113,7 +113,7 @@ import DocumentSearch from './components/DocumentSearch/DocumentSearch'
 				<Button type='solid' className="main-menu-button">
 					<NavLink to="document-control" style={{ fontSize: "25px" }}>
 						<DesktopOutlined style={{ marginRight: 7 }} />
-						Договора 
+						Договоры
 						<p className='page-desc'>Организовывает движение документа</p>
 					</NavLink>
 				 </Button>
