@@ -22,7 +22,6 @@ import ForExecutionInbox from './pages/ForExecutionInbox/ForExecutionInbox.js';
 
 //Admin
 import AdminAllPage from './pages/XAdminPageAll/AdminPageAll';
-import RejectedDocuments from './pages/RejectedDocuments'
 import { DocumentsFinals } from './pages/DocumentsFinals/DocumentsFinals';
 
 
@@ -94,7 +93,6 @@ let DocumentControl = (props) => {
                         <Route path={'/document-control/on-approval-list'} component={accessRedirect(OnApprovalDocumentsList)} />
 
                         <Route path={'/document-control/approved'} component={accessRedirect(AdminAllPage)} />
-                        <Route path={'/document-control/rejected'} component={accessRedirect(RejectedDocuments)} />
 
                         <Route path={'/document-control/for-execution-inbox'} component={accessRedirect(ForExecutionInbox)} />
                     </Content>

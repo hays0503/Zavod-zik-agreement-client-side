@@ -20,7 +20,7 @@ import {
 } from "../../../../core/functions";
 import ModalUpdate from "../../modals/ModalUpdate";
 import TableContainer from "../../tableContainers/TableContainer";
-import test from "../../../../core/test";
+import test from "../../../../core/TrashComponent2";
 import TitleMenu from "../../../../core/TitleMenu";
 import "moment/locale/ru";
 import locale from "antd/es/date-picker/locale/ru_RU";

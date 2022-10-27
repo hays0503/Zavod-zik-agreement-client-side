@@ -159,11 +159,8 @@ let SiderMenu = (props) => {
 			case "/document-control/approved":
 				props.setHeaderTitle("Все документы");
 				break;
-			case "/document-control/rejected":
-				props.setHeaderTitle("Все отклонённые");
-				break;
 			case "/document-control/for-execution-inbox":
-				props.setHeaderTitle("На исполнение");
+				props.setHeaderTitle("Входящие задачи");
 				break;
 			default:
 				break;
@@ -296,8 +293,7 @@ let SiderMenu = (props) => {
 						) : null}
 					</SubMenu>
 				) : null}
-				{user.documentControl.approved.select ||
-				user.documentControl.rejected.select ? (
+				{user.documentControl.approved.select ? (
 					<SubMenu
 						key="Admin"
 						icon={<CarryOutOutlined />}
@@ -308,11 +304,6 @@ let SiderMenu = (props) => {
 								<NavLink to={"/document-control/approved"}>
 									Все документы
 								</NavLink>
-							</Menu.Item>
-						) : null}
-						{user.documentControl.rejected.select ? (
-							<Menu.Item key={"/document-control/rejected"}>
-								<NavLink to={"/document-control/rejected"}>Все отклонённые</NavLink>
 							</Menu.Item>
 						) : null}
 					</SubMenu>
