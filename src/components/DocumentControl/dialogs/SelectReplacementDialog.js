@@ -73,6 +73,9 @@ let SelectReplacementDialog = React.memo((props) => {
 	const [state, setState] = useState({});
 
 	let onFinish = (values) => {
+		console.log(`props.routesList`, props.routesList);
+		console.log(`props.form`, props.form);
+		//mutateRoutePosition(form.state)
 		//console.log(values)
 	};
 
@@ -89,7 +92,7 @@ let SelectReplacementDialog = React.memo((props) => {
 				title={"Назначение заменяющих должностей"}
 				visible={props.visible}
 				centered
-				width={450}
+				width={500}
 				onOk={() => {}}
 				onCancel={() => {
 					props.setVisible(false);
@@ -114,23 +117,27 @@ let SelectReplacementDialog = React.memo((props) => {
 							const tmpPosName = data.positions.filter((el) => {
 								return el.id == state.replacement;
 							})[0];
+							console.log("tmpPosName", tmpPosName);
 							//console.log("form name", tmpPosName, state);
+							console.log("STEP_COUNT", props.stepCount);
+							console.log("Prev props.routeData", props.routeData);
 							props.setRoutesList((prevState) => {
 								let old = Object.assign({}, prevState);
-								let tmpIndex = old[0].substitutes.indexOf(
-									props.routeData[props.stepCount.step - 1].positionId
-								);
+								console.log("let old", old);
+								// let tmpIndex = old[0]?.substitutes?.indexOf(
+								// 	props.routeData[props.stepCount.step - 1].positionId
+								// );
 								//console.log("tmpIndex", tmpPosName.id, tmpIndex);
 								if (
-									old[0].substitutes.indexOf(
+									old[0]?.substitutes?.indexOf(
 										props.routeData[props.stepCount.step - 1].positionId
 									) === -1
 								) {
 									old[0].substitutes.push(tmpPosName.id);
 								}
-								old[0].positionName = tmpPosName.name;
-								old[0].positionId = tmpPosName.id;
-								//console.log("step old", old);
+								old[props.stepCount.step - 1].positionName = tmpPosName.name;
+								old[props.stepCount.step - 1].positionId = tmpPosName.id;
+								console.log("step old", old);
 								return old;
 							});
 							props.form.submit();
