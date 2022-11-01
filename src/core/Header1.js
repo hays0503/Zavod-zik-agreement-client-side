@@ -72,16 +72,16 @@ let Header1 = React.memo(({ title, user, ...props }) => {
                                 a.title = 'СД-ВЕБ';
                                 a.href = '/help/admin';
                                 a.click();
-                            }} style={{ textAlign: 'center' }}><ReadOutlined />Справка</Menu.Item>}
+                            }} style={{ textAlign: 'center' }}><ReadOutlined />Справка(Админ)</Menu.Item>}
 
-                            {user.technicalDepartment && !user.admin && <Menu.Item danger onClick={() => {
+                            <Menu.Item danger onClick={() => {
 
                                 let a = document.createElement('a');
                                 a.target = '_blank';
                                 a.title = 'ZIK-СКУД';
                                 a.href = '/help/hr';
                                 a.click();
-                            }} style={{ textAlign: 'center' }}><ReadOutlined />Справка</Menu.Item>}
+                            }} style={{ textAlign: 'center' }}><ReadOutlined />Справка</Menu.Item>
 
                             <Menu.Item danger onClick={() => { window.location.href = '/account/' }} style={{ textAlign: 'center' }}><UserOutlined />Аккаунт</Menu.Item>
                             <Menu.Item danger onClick={() => { window.location.href = '/logout/' }} style={{ textAlign: 'center' }}><LogoutOutlined />Выйти</Menu.Item>
