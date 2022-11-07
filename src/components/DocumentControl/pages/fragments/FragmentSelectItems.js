@@ -25,6 +25,10 @@ const DepartmentDictionary = gql`
     }
   }
 `;
+
+/**
+ * @description Запрос одной позиции по id
+ */
 const GetPosition = gql`
   query position($position: JSON) {
     position(position: $position) {
@@ -92,7 +96,7 @@ export const FragmentSelectItems = (props) => {
     );
   // Отображение списка с наименованием департаментов
 
-  const onChange = (value) => {
+  const onDepartmentChange = (value) => {
     setIdDepartment(value);
     setPositionName("Наименование должности");
     setClick(false);
@@ -114,7 +118,7 @@ export const FragmentSelectItems = (props) => {
             .toLowerCase()
             .localeCompare(optionB.children.toLowerCase())
         }
-        onChange={(value) => onChange(value)}
+        onChange={(value) => onDepartmentChange(value)}
         disabled={props.disabled}
         defaultValue={
           data?.department_dictionary[idDepartment - 1]?.department_name
