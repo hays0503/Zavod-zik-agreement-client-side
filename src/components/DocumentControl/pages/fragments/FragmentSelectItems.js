@@ -3,7 +3,7 @@ import { useQuery, gql, useSubscription } from "@apollo/client";
 import { useEffect, useState } from "react";
 
 /**
- *	@description C помощью этого `gql` запроса будут запрашиваться свободные вакансии в каком либо департаменте
+ *	@description C помощью этого `gql` запроса будут запрашиваться свободные вакансии в каком либо департаменте, включая текущую позицию пользователя, если такая имеется
  */
 const positions = gql`
   query get_free_position($positions: JSON) {
@@ -25,6 +25,15 @@ const DepartmentDictionary = gql`
     }
   }
 `;
+const GetPosition = gql`
+  query position($position: JSON) {
+    position(position: $position) {
+      id
+      name
+      id_depart
+    }
+  }
+`;
 
 /**
  * @function `FragmentSelectItems` Выпадающий список элементов antd
@@ -35,14 +44,31 @@ const DepartmentDictionary = gql`
  */
 export const FragmentSelectItems = (props) => {
   const [idDepartment, setIdDepartment] = useState(props?.idDepartment);
-
+  let currentPositionId = props?.idPosition;
+  const [positionName, setPositionName] = useState("Наименование должности");
   const [isClick, setClick] = useState(true);
+
+  const PositionName = useQuery(GetPosition, {
+    onCompleted: (Data) => {
+      setPositionName(
+        Data.position[0].name ? Data.position[0].name : positionName
+      );
+    },
+    variables: {
+      position: {
+        global: {
+          id: `=${currentPositionId}`,
+        },
+      },
+    },
+  });
 
   const QueryDepartment = useQuery(positions, {
     onCompleted: (Data) => {
       //   console.log("onCompleted:(Data)", Data);
       //console.log("onCompleted:(Data)", QueryDepartment?.data);
     },
+    fetchPolicy: "no-cache",
     variables: {
       positions: {
         global: {
@@ -68,9 +94,10 @@ export const FragmentSelectItems = (props) => {
 
   const onChange = (value) => {
     setIdDepartment(value);
+    setPositionName("Наименование должности");
     setClick(false);
   };
-  console.log(data.department_dictionary);
+
   return (
     <>
       <h2>Наименование департаментов</h2>
@@ -87,7 +114,7 @@ export const FragmentSelectItems = (props) => {
             .toLowerCase()
             .localeCompare(optionB.children.toLowerCase())
         }
-        onChange={onChange}
+        onChange={(value) => onChange(value)}
         disabled={props.disabled}
         defaultValue={
           data?.department_dictionary[idDepartment - 1]?.department_name
@@ -108,7 +135,7 @@ export const FragmentSelectItems = (props) => {
         style={{
           width: 200,
         }}
-        placeholder="Наименование должности"
+        placeholder={positionName}
         optionFilterProp="children"
         filterOption={(input, option) => option.children.includes(input)}
         filterSort={(optionA, optionB) =>
@@ -124,7 +151,7 @@ export const FragmentSelectItems = (props) => {
         onChange={(value) => {
           props.onChange([value]);
         }}
-        defaultValue={props.value}
+        defaultValue={null}
       >
         {QueryDepartment.data?.get_free_position.map((Item) => {
           return <Select.Option value={Item.id}>{Item.name}</Select.Option>;

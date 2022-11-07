@@ -472,7 +472,11 @@ let WorkersWorkerdForm = React.memo((props) => {
           <Form.Item name="positions">
             <FragmentSelectItems
               disabled={props.disabled}
-              idPosition
+              idPosition={
+                props?.initialValues?.users[0]?.positions[0]
+                  ? props?.initialValues?.users[0]?.positions[0]
+                  : null
+              }
               idDepartment={
                 props?.initialValues?.users[0]?.department_relationship
                   ?.id_department
