@@ -40,7 +40,7 @@ export const FragmentSelectItems = (props) => {
 
   const QueryDepartment = useQuery(positions, {
     onCompleted: (Data) => {
-      //console.log("onCompleted:(Data)", Data);
+      //   console.log("onCompleted:(Data)", Data);
       //console.log("onCompleted:(Data)", QueryDepartment?.data);
     },
     variables: {
@@ -70,7 +70,7 @@ export const FragmentSelectItems = (props) => {
     setIdDepartment(value);
     setClick(false);
   };
-
+  console.log(data.department_dictionary);
   return (
     <>
       <h2>Наименование департаментов</h2>
@@ -79,7 +79,7 @@ export const FragmentSelectItems = (props) => {
         style={{
           width: 200,
         }}
-        placeholder="Search to Select"
+        placeholder="Наименование департамента"
         optionFilterProp="children"
         filterOption={(input, option) => option.children.includes(input)}
         filterSort={(optionA, optionB) =>
@@ -90,7 +90,7 @@ export const FragmentSelectItems = (props) => {
         onChange={onChange}
         disabled={props.disabled}
         defaultValue={
-          data?.department_dictionary[idDepartment + 1]?.department_name
+          data?.department_dictionary[idDepartment - 1]?.department_name
         }
       >
         {data.department_dictionary.map((Item) => {
@@ -108,7 +108,7 @@ export const FragmentSelectItems = (props) => {
         style={{
           width: 200,
         }}
-        placeholder="Search to Select"
+        placeholder="Наименование должности"
         optionFilterProp="children"
         filterOption={(input, option) => option.children.includes(input)}
         filterSort={(optionA, optionB) =>
