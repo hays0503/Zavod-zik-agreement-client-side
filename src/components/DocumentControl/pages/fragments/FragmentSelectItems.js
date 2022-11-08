@@ -1,6 +1,7 @@
 import { Divider, Select, Spin } from "antd";
 import { useQuery, gql, useSubscription } from "@apollo/client";
 import { useEffect, useState } from "react";
+import array_column from "../../../../core/functions/array_column";
 
 /**
  *	@description C помощью этого `gql` запроса будут запрашиваться свободные вакансии в каком либо департаменте, включая текущую позицию пользователя, если такая имеется
@@ -51,7 +52,6 @@ export const FragmentSelectItems = (props) => {
   let currentPositionId = props?.idPosition;
   const [positionName, setPositionName] = useState("Наименование должности");
   const [isClick, setClick] = useState(true);
-
   const PositionName = useQuery(GetPosition, {
     onCompleted: (Data) => {
       setPositionName(
@@ -101,7 +101,6 @@ export const FragmentSelectItems = (props) => {
     setPositionName("Наименование должности");
     setClick(false);
   };
-
   return (
     <>
       <h2>Наименование департаментов</h2>
@@ -121,7 +120,9 @@ export const FragmentSelectItems = (props) => {
         onChange={(value) => onDepartmentChange(value)}
         disabled={props.disabled}
         defaultValue={
-          data?.department_dictionary[idDepartment - 1]?.department_name
+          array_column(data?.department_dictionary, "department_name", "id")[
+            idDepartment
+          ]
         }
       >
         {data.department_dictionary.map((Item) => {
