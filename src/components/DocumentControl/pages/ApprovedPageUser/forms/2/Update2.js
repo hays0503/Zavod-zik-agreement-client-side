@@ -51,10 +51,13 @@ let Update2 = React.memo((props) => {
 	useEffect(() => {
 		props.form2.setFieldsValue(state);
 	}, [state]);
+
 	let [routesList, setRoutesList] = useState([
 		{ positionName: "Тип договора не выбран." },
 	]);
+
 	let [stepCount, setStepCount] = useState({ step: "0" });
+	
 	useEffect(() => {
 		if (props.initialValues2) {
 			setState({

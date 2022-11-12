@@ -7,25 +7,27 @@ import {
 	useUser,
 	handlerMutation,
 } from "../../../core/functions";
-import { Modal, Button, Form, Checkbox, Divider } from "antd";
+import { Modal, Button, Form, Divider } from "antd";
 import "moment/locale/ru";
-import { FragmentCheckBoxTaskFileSelector } from "../pages/fragments/FragmentCheckBoxTaskFileSelector";
-import { AllUserGQL } from "./../gql/AllUserGQL";
-import { AllDocumentTaskGQL } from "./../gql/AllDocumentTaskGQL";
-import { FragmentSelectRecepient } from "./../pages/fragments/FragmentSelectRecepient";
+import { FragmentCheckBoxTaskFileSelector } from "./../pages/fragments/FragmentCheckBoxTaskFileSelector";
+import { FragmentSelectRecepient } from "../pages/fragments/FragmentSelectRecepient";
 import { FragmentDeadline } from "./../pages/fragments/FragmentDeadline";
 import { FragmentWriteNote } from "./../pages/fragments/FragmentWriteNote";
-import { FragmentSwitchArea } from "./../pages/fragments/FragmentSwitchArea";
+import { FragmentSwitchArea } from "../pages/fragments/FragmentSwitchArea";
 import {
 	FragmentPopConfirmClose,
 	FragmentPopConfirmSend,
-} from "./../pages/fragments/FragmentPopConfirm";
+} from "../pages/fragments/FragmentPopConfirm";
+import { AllUserGQL } from "./../gql/AllUserGQL";
+import { AllDocumentTaskGQL } from "./../gql/AllDocumentTaskGQL";
 
-let TasksAddDialog4 = React.memo((props) => {
+let TasksAddDialog2 = React.memo((props) => {
 	let user = useUser();
 
-	const [insert] = handlerMutation(useMutation(AllDocumentTaskGQL.insert))();
-	const { data, refetch } = handlerQuery(AllUserGQL, "all")();
+	const [insert, { loading: documentTasksInsertLoading }] = handlerMutation(
+		useMutation(AllDocumentTaskGQL.insert)
+	)();
+	const { loading, data, refetch } = handlerQuery(AllUserGQL, "all")();
 
 	useEffect(() => {
 		refetch();
@@ -51,19 +53,22 @@ let TasksAddDialog4 = React.memo((props) => {
 						title: values.title == undefined ? false : values.title,
 						subject: values.subject == undefined ? false : values.subject,
 						price: values.price == undefined ? false : values.price,
-						currency: values.currency == undefined ? false : values.currency,
+						currency_price:
+							values.currency_price == undefined
+								? false
+								: values.currency_price,
 						executor_name_division:
 							values.executor_name_division == undefined
 								? false
 								: values.executor_name_division,
-						executor_phone_number:
-							values.executor_phone_number == undefined
+						sider_signatures_date:
+							values.sider_signatures_date == undefined
 								? false
-								: values.executor_phone_number,
-						counteragent_contacts:
-							values.counteragent_contacts == undefined
+								: values.sider_signatures_date,
+						received_from_counteragent_date:
+							values.received_from_counteragent_date == undefined
 								? false
-								: values.counteragent_contacts,
+								: values.received_from_counteragent_date,
 					},
 					task_files: `{${values.task_files.map((item) => parseInt(item))}}`,
 					files: values.files,
@@ -75,16 +80,12 @@ let TasksAddDialog4 = React.memo((props) => {
 		};
 		insert(taskData);
 		props.setVisible(false);
-		//console.log("taskData-------------", taskData);
-		//console.log("VALUES-----", values);
 	};
 
 	const [form] = Form.useForm();
 	useEffect(() => {
 		form.setFieldsValue(state);
 	}, [state]);
-
-	//checkboxgroup select all
 
 	let [popconfirmInModalVisible, setPopconfirmInModalVisible] = useState(false);
 
@@ -106,8 +107,6 @@ let TasksAddDialog4 = React.memo((props) => {
 				width={800}
 				onOk={() => {}}
 				closable={false}
-				// onCancel={() => { props.setVisible(false) }}
-
 				maskClosable={false}
 				destroyOnClose={true}
 				footer={[
@@ -140,10 +139,12 @@ let TasksAddDialog4 = React.memo((props) => {
 						setState(Object.assign({}, state, { ...allValues }));
 					}}
 				>
-					{/*`FragmentSelectRecepient` 
+					{/*
+						`FragmentSelectRecepient` 
 						фрагмент antd дающий возможность выбирать
 						из выпадающего списка фамилию пользователя
-						для назначения поручения */}
+						для назначения поручения 
+					*/}
 					<FragmentSelectRecepient users={data?.users} />
 
 					{/* `FragmentDeadline` 
@@ -175,23 +176,19 @@ let TasksAddDialog4 = React.memo((props) => {
 					какое поле будет в документе */}
 					<FragmentSwitchArea
 						data={
-							props?.document?.documents[0]
-								?.data_agreement_list_internal_needs[0]?.subject
+							props?.document?.documents[0]?.data_agreement_list[0]?.subject
 						}
 						name={"subject"}
-						label={"Предмет договора:"}
+						label={"Предмет договора: "}
 					/>
 
 					{/* `FragmentSwitchArea` 
 					фрагмент antd дающий возможность выбрать через switch
 					какое поле будет в документе */}
 					<FragmentSwitchArea
-						data={
-							props?.document?.documents[0]
-								?.data_agreement_list_internal_needs[0]?.price
-						}
+						data={props?.document?.documents[0]?.data_agreement_list[0]?.price}
 						name={"price"}
-						label={"Общая сумма договора: "}
+						label={"Предмет договора: "}
 					/>
 
 					{/* `FragmentSwitchArea` 
@@ -199,11 +196,11 @@ let TasksAddDialog4 = React.memo((props) => {
 					какое поле будет в документе */}
 					<FragmentSwitchArea
 						data={
-							props?.document?.documents[0]
-								?.data_agreement_list_internal_needs[0]?.currency
+							props?.document?.documents[0]?.data_agreement_list[0]
+								?.currency_price
 						}
-						name={"currency"}
-						label={"Валюта платежа: "}
+						name={"currency_price"}
+						label={"Общая сумма договора в тенге, по курсу НБ РК: "}
 					/>
 
 					{/* `FragmentSwitchArea` 
@@ -211,12 +208,12 @@ let TasksAddDialog4 = React.memo((props) => {
 					какое поле будет в документе */}
 					<FragmentSwitchArea
 						data={
-							props?.document?.documents[0]
-								?.data_agreement_list_internal_needs[0]?.executor_name_division
+							props?.document?.documents[0]?.data_agreement_list[0]
+								?.executor_name_division
 						}
 						name={"executor_name_division"}
 						label={
-							"Наименование подразделения, фамилия ответственного исполнителя:"
+							"Наименование подразделения, фамилия ответственного исполнителя: "
 						}
 					/>
 
@@ -225,11 +222,12 @@ let TasksAddDialog4 = React.memo((props) => {
 					какое поле будет в документе */}
 					<FragmentSwitchArea
 						data={
-							props?.document?.documents[0]
-								?.data_agreement_list_internal_needs[0]?.executor_phone_number
+							props?.document?.documents[0]?.data_agreement_list[0]
+								?.sider_signatures_date
 						}
-						name={"executor_phone_number"}
-						label={"Телефон исполнителя: "}
+						name={"sider_signatures_date"}
+						label={`Подписанный сторонами оригинал договора получен, дата, способ
+								получения от контрагента: `}
 					/>
 
 					{/* `FragmentSwitchArea` 
@@ -237,11 +235,12 @@ let TasksAddDialog4 = React.memo((props) => {
 					какое поле будет в документе */}
 					<FragmentSwitchArea
 						data={
-							props?.document?.documents[0]
-								?.data_agreement_list_internal_needs[0]?.counteragent_contacts
+							props?.document?.documents[0]?.data_agreement_list[0]
+								?.received_from_counteragent_date
 						}
-						name={"counteragent_contacts"}
-						label={"Контакты контрагента:"}
+						name={"received_from_counteragent_date"}
+						label={`Дата получение проекта договора, способ получения от
+						контрагента: `}
 					/>
 
 					<Divider type={"horizontal"} />
@@ -258,4 +257,4 @@ let TasksAddDialog4 = React.memo((props) => {
 	);
 });
 
-export default TasksAddDialog4;
+export default TasksAddDialog2;

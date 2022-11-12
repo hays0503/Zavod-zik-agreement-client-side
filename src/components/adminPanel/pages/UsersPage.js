@@ -327,7 +327,7 @@ let UsersPage = React.memo((props) => {
 	);
 });
 
-let WorkersWorkerdForm = React.memo((props) => {
+const WorkersWorkerdForm = React.memo((props) => {
 	let user = useUser();
 	const [state, setState] = useState({
 		username: "",

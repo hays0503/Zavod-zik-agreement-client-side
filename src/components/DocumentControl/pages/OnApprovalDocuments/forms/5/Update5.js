@@ -44,26 +44,25 @@ const Update5 = React.memo((props) => {
 	const [stepCount, setStepCount] = useState({ step: "0" });
 
 	//////////////////////////////////////////////////////////////////////////////////////////
-	/**																					//
-	 * Отобразить новое состояние компонентов после обновление (файлов / по поручению)	//
-	 */ //
-	//
-	/**																					//
-	 * Cтейт для таблиц файлов по поручением											//
-	 */ //
-	const [FileTask, setFileTask] = useState([]); //
-	//
-	const [ReRender, setRerender] = useState(false); //
+	/**																					
+	 * Отобразить новое состояние компонентов после обновление (файлов / по поручению)
+	 */ 
+	
+	/**																					
+	 * Cтейт для таблиц файлов по поручением											
+	 */ 
+	const [FileTask, setFileTask] = useState([]); 
+	const [ReRender, setRerender] = useState(false); 
 	useEffect(() => {
-		//
+		
 		if (iniValue?.id) {
-			//
+			
 			GetIDNameTaskFile(iniValue?.id).then((value) => {
-				//
-				setFileTask(value.result); //
-			}); //
-		} //
-	}, [iniValue, ReRender]); //
+				
+				setFileTask(value.result); 
+			}); 
+		} 
+	}, [iniValue, ReRender]); 
 	//////////////////////////////////////////////////////////////////////////////////////////
 
 	useEffect(() => {
@@ -101,6 +100,7 @@ const Update5 = React.memo((props) => {
 				signatures: iniValue.signatures,
 				files: iniValue.files,
 				log_username: state.log_username,
+				reason:iniValue.reason
 			});
 			setStepCount({ step: iniValue.step });
 			setRoutesList(iniValue.route_data);
@@ -118,7 +118,7 @@ const Update5 = React.memo((props) => {
 						title="Поручение"
 						selectedRowKeys={tableProps.selectedRowKeys}
 						update={true}
-						width={750}
+						width={850}
 						setRerender={setRerender} // Стейт функция для обновления
 						ReRender={ReRender} // Стейт переменная для обновления
 					/>,
@@ -126,6 +126,7 @@ const Update5 = React.memo((props) => {
 						visible={visible}
 						setVisible={setVisible}
 						document={props.initialValues5}
+						FileTask={FileTask}
 					/>,
 				]}
 				selectedRowKeys={tableProps.selectedRowKeys}

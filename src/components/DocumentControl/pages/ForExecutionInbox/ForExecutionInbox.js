@@ -361,6 +361,7 @@ let ForExecutionInbox = React.memo((props) => {
 						route_id
 						document_options
 						task_files
+						document_tasks_id_file
 						task_statuses {
 							id
 							name
@@ -393,6 +394,7 @@ let ForExecutionInbox = React.memo((props) => {
 						route_id
 						document_options
 						task_files
+						document_tasks_id_file
 						document_tasks_logs {
 							id
 							task_id
@@ -432,6 +434,7 @@ let ForExecutionInbox = React.memo((props) => {
 						fio_receiver
 						document_options
 						task_files
+						document_tasks_id_file
 						document_tasks_logs {
 							id
 							task_id
@@ -518,7 +521,8 @@ let ForExecutionInbox = React.memo((props) => {
 						route_id: item.route_id ? item.route_id : 10,
 						document_options: item.document_options,
 						task_files: item.task_files ? item.task_files : {},
-						task_statuses: item.task_statuses.name,
+						task_statuses: item.task_statuses?.name,
+						document_tasks_id_file:item?.document_tasks_id_file,
 						document_tasks_logs: item.document_tasks_logs
 							? item.document_tasks_logs[
 									item.document_tasks_logs.findIndex(

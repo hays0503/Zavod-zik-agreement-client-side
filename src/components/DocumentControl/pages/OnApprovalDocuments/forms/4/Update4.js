@@ -43,26 +43,25 @@ const Update4 = React.memo((props) => {
 	});
 
 	//////////////////////////////////////////////////////////////////////////////////////////
-	/**																					//
-	 * Отобразить новое состояние компонентов после обновление (файлов / по поручению)	//
-	 */ //
+	/**																					
+	 * Отобразить новое состояние компонентов после обновление (файлов / по поручению)	
+	 */ 
 	//
-	/**																					//
-	 * Cтейт для таблиц файлов по поручением											//
-	 */ //
-	const [FileTask, setFileTask] = useState([]); //
-	//
-	const [ReRender, setRerender] = useState(false); //
+	/**
+	 * Cтейт для таблиц файлов по поручением
+	 */
+	const [FileTask, setFileTask] = useState([]); 
+	const [ReRender, setRerender] = useState(false); 
 	useEffect(() => {
-		//
+		
 		if (iniValue?.id) {
-			//
+			
 			GetIDNameTaskFile(iniValue?.id).then((value) => {
-				//
-				setFileTask(value.result); //
-			}); //
-		} //
-	}, [iniValue, ReRender]); //
+				
+				setFileTask(value.result); 
+			}); 
+		} 
+	}, [iniValue, ReRender]); 
 	//////////////////////////////////////////////////////////////////////////////////////////
 
 	useEffect(() => {
@@ -101,6 +100,7 @@ const Update4 = React.memo((props) => {
 				signatures: iniValue.signatures,
 				files: iniValue.files,
 				log_username: state.log_username,
+				reason:iniValue.reason
 			});
 			setStepCount({ step: iniValue.step });
 			setRoutesList(iniValue.route_data);
@@ -131,7 +131,7 @@ const Update4 = React.memo((props) => {
 						title="Поручение"
 						selectedRowKeys={tableProps.selectedRowKeys}
 						update={true}
-						width={750}
+						width={850}
 						setRerender={setRerender} // Стейт функция для обновления
 						ReRender={ReRender} // Стейт переменная для обновления
 					/>,
@@ -139,6 +139,7 @@ const Update4 = React.memo((props) => {
 						visible={visible}
 						setVisible={setVisible}
 						document={props.initialValues4}
+						FileTask={FileTask}
 					/>,
 				]}
 				selectedRowKeys={tableProps.selectedRowKeys}

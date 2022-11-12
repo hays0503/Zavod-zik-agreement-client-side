@@ -21,6 +21,7 @@ import { TaskFileDownload } from "../../../api/CRU_Document";
 import { FormItem, FormWrap } from "../../../fragments/FragmentItemWrap";
 import {
 	FragmentFileViewer,
+	FragmentFileViewerReceiver,
 	FragmentTaskFileViewer,
 } from "../../../fragments/FragmentFileViewer";
 import { FragmentInputArea } from "../../../fragments/FragmentInputArea";
@@ -113,6 +114,8 @@ let Update3 = React.memo((props) => {
 					? props.initialValues.document_tasks[0].document_tasks_files
 					: [],
 				task_statuses: props.initialValues.document_tasks[0].task_statuses,
+				document_tasks_id_file:
+					props.initialValues.document_tasks[0].document_tasks_id_file, // Файлы которые уже добавили по поручению на предыдущих шагах
 			});
 		}
 	}, [props.initialValues]);
@@ -227,7 +230,10 @@ let Update3 = React.memo((props) => {
 			<h3 className="marginTop">
 				<b>Файлы прикреплённые отправителем</b>
 			</h3>
-			<FragmentFileViewer files={result} />
+			<FragmentFileViewerReceiver
+				files={result}
+				document_tasks_id_file={state.document_tasks_id_file}
+			/>
 			{/* /////////////////////////////////// */}
 			<Divider type={"horizontal"} />
 			{/* /////////////////////////////////// */}

@@ -1,4 +1,5 @@
 import { Form, Input } from "antd";
+import { ExclamationCircleOutlined } from "@ant-design/icons";
 
 /**
  * Фрагмент antd для вывода Замечаний по документу
@@ -16,7 +17,6 @@ export const FragmentReasonsViewer = (props) => {
 				labelCol={{ span: 24 }}
 			></Form.Item>
 			<div>
-				{/* {console.log(`${props?.disabled} ${props?.ReasonInputChange}`)} */}
 				{
 					//Если определены флаг disable и callback функция то выводим Input
 					props?.disabled != undefined &&
@@ -25,14 +25,15 @@ export const FragmentReasonsViewer = (props) => {
 								disabled={props.disabled}
 								onChange={props.ReasonInputChange}
 								placeholder="Замечание"
+								style={{marginBottom: "15px"}}
 							/>
 						)
 				}
-				{props?.reason?.map((item) => {
+				{props?.Reason?.map((item) => {
 					return (
-						<span>
-							<span>{item.text + "-" + item.userPosition}</span>
-							<br />
+						<span style={{ font: "1.2rem bold" }}>
+							<span style={{ color: "red",font: "1.8rem bold" }}><ExclamationCircleOutlined  /></span>
+							{" " + item.text + "-" + item.userPosition}
 						</span>
 					);
 				})}

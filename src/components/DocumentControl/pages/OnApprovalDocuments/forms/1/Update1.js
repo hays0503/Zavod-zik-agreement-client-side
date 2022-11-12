@@ -130,7 +130,7 @@ const Update1 = React.memo((props) => {
 						title="Поручение"
 						selectedRowKeys={tableProps.selectedRowKeys}
 						update={true}
-						width={750}
+						width={850}
 						setRerender={setRerender} // Стейт функция для обновления
 						ReRender={ReRender} // Стейт переменная для обновления
 					/>,
@@ -138,6 +138,7 @@ const Update1 = React.memo((props) => {
 						visible={visible}
 						setVisible={setVisible}
 						document={props.initialValues}
+						FileTask={FileTask}
 					/>,
 				]}
 				selectedRowKeys={tableProps.selectedRowKeys}

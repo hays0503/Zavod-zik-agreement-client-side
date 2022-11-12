@@ -70,7 +70,6 @@ let OnApprovalDocuments = React.memo((props) => {
 							is_cancelled
 							note
 							deadline
-
 							user_id_created
 							fio_created
 							user_id_receiver
@@ -100,7 +99,6 @@ let OnApprovalDocuments = React.memo((props) => {
 							document_id
 							price
 							subject
-
 							currency_price
 							executor_name_division
 							sider_signatures_date
@@ -173,7 +171,6 @@ let OnApprovalDocuments = React.memo((props) => {
 							is_cancelled
 							note
 							deadline
-
 							user_id_created
 							fio_created
 							user_id_receiver
