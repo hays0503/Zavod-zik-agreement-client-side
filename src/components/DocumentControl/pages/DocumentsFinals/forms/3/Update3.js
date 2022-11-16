@@ -70,6 +70,8 @@ let Update3 = React.memo((props) => {
 				comments: iniValue?.comments,
 				signatures: iniValue?.signatures,
 				files: iniValue?.files,
+				mitwork_number: iniValue.mitwork_number,
+				mitwork_data: iniValue.mitwork_data,
 			});
 		}
 	}, [iniValue]);
@@ -164,7 +166,6 @@ let Update3 = React.memo((props) => {
 			<Divider type={"horizontal"} />
 			{/* /////////////////////////////////// */}
 			<FragmentMitWork
-				id={iniValue?.id}
 				mitwork_number={state?.mitwork_number}
 				mitwork_data={state?.mitwork_data}
 			/>

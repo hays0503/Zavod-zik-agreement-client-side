@@ -111,7 +111,6 @@ const Update1 = React.memo((props) => {
 			<FormWrap>{FormItem("Общая сумма договора: ", state?.price)}</FormWrap>
 
 			<FragmentMitWork
-				id={iniValue?.id}
 				mitwork_number={state?.mitwork_number}
 				mitwork_data={state?.mitwork_data}
 			/>

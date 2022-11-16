@@ -126,7 +126,6 @@ const Update5 = React.memo((props) => {
 			<Divider type={"horizontal"} />
 
 			<FragmentMitWork
-				id={iniValue?.id}
 				mitwork_number={state?.mitwork_number}
 				mitwork_data={state?.mitwork_data}
 			/>
