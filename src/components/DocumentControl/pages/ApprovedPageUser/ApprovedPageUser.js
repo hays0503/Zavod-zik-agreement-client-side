@@ -34,6 +34,7 @@ let ApprovedPageUser = React.memo((props) => {
             global: {
               user_id: `=${userVariable}`,
               ORDER_BY: ["date_created desc"],
+              status_id: "=4",
             },
           },
         },
@@ -395,10 +396,7 @@ let ApprovedPageUser = React.memo((props) => {
         })
       : [];
 
-  let listFiltered = list.filter((el) => {
-    return el.status_id == 4;
-  });
-  window.localStorage["rows_approved"] = listFiltered.length;
+  window.localStorage["rows_approved"] = list.length;
 
   let dict = test([
     {
@@ -508,7 +506,7 @@ let ApprovedPageUser = React.memo((props) => {
 
   return (
     <TableContainerIsRead
-      data={{ dict, records: listFiltered }}
+      data={{ dict, records: list }}
       loading={loading}
       title={titleMenu}
       visibleModalUpdate={visibleModalUpdate}
