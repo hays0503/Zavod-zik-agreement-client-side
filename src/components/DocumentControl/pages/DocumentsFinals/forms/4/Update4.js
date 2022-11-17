@@ -144,7 +144,7 @@ let Update4 = React.memo((props) => {
 				label="Подписи"
 				labelCol={{ span: 24 }}
 			>
-				{iniValue.signatures.map((item) => {
+				{iniValue?.signatures.map((item) => {
 					//remove commentsList
 					return (
 						<>

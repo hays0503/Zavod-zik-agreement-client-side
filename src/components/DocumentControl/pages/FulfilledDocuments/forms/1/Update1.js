@@ -97,8 +97,9 @@ const Update1 = React.memo((props) => {
 				setState(Object.assign({}, state, { ...allValues }));
 			}}
 		>
+			{/* Закуп ТРУ*/}
 			<h4>
-				<b>Тип договора:</b> Закуп ТРУ
+				<b>Тип договора:</b> {iniValue.route_id.name}
 			</h4>
 
 			{/* /////////////////////////////////// */}

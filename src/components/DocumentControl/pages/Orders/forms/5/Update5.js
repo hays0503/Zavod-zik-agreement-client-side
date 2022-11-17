@@ -49,7 +49,7 @@ let Update5 = React.memo((props) => {
 		log_username: user.username,
 	});
 
-    useEffect(() => {
+	useEffect(() => {
 		props.form5.setFieldsValue(state);
 	}, [state]);
 
@@ -97,8 +97,9 @@ let Update5 = React.memo((props) => {
 				setState(Object.assign({}, state, { ...allValues }));
 			}}
 		>
+			{/* Другой */}
 			<h4>
-				<b>Тип договора:</b> Другой
+				<b>Тип договора:</b> {props?.initialValues5?.documents[0].route_id.name}
 			</h4>
 			{/* /////////////////////////////////// */}
 			<FormWrap>{FormItem("Наименование : ", state?.title)}</FormWrap>

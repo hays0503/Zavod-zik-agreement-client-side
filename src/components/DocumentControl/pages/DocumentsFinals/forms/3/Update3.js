@@ -91,24 +91,21 @@ let Update3 = React.memo((props) => {
 				setState(Object.assign({}, state, { ...allValues }));
 			}}
 		>
+			{/* Лист согласования на закуп ТРУ для производства и продукции */}
 			<h4>
-				<b>Тип договора:</b> Лист согласования на закуп ТРУ для производства и
-				продукции
+				<b>Тип договора:</b>
+				{props?.initialValues3?.documents[0].route_id.name}
 			</h4>
 			{/* /////////////////////////////////// */}
 			<FormWrap>
 				{FormItem("Наименование контрагента: ", state?.title)}
 			</FormWrap>
-
 			{/* /////////////////////////////////// */}
 			<FormWrap>{FormItem("Предмет договора: ", state.subject)}</FormWrap>
-
 			{/* /////////////////////////////////// */}
 			<FormWrap>{FormItem("Общая сумма договора: ", state?.price)}</FormWrap>
-
 			{/* /////////////////////////////////// */}
 			<FormWrap>{FormItem("Валюта платежа: ", state.currency)}</FormWrap>
-
 			{/* /////////////////////////////////// */}
 			<FormWrap>
 				{FormItem(
@@ -117,12 +114,10 @@ let Update3 = React.memo((props) => {
 					state.executor_name_division
 				)}
 			</FormWrap>
-
 			{/* /////////////////////////////////// */}
 			<FormWrap>
 				{FormItem(`Телефон исполнителя: `, state.executor_phone_number)}
 			</FormWrap>
-
 			{/* /////////////////////////////////// */}
 			<FormWrap>
 				{FormItem(`Контакты контрагента: `, state.counteragent_contacts)}

@@ -47,7 +47,6 @@ let Update1 = React.memo((props) => {
 		props.form.setFieldsValue(state);
 	}, [state]);
 
-
 	useEffect(() => {
 		if (iniValue) {
 			setState({
@@ -95,8 +94,9 @@ let Update1 = React.memo((props) => {
 		>
 			<b>От:</b> {iniValue?.fio} <br />
 			<b>Должность:</b> {iniValue?.position}
+			{/* Закуп ТРУ */}
 			<h4>
-				<b>Тип договора:</b> Закуп ТРУ
+				<b>Тип договора:</b> {props?.initialValues?.documents[0].route_id.name}
 			</h4>
 			{/* /////////////////////////////////// */}
 			<FormWrap>{FormItem("Наименование ТРУ: ", state?.title)}</FormWrap>
@@ -113,10 +113,7 @@ let Update1 = React.memo((props) => {
 				<b>Файл согласованного договора</b>
 			</h3>
 			{/* /////////////////////////////////// */}
-			<Print
-				printData={iniValue?.id}
-				documentData={props?.initialValues}
-			/>
+			<Print printData={iniValue?.id} documentData={props?.initialValues} />
 			<Divider type={"horizontal"} />
 			{/* /////////////////////////////////// */}
 			<Form.Item

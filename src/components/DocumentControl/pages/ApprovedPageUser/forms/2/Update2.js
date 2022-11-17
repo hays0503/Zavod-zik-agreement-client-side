@@ -57,7 +57,7 @@ let Update2 = React.memo((props) => {
 	]);
 
 	let [stepCount, setStepCount] = useState({ step: "0" });
-	
+
 	useEffect(() => {
 		if (props.initialValues2) {
 			setState({
@@ -176,7 +176,8 @@ let Update2 = React.memo((props) => {
 			<b>От:</b> {props?.initialValues2?.documents[0].fio} <br />
 			<b>Должность:</b> {props?.initialValues2?.documents[0].position}
 			<h4>
-				<b>Тип договора:</b> Лист согласования на реализацию готовой продукции
+				{/*Лист согласования на реализацию готовой продукции*/}
+				<b>Тип договора:</b> {props?.initialValues?.documents[0].route_id.name}
 			</h4>
 			<Divider type={"horizontal"} />
 			<div className="form-item-wrap">
