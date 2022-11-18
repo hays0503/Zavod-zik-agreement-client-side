@@ -97,6 +97,9 @@ let SiderMenu = (props) => {
       subData.onaproval = data.document_logs.filter((el) => {
         return el.type == 2 && el.is_read == false;
       }).length;
+      subData.finished = data.document_logs.filter((el) => {
+        return el.type == 7 && el.is_read == false;
+      }).length;
       setCon(subData);
     },
   });
@@ -125,6 +128,9 @@ let SiderMenu = (props) => {
       subData.onaproval = data.document_logs.filter((el) => {
         return el.type == 2 && el.is_read == false;
       }).length;
+      subData.finished = data.document_logs.filter((el) => {
+        return el.type == 7 && el.is_read == false;
+      }).length;
       //console.log('testSub', data);
       //console.log('testSub2', subData);
       setCon(subData);
@@ -132,7 +138,8 @@ let SiderMenu = (props) => {
         subData.revised > 0 ||
         subData.approved > 0 ||
         subData.rejected > 0 ||
-        subData.onaproval > 0
+        subData.onaproval > 0 ||
+        subData.finished > 0
       ) {
         sendAgentNotification(user.email);
         notifyMe("Есть новые входящие сообщения.");
@@ -278,7 +285,7 @@ let SiderMenu = (props) => {
               <NavLink to={"/document-control/documents-finals"}>
                 Исполненные{" "}
                 <sup>
-                  <Badge count={con.approved} />
+                  <Badge count={con.finished} />
                 </sup>
               </NavLink>
             </Menu.Item>
