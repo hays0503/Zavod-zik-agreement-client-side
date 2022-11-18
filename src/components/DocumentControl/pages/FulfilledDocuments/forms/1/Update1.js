@@ -99,7 +99,7 @@ const Update1 = React.memo((props) => {
 		>
 			{/* Закуп ТРУ*/}
 			<h4>
-				<b>Тип договора:</b> {iniValue.route_id.name}
+				<b>Тип договора:</b> {iniValue?.route_id?.name}
 			</h4>
 
 			{/* /////////////////////////////////// */}
