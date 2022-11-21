@@ -244,7 +244,7 @@ let SiderMenu = (props) => {
 				defaultSelectedKeys={pathname}
 				className="siderMenu"
 				mode="inline"
-				defaultOpenKeys={["User", "onApproval", "Admin"]}
+				defaultOpenKeys={["User", "onApproval", "forExecution", "Admin"]}
 			>
 				<SubMenu key="User" icon={<DatabaseOutlined />} title="Мои документы">
 					{user.documentControl.insert ? (
@@ -255,7 +255,7 @@ let SiderMenu = (props) => {
 					{user.documentControl.revisedUser.select ? (
 						<Menu.Item key={"/document-control/reviseduser"}>
 							<NavLink to={"/document-control/reviseduser"}>
-								На доработку{" "}
+								На доработку
 								<sup>
 									<Badge count={con.revised} />
 								</sup>
@@ -265,7 +265,7 @@ let SiderMenu = (props) => {
 					{user.documentControl.approvedUser.select ? (
 						<Menu.Item key={"/document-control/approveduser"}>
 							<NavLink to={"/document-control/approveduser"}>
-								Согласованные{" "}
+								Согласованные
 								<sup>
 									<Badge count={con.approved} />
 								</sup>
@@ -276,7 +276,7 @@ let SiderMenu = (props) => {
 					{user.documentControl.documentsFinals.select ? (
 						<Menu.Item key={"/document-control/documents-finals"}>
 							<NavLink to={"/document-control/documents-finals"}>
-								Исполненные{" "}
+								Исполненные
 								<sup>
 									<Badge count={con.approved} />
 								</sup>
@@ -287,7 +287,7 @@ let SiderMenu = (props) => {
 					{user.documentControl.rejectedUser.select ? (
 						<Menu.Item key={"/document-control/rejecteduser"}>
 							<Link to={"/document-control/rejecteduser"}>
-								Отклонённые{" "}
+								Отклонённые
 								<sup>
 									<Badge count={con.rejected} />
 								</sup>

@@ -587,7 +587,7 @@ let DocumentsFormUpdate = React.memo((props) => {
 									<a data-fileid={item.id} onClick={download}>
 										{item.filename} <FileImageOutlined />
 									</a>
-								</Link>{" "}
+								</Link>
 								<br />
 								{/* <Link><a href={`/uploads/${item.filename}`} data-fileid={item.id} onClick={download} >{item.filename} <FileImageOutlined /></a></Link> <br/> */}
 								<Button
@@ -596,7 +596,7 @@ let DocumentsFormUpdate = React.memo((props) => {
 									}}
 								>
 									Просмотр
-								</Button>{" "}
+								</Button>
 								<br />
 							</div>
 						</>
@@ -911,7 +911,7 @@ let DocumentsFormUpdate2 = React.memo((props) => {
 									<a data-fileid={item.id} onClick={download}>
 										{item.filename} <FileImageOutlined />
 									</a>
-								</Link>{" "}
+								</Link>
 								<br />
 								{/* <Link><a href={`/uploads/${item.filename}`} data-fileid={item.id} onClick={download} >{item.filename} <FileImageOutlined /></a></Link> <br/> */}
 								<Button
@@ -920,7 +920,7 @@ let DocumentsFormUpdate2 = React.memo((props) => {
 									}}
 								>
 									Просмотр
-								</Button>{" "}
+								</Button>
 								<br />
 							</div>
 						</>

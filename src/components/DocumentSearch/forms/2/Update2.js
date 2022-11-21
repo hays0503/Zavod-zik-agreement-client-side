@@ -191,25 +191,25 @@ let Update2 = React.memo((props) => {
 			<Divider type={"horizontal"} />
 			<div className="form-item-wrap">
 				<Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-					<Col span={12}>Наименование контрагента:</Col>{" "}
+					<Col span={12}>Наименование контрагента:</Col>
 					<Col span={12}>{state.title}</Col>
 				</Row>
 			</div>
 			<div className="form-item-wrap">
 				<Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-					<Col span={12}>Предмет договора:</Col>{" "}
+					<Col span={12}>Предмет договора:</Col>
 					<Col span={12}>{state.subject}</Col>
 				</Row>
 			</div>
 			<div className="form-item-wrap">
 				<Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-					<Col span={12}>Общая сумма договора в валюте цены договора:</Col>{" "}
+					<Col span={12}>Общая сумма договора в валюте цены договора:</Col>
 					<Col span={12}>{state.price}</Col>
 				</Row>
 			</div>
 			<div className="form-item-wrap">
 				<Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-					<Col span={12}>Общая сумма договора в тенге, по курсу НБ РК:</Col>{" "}
+					<Col span={12}>Общая сумма договора в тенге, по курсу НБ РК:</Col>
 					<Col span={12}>{state.currency_price}</Col>
 				</Row>
 			</div>
@@ -217,7 +217,7 @@ let Update2 = React.memo((props) => {
 				<Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
 					<Col span={12}>
 						Наименование подразделения, фамилия ответственного исполнителя:
-					</Col>{" "}
+					</Col>
 					<Col span={12}>{state.executor_name_division}</Col>
 				</Row>
 			</div>
@@ -226,7 +226,7 @@ let Update2 = React.memo((props) => {
 					<Col span={12}>
 						Подписанный сторонами оригинал договора получен, дата, способ
 						получения от контрагента:
-					</Col>{" "}
+					</Col>
 					<Col span={12}>{state.sider_signatures_date}</Col>
 				</Row>
 			</div>
@@ -234,7 +234,7 @@ let Update2 = React.memo((props) => {
 				<Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
 					<Col span={12}>
 						Дата получение проекта договора, способ получения от контрагента:
-					</Col>{" "}
+					</Col>
 					<Col span={12}>{state.received_from_counteragent_date}</Col>
 				</Row>
 			</div>
@@ -253,14 +253,14 @@ let Update2 = React.memo((props) => {
 									<a data-fileid={item.id} onClick={download}>
 										{item.filename}
 									</a>
-								</Link>{" "}
+								</Link>
 								<Button
 									onClick={() => {
 										OpenDocument(item);
 									}}
 									shape="circle"
 									icon={<EyeOutlined />}
-								/>{" "}
+								/>
 								<br />
 							</div>
 						</>
