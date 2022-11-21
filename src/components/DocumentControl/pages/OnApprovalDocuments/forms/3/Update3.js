@@ -47,25 +47,22 @@ let Update3 = React.memo((props) => {
 	});
 
 	//////////////////////////////////////////////////////////////////////////////////////////
-	/**																					
-	 * Отобразить новое состояние компонентов после обновление (файлов / по поручению)	
-	 */ 
-	
-	/**																					
-	 * Cтейт для таблиц файлов по поручением											
-	 */ 
-	const [FileTask, setFileTask] = useState([]); 
-	const [ReRender, setRerender] = useState(false); 
-	useEffect(() => {
+	/**
+	 * Отобразить новое состояние компонентов после обновление (файлов / по поручению)
+	 */
 
+	/**
+	 * Cтейт для таблиц файлов по поручением
+	 */
+	const [FileTask, setFileTask] = useState([]);
+	const [ReRender, setRerender] = useState(false);
+	useEffect(() => {
 		if (iniValue?.id) {
-			
 			GetIDNameTaskFile(iniValue?.id).then((value) => {
-				
-				setFileTask(value.result); 
-			}); 
-		} 
-	}, [iniValue, ReRender]); 
+				setFileTask(value.result);
+			});
+		}
+	}, [iniValue, ReRender]);
 	//////////////////////////////////////////////////////////////////////////////////////////
 
 	useEffect(() => {
@@ -102,7 +99,7 @@ let Update3 = React.memo((props) => {
 				signatures: iniValue.signatures,
 				files: iniValue.files,
 				log_username: state.log_username,
-				reason:iniValue.reason
+				reason: iniValue.reason,
 			});
 			setStepCount({ step: iniValue.step });
 			setRoutesList(iniValue.route_data);
@@ -166,10 +163,7 @@ let Update3 = React.memo((props) => {
 			<FormWrap>{FormItem("Должность: ", state?.position)}</FormWrap>
 			{/* /////////////////////////////////// */}
 			<FormWrap>
-				{FormItem(
-					"Тип договора: ",
-					"Лист согласования на реализацию готовой продукции"
-				)}
+				{FormItem("Тип договора: ", iniValue?.route_id?.name)}
 			</FormWrap>
 			{/* /////////////////////////////////// */}
 			<Divider type={"horizontal"} />

@@ -23,8 +23,8 @@ const { Step } = Steps;
 
 let AdminPageAll = React.memo((props) => {
 	let user = useUser();
+	let userVariable = user.id;
 	let positionsVariable = user.positions.toString();
-	//console.log('positionsVariable', positionsVariable)
 
 	let documents = {
 		exemplar: "document",
@@ -32,7 +32,11 @@ let AdminPageAll = React.memo((props) => {
 		options: {
 			all: {
 				variables: {
-					documents: { global: { ORDER_BY: ["date_created desc"] } },
+					documents: {
+						global: {
+							ORDER_BY: ["date_created desc"],
+						},
+					},
 				},
 				fetchPolicy: "cache-only",
 			},
@@ -57,6 +61,18 @@ let AdminPageAll = React.memo((props) => {
 						date_modified
 						status_id
 						reason
+						document_tasks {
+							id
+							document_id
+							status
+							is_cancelled
+							note
+							deadline
+							user_id_created
+							fio_created
+							user_id_receiver
+							fio_receiver
+						}
 						document_logs {
 							id
 							document_id
@@ -81,7 +97,6 @@ let AdminPageAll = React.memo((props) => {
 							document_id
 							price
 							subject
-
 							currency_price
 							executor_name_division
 							sider_signatures_date
@@ -146,6 +161,18 @@ let AdminPageAll = React.memo((props) => {
 							price
 							subject
 							supllier
+						}
+						document_tasks {
+							id
+							document_id
+							status
+							is_cancelled
+							note
+							deadline
+							user_id_created
+							fio_created
+							user_id_receiver
+							fio_receiver
 						}
 						data_custom {
 							id
@@ -245,6 +272,18 @@ let AdminPageAll = React.memo((props) => {
 								is_read
 								user_id
 							}
+							document_tasks {
+								id
+								document_id
+								status
+								is_cancelled
+								note
+								deadline
+								user_id_created
+								fio_created
+								user_id_receiver
+								fio_receiver
+							}
 							document_statuses {
 								id
 								name
@@ -298,22 +337,74 @@ let AdminPageAll = React.memo((props) => {
 		`,
 	};
 
-	//subscriptions
+	let DocumentTasks = {
+		exemplar: "document_tasks",
+		table: "document_tasks",
+		options: {
+			all: {
+				variables: {
+					document_tasks: { global: { user_id_created: `=${user.id}` } },
+				},
+				fetchPolicy: "standby",
+			},
+			one: {
+				fetchPolicy: "standby",
+			},
+		},
+		select: {
+			all: gql`
+				query document_tasks($document_tasks: JSON) {
+					document_tasks(document_tasks: $document_tasks) {
+						id
+						document_id
+						status
+						user_id_created
+						fio_created
+						user_id_receiver
+						fio_receiver
+					}
+				}
+			`,
+			one: gql`
+				query document_tasks($document_tasks: JSON) {
+					document_tasks(document_tasks: $document_tasks) {
+						id
+						document_id
+						status
+						user_id_created
+						fio_created
+						user_id_receiver
+						fio_receiver
+					}
+				}
+			`,
+		},
+		subscription: {
+			all: gql`
+				subscription document_tasks($document_tasks: JSON) {
+					document_tasks(document_tasks: $document_tasks) {
+						id
+						document_id
+						status
+						user_id_created
+						fio_created
+						user_id_receiver
+						fio_receiver
+					}
+				}
+			`,
+		},
+		insert: gql`
+			mutation insertDocumentTasks($document_tasks: JSON) {
+				insertDocumentTasks(document_tasks: $document_tasks) {
+					type
+					message
+				}
+			}
+		`,
+	};
+
 	const count = useRef(0);
-	/*const { } = useSu//console.log
-        documents.subscription.all[0],
-        {
-            variables: { document_logs: { global: { is_read: '=false', user_id: user.id, ORDER_BY: ['date_created desc'] } } },
-            onSubscriptionData: ({ subscriptionData: { data } }) => {
-                if (data.documents.length > count.current) {
-                    count.current = data.documents.length;
-                    //console.log('notification', data, count.current)
-                    sendNotification();
-                    notifyMe('Есть новые входящие сообщения 11111');
-                }
-            }
-        }
-    );*/
 
 	const visibleModalUpdate = useState(false);
 	const visibleModalUpdate2 = useState(false);
@@ -326,6 +417,14 @@ let AdminPageAll = React.memo((props) => {
 	)();
 
 	const { loading, data, refetch } = handlerQuery(documents, "all")();
+	const {
+		loading: taskLoading,
+		data: taskData,
+		refetch: taskRefetch,
+	} = handlerQuery(DocumentTasks, "all")();
+	useEffect(() => {
+		taskRefetch();
+	}, []);
 	useEffect(() => {
 		refetch();
 	}, []);
@@ -334,6 +433,12 @@ let AdminPageAll = React.memo((props) => {
 		data && data[Object.keys(data)[0]] != null
 			? data[Object.keys(data)[0]].map((item) => {
 					count.current = data.documents.length;
+					let tasks = taskData?.document_tasks?.filter((task) => {
+						return task.document_id == item.id;
+					});
+					let tasks_done = taskData?.document_tasks?.filter((task) => {
+						return task.document_id == item.id && task.status == 2;
+					});
 					return {
 						id: item.id,
 						key: item.id,
@@ -355,7 +460,6 @@ let AdminPageAll = React.memo((props) => {
 							: [],
 						step: item.step,
 						step_count: item.step + " из " + item.route_data?.length,
-						//step_name:console.log('DDDDDD',item.step)
 						step_name:
 							item.route_data?.length > 0
 								? item.route_data[item.step - 1].positionName
@@ -364,18 +468,16 @@ let AdminPageAll = React.memo((props) => {
 							item.document_logs[
 								item.document_logs.findIndex((item) => item.user_id == user.id)
 							],
-						//step_name: item.route_id?.routes ? item.route_id.routes[item.route_id.routes.findIndex(item => item.positionId == item.step)].positionName : ''
+						tasks_count: `${tasks_done?.length} из ${tasks?.length}`,
 					};
 			  })
 			: [];
 
-	//console.log('list2', list2)
+	let listFiltered = list.filter((el) => {
+		return el.step == el.route_step && el.status_id != 4;
+	});
 
-	/*let listFiltered = list.filter((el) => {
-        return el.step == el.route_step && el.status_id != 4
-    });*/
-
-	//console.log('newArray', newArray)
+	window.localStorage["rows_onaproval"] = listFiltered.length;
 
 	let dict = test([
 		{
@@ -424,34 +526,34 @@ let AdminPageAll = React.memo((props) => {
 			width: "80px",
 			tooltip: true,
 			sorter: (a, b) => a.status.localeCompare(b.status),
-			sortDirections: ['ascend', 'descend'],
-			filters:[
+			sortDirections: ["ascend", "descend"],
+			filters: [
 				{
-					text:'В работе',
-					value:'В работе'
+					text: "В работе",
+					value: "В работе",
 				},
 				{
-					text:'На доработке',
-					value:'На доработке'
+					text: "На доработке",
+					value: "На доработке",
 				},
 				{
-					text:'Согласован',
-					value:'Согласован'
+					text: "Согласован",
+					value: "Согласован",
 				},
 				{
-					text:'На регистрации',
-					value:'На регистрации'
+					text: "На регистрации",
+					value: "На регистрации",
 				},
 				{
-					text:'Исполнен',
-					value:'Исполнен'
+					text: "Исполнен",
+					value: "Исполнен",
 				},
 				{
-					text:'Отклонён',
-					value:'Отклонён'
-				}
+					text: "Отклонён",
+					value: "Отклонён",
+				},
 			],
-			onFilter: (value, record) => record.status.indexOf(value) === 0
+			onFilter: (value, record) => record.status.indexOf(value) === 0,
 		},
 		{ title: "На подписи", dataIndex: "step_name", width: "114px" },
 		{ title: "Этап", dataIndex: "step_count", width: "55px" },

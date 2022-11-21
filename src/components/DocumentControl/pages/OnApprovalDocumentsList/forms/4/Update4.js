@@ -69,7 +69,8 @@ let Update4 = React.memo((props) => {
 					props.initialValues4.documents[0]
 						?.data_agreement_list_internal_needs[0]?.executor_phone_number,
 				counteragent_contacts:
-					props?.data_agreement_list_internal_needs[0]?.counteragent_contacts, //console.logalues4.documents[0]
+					props?.initialValues4.documents[0]
+						.data_agreement_list_internal_needs[0]?.counteragent_contacts, //console.logalues4.documents[0]
 
 				date_created: props.initialValues4.documents[0].date_created,
 				date_modified: props.initialValues4.documents[0].date_modified,
