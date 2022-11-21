@@ -421,7 +421,8 @@ code {
   z-index: -1;
 }
 .ant-menu-submenu-open.ant-menu-submenu-inline>.ant-menu-submenu-title>.ant-menu-submenu-arrow, .ant-menu-submenu-arrow{
-  color: #fff;
+  color: rgb(255, 0, 0);
+  font-size: 1.0rem;
 }
 /* .ant-menu-root.ant-menu-inline, .ant-menu-root.ant-menu-vertical, .ant-menu-root.ant-menu-vertical-left, .ant-menu-root.ant-menu-vertical-right{ */
 .ant-menu-root.ant-menu-inline{

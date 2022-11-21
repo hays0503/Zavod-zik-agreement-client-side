@@ -55,8 +55,10 @@ export const FragmentFileViewer = (props) => {
  * @param files Массив из файлов для показа их на форме
  */
 export const FragmentFileViewerReceiver = (props) => {
+
 	//Делаем запрос для отображения файлов которые прикрепил поручитель
 	//(эти файлы прикрепляли в прошлых поручениях и они хранятся в document_tasks_files по этому тут такой изврат)
+	
 	const GET_TASK_FILE = gql`
 		query Task_files_in_id($taskFilesInId: JSON) {
 			task_files_in_id(task_files_in_id: $taskFilesInId) {
