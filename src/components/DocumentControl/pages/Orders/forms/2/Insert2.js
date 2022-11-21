@@ -21,7 +21,7 @@ let Insert2 = React.memo((props) => {
 
 	let user = useUser();
 	const price_pattern = /^\d+$/;
-	const price_max_count = /^.{1,8}$/;
+	const price_max_count = /^.{1,15}$/;
 	const [state, setState] = useState({
 		log_username: user.username,
 	});
