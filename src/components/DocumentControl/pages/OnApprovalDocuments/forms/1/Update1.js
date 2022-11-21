@@ -170,7 +170,8 @@ const Update1 = React.memo((props) => {
 			{/* /////////////////////////////////// */}
 			<FormWrap>{FormItem("Должность: ", state?.position)}</FormWrap>
 			{/* /////////////////////////////////// */}
-			<FormWrap>{FormItem("Тип договора: ", "Закуп ТРУ")}</FormWrap>
+			{/* //"Закуп ТРУ" */}
+			<FormWrap>{FormItem("Тип договора: ", iniValue?.route_id?.name)}</FormWrap>
 			{/* /////////////////////////////////// */}
 
 			<Divider type={"horizontal"} />
