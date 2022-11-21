@@ -153,7 +153,8 @@ let Update5 = React.memo((props) => {
 			}}
 		>
 			<h4>
-				<b>Тип договора:</b> Другой
+				{/*Другой */}
+				<b>Тип договора:</b> {props?.initialValues5?.documents[0].route_id.name}
 			</h4>
 			<div className="form-item-wrap">
 				<Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>

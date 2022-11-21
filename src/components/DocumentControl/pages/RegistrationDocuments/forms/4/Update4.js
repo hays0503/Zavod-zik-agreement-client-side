@@ -117,7 +117,7 @@ const Update4 = React.memo((props) => {
 			<FormWrap>
 				{FormItem(
 					"Тип договора: ",
-					"Лист согласования на реализацию готовой продукции"
+					iniValue?.route_id?.name
 				)}
 			</FormWrap>
 			{/* /////////////////////////////////// */}

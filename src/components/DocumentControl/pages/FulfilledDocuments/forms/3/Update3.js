@@ -153,7 +153,6 @@ let Update3 = React.memo((props) => {
       {/* /////////////////////////////////// */}
 
       <FragmentMitWork
-        id={iniValue?.id}
         mitwork_number={state?.mitwork_number}
         mitwork_data={state?.mitwork_data}
       />

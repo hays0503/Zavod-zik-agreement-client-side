@@ -95,8 +95,9 @@ let Update2 = React.memo((props) => {
 		>
 			<b>От:</b> {iniValue?.fio} <br />
 			<b>Должность:</b> {iniValue?.position}
+			{/* Лист согласования на реализацию готовой продукции */}
 			<h4>
-				<b>Тип договора:</b> Лист согласования на реализацию готовой продукции
+				<b>Тип договора:</b> {props?.initialValues2?.documents[0].route_id.name}
 			</h4>
 			{/* /////////////////////////////////// */}
 			<FormWrap>{FormItem("Наименование контрагента:", state?.title)}</FormWrap>
@@ -175,7 +176,6 @@ let Update2 = React.memo((props) => {
 			<Divider type={"horizontal"} />
 			{/* /////////////////////////////////// */}
 			<FragmentMitWork
-				id={iniValue?.id}
 				mitwork_number={state?.mitwork_number}
 				mitwork_data={state?.mitwork_data}
 			/>

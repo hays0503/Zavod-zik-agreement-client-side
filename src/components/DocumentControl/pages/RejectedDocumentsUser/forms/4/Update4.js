@@ -153,8 +153,9 @@ let Update4 = React.memo((props) => {
 				setState(Object.assign({}, state, { ...allValues }));
 			}}
 		>
+			{/* Лист согласования на реализацию готовой продукции */}
 			<h4>
-				<b>Тип договора:</b> Лист согласования на реализацию готовой продукции
+				<b>Тип договора:</b> {props?.initialValues4?.documents[0].route_id.name}
 			</h4>
 			<div className="form-item-wrap">
 				<Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>

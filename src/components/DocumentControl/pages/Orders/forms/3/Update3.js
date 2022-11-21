@@ -117,9 +117,10 @@ let Update3 = React.memo((props) => {
 				setState(Object.assign({}, state, { ...allValues }));
 			}}
 		>
+			{/* Лист согласования на закуп ТРУ для производства и продукции */}
 			<h4>
 				<b>Тип договора:</b>
-				Лист согласования на закуп ТРУ для производства и продукции
+				{props?.initialValues3?.documents[0].route_id.name}
 			</h4>
 			{/* /////////////////////////////////// */}
 			<FormWrap>

@@ -103,7 +103,7 @@ const Update2 = React.memo((props) => {
 				files: iniValue.files,
 				document_logs: iniValue.document_logs,
 				log_username: state.log_username,
-				reason:iniValue.reason
+				reason: iniValue.reason,
 			});
 			setStepCount({ step: iniValue.step });
 			setRoutesList(iniValue.route_data);
@@ -168,11 +168,9 @@ const Update2 = React.memo((props) => {
 			{/* /////////////////////////////////// */}
 			<FormWrap>{FormItem("Должность: ", state?.position)}</FormWrap>
 			{/* /////////////////////////////////// */}
+			{/* "Лист согласования на реализацию готовой продукции" */}
 			<FormWrap>
-				{FormItem(
-					"Тип договора: ",
-					"Лист согласования на реализацию готовой продукции"
-				)}
+				{FormItem("Тип договора: ", iniValue?.route_id?.name)}
 			</FormWrap>
 			{/* /////////////////////////////////// */}
 

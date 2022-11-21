@@ -73,6 +73,8 @@ let Update4 = React.memo((props) => {
 				signatures: iniValue.signatures,
 				files: iniValue.files,
 				log_username: state.log_username,
+				mitwork_number: iniValue.mitwork_number,
+				mitwork_data: iniValue.mitwork_data,
 			});
 		}
 	}, [iniValue]);
@@ -142,7 +144,7 @@ let Update4 = React.memo((props) => {
 				label="Подписи"
 				labelCol={{ span: 24 }}
 			>
-				{iniValue.signatures.map((item) => {
+				{iniValue?.signatures.map((item) => {
 					//remove commentsList
 					return (
 						<>
@@ -161,7 +163,6 @@ let Update4 = React.memo((props) => {
 			<Divider type={"horizontal"} />
 			{/* /////////////////////////////////// */}
 			<FragmentMitWork
-				id={iniValue?.id}
 				mitwork_number={state?.mitwork_number}
 				mitwork_data={state?.mitwork_data}
 			/>
