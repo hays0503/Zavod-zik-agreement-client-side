@@ -95,9 +95,7 @@ let Update4 = React.memo((props) => {
 				<FormWrap>
 					{FormItem("Наименование контрагента: ", props?.document.title)}
 				</FormWrap>
-			) : (
-				"null"
-			)}
+			) : null}
 			{/* /////////////////////////////////// */}
 			{state?.document_options?.subject ? (
 				<FormWrap>
@@ -106,9 +104,7 @@ let Update4 = React.memo((props) => {
 						props?.document?.data_agreement_list_internal_needs[0]?.subject
 					)}
 				</FormWrap>
-			) : (
-				"null"
-			)}
+			) : null}
 			{/* /////////////////////////////////// */}
 			{state?.document_options?.price ? (
 				<FormWrap>
@@ -117,9 +113,7 @@ let Update4 = React.memo((props) => {
 						props?.document?.data_agreement_list_internal_needs[0]?.price
 					)}
 				</FormWrap>
-			) : (
-				"null"
-			)}
+			) : null}
 			{/* /////////////////////////////////// */}
 			{state?.document_options?.currency ? (
 				<FormWrap>
@@ -128,9 +122,7 @@ let Update4 = React.memo((props) => {
 						props?.document?.data_agreement_list_internal_needs[0]?.currency
 					)}
 				</FormWrap>
-			) : (
-				"null"
-			)}
+			) : null}
 			{/* /////////////////////////////////// */}
 			{state?.document_options?.executor_name_division ? (
 				<FormWrap>
@@ -140,9 +132,7 @@ let Update4 = React.memo((props) => {
 							?.executor_name_division
 					)}
 				</FormWrap>
-			) : (
-				"null"
-			)}
+			) : null}
 			{/* /////////////////////////////////// */}
 			{state?.document_options?.executor_phone_number ? (
 				<FormWrap>
@@ -152,9 +142,7 @@ let Update4 = React.memo((props) => {
 							?.executor_phone_number
 					)}
 				</FormWrap>
-			) : (
-				"null"
-			)}
+			) : null}
 			{/* /////////////////////////////////// */}
 			{state?.document_options?.counteragent_contacts ? (
 				<FormWrap>
@@ -164,9 +152,7 @@ let Update4 = React.memo((props) => {
 							?.counteragent_contacts
 					)}
 				</FormWrap>
-			) : (
-				"null"
-			)}
+			) : null}
 			<Divider type={"horizontal"} />
 			{/* /////////////////////////////////// */}
 			<h3 className="marginTop">
