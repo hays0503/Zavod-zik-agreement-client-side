@@ -95,9 +95,7 @@ let Update2 = React.memo((props) => {
 				<FormWrap>
 					{FormItem("Наименование контрагента: ", props?.document.title)}
 				</FormWrap>
-			) : (
-				"null"
-			)}
+			) : null}
 
 			{/* /////////////////////////////////// */}
 			{state?.document_options?.subject ? (
@@ -107,9 +105,7 @@ let Update2 = React.memo((props) => {
 						props?.document?.data_agreement_list[0]?.subject
 					)}
 				</FormWrap>
-			) : (
-				"null"
-			)}
+			) : null}
 			{/* /////////////////////////////////// */}
 			{state?.document_options?.price ? (
 				<FormWrap>
@@ -118,9 +114,7 @@ let Update2 = React.memo((props) => {
 						props?.document?.data_agreement_list[0]?.price
 					)}
 				</FormWrap>
-			) : (
-				"null"
-			)}
+			) : null}
 			{/* /////////////////////////////////// */}
 			{state?.document_options?.currency_price ? (
 				<FormWrap>
@@ -129,9 +123,7 @@ let Update2 = React.memo((props) => {
 						props?.document?.data_agreement_list[0]?.currency_price
 					)}
 				</FormWrap>
-			) : (
-				"null"
-			)}
+			) : null}
 			{/* /////////////////////////////////// */}
 			{state?.document_options?.executor_name_division ? (
 				<FormWrap>
@@ -140,9 +132,7 @@ let Update2 = React.memo((props) => {
 						props?.document?.data_agreement_list[0]?.executor_name_division
 					)}
 				</FormWrap>
-			) : (
-				"null"
-			)}
+			) : null}
 			{/* /////////////////////////////////// */}
 			{state?.document_options?.sider_signatures_date ? (
 				<FormWrap>
@@ -151,9 +141,7 @@ let Update2 = React.memo((props) => {
 						props?.document?.data_agreement_list[0]?.sider_signatures_date
 					)}
 				</FormWrap>
-			) : (
-				"null"
-			)}
+			) : null}
 			{/* /////////////////////////////////// */}
 			{state?.document_options?.received_from_counteragent_date ? (
 				<FormWrap>
@@ -163,9 +151,7 @@ let Update2 = React.memo((props) => {
 							?.received_from_counteragent_date
 					)}
 				</FormWrap>
-			) : (
-				"null"
-			)}
+			) : null}
 			{/* /////////////////////////////////// */}
 			<Divider type={"horizontal"} />
 
