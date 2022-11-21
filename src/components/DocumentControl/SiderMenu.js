@@ -244,7 +244,7 @@ let SiderMenu = (props) => {
 				defaultSelectedKeys={pathname}
 				className="siderMenu"
 				mode="inline"
-				defaultOpenKeys={["User", "onApproval", "forExecution", "Admin"]}
+				defaultOpenKeys={["User", "onApproval", "Admin"]}
 			>
 				<SubMenu key="User" icon={<DatabaseOutlined />} title="Мои документы">
 					{user.documentControl.insert ? (
