@@ -1,143 +1,119 @@
-import { EyeOutlined } from "@ant-design/icons";
-import {
-	Button,
-	Form,
-	Input,
-	Typography,
-	Space,
-	Divider,
-	Row,
-	Col,
-	Steps,
-	Checkbox,
-	Popconfirm,
-	message,
-	Radio,
-} from "antd";
+import { Form, Divider } from "antd";
 import React, { useEffect, useState } from "react";
-import { useUser, formatDate } from "../../../../../../core/functions";
+import { useUser } from "../../../../../../core/functions";
+import TitleMenu from "../../../../../../core/TitleMenu";
 
 import ApproveConfirm from "./dialogs/ApproveConfirm";
 import RejectConfirm from "./dialogs/RejectConfirm";
 import ReturnStepBackConfirm from "./dialogs/ReturnStepBackConfirm";
 import ReturnToSenderConfirm from "./dialogs/ReturnToSenderConfirm";
 
-let Update3 = React.memo((props) => {
-	let user = useUser();
-	const price_pattern = /^\d+$/;
-	const { Title, Link } = Typography;
-	const { Step } = Steps;
+//Tasks
+import TasksAddDialog3 from "../../../../dialogs/TasksAddDialog3";
+import TaskModalUpdate from "../../modals/TaskModalUpdate";
+import UpdateTask3 from "./UpdateTask3";
+import { FormWrap, FormItem } from "./../../../fragments/FragmentItemWrap";
+import FragmentUploader from "./../../../fragments/FragmentUploader";
+import { FragmentStepViewer } from "./../../../fragments/FragmentStepViewer";
+import { FragmentButtons } from "../../../fragments/FragmentButtons";
+import { FragmentReasonsViewer } from "./../../../fragments/FragmentReasonsViewer";
+import { FragmentTaskList } from "./../../../fragments/FragmentTaskList";
+import FragmentCommentsViewer from "../../../fragments/FragmentCommentsViewer";
+import { FragmentAnyItems } from "../../../fragments/FragmentAnyItems";
+import { GetIDNameTaskFile } from "./../../../api/CRU_Document";
+import { dict, DocumentTasks } from "./gql";
+import { FragmentTaskAndFileViewer } from "./../../../fragments/FragmentFileViewer";
 
+/**
+ * Форма 3 Лист согласования на закуп ТРУ для производства продукции
+ */
+
+let Update3 = React.memo((props) => {
+	/**
+	 * Деструктаризация (начального значение)
+	 */
+	const iniValue = props?.initialValues3?.documents[0];
+
+	const user = useUser();
+	const visibleModalUpdate = useState(false);
+	const [visible, setVisible] = useState(false);
+	const [reasonText, setReasonText] = useState(iniValue?.reason);
+	const [routesList, setRoutesList] = useState([
+		{ positionName: "Тип договора не выбран." },
+	]);
+	const [stepCount, setStepCount] = useState({ step: "0" });
 	const [state, setState] = useState({
 		log_username: user.username,
 	});
 
-	let OpenDocument = async (item) => {
-		// setBtnLoad(true)
-		//console.log("PROPS", item.id)
-		// console.log('RECORD',props.record)
-		const tmp = await fetch("/api/files", {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify({ user: Number(user.id), item: item.id }),
-		});
-		const content = await tmp.json();
-		if (content != undefined) {
-			//console.log("RESULT", content);
-		}
-	};
+	//////////////////////////////////////////////////////////////////////////////////////////
+	/**																					
+	 * Отобразить новое состояние компонентов после обновление (файлов / по поручению)	
+	 */ 
+	
+	/**																					
+	 * Cтейт для таблиц файлов по поручением											
+	 */ 
+	const [FileTask, setFileTask] = useState([]); 
+	const [ReRender, setRerender] = useState(false); 
+	useEffect(() => {
+
+		if (iniValue?.id) {
+			
+			GetIDNameTaskFile(iniValue?.id).then((value) => {
+				
+				setFileTask(value.result); 
+			}); 
+		} 
+	}, [iniValue, ReRender]); 
+	//////////////////////////////////////////////////////////////////////////////////////////
 
 	useEffect(() => {
 		props.form3.setFieldsValue(state);
-		//console.log("state3 form", state);
 	}, [state]);
-	let [routesList, setRoutesList] = useState([
-		{ positionName: "Тип договора не выбран." },
-	]);
-	let [stepCount, setStepCount] = useState({ step: "0" });
+
 	useEffect(() => {
 		if (props.initialValues3) {
 			setState({
-				id: props.initialValues3.documents[0].id,
-				title: props.initialValues3.documents[0].title,
-				position: props.initialValues3.documents[0].position,
-				username: props.initialValues3.documents[0].username,
-				fio: props.initialValues3.documents[0].fio,
-
-				price:
-					props.initialValues3.documents[0].data_agreement_list_production[0]
-						.price,
-				subject:
-					props.initialValues3.documents[0].data_agreement_list_production[0]
-						.subject,
-				currency:
-					props.initialValues3.documents[0].data_agreement_list_production[0]
-						.currency,
+				id: iniValue.id,
+				title: iniValue.title,
+				position: iniValue.position,
+				username: iniValue.username,
+				fio: iniValue.fio,
+				price: iniValue.data_agreement_list_production[0].price,
+				subject: iniValue.data_agreement_list_production[0].subject,
+				currency: iniValue.data_agreement_list_production[0].currency,
 				executor_name_division:
-					props.initialValues3.documents[0].data_agreement_list_production[0]
-						.executor_name_division,
+					iniValue.data_agreement_list_production[0].executor_name_division,
 				executor_phone_number:
-					props.initialValues3.documents[0].data_agreement_list_production[0]
-						.executor_phone_number,
+					iniValue.data_agreement_list_production[0].executor_phone_number,
 				counteragent_contacts:
-					props.initialValues3.documents[0].data_agreement_list_production[0]
-						.counteragent_contacts,
-
-				date_created: props.initialValues3.documents[0].date_created,
-				date_modified: props.initialValues3.documents[0].date_modified,
-				route_id: props.initialValues3.documents[0].route_id.id,
-				status_in_process:
-					props.initialValues3.documents[0].route_id.status_in_process,
-				status_cancelled:
-					props.initialValues3.documents[0].route_id.status_cancelled,
-				status_finished:
-					props.initialValues3.documents[0].route_id.status_finished,
-				status_id: props.initialValues3.documents[0].status_id,
-				route: props.initialValues3.documents[0].route_data,
-				step: props.initialValues3.documents[0].step,
-				comments: props.initialValues3.documents[0].comments,
-				signatures: props.initialValues3.documents[0].signatures,
-				files: props.initialValues3.documents[0].files,
+					iniValue.data_agreement_list_production[0].counteragent_contacts,
+				date_created: iniValue.date_created,
+				date_modified: iniValue.date_modified,
+				route_id: iniValue.route_id.id,
+				status_in_process: iniValue.route_id.status_in_process,
+				status_cancelled: iniValue.route_id.status_cancelled,
+				status_finished: iniValue.route_id.status_finished,
+				status_id: iniValue.status_id,
+				route: iniValue.route_data,
+				step: iniValue.step,
+				comments: iniValue.comments,
+				signatures: iniValue.signatures,
+				files: iniValue.files,
 				log_username: state.log_username,
+				reason:iniValue.reason
 			});
-			setStepCount({ step: props.initialValues3.documents[0].step });
-			setRoutesList(props.initialValues3.documents[0].route_data);
+			setStepCount({ step: iniValue.step });
+			setRoutesList(iniValue.route_data);
 		}
 	}, [props.initialValues3]);
 
-	let download = async (e) => {
-		let id = e.target.dataset.fileid;
-		await fetch("/get-file", {
-			method: "POST",
-			body: JSON.stringify({ id: e.target.dataset.fileid }),
-			headers: {
-				"Content-Type": "application/json",
-			},
-		})
-			.then((response) => {
-				return response.json();
-			})
-			.then((response) => {
-				let result = response.result;
-				let link = document.createElement("a");
-				link.href =
-					result.data_file; /*result.data_file.slice(result.data_file.indexOf(',')+1) */
-				link.download = result.filename;
-				link.click();
-			});
-	};
-
-	let onFinish = (values) => {
+	const onFinish = (values) => {
 		props.onFinish3(state);
-		//console.log("+++++++++++++++++++++++", values);
 	};
 
-	const [reasonText, setReasonText] = useState(
-		props?.initialValues3?.documents[0]?.reason
-	);
-	let ReasonInputChange = (all, change) => {
+	const ReasonInputChange = (all, change) => {
 		if (all.target.value.length > 0) {
 			setReasonText(all.target.value);
 		} else {
@@ -145,31 +121,31 @@ let Update3 = React.memo((props) => {
 		}
 	};
 
-	let radioOptions = [
-		{ label: "Закупки товаров, работ и услуг", value: "1" },
-		{
-			label: "Поставка продукции (выполнение работ, оказание услуг) заказчикам",
-			value: "2",
-		},
-		{
-			label: "Передача имущества в аренду (бесплатное пользование)",
-			value: "3",
-		},
-		{ label: "Совместная деятельность", value: "4" },
-		{
-			label:
-				"Финансирование (кредитование, обеспечение исполнения обязательств)",
-			value: "5",
-		},
-		{ label: "Прочие обязательства", value: "6" },
-	];
-	const [radioState, setRadioState] = useState(
-		props?.initialValues3?.documents[0]?.data_agreement_list_production[0]
-			?.subject
-	);
-
-	const RadioOnChange = (radioValue) => {
-		setRadioState(radioValue.target.value);
+	const TasksTitleMenu = (tableProps) => {
+		return (
+			<TitleMenu
+				buttons={[
+					<TaskModalUpdate
+						visibleModalUpdate={visibleModalUpdate}
+						UpdateForm={UpdateTask3}
+						GQL={DocumentTasks}
+						title="Поручение"
+						selectedRowKeys={tableProps.selectedRowKeys}
+						update={true}
+						width={850}
+						setRerender={setRerender} // Стейт функция для обновления
+						ReRender={ReRender} // Стейт переменная для обновления
+					/>,
+					<TasksAddDialog3
+						visible={visible}
+						setVisible={setVisible}
+						document={props.initialValues3}
+						FileTask={FileTask}
+					/>,
+				]}
+				selectedRowKeys={tableProps.selectedRowKeys}
+			/>
+		);
 	};
 
 	return (
@@ -184,208 +160,166 @@ let Update3 = React.memo((props) => {
 				//console.log("UPDATE3 values", allValues);
 			}}
 		>
-			<b>От:</b> {props?.initialValues3?.documents[0].fio} <br />
-			<b>Должность:</b> {props?.initialValues3?.documents[0].position}
-			{/* Лист согласования на реализацию готовой продукции */}
-			<h4>
-				<b>Тип договора:</b> {props?.initialValues3?.documents[0].route_id.name}
-			</h4>
+			{/* /////////////////////////////////// */}
+			<FormWrap>{FormItem("От: ", state?.fio)}</FormWrap>
+			{/* /////////////////////////////////// */}
+			<FormWrap>{FormItem("Должность: ", state?.position)}</FormWrap>
+			{/* /////////////////////////////////// */}
+			<FormWrap>
+				{FormItem(
+					"Тип договора: ",
+					iniValue?.route_id?.name
+				)}
+			</FormWrap>
+			{/* /////////////////////////////////// */}
 			<Divider type={"horizontal"} />
-			<div className="form-item-wrap">
-				<Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-					<Col span={12}>Наименование контрагента:</Col>{" "}
-					<Col span={12}>{state.title}</Col>
-				</Row>
-			</div>
-			<div className="form-item-wrap">
-				<Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-					<Col span={12}>Предмет договора:</Col>{" "}
-					<Col span={12}>{state.subject}</Col>
-				</Row>
-			</div>
-			<div className="form-item-wrap">
-				<Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-					<Col span={12}>Общая сумма договора:</Col>{" "}
-					<Col span={12}>{state.price}</Col>
-				</Row>
-			</div>
-			<div className="form-item-wrap">
-				<Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-					<Col span={12}>Валюта платежа:</Col>{" "}
-					<Col span={12}>{state.currency}</Col>
-				</Row>
-			</div>
-			<div className="form-item-wrap">
-				<Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-					<Col span={12}>
-						Наименование подразделения, фамилия ответственного исполнителя:
-					</Col>{" "}
-					<Col span={12}>{state.executor_name_division}</Col>
-				</Row>
-			</div>
-			<div className="form-item-wrap">
-				<Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-					<Col span={12}>Телефон исполнителя:</Col>{" "}
-					<Col span={12}>{state.executor_phone_number}</Col>
-				</Row>
-			</div>
-			<div className="form-item-wrap">
-				<Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-					<Col span={12}>Контакты контрагента:</Col>{" "}
-					<Col span={12}>{state.counteragent_contacts}</Col>
-				</Row>
-			</div>
+			{/* /////////////////////////////////// */}
+			<FormWrap>
+				{FormItem("Наименование контрагента: ", state?.title)}
+			</FormWrap>
+			{/* /////////////////////////////////// */}
+			<FormWrap>{FormItem("Предмет договора: ", state?.subject)}</FormWrap>
+			{/* /////////////////////////////////// */}
+			<FormWrap>{FormItem("Основание: ", state?.subject)}</FormWrap>
+			{/* /////////////////////////////////// */}
+			<FormWrap>{FormItem("Общая сумма договора: ", state?.price)}</FormWrap>
+			{/* /////////////////////////////////// */}
+			<FormWrap>{FormItem("Валюта платежа: ", state?.currency)}</FormWrap>
+			{/* /////////////////////////////////// */}
+			<FormWrap>
+				{FormItem(
+					"Наименование подразделения, фамилия ответственного исполнителя: ",
+					state?.executor_name_division
+				)}
+			</FormWrap>
+			{/* /////////////////////////////////// */}
+			<FormWrap>
+				{FormItem("Телефон исполнителя: ", state?.executor_phone_number)}
+			</FormWrap>
+			{/* /////////////////////////////////// */}
+			<FormWrap>
+				{FormItem("Контакты контрагента: ", state?.counteragent_contacts)}
+			</FormWrap>
+			{/* /////////////////////////////////// */}
+
 			<Divider type={"horizontal"} />
-			<Form.Item
-				name="files"
-				className="font-form-header"
-				label="Файлы"
-				labelCol={{ span: 24 }}
-			>
-				{props?.initialValues3?.documents[0].files.map((item) => {
-					return (
-						<>
-							<div className="document-view-wrap">
-								<Link>
-									<a data-fileid={item.id} onClick={download}>
-										{item.filename}
-									</a>
-								</Link>{" "}
-								<Button
-									onClick={() => {
-										OpenDocument(item);
-									}}
-									shape="circle"
-									icon={<EyeOutlined />}
-								/>{" "}
-								<br />
-							</div>
-						</>
-					);
-				})}
-			</Form.Item>
+
+			{/* Фрагмент antd дающую возможность загружать файлы */}
+			<FragmentUploader />
+			{/* /////////////////////////////////// */}
+
 			<Divider type={"horizontal"} />
-			<Form.Item
-				className="font-form-header"
-				name="signatures"
-				label="Подписи"
-				labelCol={{ span: 24 }}
-			>
-				{props?.initialValues3?.documents[0].signatures.map((item) => {
-					//remove commentsList
-					return (
-						<>
-							<div className="signature-view-wrap">
-								<span className="signature-view-position">{item.position}</span>
-								<span className="signature-view-username">{item.fio}</span>
-								<span className="signature-view-date">
-									{formatDate(item.date_signature)}
-								</span>
-							</div>
-						</>
-					);
-				})}
-			</Form.Item>
-			<Row>
-				<Col span={24}>
-					<Divider type={"horizontal"} />
+
+			{console.log("iniValue?.files", iniValue?.files)}
+			{console.log("FileTask", FileTask)}
+
+			{/*Фрагмент antd дающую возможность просматривать файлы*/}
+			{props.initialValues3 !== undefined && FileTask !== undefined ? (
+				<FragmentTaskAndFileViewer
+					files={iniValue?.files}
+					files_task={FileTask}
+					userId={user.id}
+				/>
+			) : (
+				<h1>Загрузка</h1>
+			)}
+			{/* /////////////////////////////////// */}
+
+			<Divider type={"horizontal"} />
+
+			{/* Фрагмент antd дающую возможность просматривать состояние движений документов */}
+			{props.initialValues3 !== undefined ? (
+				<FragmentStepViewer
+					signatures={iniValue?.signatures}
+					step={stepCount.step - 1}
+					routesList={routesList}
+				/>
+			) : (
+				<h1>Загрузка</h1>
+			)}
+			{/* /////////////////////////////////// */}
+
+			<Divider type={"horizontal"} />
+
+			{/* Фрагмент antd с кнопками для форм  */}
+			<FragmentButtons
+				ApproveConfirm={() => (
 					<ApproveConfirm
 						reasonText={reasonText}
 						dataProps={props}
 						setState={setState}
 						user={user}
 					/>
-					<Divider type={"vertical"} />
-					<Space>
-						<Divider type={"vertical"} />
-						<ReturnToSenderConfirm
-							reasonText={reasonText}
-							dataProps={props}
-							setState={setState}
-							user={user}
-						/>
-						<ReturnStepBackConfirm
-							reasonText={reasonText}
-							dataProps={props}
-							setState={setState}
-							user={user}
-						/>
-						<Divider type={"vertical"} />
-						<RejectConfirm
-							reasonText={reasonText}
-							dataProps={props}
-							setState={setState}
-							user={user}
-						/>
-					</Space>
-				</Col>
-				<Col span={24} className="marginTop">
-					<Button onClick={props.modalCancelHandler}>Отменить</Button>
-					<Divider type={"vertical"} />
-					<Button onClick={props.modalEnableEditHandler}>Редактировать</Button>
-				</Col>
-			</Row>
+				)}
+				ReturnToSenderConfirm={() => (
+					<ReturnToSenderConfirm
+						reasonText={reasonText}
+						dataProps={props}
+						setState={setState}
+						user={user}
+					/>
+				)}
+				ReturnStepBackConfirm={() => (
+					<ReturnStepBackConfirm
+						reasonText={reasonText}
+						dataProps={props}
+						setState={setState}
+						user={user}
+					/>
+				)}
+				RejectConfirm={() => (
+					<RejectConfirm
+						reasonText={reasonText}
+						dataProps={props}
+						setState={setState}
+						user={user}
+					/>
+				)}
+				modalCancelHandler={props.modalCancelHandler}
+				modalEnableEditHandler={props.modalEnableEditHandler}
+				reasonText={reasonText}
+				props={props}
+				setState={setState}
+				user={user}
+			/>
+			{/* /////////////////////////////////// */}
+
 			<Divider type={"horizontal"} />
-			<Form.Item
-				className="font-form-header"
-				name="reason"
-				label="Замечание"
-				labelCol={{ span: 24 }}
-			></Form.Item>
-			<div>
-				<Input
-					disabled={props.disabled}
-					onChange={ReasonInputChange}
-					placeholder="Замечание"
-				/>
-				{props?.initialValues3?.documents[0]?.reason?.map((item) => {
-					return (
-						<span>
-							<span>{item.text + "-" + item.userPosition}</span>
-							<br />
-						</span>
-					);
-				})}
-			</div>
+
+			{/* Фрагмент antd для вывода Замечаний по документу */}
+			<FragmentReasonsViewer
+				disabled={props.disabled}
+				ReasonInputChange={ReasonInputChange}
+				Reason={state?.reason}
+			/>
+			{/* /////////////////////////////////// */}
+
 			<Divider type={"horizontal"} />
-			<Form.Item
-				className="font-form-header"
-				name="comments"
-				label="Комментарии"
-				labelCol={{ span: 24 }}
-			>
-				<Input.TextArea
-					rows={7}
-					name="comment"
-					onChange={props.HandleCommentOnChange}
-					disabled={props.disabled}
-				/>
-				<Button
-					disabled={props.disabled}
-					onClick={props.HandleComment}
-					className="marginTop"
-				>
-					Оставить комментарий
-				</Button>
-				{props.commentsList.map((item) => {
-					return (
-						<div className="comments">
-							<li className="comment-item">
-								<span className="user-position-comment">{item.position}</span>
-								<span className="user-name-comment"> ({item.fio}) </span>
-								<span className="user-date-time-comment">{item.date}</span>
-								<br />
-								<span className="comment">{item.comment}</span>
-							</li>
-						</div>
-					);
-				})}
-			</Form.Item>
-			<Form.Item name="date_created" hidden={true}></Form.Item>
-			<Form.Item name="route_id" hidden={true}></Form.Item>
-			<Form.Item name="status_id" hidden={true}></Form.Item>
-			<Form.Item name="step" hidden={true}></Form.Item>
-			<Form.Item name="log_username" hidden={true}></Form.Item>
+
+			{/* Фрагмент antd для вывода поручений по документам */}
+			<FragmentTaskList
+				dict={dict}
+				documentTasksList={props.documentTasksList}
+				visibleModalUpdate={visibleModalUpdate}
+				DocumentTasks={DocumentTasks}
+				TasksTitleMenu={TasksTitleMenu}
+			/>
+			{/* /////////////////////////////////// */}
+
+			<Divider type={"horizontal"} />
+
+			{/* Фрагмент antd дающую возможность просматривать комментарии к документам */}
+			<FragmentCommentsViewer
+				HandleCommentOnChange={props.HandleCommentOnChange}
+				disabled={props.disabled}
+				HandleComment={props.HandleComment}
+				commentsList={props.commentsList}
+			/>
+			{/* /////////////////////////////////// */}
+
+			{/* Фрагмент antd элементами для хранение данных (ну или типо того) */}
+			<FragmentAnyItems />
+			{/* /////////////////////////////////// */}
 		</Form>
 	);
 });
