@@ -63,6 +63,7 @@ let TasksAddDialog = React.memo((props) => {
 				},
 			},
 		};
+		console.log(taskData)
 		insert(taskData);
 		props.setVisible(false);
 	};

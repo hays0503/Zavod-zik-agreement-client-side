@@ -109,7 +109,6 @@ let Update1 = React.memo((props) => {
 
 	let onFinish = (values) => {
 		props.onFinish(state);
-		//console.log("+++++++++++++++++++++++", values);
 	};
 
 	return (
@@ -231,17 +230,7 @@ let Update1 = React.memo((props) => {
 					);
 				})}
 			</div>
-			{/* <Row>
-                <Col span={24} className="marginTop">
-                    <Button onClick={props.modalCancelHandler}>
-                        Отменить
-                    </Button>
-                    <Divider type={'vertical'} />
-                    <Button onClick={props.modalEnableEditHandler}>
-                        Редактировать
-                    </Button>
-                </Col>
-            </Row> */}
+
 			<Divider type={"horizontal"} />
 			<Form.Item
 				className="font-form-header"
