@@ -163,6 +163,7 @@ let SiderMenu = (props) => {
       document_tasks_logs: {
         global: {
           is_read: "=false",
+          type: "!=2",
           user_id: "=" + user.id,
           ORDER_BY: ["date"],
         },
