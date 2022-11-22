@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 import { handlerQuery } from "../../../../../core/functions";
 
 let TaskModalUpdate = React.memo(({ GQL, UpdateForm, ...props }) => {
+	
 	const document = {
 		exemplar: "document",
 		table: "documents",
