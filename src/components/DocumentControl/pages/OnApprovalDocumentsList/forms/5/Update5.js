@@ -186,14 +186,14 @@ let Update5 = React.memo((props) => {
 									<a data-fileid={item.id} onClick={download}>
 										{item.filename}
 									</a>
-								</Link>{" "}
+								</Link>
 								<Button
 									onClick={() => {
 										OpenDocument(item);
 									}}
 									shape="circle"
 									icon={<EyeOutlined />}
-								/>{" "}
+								/>
 								<br />
 							</div>
 						</>

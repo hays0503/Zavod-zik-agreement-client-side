@@ -545,7 +545,7 @@ let ModalInsert = React.memo(
 													<Col span={19}>
 														<span className="displayFlex">
 															<p className="anotherFormSelectCount">
-																{field.name + 1}.{" "}
+																{field.name + 1}.
 															</p>
 
 															<Form.Item

@@ -60,10 +60,10 @@ let TasksAddDialog5 = React.memo((props) => {
 				},
 			},
 		};
+		console.log(taskData)
 		insert(taskData);
 		props.setVisible(false);
-		// console.log("taskData-------------", taskData);
-		// console.log("VALUES-----", values);
+
 	};
 
 	const [form] = Form.useForm();
