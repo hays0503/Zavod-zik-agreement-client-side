@@ -235,113 +235,113 @@ let SiderMenu = (props) => {
     }
   }, [pathname]);
 
-	const onCollapse = (collapsed) => {
-		console.log(collapsed);
-		setCollapsedState(collapsed);
-	};
-	console.log("user ");
-	return (
-		<Sider
-			theme="dark"
-			collapsible
-			collapsed={collapsedState}
-			onCollapse={onCollapse}
-		>
-			<Menu
-				defaultSelectedKeys={pathname}
-				className="siderMenu"
-				mode="inline"
-				defaultOpenKeys={["User", "onApproval", "Admin"]}
-			>
-				<SubMenu key="User" icon={<DatabaseOutlined />} title="Мои документы">
-					{user.documentControl.insert ? (
-						<Menu.Item key="/document-control/orders">
-							<Link to={"/document-control/orders"}>Созданные мною</Link>
-						</Menu.Item>
-					) : null}
-					{user.documentControl.revisedUser.select ? (
-						<Menu.Item key={"/document-control/reviseduser"}>
-							<NavLink to={"/document-control/reviseduser"}>
-								На доработку
-								<sup>
-									<Badge count={con.revised} />
-								</sup>
-							</NavLink>
-						</Menu.Item>
-					) : null}
-					{user.documentControl.approvedUser.select ? (
-						<Menu.Item key={"/document-control/approveduser"}>
-							<NavLink to={"/document-control/approveduser"}>
-								Согласованные
-								<sup>
-									<Badge count={con.approved} />
-								</sup>
-							</NavLink>
-						</Menu.Item>
-					) : null}
+  const onCollapse = (collapsed) => {
+    console.log(collapsed);
+    setCollapsedState(collapsed);
+  };
+  console.log("user ");
+  return (
+    <Sider
+      theme="dark"
+      collapsible
+      collapsed={collapsedState}
+      onCollapse={onCollapse}
+    >
+      <Menu
+        defaultSelectedKeys={pathname}
+        className="siderMenu"
+        mode="inline"
+        defaultOpenKeys={["User", "onApproval", "Admin"]}
+      >
+        <SubMenu key="User" icon={<DatabaseOutlined />} title="Мои документы">
+          {user.documentControl.insert ? (
+            <Menu.Item key="/document-control/orders">
+              <Link to={"/document-control/orders"}>Созданные мною</Link>
+            </Menu.Item>
+          ) : null}
+          {user.documentControl.revisedUser.select ? (
+            <Menu.Item key={"/document-control/reviseduser"}>
+              <NavLink to={"/document-control/reviseduser"}>
+                На доработку
+                <sup>
+                  <Badge count={con.revised} />
+                </sup>
+              </NavLink>
+            </Menu.Item>
+          ) : null}
+          {user.documentControl.approvedUser.select ? (
+            <Menu.Item key={"/document-control/approveduser"}>
+              <NavLink to={"/document-control/approveduser"}>
+                Согласованные
+                <sup>
+                  <Badge count={con.approved} />
+                </sup>
+              </NavLink>
+            </Menu.Item>
+          ) : null}
 
-					{user.documentControl.documentsFinals.select ? (
-						<Menu.Item key={"/document-control/documents-finals"}>
-							<NavLink to={"/document-control/documents-finals"}>
-								Исполненные
-								<sup>
-									<Badge count={con.approved} />
-								</sup>
-							</NavLink>
-						</Menu.Item>
-					) : null}
+          {user.documentControl.documentsFinals.select ? (
+            <Menu.Item key={"/document-control/documents-finals"}>
+              <NavLink to={"/document-control/documents-finals"}>
+                Исполненные
+                <sup>
+                  <Badge count={con.finished} />
+                </sup>
+              </NavLink>
+            </Menu.Item>
+          ) : null}
 
-					{user.documentControl.rejectedUser.select ? (
-						<Menu.Item key={"/document-control/rejecteduser"}>
-							<Link to={"/document-control/rejecteduser"}>
-								Отклонённые
-								<sup>
-									<Badge count={con.rejected} />
-								</sup>
-							</Link>
-						</Menu.Item>
-					) : null}
-					{user.documentControl.registrationDocuments.select ? (
-						<Menu.Item key={"/document-control/registration"}>
-							<Link to={"/document-control/registration"}>
-								Регистрация документов
-							</Link>
-						</Menu.Item>
-					) : null}
-				</SubMenu>
-				{user.documentControl.onApproval.select ||
-				user.documentControl.onApprovalList.select ? (
-					<SubMenu
-						key="onApproval"
-						icon={<SafetyCertificateOutlined />}
-						title="Подписание"
-					>
-						{user.documentControl.onApproval.select ? (
-							<Menu.Item key="/document-control/on-approval">
-								<Link to={"/document-control/on-approval"}>
-									Входящие
-									<sup>
-										<Badge count={con.onaproval} />
-									</sup>
-								</Link>
-							</Menu.Item>
-						) : null}
-						{user.documentControl.onApprovalList.select ? (
-							<Menu.Item key="/document-control/on-approval-list">
-								<Link to={"/document-control/on-approval-list"}>
-									Подписанные мною
-								</Link>
-							</Menu.Item>
-						) : null}
-						{user.documentControl.fulfilledDocuments.select ? (
-							<Menu.Item key={"/document-control/fulfilled"}>
-								<NavLink to={"/document-control/fulfilled"}>
-									Документы подписанные в ООПЗ
-								</NavLink>
-							</Menu.Item>
-						) : null}
-					</SubMenu>
-				) : null}
+          {user.documentControl.rejectedUser.select ? (
+            <Menu.Item key={"/document-control/rejecteduser"}>
+              <Link to={"/document-control/rejecteduser"}>
+                Отклонённые
+                <sup>
+                  <Badge count={con.rejected} />
+                </sup>
+              </Link>
+            </Menu.Item>
+          ) : null}
+          {user.documentControl.registrationDocuments.select ? (
+            <Menu.Item key={"/document-control/registration"}>
+              <Link to={"/document-control/registration"}>
+                Регистрация документов
+              </Link>
+            </Menu.Item>
+          ) : null}
+        </SubMenu>
+        {user.documentControl.onApproval.select ||
+        user.documentControl.onApprovalList.select ? (
+          <SubMenu
+            key="onApproval"
+            icon={<SafetyCertificateOutlined />}
+            title="Подписание"
+          >
+            {user.documentControl.onApproval.select ? (
+              <Menu.Item key="/document-control/on-approval">
+                <Link to={"/document-control/on-approval"}>
+                  Входящие
+                  <sup>
+                    <Badge count={con.onaproval} />
+                  </sup>
+                </Link>
+              </Menu.Item>
+            ) : null}
+            {user.documentControl.onApprovalList.select ? (
+              <Menu.Item key="/document-control/on-approval-list">
+                <Link to={"/document-control/on-approval-list"}>
+                  Подписанные мною
+                </Link>
+              </Menu.Item>
+            ) : null}
+            {user.documentControl.fulfilledDocuments.select ? (
+              <Menu.Item key={"/document-control/fulfilled"}>
+                <NavLink to={"/document-control/fulfilled"}>
+                  Документы подписанные в ООПЗ
+                </NavLink>
+              </Menu.Item>
+            ) : null}
+          </SubMenu>
+        ) : null}
 
         {user.documentControl.forExecutionInbox.select ? (
           <SubMenu
