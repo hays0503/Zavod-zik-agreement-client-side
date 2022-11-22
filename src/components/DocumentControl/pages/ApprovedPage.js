@@ -491,215 +491,215 @@ let DocumentsFormUpdate = React.memo((props) => {
     //console.log("+++++++++++++++++++++++", values);
   };
 
-  return (
-    <Form
-      form={props.form}
-      name="DocumentsForm"
-      onFinish={onFinish}
-      scrollToFirstError
-      autoComplete="off"
-      onValuesChange={(changedValues, allValues) => {
-        setState(Object.assign({}, state, { ...allValues }));
-      }}
-    >
-      <Form.Item
-        name="title"
-        label="Наименование ТРУ"
-        labelCol={{ span: 24 }}
-        rules={[
-          {
-            required: true,
-            message: "Необходимо для заполнения!",
-          },
-        ]}
-      >
-        <Input disabled={props.disabled} placeholder="Наименование ТРУ" />
-      </Form.Item>
-      <Form.Item
-        name="supllier"
-        label="Поставщик ТРУ"
-        labelCol={{ span: 24 }}
-        rules={[
-          {
-            required: true,
-            message: "Необходимо для заполнения!",
-          },
-        ]}
-      >
-        <Input disabled={props.disabled} placeholder="Поставщик ТРУ" />
-      </Form.Item>
-      <Form.Item
-        name="subject"
-        label="Основание"
-        labelCol={{ span: 24 }}
-        rules={[
-          {
-            required: true,
-            message: "Необходимо для заполнения!",
-          },
-        ]}
-      >
-        <Input disabled={props.disabled} placeholder="Основание" />
-      </Form.Item>
-      <Form.Item
-        name="price"
-        label="Общая сумма договора"
-        labelCol={{ span: 24 }}
-        rules={[
-          {
-            required: true,
-            message: "Необходимо для заполнения!",
-          },
-          {
-            pattern: price_pattern,
-            message: "Можно использовать только цифры!",
-          },
-        ]}
-      >
-        <Input disabled={props.disabled} placeholder="Общая сумма договора" />
-      </Form.Item>
-      <Divider type={"horizontal"} />
-      <Form.Item
-        name="files"
-        className="font-form-header"
-        label="Файлы"
-        labelCol={{ span: 24 }}
-      >
-        {props?.initialValues?.documents[0].files.map((item) => {
-          let blolbFile = new Blob([`${item.data_file}`], {
-            type: "data:application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-          });
-          return (
-            <>
-              <div className="document-view-wrap">
-                <Link>
-                  <a data-fileid={item.id} onClick={download}>
-                    {item.filename} <FileImageOutlined />
-                  </a>
-                </Link>{" "}
-                <br />
-                {/* <Link><a href={`/uploads/${item.filename}`} data-fileid={item.id} onClick={download} >{item.filename} <FileImageOutlined /></a></Link> <br/> */}
-                <Button
-                  onClick={() => {
-                    OpenDocument(item);
-                  }}
-                >
-                  Просмотр
-                </Button>{" "}
-                <br />
-              </div>
-            </>
-          );
-        })}
-      </Form.Item>
-      <Divider type={"horizontal"} />
-      <Form.Item
-        className="font-form-header"
-        name="signatures"
-        label="Подписи"
-        labelCol={{ span: 24 }}
-      >
-        {props?.initialValues?.documents[0].signatures.map((item) => {
-          //remove commentsList
-          return (
-            <>
-              <div className="signature-view-wrap">
-                <span className="signature-view-position">{item.position}</span>
-                <span className="signature-view-username">{item.fio}</span>
-                <span className="signature-view-date">
-                  {formatDate(item.date_signature)}
-                </span>
-              </div>
-            </>
-          );
-        })}
-        <Steps
-          labelPlacement="vertical"
-          size="small"
-          current={stepCount.step - 1}
-          className="steps-form-update"
-        >
-          {routesList.map((item) => {
-            return <Step title={item.positionName} />;
-          })}
-        </Steps>
-      </Form.Item>
-      <Row>
-        <Col span={24}>
-          <Divider type={"horizontal"} />
-          <Button
-            type="primary"
-            htmlType="submit"
-            onClick={props.handleRouteForward}
-          >
-            Согласовать
-          </Button>
-          <Space>
-            <Divider type={"vertical"} />
-            <Button
-              type="primary"
-              htmlType="submit"
-              onClick={props.handleRouteBackward}
-            >
-              Вернуть на доработку
-            </Button>
-            <Divider type={"vertical"} />
-            <Button
-              type="primary"
-              htmlType="submit"
-              onClick={props.handleStatusCancelled}
-            >
-              Отклонить
-            </Button>
-          </Space>
-        </Col>
-        <Col span={24} className="marginTop">
-          <Button onClick={props.modalCancelHandler}>Отменить</Button>
-          <Divider type={"vertical"} />
-          <Button onClick={props.modalEnableEditHandler}>Редактировать</Button>
-        </Col>
-      </Row>
-      <Divider type={"horizontal"} />
-      <Form.Item
-        className="font-form-header"
-        name="comments"
-        label="Комментарии"
-        labelCol={{ span: 24 }}
-      >
-        <Input.TextArea
-          rows={7}
-          name="comment"
-          onChange={props.HandleCommentOnChange}
-          disabled={props.disabled}
-        />
-        <Button
-          disabled={props.disabled}
-          onClick={props.HandleComment}
-          className="marginTop"
-        >
-          Оставить комментарий
-        </Button>
-        {props.commentsList.map((item) => {
-          return (
-            <div className="comments">
-              <li className="comment-item">
-                <span className="user-position-comment">{item.position}</span>
-                <span className="user-name-comment"> ({item.fio}) </span>
-                <span className="user-date-time-comment">{item.date}</span>
-                <br />
-                <span className="comment">{item.comment}</span>
-              </li>
-            </div>
-          );
-        })}
-      </Form.Item>
-      <Form.Item name="date_created" hidden={true}></Form.Item>
-      <Form.Item name="route_id" hidden={true}></Form.Item>
-      <Form.Item name="status_id" hidden={true}></Form.Item>
-      <Form.Item name="step" hidden={true}></Form.Item>
-      <Form.Item name="log_username" hidden={true}></Form.Item>
-    </Form>
-  );
+	return (
+		<Form
+			form={props.form}
+			name="DocumentsForm"
+			onFinish={onFinish}
+			scrollToFirstError
+			autoComplete="off"
+			onValuesChange={(changedValues, allValues) => {
+				setState(Object.assign({}, state, { ...allValues }));
+			}}
+		>
+			<Form.Item
+				name="title"
+				label="Наименование ТРУ"
+				labelCol={{ span: 24 }}
+				rules={[
+					{
+						required: true,
+						message: "Необходимо для заполнения!",
+					},
+				]}
+			>
+				<Input disabled={props.disabled} placeholder="Наименование ТРУ" />
+			</Form.Item>
+			<Form.Item
+				name="supllier"
+				label="Поставщик ТРУ"
+				labelCol={{ span: 24 }}
+				rules={[
+					{
+						required: true,
+						message: "Необходимо для заполнения!",
+					},
+				]}
+			>
+				<Input disabled={props.disabled} placeholder="Поставщик ТРУ" />
+			</Form.Item>
+			<Form.Item
+				name="subject"
+				label="Основание"
+				labelCol={{ span: 24 }}
+				rules={[
+					{
+						required: true,
+						message: "Необходимо для заполнения!",
+					},
+				]}
+			>
+				<Input disabled={props.disabled} placeholder="Основание" />
+			</Form.Item>
+			<Form.Item
+				name="price"
+				label="Общая сумма договора"
+				labelCol={{ span: 24 }}
+				rules={[
+					{
+						required: true,
+						message: "Необходимо для заполнения!",
+					},
+					{
+						pattern: price_pattern,
+						message: "Можно использовать только цифры!",
+					},
+				]}
+			>
+				<Input disabled={props.disabled} placeholder="Общая сумма договора" />
+			</Form.Item>
+			<Divider type={"horizontal"} />
+			<Form.Item
+				name="files"
+				className="font-form-header"
+				label="Файлы"
+				labelCol={{ span: 24 }}
+			>
+				{props?.initialValues?.documents[0].files.map((item) => {
+					let blolbFile = new Blob([`${item.data_file}`], {
+						type: "data:application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+					});
+					return (
+						<>
+							<div className="document-view-wrap">
+								<Link>
+									<a data-fileid={item.id} onClick={download}>
+										{item.filename} <FileImageOutlined />
+									</a>
+								</Link>
+								<br />
+								{/* <Link><a href={`/uploads/${item.filename}`} data-fileid={item.id} onClick={download} >{item.filename} <FileImageOutlined /></a></Link> <br/> */}
+								<Button
+									onClick={() => {
+										OpenDocument(item);
+									}}
+								>
+									Просмотр
+								</Button>
+								<br />
+							</div>
+						</>
+					);
+				})}
+			</Form.Item>
+			<Divider type={"horizontal"} />
+			<Form.Item
+				className="font-form-header"
+				name="signatures"
+				label="Подписи"
+				labelCol={{ span: 24 }}
+			>
+				{props?.initialValues?.documents[0].signatures.map((item) => {
+					//remove commentsList
+					return (
+						<>
+							<div className="signature-view-wrap">
+								<span className="signature-view-position">{item.position}</span>
+								<span className="signature-view-username">{item.fio}</span>
+								<span className="signature-view-date">
+									{formatDate(item.date_signature)}
+								</span>
+							</div>
+						</>
+					);
+				})}
+				<Steps
+					labelPlacement="vertical"
+					size="small"
+					current={stepCount.step - 1}
+					className="steps-form-update"
+				>
+					{routesList.map((item) => {
+						return <Step title={item.positionName} />;
+					})}
+				</Steps>
+			</Form.Item>
+			<Row>
+				<Col span={24}>
+					<Divider type={"horizontal"} />
+					<Button
+						type="primary"
+						htmlType="submit"
+						onClick={props.handleRouteForward}
+					>
+						Согласовать
+					</Button>
+					<Space>
+						<Divider type={"vertical"} />
+						<Button
+							type="primary"
+							htmlType="submit"
+							onClick={props.handleRouteBackward}
+						>
+							Вернуть на доработку
+						</Button>
+						<Divider type={"vertical"} />
+						<Button
+							type="primary"
+							htmlType="submit"
+							onClick={props.handleStatusCancelled}
+						>
+							Отклонить
+						</Button>
+					</Space>
+				</Col>
+				<Col span={24} className="marginTop">
+					<Button onClick={props.modalCancelHandler}>Отменить</Button>
+					<Divider type={"vertical"} />
+					<Button onClick={props.modalEnableEditHandler}>Редактировать</Button>
+				</Col>
+			</Row>
+			<Divider type={"horizontal"} />
+			<Form.Item
+				className="font-form-header"
+				name="comments"
+				label="Комментарии"
+				labelCol={{ span: 24 }}
+			>
+				<Input.TextArea
+					rows={7}
+					name="comment"
+					onChange={props.HandleCommentOnChange}
+					disabled={props.disabled}
+				/>
+				<Button
+					disabled={props.disabled}
+					onClick={props.HandleComment}
+					className="marginTop"
+				>
+					Оставить комментарий
+				</Button>
+				{props.commentsList.map((item) => {
+					return (
+						<div className="comments">
+							<li className="comment-item">
+								<span className="user-position-comment">{item.position}</span>
+								<span className="user-name-comment"> ({item.fio}) </span>
+								<span className="user-date-time-comment">{item.date}</span>
+								<br />
+								<span className="comment">{item.comment}</span>
+							</li>
+						</div>
+					);
+				})}
+			</Form.Item>
+			<Form.Item name="date_created" hidden={true}></Form.Item>
+			<Form.Item name="route_id" hidden={true}></Form.Item>
+			<Form.Item name="status_id" hidden={true}></Form.Item>
+			<Form.Item name="step" hidden={true}></Form.Item>
+			<Form.Item name="log_username" hidden={true}></Form.Item>
+		</Form>
+	);
 });
 let DocumentsFormUpdate2 = React.memo((props) => {
   let user = useUser();
@@ -812,218 +812,218 @@ let DocumentsFormUpdate2 = React.memo((props) => {
     //console.log("+++++++++++++++++++++++", values);
   };
 
-  return (
-    <Form
-      form={props.form2}
-      name="DocumentsForm2"
-      onFinish={onFinish}
-      scrollToFirstError
-      autoComplete="off"
-      onValuesChange={(changedValues, allValues) => {
-        setState(Object.assign({}, state, { ...allValues }));
-      }}
-    >
-      <b>От:</b> {props?.initialValues2?.documents[0].fio} <br />
-      <b>Должность:</b> {props?.initialValues2?.documents[0].position}
-      <Divider type={"horizontal"} />
-      <Form.Item
-        name="title"
-        label="Наименование ТРУ2"
-        labelCol={{ span: 24 }}
-        rules={[
-          {
-            required: true,
-            message: "Необходимо для заполнения!",
-          },
-        ]}
-      >
-        <Input disabled={props.disabled} placeholder="Наименование ТРУ" />
-      </Form.Item>
-      <Form.Item
-        name="supllier"
-        label="Поставщик ТРУ"
-        labelCol={{ span: 24 }}
-        rules={[
-          {
-            required: true,
-            message: "Необходимо для заполнения!",
-          },
-        ]}
-      >
-        <Input disabled={props.disabled} placeholder="Поставщик ТРУ" />
-      </Form.Item>
-      <Form.Item
-        name="subject"
-        label="Основание"
-        labelCol={{ span: 24 }}
-        rules={[
-          {
-            required: true,
-            message: "Необходимо для заполнения!",
-          },
-        ]}
-      >
-        <Input disabled={props.disabled} placeholder="Основание" />
-      </Form.Item>
-      <Form.Item
-        name="price"
-        label="Общая сумма договора"
-        labelCol={{ span: 24 }}
-        rules={[
-          {
-            required: true,
-            message: "Необходимо для заполнения!",
-          },
-          {
-            pattern: price_pattern,
-            message: "Можно использовать только цифры!",
-          },
-        ]}
-      >
-        <Input disabled={props.disabled} placeholder="Общая сумма договора" />
-      </Form.Item>
-      <Divider type={"horizontal"} />
-      <Form.Item
-        name="files"
-        className="font-form-header"
-        label="Файлы"
-        labelCol={{ span: 24 }}
-      >
-        {props?.initialValues2?.documents[0].files.map((item) => {
-          let blolbFile = new Blob([`${item.data_file}`], {
-            type: "data:application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-          });
-          return (
-            <>
-              <div className="document-view-wrap">
-                <Link>
-                  <a data-fileid={item.id} onClick={download}>
-                    {item.filename} <FileImageOutlined />
-                  </a>
-                </Link>{" "}
-                <br />
-                {/* <Link><a href={`/uploads/${item.filename}`} data-fileid={item.id} onClick={download} >{item.filename} <FileImageOutlined /></a></Link> <br/> */}
-                <Button
-                  onClick={() => {
-                    OpenDocument(item);
-                  }}
-                >
-                  Просмотр
-                </Button>{" "}
-                <br />
-              </div>
-            </>
-          );
-        })}
-      </Form.Item>
-      <Divider type={"horizontal"} />
-      <Form.Item
-        className="font-form-header"
-        name="signatures"
-        label="Подписи"
-        labelCol={{ span: 24 }}
-      >
-        {props?.initialValues2?.documents[0].signatures.map((item) => {
-          //remove commentsList
-          return (
-            <>
-              <div className="signature-view-wrap">
-                <span className="signature-view-position">{item.position}</span>
-                <span className="signature-view-username">{item.fio}</span>
-                <span className="signature-view-date">
-                  {formatDate(item.date_signature)}
-                </span>
-              </div>
-            </>
-          );
-        })}
-        <Steps
-          labelPlacement="vertical"
-          size="small"
-          current={stepCount.step - 1}
-          className="steps-form-update"
-        >
-          {routesList.map((item) => {
-            return <Step title={item.positionName} />;
-          })}
-        </Steps>
-      </Form.Item>
-      <Row>
-        <Col span={24}>
-          <Divider type={"horizontal"} />
-          <Button
-            type="primary"
-            htmlType="submit"
-            onClick={props.handleRouteForward2}
-          >
-            Согласовать
-          </Button>
-          <Space>
-            <Divider type={"vertical"} />
-            <Button
-              type="primary"
-              htmlType="submit"
-              onClick={props.handleRouteBackward2}
-            >
-              Вернуть на доработку
-            </Button>
-            <Divider type={"vertical"} />
-            <Button
-              type="primary"
-              htmlType="submit"
-              onClick={props.handleStatusCancelled}
-            >
-              Отклонить
-            </Button>
-          </Space>
-        </Col>
-        <Col span={24} className="marginTop">
-          <Button onClick={props.modalCancelHandler}>Отменить</Button>
-          <Divider type={"vertical"} />
-          <Button onClick={props.modalEnableEditHandler}>Редактировать</Button>
-        </Col>
-      </Row>
-      <Divider type={"horizontal"} />
-      <Form.Item
-        className="font-form-header"
-        name="comments"
-        label="Комментарии"
-        labelCol={{ span: 24 }}
-      >
-        <Input.TextArea
-          rows={7}
-          name="comment"
-          onChange={props.HandleCommentOnChange}
-          disabled={props.disabled}
-        />
-        <Button
-          disabled={props.disabled}
-          onClick={props.HandleComment}
-          className="marginTop"
-        >
-          Оставить комментарий
-        </Button>
-        {props.commentsList.map((item) => {
-          return (
-            <div className="comments">
-              <li className="comment-item">
-                <span className="user-position-comment">{item.position}</span>
-                <span className="user-name-comment"> ({item.fio}) </span>
-                <span className="user-date-time-comment">{item.date}</span>
-                <br />
-                <span className="comment">{item.comment}</span>
-              </li>
-            </div>
-          );
-        })}
-      </Form.Item>
-      <Form.Item name="date_created" hidden={true}></Form.Item>
-      <Form.Item name="route_id" hidden={true}></Form.Item>
-      <Form.Item name="status_id" hidden={true}></Form.Item>
-      <Form.Item name="step" hidden={true}></Form.Item>
-      <Form.Item name="log_username" hidden={true}></Form.Item>
-    </Form>
-  );
+	return (
+		<Form
+			form={props.form2}
+			name="DocumentsForm2"
+			onFinish={onFinish}
+			scrollToFirstError
+			autoComplete="off"
+			onValuesChange={(changedValues, allValues) => {
+				setState(Object.assign({}, state, { ...allValues }));
+			}}
+		>
+			<b>От:</b> {props?.initialValues2?.documents[0].fio} <br />
+			<b>Должность:</b> {props?.initialValues2?.documents[0].position}
+			<Divider type={"horizontal"} />
+			<Form.Item
+				name="title"
+				label="Наименование ТРУ2"
+				labelCol={{ span: 24 }}
+				rules={[
+					{
+						required: true,
+						message: "Необходимо для заполнения!",
+					},
+				]}
+			>
+				<Input disabled={props.disabled} placeholder="Наименование ТРУ" />
+			</Form.Item>
+			<Form.Item
+				name="supllier"
+				label="Поставщик ТРУ"
+				labelCol={{ span: 24 }}
+				rules={[
+					{
+						required: true,
+						message: "Необходимо для заполнения!",
+					},
+				]}
+			>
+				<Input disabled={props.disabled} placeholder="Поставщик ТРУ" />
+			</Form.Item>
+			<Form.Item
+				name="subject"
+				label="Основание"
+				labelCol={{ span: 24 }}
+				rules={[
+					{
+						required: true,
+						message: "Необходимо для заполнения!",
+					},
+				]}
+			>
+				<Input disabled={props.disabled} placeholder="Основание" />
+			</Form.Item>
+			<Form.Item
+				name="price"
+				label="Общая сумма договора"
+				labelCol={{ span: 24 }}
+				rules={[
+					{
+						required: true,
+						message: "Необходимо для заполнения!",
+					},
+					{
+						pattern: price_pattern,
+						message: "Можно использовать только цифры!",
+					},
+				]}
+			>
+				<Input disabled={props.disabled} placeholder="Общая сумма договора" />
+			</Form.Item>
+			<Divider type={"horizontal"} />
+			<Form.Item
+				name="files"
+				className="font-form-header"
+				label="Файлы"
+				labelCol={{ span: 24 }}
+			>
+				{props?.initialValues2?.documents[0].files.map((item) => {
+					let blolbFile = new Blob([`${item.data_file}`], {
+						type: "data:application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+					});
+					return (
+						<>
+							<div className="document-view-wrap">
+								<Link>
+									<a data-fileid={item.id} onClick={download}>
+										{item.filename} <FileImageOutlined />
+									</a>
+								</Link>
+								<br />
+								{/* <Link><a href={`/uploads/${item.filename}`} data-fileid={item.id} onClick={download} >{item.filename} <FileImageOutlined /></a></Link> <br/> */}
+								<Button
+									onClick={() => {
+										OpenDocument(item);
+									}}
+								>
+									Просмотр
+								</Button>
+								<br />
+							</div>
+						</>
+					);
+				})}
+			</Form.Item>
+			<Divider type={"horizontal"} />
+			<Form.Item
+				className="font-form-header"
+				name="signatures"
+				label="Подписи"
+				labelCol={{ span: 24 }}
+			>
+				{props?.initialValues2?.documents[0].signatures.map((item) => {
+					//remove commentsList
+					return (
+						<>
+							<div className="signature-view-wrap">
+								<span className="signature-view-position">{item.position}</span>
+								<span className="signature-view-username">{item.fio}</span>
+								<span className="signature-view-date">
+									{formatDate(item.date_signature)}
+								</span>
+							</div>
+						</>
+					);
+				})}
+				<Steps
+					labelPlacement="vertical"
+					size="small"
+					current={stepCount.step - 1}
+					className="steps-form-update"
+				>
+					{routesList.map((item) => {
+						return <Step title={item.positionName} />;
+					})}
+				</Steps>
+			</Form.Item>
+			<Row>
+				<Col span={24}>
+					<Divider type={"horizontal"} />
+					<Button
+						type="primary"
+						htmlType="submit"
+						onClick={props.handleRouteForward2}
+					>
+						Согласовать
+					</Button>
+					<Space>
+						<Divider type={"vertical"} />
+						<Button
+							type="primary"
+							htmlType="submit"
+							onClick={props.handleRouteBackward2}
+						>
+							Вернуть на доработку
+						</Button>
+						<Divider type={"vertical"} />
+						<Button
+							type="primary"
+							htmlType="submit"
+							onClick={props.handleStatusCancelled}
+						>
+							Отклонить
+						</Button>
+					</Space>
+				</Col>
+				<Col span={24} className="marginTop">
+					<Button onClick={props.modalCancelHandler}>Отменить</Button>
+					<Divider type={"vertical"} />
+					<Button onClick={props.modalEnableEditHandler}>Редактировать</Button>
+				</Col>
+			</Row>
+			<Divider type={"horizontal"} />
+			<Form.Item
+				className="font-form-header"
+				name="comments"
+				label="Комментарии"
+				labelCol={{ span: 24 }}
+			>
+				<Input.TextArea
+					rows={7}
+					name="comment"
+					onChange={props.HandleCommentOnChange}
+					disabled={props.disabled}
+				/>
+				<Button
+					disabled={props.disabled}
+					onClick={props.HandleComment}
+					className="marginTop"
+				>
+					Оставить комментарий
+				</Button>
+				{props.commentsList.map((item) => {
+					return (
+						<div className="comments">
+							<li className="comment-item">
+								<span className="user-position-comment">{item.position}</span>
+								<span className="user-name-comment"> ({item.fio}) </span>
+								<span className="user-date-time-comment">{item.date}</span>
+								<br />
+								<span className="comment">{item.comment}</span>
+							</li>
+						</div>
+					);
+				})}
+			</Form.Item>
+			<Form.Item name="date_created" hidden={true}></Form.Item>
+			<Form.Item name="route_id" hidden={true}></Form.Item>
+			<Form.Item name="status_id" hidden={true}></Form.Item>
+			<Form.Item name="step" hidden={true}></Form.Item>
+			<Form.Item name="log_username" hidden={true}></Form.Item>
+		</Form>
+	);
 });
 
 export default ApprovedPage;

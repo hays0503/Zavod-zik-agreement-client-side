@@ -48,25 +48,25 @@ const PrintForm2 = React.forwardRef((props, ref) => {
 							продукции
 						</div>
 						<div style={{ marginBottom: "10px" }}>
-							<b>Наименование контрагента:</b>{" "}
+							<b>Наименование контрагента:</b>
 							{props?.printData?.documentData?.documents[0]?.title}
 						</div>
 						<div style={{ marginBottom: "10px" }}>
-							<b>Предмет договора:</b>{" "}
+							<b>Предмет договора:</b>
 							{
 								props?.printData?.documentData?.documents[0]
 									?.data_agreement_list[0]?.subject
 							}
 						</div>
 						<div style={{ marginBottom: "10px" }}>
-							<b>Общая сумма договора в валюте цены договора:</b>{" "}
+							<b>Общая сумма договора в валюте цены договора:</b>
 							{
 								props?.printData?.documentData?.documents[0]
 									?.data_agreement_list[0]?.price
 							}
 						</div>
 						<div style={{ marginBottom: "10px" }}>
-							<b>Общая сумма договора в тенге, по курсу НБ РК:</b>{" "}
+							<b>Общая сумма договора в тенге, по курсу НБ РК:</b>
 							{
 								props?.printData?.documentData?.documents[0]
 									?.data_agreement_list[0]?.currency_price
@@ -75,7 +75,7 @@ const PrintForm2 = React.forwardRef((props, ref) => {
 						<div style={{ marginBottom: "10px" }}>
 							<b>
 								Наименование подразделения, фамилия ответственного исполнителя:
-							</b>{" "}
+							</b>
 							{
 								props?.printData?.documentData?.documents[0]
 									?.data_agreement_list[0]?.executor_name_division
@@ -85,7 +85,7 @@ const PrintForm2 = React.forwardRef((props, ref) => {
 							<b>
 								Подписанный сторонами оригинал договора получен, дата, способ
 								получения от контрагента:
-							</b>{" "}
+							</b>
 							{
 								props?.printData?.documentData?.documents[0]
 									?.data_agreement_list[0]?.sider_signatures_date
@@ -95,7 +95,7 @@ const PrintForm2 = React.forwardRef((props, ref) => {
 							<b>
 								Дата получение проекта договора, способ получения от
 								контрагента:
-							</b>{" "}
+							</b>
 							{
 								props?.printData?.documentData?.documents[0]
 									?.data_agreement_list[0]?.received_from_counteragent_date
@@ -144,11 +144,11 @@ const PrintForm2 = React.forwardRef((props, ref) => {
 							</table>
 						</Row>
 						<div style={{ paddingTop: "20px" }}>
-							<b>Исполнитель:</b>{" "}
-							{props?.printData?.documentData?.documents[0]?.position},{" "}
+							<b>Исполнитель:</b>
+							{props?.printData?.documentData?.documents[0]?.position},
 							{props?.printData?.documentData?.documents[0]?.fio} <br />
 							<b>Телефоны исполнителя:</b> _________________ <br />
-							<b>Полученный сторонами оригинал договора получен:</b>{" "}
+							<b>Полученный сторонами оригинал договора получен:</b>
 							_________________
 						</div>
 					</div>
