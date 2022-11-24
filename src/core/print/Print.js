@@ -5,7 +5,6 @@ import { Button } from "antd";
 import "antd/dist/antd.css";
 
 import TestPrint from "./reports/test/TestPrint";
-import { createPdf } from "./reports/test/pdfConstruct";
 
 function Print(documentData) {
 	let componentRef = useRef();
