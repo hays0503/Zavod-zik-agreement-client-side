@@ -5,16 +5,16 @@ import { useUser } from "../../../../core/functions";
  * @param item id документа
  */
 export const TaskFileOpenDocument = async (item) => {
-	let user = useUser();
 	const tmp = await fetch("/api/tasks_files", {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json",
 		},
-		body: JSON.stringify({ user: Number(user.id), item: item.id }),
+		body: JSON.stringify({item: item.id }),
 	});
 	const content = await tmp.json();
 	if (content !== undefined) {
+		return await content;
 		//console.log("RESULT", content)
 	}
 };
@@ -47,17 +47,16 @@ export const TaskFileDownload = async (e) => {
  * @param item id документа
  */
 export const FileOpenDocument = async (item) => {
-	let user = useUser();
 	const tmp = await fetch("/api/files", {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json",
 		},
-		body: JSON.stringify({ user: Number(user.id), item: item.id }),
+		body: JSON.stringify({ item: item.id }),
 	});
 	const content = await tmp.json();
 	if (content !== undefined) {
-		//console.log("RESULT", content);
+		return await content;
 	}
 };
 /**
