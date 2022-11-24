@@ -55,7 +55,7 @@ export const FragmentSelectItems = (props) => {
   const PositionName = useQuery(GetPosition, {
     onCompleted: (Data) => {
       setPositionName(
-        Data.position[0].name ? Data.position[0].name : positionName
+        Data.position[0]?.name ? Data.position[0].name : positionName
       );
     },
     variables: {
