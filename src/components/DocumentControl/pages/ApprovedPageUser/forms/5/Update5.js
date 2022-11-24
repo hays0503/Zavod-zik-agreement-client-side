@@ -75,7 +75,7 @@ let Update5 = React.memo((props) => {
 	}, [props.initialValues5]);
 
 	let onFinish = (values) => {
-		props.onFinish4(state);
+		props.onFinish5(state);
 		//console.log("+++++++++++++++++++++++", values);
 	};
 
@@ -138,8 +138,9 @@ let Update5 = React.memo((props) => {
 				setState(Object.assign({}, state, { ...allValues }));
 			}}
 		>
+			{/* Другой */}
 			<h4>
-				<b>Тип договора:</b> Другой
+				<b>Тип договора:</b> {props?.initialValues5?.documents[0].route_id.name}
 			</h4>
 			<div className="form-item-wrap">
 				<Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
@@ -171,14 +172,14 @@ let Update5 = React.memo((props) => {
 									<a data-fileid={item.id} onClick={download}>
 										{item.filename}
 									</a>
-								</Link>{" "}
+								</Link>
 								<Button
 									onClick={() => {
 										OpenDocument(item);
 									}}
 									shape="circle"
 									icon={<EyeOutlined />}
-								/>{" "}
+								/>
 								<br />
 							</div>
 						</>

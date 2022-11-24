@@ -2,7 +2,7 @@ import { Button, Col, Divider, Form } from "antd";
 import React, { useEffect, useState } from "react";
 import { useUser } from "../../../../../../core/functions";
 import {
-	FragmentFileViewer,
+	FragmentFileViewerReceiver,
 	FragmentFileViewerOnClick,
 } from "../../../fragments/FragmentFileViewer";
 import { FormItem, FormWrap } from "../../../fragments/FragmentItemWrap";
@@ -133,13 +133,11 @@ let Update2 = React.memo((props) => {
 			{/* /////////////////////////////////// */}
 			{state?.document_options?.sider_signatures_date === true ? (
 				<FormWrap>
-					<Col span={12}>
-						Подписанный сторонами оригинал договора получен, дата, способ
-						получения от контрагента:{" "}
-					</Col>
-					<Col span={12}>
-						{props?.document?.data_agreement_list[0]?.sider_signatures_date}
-					</Col>
+					{FormItem(
+						`Подписанный сторонами оригинал договора получен, дата, способ
+						получения от контрагента: `,
+						props?.document?.data_agreement_list[0]?.sider_signatures_date
+					)}
 				</FormWrap>
 			) : (
 				""
@@ -147,15 +145,11 @@ let Update2 = React.memo((props) => {
 			{/* /////////////////////////////////// */}
 			{state?.document_options?.sider_signatures_date === true ? (
 				<FormWrap>
-					<Col span={12}>
-						Дата получение проекта договора, способ получения от контрагента:{" "}
-					</Col>
-					<Col span={12}>
-						{
-							props?.document?.data_agreement_list[0]
-								?.received_from_counteragent_date
-						}
-					</Col>
+					{FormItem(
+						`Дата получение проекта договора, способ получения от контрагента: `,
+						props?.document?.data_agreement_list[0]
+							?.received_from_counteragent_date
+					)}
 				</FormWrap>
 			) : (
 				""
@@ -169,7 +163,14 @@ let Update2 = React.memo((props) => {
 				<b>Файлы прикреплённые отправителем</b>
 			</h3>
 			{/* /////////////////////////////////// */}
-			{result !== undefined ? <FragmentFileViewer files={result} /> : ""}
+			{result !== undefined ? (
+				<FragmentFileViewerReceiver
+					files={result}
+					document_tasks_id_file={state.document_tasks_id_file}
+				/>
+			) : (
+				""
+			)}
 			{/* /////////////////////////////////// */}
 
 			<Divider type={"horizontal"} />

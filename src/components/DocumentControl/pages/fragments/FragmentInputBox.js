@@ -1,14 +1,14 @@
-import { Form, Input, Radio }from "antd";
+import { Form, Input, Radio } from "antd";
 import React, { useState } from "react";
 
 const price_pattern = /^\d+$/;
-const price_max_count = /^.{1,8}$/;
+const price_max_count = /^.{1,15}$/;
 const phone_pattern = /^!*([0-9]!*){11,11}$/g;
 
 /**
- * 
+ *
  * @param {string} label Метка заполняемой области
- * @param {string} placeholder Подсказка для области заполнение 
+ * @param {string} placeholder Подсказка для области заполнение
  * @returns {Form.Item} Form.Item Возвращает фрагмент формы
  */
 export const FragmentInputBoxTitle = (props) => {
@@ -29,9 +29,9 @@ export const FragmentInputBoxTitle = (props) => {
 	);
 };
 /**
- * 
+ *
  * @param {string} label Метка заполняемой области
- * @param {string} placeholder Подсказка для области заполнение 
+ * @param {string} placeholder Подсказка для области заполнение
  * @returns {Form.Item} Form.Item Возвращает фрагмент формы
  */
 export const FragmentInputBoxRemark = (props) => {
@@ -52,9 +52,9 @@ export const FragmentInputBoxRemark = (props) => {
 	);
 };
 /**
- * 
+ *
  * @param {string} label Метка заполняемой области
- * @param {string} placeholder Подсказка для области заполнение 
+ * @param {string} placeholder Подсказка для области заполнение
  * @returns {Form.Item} Form.Item Возвращает фрагмент формы
  */
 export const FragmentInputBoxSupllier = (props) => {
@@ -75,9 +75,9 @@ export const FragmentInputBoxSupllier = (props) => {
 	);
 };
 /**
- * 
+ *
  * @param {string} label Метка заполняемой области
- * @param {string} placeholder Подсказка для области заполнение 
+ * @param {string} placeholder Подсказка для области заполнение
  * @returns {Form.Item} Form.Item Возвращает фрагмент формы
  */
 export const FragmentInputBoxSubject = (props) => {
@@ -103,9 +103,9 @@ export const FragmentInputBoxSubject = (props) => {
 };
 
 /**
- * 
+ *
  * @param {string} label Метка заполняемой области
- * @param {string} placeholder Подсказка для области заполнение 
+ * @param {string} placeholder Подсказка для области заполнение
  * @returns {Form.Item} Form.Item Возвращает фрагмент формы
  */
 export const FragmentInputBoxSubjectRadio = (props) => {
@@ -147,21 +147,21 @@ export const FragmentInputBoxSubjectRadio = (props) => {
 				},
 			]}
 		>
-				<Radio.Group
-					disabled={props.disabled}
-					onChange={RadioOnChange}
-					options={radioOptions}
-					className="form-radio"
-					value={radioState}
-				/>
+			<Radio.Group
+				disabled={props.disabled}
+				onChange={RadioOnChange}
+				options={radioOptions}
+				className="form-radio"
+				value={radioState}
+			/>
 		</Form.Item>
 	);
 };
 
 /**
- * 
+ *
  * @param {string} label Метка заполняемой области
- * @param {string} placeholder Подсказка для области заполнение 
+ * @param {string} placeholder Подсказка для области заполнение
  * @returns {Form.Item} Form.Item Возвращает фрагмент формы
  */
 export const FragmentInputBoxPrice = (props) => {
@@ -170,20 +170,20 @@ export const FragmentInputBoxPrice = (props) => {
 			name="price"
 			label={props.label}
 			labelCol={{ span: 24 }}
-            rules={[
-                {
-                    required: true,
-                    message: "Необходимо для заполнения!",
-                },
-                {
-                    pattern: price_pattern,
-                    message: "Можно использовать только цифры!",
-                },
-                {
-                    pattern: price_max_count,
-                    message: "Общая сумма договора не должна превышать 99999999",
-                },
-            ]}
+			rules={[
+				{
+					required: true,
+					message: "Необходимо для заполнения!",
+				},
+				{
+					pattern: price_pattern,
+					message: "Можно использовать только цифры!",
+				},
+				{
+					pattern: price_max_count,
+					message: "Общая сумма договора не должна превышать 15 знаков",
+				},
+			]}
 		>
 			<Input
 				rows={4}
@@ -195,9 +195,9 @@ export const FragmentInputBoxPrice = (props) => {
 };
 
 /**
- * 
+ *
  * @param {string} label Метка заполняемой области
- * @param {string} placeholder Подсказка для области заполнение 
+ * @param {string} placeholder Подсказка для области заполнение
  * @returns {Form.Item} Form.Item Возвращает фрагмент формы
  */
 export const FragmentInputBoxCurrency = (props) => {
@@ -206,25 +206,22 @@ export const FragmentInputBoxCurrency = (props) => {
 			name="currency"
 			label={props.label}
 			labelCol={{ span: 24 }}
-            rules={[
-                {
-                    required: true,
-                    message: "Необходимо для заполнения!",
-                }
-            ]}
+			rules={[
+				{
+					required: true,
+					message: "Необходимо для заполнения!",
+				},
+			]}
 		>
-			<Input
-				disabled={props.disabled}
-				placeholder={props.placeholder}
-			/>
+			<Input disabled={props.disabled} placeholder={props.placeholder} />
 		</Form.Item>
 	);
 };
 
 /**
- * 
+ *
  * @param {string} label Метка заполняемой области
- * @param {string} placeholder Подсказка для области заполнение 
+ * @param {string} placeholder Подсказка для области заполнение
  * @returns {Form.Item} Form.Item Возвращает фрагмент формы
  */
 export const FragmentInputBoxCurrencyPrice = (props) => {
@@ -233,33 +230,30 @@ export const FragmentInputBoxCurrencyPrice = (props) => {
 			name="currency_price"
 			label={props.label}
 			labelCol={{ span: 24 }}
-            rules={[
-                {
-                    required: true,
-                    message: "Необходимо для заполнения!",
-                },
-                {
-                    pattern: price_pattern,
-                    message: "Можно использовать только цифры!",
-                },
-                {
-                    pattern: price_max_count,
-                    message: "Общая сумма договора не должна превышать 99999999",
-                },
-            ]}
+			rules={[
+				{
+					required: true,
+					message: "Необходимо для заполнения!",
+				},
+				{
+					pattern: price_pattern,
+					message: "Можно использовать только цифры!",
+				},
+				{
+					pattern: price_max_count,
+					message: "Общая сумма договора не должна превышать 15 знаков",
+				},
+			]}
 		>
-			<Input
-				disabled={props.disabled}
-				placeholder={props.placeholder}
-			/>
+			<Input disabled={props.disabled} placeholder={props.placeholder} />
 		</Form.Item>
 	);
 };
 
 /**
- * 
+ *
  * @param {string} label Метка заполняемой области
- * @param {string} placeholder Подсказка для области заполнение 
+ * @param {string} placeholder Подсказка для области заполнение
  * @returns {Form.Item} Form.Item Возвращает фрагмент формы
  */
 export const FragmentInputBoxExecutorNameDivision = (props) => {
@@ -268,25 +262,22 @@ export const FragmentInputBoxExecutorNameDivision = (props) => {
 			name="executor_name_division"
 			label={props.label}
 			labelCol={{ span: 24 }}
-            rules={[
-                {
-                    required: true,
-                    message: "Необходимо для заполнения!",
-                },
-            ]}
+			rules={[
+				{
+					required: true,
+					message: "Необходимо для заполнения!",
+				},
+			]}
 		>
-			<Input
-				disabled={props.disabled}
-				placeholder={props.placeholder}
-			/>
+			<Input disabled={props.disabled} placeholder={props.placeholder} />
 		</Form.Item>
 	);
 };
 
 /**
- * 
+ *
  * @param {string} label Метка заполняемой области
- * @param {string} placeholder Подсказка для области заполнение 
+ * @param {string} placeholder Подсказка для области заполнение
  * @returns {Form.Item} Form.Item Возвращает фрагмент формы
  */
 export const FragmentInputBoxExecutorSiderSignaturesDate = (props) => {
@@ -295,25 +286,22 @@ export const FragmentInputBoxExecutorSiderSignaturesDate = (props) => {
 			name="sider_signatures_date"
 			label={props.label}
 			labelCol={{ span: 24 }}
-            rules={[
-                {
-                    required: true,
-                    message: "Необходимо для заполнения!",
-                },
-            ]}
+			rules={[
+				{
+					required: true,
+					message: "Необходимо для заполнения!",
+				},
+			]}
 		>
-			<Input
-				disabled={props.disabled}
-				placeholder={props.placeholder}
-			/>
+			<Input disabled={props.disabled} placeholder={props.placeholder} />
 		</Form.Item>
 	);
 };
 
 /**
- * 
+ *
  * @param {string} label Метка заполняемой области
- * @param {string} placeholder Подсказка для области заполнение 
+ * @param {string} placeholder Подсказка для области заполнение
  * @returns {Form.Item} Form.Item Возвращает фрагмент формы
  */
 export const FragmentInputBoxExecutorReceivedFromCounteragentDate = (props) => {
@@ -322,25 +310,22 @@ export const FragmentInputBoxExecutorReceivedFromCounteragentDate = (props) => {
 			name="received_from_counteragent_date"
 			label={props.label}
 			labelCol={{ span: 24 }}
-            rules={[
-                {
-                    required: true,
-                    message: "Необходимо для заполнения!",
-                },
-            ]}
+			rules={[
+				{
+					required: true,
+					message: "Необходимо для заполнения!",
+				},
+			]}
 		>
-			<Input
-				disabled={props.disabled}
-				placeholder={props.placeholder}
-			/>
+			<Input disabled={props.disabled} placeholder={props.placeholder} />
 		</Form.Item>
 	);
 };
 
 /**
- * 
+ *
  * @param {string} label Метка заполняемой области
- * @param {string} placeholder Подсказка для области заполнение 
+ * @param {string} placeholder Подсказка для области заполнение
  * @returns {Form.Item} Form.Item Возвращает фрагмент формы
  */
 export const FragmentInputBoxExecutorPhoneNumber = (props) => {
@@ -360,18 +345,15 @@ export const FragmentInputBoxExecutorPhoneNumber = (props) => {
 				},
 			]}
 		>
-			<Input
-				disabled={props.disabled}
-				placeholder={props.placeholder}
-			/>
+			<Input disabled={props.disabled} placeholder={props.placeholder} />
 		</Form.Item>
 	);
 };
 
 /**
- * 
+ *
  * @param {string} label Метка заполняемой области
- * @param {string} placeholder Подсказка для области заполнение 
+ * @param {string} placeholder Подсказка для области заполнение
  * @returns {Form.Item} Form.Item Возвращает фрагмент формы
  */
 export const FragmentInputBoxCounteragentContacts = (props) => {
@@ -391,10 +373,7 @@ export const FragmentInputBoxCounteragentContacts = (props) => {
 				},
 			]}
 		>
-			<Input
-				disabled={props.disabled}
-				placeholder={props.placeholder}
-			/>
+			<Input disabled={props.disabled} placeholder={props.placeholder} />
 		</Form.Item>
 	);
 };

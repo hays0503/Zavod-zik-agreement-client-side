@@ -2,8 +2,8 @@ import { Button, Form, Typography, Divider } from "antd";
 import React, { useEffect, useState } from "react";
 import { useUser } from "../../../../../../core/functions";
 import {
-	FragmentFileViewer,
-	FragmentFileViewerOnClick,
+	FragmentFileViewerReceiver,
+	FragmentFileViewerOnClick
 } from "../../../fragments/FragmentFileViewer";
 import { FormItem, FormWrap } from "./../../../fragments/FragmentItemWrap";
 
@@ -111,7 +111,14 @@ let Update5 = React.memo((props) => {
 				<b>Файлы прикреплённые отправителем</b>
 			</h3>
 			{/* /////////////////////////////////// */}
-			{result !== undefined ? <FragmentFileViewer files={result} /> : ""}
+			{result !== undefined ? (
+				<FragmentFileViewerReceiver
+					files={result}
+					document_tasks_id_file={state.document_tasks_id_file}
+				/>
+			) : (
+				""
+			)}
 			{/* /////////////////////////////////// */}
 
 			{/* /////////////////////////////////// */}

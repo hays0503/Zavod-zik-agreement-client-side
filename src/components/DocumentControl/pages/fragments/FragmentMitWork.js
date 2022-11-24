@@ -4,6 +4,7 @@ import { FormItemWithProps, FormWrap } from "./FragmentItemWrap";
 import moment, { now } from "moment";
 import locale from "antd/es/date-picker/locale/ru_RU";
 import { gql, useMutation } from "@apollo/client";
+import { arrayAsString } from "pdf-lib";
 
 const { Panel } = Collapse;
 
@@ -32,19 +33,34 @@ export const FragmentMitWorkEdit = (props) => {
 			}
 		}
 	`;
+
 	/**
 	 * Мутация для установки данных о митворге в базу данных
 	 */
 	const [setMitworkData, { data }] = useMutation(SET_MITWORK_DATA);
 
 	//Состояние для даты на митворге
-	const [InputData, setInputData] = useState({
+	//Инициализируем данными дату на сегодняшний день
+	let DataRef = useRef({
 		momentData: moment(),
 		dataString: moment().format("DD MM YYYY").toString(),
 	});
 
+	//Установи дату из бд или сегодняшнею дату
+	useEffect(() => {
+		DataRef.current = {
+			momentData: props.mitwork_data ? moment(props.mitwork_data) : moment(),
+			dataString: props.mitwork_data
+				? moment(props.mitwork_data).format("DD MM YYYY").toString()
+				: moment().format("DD MM YYYY").toString(),
+		};
+	}, [props.mitwork_data]);
+
 	//Форматирование дат
 	const dateFormatList = ["DD/MM/YYYY", "DD/MM/YY"];
+
+	//Активные или не активные элементы управление
+	const [visible, setVisible] = useState(true);
 
 	//Id'шник документа в бд
 	const [ID, setID] = useState(null);
@@ -56,7 +72,7 @@ export const FragmentMitWorkEdit = (props) => {
 	const [editState, setEditState] = useState(false);
 
 	/**
-	 * `IfDef` Если у нас есть какие то данные то просто выедим их иначе выедим логику для заполнение
+	 * `IfDef` Если у нас есть какие то данные то просто выведем их, иначе выедим логику для заполнение
 	 * (+ вкл или выкл режим редактирование за это отвечает состояние `editState`)
 	 * @param props  `{variable, Text, Component}`
 	 * @returns `{variable}`
@@ -117,10 +133,11 @@ export const FragmentMitWorkEdit = (props) => {
 											variables: {
 												id: parseInt(ID),
 												mitworkNumber: InputNumber,
-												mitworkData: now(InputData),
+												mitworkData: DataRef.current.momentData,
 											},
 										});
 										setEditState(!editState);
+										setVisible(!visible);
 									}}
 								>
 									Сохранить
@@ -132,6 +149,7 @@ export const FragmentMitWorkEdit = (props) => {
 									event.stopPropagation();
 									setEditState(!editState);
 									setInputNumber(props?.mitwork_number);
+									setVisible(!visible);
 								}}
 							>
 								{editState ? "Отмена" : "Редактировать"}
@@ -150,25 +168,21 @@ export const FragmentMitWorkEdit = (props) => {
 										Component={
 											<>
 												<DatePicker
+													disabled={visible}
 													allowClear={false}
 													format={dateFormatList}
 													locale={locale}
 													style={{
 														width: 350,
 													}}
-													value={
-														props?.mitwork_data === undefined ||
-														props?.mitwork_data === null
-															? InputData?.momentData
-															: moment(props?.mitwork_data)
-													}
+													defaultValue={DataRef.current.momentData}
+													// defaultValue={moment(props?.mitwork_data)}
 													placeholder={"Внесите дату регистрации на `Митворге`"}
 													onChange={(moment, data) => {
-														setInputData({
+														DataRef.current = {
 															momentData: moment,
 															dataString: data,
-														});
-													}}
+														};													}}
 												/>
 											</>
 										}
@@ -188,6 +202,7 @@ export const FragmentMitWorkEdit = (props) => {
 										Component={
 											<>
 												<Input
+													disabled={visible}
 													style={{
 														width: 350,
 													}}
@@ -212,76 +227,12 @@ export const FragmentMitWorkEdit = (props) => {
 };
 
 /**
- * `FragmentMitWorkEdit` Фрагмент который отображает Номер и дату на митворге(в бд) согласно id документа
- * @param {number}  `id` Id номер документа в бд
+ * `FragmentMitWork` Фрагмент который отображает Номер и дату на митворге(в бд) согласно id документа
  * @param {number}  `mitwork_number` Номер на митворге
  * @param {number}  `mitwork_data` Дата на митворге
  */
 
 export const FragmentMitWork = (props) => {
-	//Состояние для даты на митворге
-	const [InputData, setInputData] = useState({
-		momentData: moment(),
-		dataString: moment().format("DD MM YYYY").toString(),
-	});
-
-	//Форматирование дат
-	const dateFormatList = ["DD/MM/YYYY", "DD/MM/YY"];
-
-	//Id'шник документа в бд
-	const [ID, setID] = useState(null);
-	//Состояние для поля ввода номера на митворге
-	const [InputNumber, setInputNumber] = useState(null);
-	//Ссылка на объект ввода (используется для установки фокуса при непризывном вводе)
-	const refInputNumber = useRef(null);
-	//Состояние для кнопки редактировать или нет (по умолчанию выключено)
-	const [editState, setEditState] = useState(false);
-
-	/**
-	 * `IfDef` Если у нас есть какие то данные то просто выедим их иначе выедим логику для заполнение
-	 * (+ вкл или выкл режим редактирование за это отвечает состояние `editState`)
-	 * @param props  `{variable, Text, Component}`
-	 * @returns `{variable}`
-	 */
-	const IfDef = (props) => {
-		const { variable, Text, Component } = props;
-
-		//console.log("variable", variable);
-
-		if (
-			variable === undefined ||
-			variable === null ||
-			variable === "Invalid date" ||
-			editState
-		)
-			return (
-				<>
-					{Text}
-					<Divider type="vertical" />
-					{Component}
-				</>
-			);
-		return variable;
-	};
-
-	/**
-	 * Установим фокус при изменение числа в поле ввода
-	 */
-	useEffect(() => {
-		if (InputNumber) {
-			refInputNumber.current.focus({
-				cursor: "end",
-			});
-		}
-	}, [InputNumber]);
-
-	/**
-	 * Установка ID документа
-	 */
-	useEffect(() => {
-		if (props?.id) setID(props?.id);
-	}, [props?.id]);
-
 	return (
 		<>
 			<Collapse defaultActiveKey={["1"]}>
@@ -289,66 +240,13 @@ export const FragmentMitWork = (props) => {
 					<FormWrap>
 						<FormItemWithProps
 							Title={"Дата регистрации на Митворге: "}
-							Component={
-								<>
-									<IfDef
-										variable={moment(props?.mitwork_data).format("DD/MM/YYYY")}
-										Text={"Установить дату"}
-										Component={
-											<>
-												<DatePicker
-													allowClear={false}
-													format={dateFormatList}
-													locale={locale}
-													style={{
-														width: 350,
-													}}
-													value={
-														props?.mitwork_data === undefined ||
-														props?.mitwork_data === null
-															? InputData?.momentData
-															: moment(props?.mitwork_data)
-													}
-													placeholder={
-														"Внесите дату регистрации на `Митворге` в разделе `Регистрация документов`"
-													}
-												/>
-											</>
-										}
-									/>
-								</>
-							}
+							Component={<>{props?.mitwork_data}</>}
 						/>
 
 						<Divider type="horizontal" />
 						<FormItemWithProps
 							Title={"Митворг номер: "}
-							Component={
-								<>
-									<IfDef
-										variable={props?.mitwork_number}
-										Text={"Установить номер"}
-										Component={
-											<>
-												<Input
-													style={{
-														width: 350,
-													}}
-													value={
-														props?.mitwork_number === undefined ||
-														props?.mitwork_number === null
-															? InputNumber
-															: props?.mitwork_number
-													}
-													placeholder={
-														"Внесите номер договора на `Митворге` в разделе `Регистрация документов`"
-													}
-												/>
-											</>
-										}
-									/>
-								</>
-							}
+							Component={<>{props?.mitwork_number}</>}
 						/>
 					</FormWrap>
 				</Panel>

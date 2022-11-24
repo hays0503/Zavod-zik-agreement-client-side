@@ -8,7 +8,7 @@ import {
 	TaskFileOpenDocument,
 } from "./../api/CRU_Document";
 import { SET_IS_ADD_TO_DOCUMENT } from "./../OnApprovalDocuments/forms/1/gql";
-import { useMutation } from "@apollo/client";
+import { useMutation, gql, useQuery } from "@apollo/client";
 
 /**
  * Фрагмент antd дающую возможность просматривать файлы
@@ -38,12 +38,103 @@ export const FragmentFileViewer = (props) => {
 										}}
 										shape="circle"
 										icon={<EyeOutlined />}
-									/>{" "}
+									/>
 									<br />
 								</div>
 							</>
 						);
 					})}
+				</Panel>
+			</Collapse>
+		</Form.Item>
+	);
+};
+
+/**
+ * Фрагмент antd дающую возможность просматривать Файлы прикреплённые отправителем
+ * @param files Массив из файлов для показа их на форме
+ */
+export const FragmentFileViewerReceiver = (props) => {
+	//Делаем запрос для отображения файлов которые прикрепил поручитель
+	//(эти файлы прикрепляли в прошлых поручениях и они хранятся в document_tasks_files по этому тут такой изврат)
+
+	const GET_TASK_FILE = gql`
+		query Task_files_in_id($taskFilesInId: JSON) {
+			task_files_in_id(task_files_in_id: $taskFilesInId) {
+				id
+				filename
+				data_file
+				task_id
+				is_add_to_document
+			}
+		}
+	`;
+
+	const { loading, error, data } = useQuery(GET_TASK_FILE, {
+		variables: {
+			taskFilesInId: {
+				global: {
+					id: props?.document_tasks_id_file,
+				},
+			},
+		},
+	});
+
+	if (loading) return <p>Загрузка...</p>;
+	if (error) return <p>Ошибка: {error.message}</p>;
+
+	return (
+		<Form.Item
+			name="files"
+			className="font-form-header"
+			labelCol={{ span: 24 }}
+		>
+			<Collapse defaultActiveKey={["2"]} onChange={callback}>
+				<Panel header={<b>Прикреплённые файлы</b>} key="2">
+					{props?.files.map((item) => {
+						return (
+							<>
+								<div className="document-view-wrap">
+									<Link>
+										<a data-fileid={item.id} onClick={FileDownload}>
+											{item.filename}
+										</a>
+									</Link>
+									<Button
+										onClick={() => {
+											FileOpenDocument(item);
+										}}
+										shape="circle"
+										icon={<EyeOutlined />}
+									/>
+									<br />
+								</div>
+							</>
+						);
+					})}
+					{/* Отображаем Файлы которые уже добавили по поручению на предыдущих шагах */}
+					{data.task_files_in_id != null &&
+						data?.task_files_in_id.map((item) => {
+							return (
+								<>
+									<div className="document-view-wrap">
+										<Link>
+											<a data-fileid={item.id} onClick={TaskFileDownload}>
+												{item.filename}
+											</a>
+										</Link>
+										<Button
+											onClick={() => {
+												TaskFileOpenDocument(item);
+											}}
+											shape="circle"
+											icon={<EyeOutlined />}
+										/>
+										<br />
+									</div>
+								</>
+							);
+						})}
 				</Panel>
 			</Collapse>
 		</Form.Item>
@@ -78,7 +169,7 @@ export const FragmentTaskFileViewer = (props) => {
 										}}
 										shape="circle"
 										icon={<EyeOutlined />}
-									/>{" "}
+									/>
 									<br />
 								</div>
 							</>
@@ -118,7 +209,7 @@ export const FragmentTaskAndFileViewer = (props) => {
 										}}
 										shape="circle"
 										icon={<EyeOutlined />}
-									/>{" "}
+									/>
 									<br />
 								</div>
 							</>
@@ -139,7 +230,7 @@ export const FragmentTaskAndFileViewer = (props) => {
 										}}
 										shape="circle"
 										icon={<EyeOutlined />}
-									/>{" "}
+									/>
 									<br />
 								</div>
 							</>

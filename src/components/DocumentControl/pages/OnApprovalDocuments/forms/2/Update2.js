@@ -9,7 +9,7 @@ import ReturnStepBackConfirm from "./dialogs/ReturnStepBackConfirm";
 import ReturnToSenderConfirm from "./dialogs/ReturnToSenderConfirm";
 
 //Tasks
-import TasksAddDialog2 from "../../../../dialogs/TasksAddDialogs2";
+import TasksAddDialog2 from "../../../../dialogs/TasksAddDialog2";
 import TaskModalUpdate from "../../modals/TaskModalUpdate";
 import UpdateTask2 from "./UpdateTask2";
 
@@ -47,26 +47,23 @@ const Update2 = React.memo((props) => {
 	const [reasonText, setReasonText] = useState(iniValue?.reason);
 
 	//////////////////////////////////////////////////////////////////////////////////////////
-	/**																					//
-	 * Отобразить новое состояние компонентов после обновление (файлов / по поручению)	//
-	 */ //
-	//
-	/**																					//
-	 * Cтейт для таблиц файлов по поручением											//
-	 */ //
-	const [FileTask, setFileTask] = useState([]); //
-	//
-	const [ReRender, setRerender] = useState(false); //
+	/**
+	 * Отобразить новое состояние компонентов после обновление (файлов / по поручению)
+	 */
+
+	/**
+	 * Cтейт для таблиц файлов по поручением
+	 */
+	const [FileTask, setFileTask] = useState([]);
+
+	const [ReRender, setRerender] = useState(false);
 	useEffect(() => {
-		//
 		if (iniValue?.id) {
-			//
 			GetIDNameTaskFile(iniValue?.id).then((value) => {
-				//
-				setFileTask(value.result); //
-			}); //
-		} //
-	}, [iniValue, ReRender]); //
+				setFileTask(value.result);
+			});
+		}
+	}, [iniValue, ReRender]);
 	//////////////////////////////////////////////////////////////////////////////////////////
 
 	useEffect(() => {
@@ -75,6 +72,7 @@ const Update2 = React.memo((props) => {
 
 	useEffect(() => {
 		if (props.initialValues2) {
+			console.log("iniValue----------", iniValue);
 			setState({
 				id: iniValue.id,
 				title: iniValue.title,
@@ -105,6 +103,7 @@ const Update2 = React.memo((props) => {
 				files: iniValue.files,
 				document_logs: iniValue.document_logs,
 				log_username: state.log_username,
+				reason: iniValue.reason,
 			});
 			setStepCount({ step: iniValue.step });
 			setRoutesList(iniValue.route_data);
@@ -112,6 +111,7 @@ const Update2 = React.memo((props) => {
 	}, [props.initialValues2]);
 
 	let TasksTitleMenu = (tableProps) => {
+		console.log("props.initialValues2", props.initialValues2);
 		return (
 			<TitleMenu
 				buttons={[
@@ -122,7 +122,7 @@ const Update2 = React.memo((props) => {
 						title="Поручение"
 						selectedRowKeys={tableProps.selectedRowKeys}
 						update={true}
-						width={750}
+						width={850}
 						setRerender={setRerender} // Стейт функция для обновления
 						ReRender={ReRender} // Стейт переменная для обновления
 					/>,
@@ -130,6 +130,7 @@ const Update2 = React.memo((props) => {
 						visible={visible}
 						setVisible={setVisible}
 						document={props.initialValues2}
+						FileTask={FileTask}
 					/>,
 				]}
 				selectedRowKeys={tableProps.selectedRowKeys}
@@ -167,11 +168,9 @@ const Update2 = React.memo((props) => {
 			{/* /////////////////////////////////// */}
 			<FormWrap>{FormItem("Должность: ", state?.position)}</FormWrap>
 			{/* /////////////////////////////////// */}
+			{/* "Лист согласования на реализацию готовой продукции" */}
 			<FormWrap>
-				{FormItem(
-					"Тип договора: ",
-					"Лист согласования на реализацию готовой продукции"
-				)}
+				{FormItem("Тип договора: ", iniValue?.route_id?.name)}
 			</FormWrap>
 			{/* /////////////////////////////////// */}
 
