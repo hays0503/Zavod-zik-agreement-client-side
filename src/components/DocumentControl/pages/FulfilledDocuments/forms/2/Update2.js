@@ -19,7 +19,7 @@ const Update2 = React.memo((props) => {
   /**
    * Деструктаризация (начального значение)
    */
-  const iniValue = props?.initialValues2?.documents[0];
+  const iniValues = props?.initialValues2?.documents[0];
 
   const user = useUser();
   const [state, setState] = useState({
@@ -39,12 +39,12 @@ const Update2 = React.memo((props) => {
    */
   const [FileTask, setFileTask] = useState([]);
   useEffect(() => {
-    if (iniValue?.id) {
-      GetIDNameTaskFile(iniValue?.id).then((value) => {
+    if (iniValues?.id) {
+      GetIDNameTaskFile(iniValues?.id).then((value) => {
         setFileTask(value.result);
       });
     }
-  }, [iniValue]);
+  }, [iniValues]);
   //////////////////////////////////////////////////////////////////////////////////////////
 
   useEffect(() => {
@@ -54,42 +54,42 @@ const Update2 = React.memo((props) => {
   useEffect(() => {
     if (props.initialValues2) {
       setState({
-        id: iniValue.id,
-        title: iniValue.title,
-        position: iniValue.position,
-        username: iniValue.username,
+        id: iniValues.id,
+        title: iniValues.title,
+        position: iniValues.position,
+        username: iniValues.username,
 
-        user_id: iniValue.user_id,
-        fio: iniValue.fio,
-        price: iniValue.data_agreement_list[0].price,
-        subject: iniValue.data_agreement_list[0].subject,
-        currency_price: iniValue.data_agreement_list[0].currency_price,
+        user_id: iniValues.user_id,
+        fio: iniValues.fio,
+        price: iniValues.data_agreement_list[0].price,
+        subject: iniValues.data_agreement_list[0].subject,
+        currency_price: iniValues.data_agreement_list[0].currency_price,
         executor_name_division:
-          iniValue.data_agreement_list[0].executor_name_division,
+          iniValues.data_agreement_list[0].executor_name_division,
         sider_signatures_date:
-          iniValue.data_agreement_list[0].sider_signatures_date,
+          iniValues.data_agreement_list[0].sider_signatures_date,
         received_from_counteragent_date:
-          iniValue.data_agreement_list[0].received_from_counteragent_date,
-        reason: iniValue.reason,
-        date_created: iniValue.date_created,
-        date_modified: iniValue.date_modified,
-        route_id: iniValue.route_id.id,
-        status_in_process: iniValue.route_id.status_in_process,
-        status_cancelled: iniValue.route_id.status_cancelled,
-        status_finished: iniValue.route_id.status_finished,
-        status_id: iniValue.status_id,
-        route: iniValue.route_data,
-        step: iniValue.step,
-        comments: iniValue.comments,
-        signatures: iniValue.signatures,
-        files: iniValue.files,
-        document_logs: iniValue.document_logs,
+          iniValues.data_agreement_list[0].received_from_counteragent_date,
+        reason: iniValues.reason,
+        date_created: iniValues.date_created,
+        date_modified: iniValues.date_modified,
+        route_id: iniValues.route_id.id,
+        status_in_process: iniValues.route_id.status_in_process,
+        status_cancelled: iniValues.route_id.status_cancelled,
+        status_finished: iniValues.route_id.status_finished,
+        status_id: iniValues.status_id,
+        route: iniValues.route_data,
+        step: iniValues.step,
+        comments: iniValues.comments,
+        signatures: iniValues.signatures,
+        files: iniValues.files,
+        document_logs: iniValues.document_logs,
         log_username: state.log_username,
-        mitwork_number: iniValue.mitwork_number,
-        mitwork_data: iniValue.mitwork_data,
+        mitwork_number: iniValues.mitwork_number,
+        mitwork_data: iniValues.mitwork_data,
       });
-      setStepCount({ step: iniValue.step });
-      setRoutesList(iniValue.route_data);
+      setStepCount({ step: iniValues.step });
+      setRoutesList(iniValues.route_data);
     }
   }, [props.initialValues2]);
 
@@ -115,10 +115,7 @@ const Update2 = React.memo((props) => {
       <FormWrap>{FormItem("Должность: ", state?.position)}</FormWrap>
       {/* /////////////////////////////////// */}
       <FormWrap>
-        {FormItem(
-          "Тип договора: ",
-          "Лист согласования на реализацию готовой продукции"
-        )}
+        {FormItem("Тип договора: ", iniValues?.route_id?.name)}
       </FormWrap>
       {/* /////////////////////////////////// */}
 
@@ -179,9 +176,9 @@ const Update2 = React.memo((props) => {
           <Divider type={"horizontal"} />
 
           {/*Фрагмент antd дающую возможность просматривать файлы*/}
-          {iniValue !== undefined && FileTask !== undefined ? (
+          {iniValues !== undefined && FileTask !== undefined ? (
             <FragmentTaskAndFileViewer
-              files={iniValue?.files}
+              files={iniValues?.files}
               files_task={FileTask}
               userId={user.id}
             />
@@ -201,14 +198,14 @@ const Update2 = React.memo((props) => {
 			Фрагмент antd дающую возможность просматривать состояние
 			движений документов (с надстройкой для замещающего)
 			*/}
-          {iniValue && (
+          {iniValues && (
             <FragmentStepViewerReplacementDialog
-              signatures={iniValue?.signatures}
+              signatures={iniValues?.signatures}
               setVisible={setVisible}
               stepCount={stepCount}
-              routeData={iniValue?.route_data}
+              routeData={iniValues?.route_data}
               date_created={state.date_created}
-              step={iniValue?.step}
+              step={iniValues?.step}
             >
               {/* Фрагмент antd дающую возможность устанавливать замещающего */}
               <SelectReplacementDialog
@@ -217,7 +214,7 @@ const Update2 = React.memo((props) => {
                 setRoutesList={setRoutesList}
                 routesList={routesList}
                 stepCount={stepCount}
-                routeData={iniValue?.route_data}
+                routeData={iniValues?.route_data}
                 form={props.form}
               />
             </FragmentStepViewerReplacementDialog>
@@ -230,7 +227,7 @@ const Update2 = React.memo((props) => {
       <Collapse>
         <Collapse.Panel header={<b>Замечание</b>}>
           {/* Фрагмент antd для вывода Замечаний по документу */}
-          <FragmentReasonsViewer Reason={iniValue?.reason} />
+          <FragmentReasonsViewer Reason={iniValues?.reason} />
           {/* /////////////////////////////////// */}
 
           <Divider type={"horizontal"} />

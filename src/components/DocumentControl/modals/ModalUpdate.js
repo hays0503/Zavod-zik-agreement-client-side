@@ -8,7 +8,6 @@ import {
 	useUser,
 } from "../../../core/functions";
 
-import GenericPdfDownloader from "../../../core/util/CanvasToHtml";
 
 import { async } from "./../../../core/print/reports/test/pdfConstruct";
 
@@ -867,9 +866,6 @@ let ModalUpdate = React.memo(
 
 		const testRef = useRef();
 
-		let dHandler = () => {
-			GenericPdfDownloader(testRef.current, "test.pdf");
-		};
 
 		return (
 			<>

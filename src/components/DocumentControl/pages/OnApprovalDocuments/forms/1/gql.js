@@ -56,6 +56,7 @@ export let DocumentTasks = {
 					document_options
 					task_files
 					report
+					document_tasks_id_file
 					document_tasks_files {
 						id
 						filename
@@ -84,6 +85,7 @@ export let DocumentTasks = {
 					document_options
 					task_files
 					report
+					document_tasks_id_file
 					document_tasks_files {
 						id
 						filename
@@ -110,6 +112,7 @@ export let DocumentTasks = {
 					fio_created
 					user_id_receiver
 					fio_receiver
+					document_tasks_id_file
 				}
 			}
 		`,

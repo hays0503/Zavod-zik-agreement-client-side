@@ -4,7 +4,7 @@ import { FormItemWithProps, FormWrap } from "./FragmentItemWrap";
 import moment, { now } from "moment";
 import locale from "antd/es/date-picker/locale/ru_RU";
 import { gql, useMutation } from "@apollo/client";
-import { arrayAsString } from "pdf-lib";
+
 
 const { Panel } = Collapse;
 

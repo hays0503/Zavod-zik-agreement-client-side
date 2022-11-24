@@ -18,7 +18,7 @@ const Update5 = React.memo((props) => {
   /**
    * Деструктаризация (начального значение)
    */
-  const iniValue = props?.initialValues5?.documents[0];
+  const iniValues = props?.initialValues5?.documents[0];
 
   const user = useUser();
   const stepsDirection = useRef("vertical");
@@ -40,18 +40,18 @@ const Update5 = React.memo((props) => {
    */
   const [FileTask, setFileTask] = useState([]);
   useEffect(() => {
-    if (iniValue?.id) {
-      GetIDNameTaskFile(iniValue?.id).then((value) => {
+    if (iniValues?.id) {
+      GetIDNameTaskFile(iniValues?.id).then((value) => {
         setFileTask(value.result);
       });
     }
-  }, [iniValue]);
+  }, [iniValues]);
   //////////////////////////////////////////////////////////////////////////////////////////
 
   useEffect(() => {
-    if (iniValue?.route_data?.length > 1)
+    if (iniValues?.route_data?.length > 1)
       stepsDirection.current =
-        iniValue?.route_data?.length <= 7 ? "horizontal" : "vertical";
+        iniValues?.route_data?.length <= 7 ? "horizontal" : "vertical";
   }, [props]);
 
   useEffect(() => {
@@ -61,33 +61,33 @@ const Update5 = React.memo((props) => {
   useEffect(() => {
     if (props.initialValues5) {
       setState({
-        id: iniValue.id,
-        title: iniValue.title,
-        position: iniValue.position,
-        username: iniValue.username,
-        fio: iniValue.fio,
-        user_id: iniValue.user_id,
-        subject: iniValue.data_custom[0].subject,
-        remark: iniValue.data_custom[0].remark,
+        id: iniValues.id,
+        title: iniValues.title,
+        position: iniValues.position,
+        username: iniValues.username,
+        fio: iniValues.fio,
+        user_id: iniValues.user_id,
+        subject: iniValues.data_custom[0].subject,
+        remark: iniValues.data_custom[0].remark,
 
-        date_created: iniValue.date_created,
-        date_modified: iniValue.date_modified,
-        route_id: iniValue.route_id.id,
-        status_in_process: iniValue.route_id.status_in_process,
-        status_cancelled: iniValue.route_id.status_cancelled,
-        status_finished: iniValue.route_id.status_finished,
-        status_id: iniValue.status_id,
-        route: iniValue.route_data,
-        step: iniValue.step,
-        comments: iniValue.comments,
-        signatures: iniValue.signatures,
-        files: iniValue.files,
+        date_created: iniValues.date_created,
+        date_modified: iniValues.date_modified,
+        route_id: iniValues.route_id.id,
+        status_in_process: iniValues.route_id.status_in_process,
+        status_cancelled: iniValues.route_id.status_cancelled,
+        status_finished: iniValues.route_id.status_finished,
+        status_id: iniValues.status_id,
+        route: iniValues.route_data,
+        step: iniValues.step,
+        comments: iniValues.comments,
+        signatures: iniValues.signatures,
+        files: iniValues.files,
         log_username: state.log_username,
-        mitwork_number: iniValue.mitwork_number,
-        mitwork_data: iniValue.mitwork_data,
+        mitwork_number: iniValues.mitwork_number,
+        mitwork_data: iniValues.mitwork_data,
       });
-      setStepCount({ step: iniValue.step });
-      setRoutesList(iniValue.route_data);
+      setStepCount({ step: iniValues.step });
+      setRoutesList(iniValues.route_data);
     }
   }, [props.initialValues5]);
 
@@ -111,7 +111,9 @@ const Update5 = React.memo((props) => {
       {/* /////////////////////////////////// */}
       <FormWrap>{FormItem("Должность: ", state?.position)}</FormWrap>
       {/* /////////////////////////////////// */}
-      <FormWrap>{FormItem("Тип договора: ", "Другой")}</FormWrap>
+      <FormWrap>
+        {FormItem("Тип договора: ", iniValues?.route_id?.name)}
+      </FormWrap>
       {/* /////////////////////////////////// */}
 
       <Divider type={"horizontal"} />
@@ -139,9 +141,9 @@ const Update5 = React.memo((props) => {
           <Divider type={"horizontal"} />
 
           {/*Фрагмент antd дающую возможность просматривать файлы*/}
-          {iniValue !== undefined && FileTask !== undefined ? (
+          {iniValues !== undefined && FileTask !== undefined ? (
             <FragmentTaskAndFileViewer
-              files={iniValue?.files}
+              files={iniValues?.files}
               files_task={FileTask}
               userId={user.id}
             />
@@ -161,14 +163,14 @@ const Update5 = React.memo((props) => {
 			Фрагмент antd дающую возможность просматривать состояние
 			движений документов (с надстройкой для замещающего)
 			*/}
-          {iniValue && (
+          {iniValues && (
             <FragmentStepViewerReplacementDialog
-              signatures={iniValue?.signatures}
+              signatures={iniValues?.signatures}
               setVisible={setVisible}
               stepCount={stepCount}
-              routeData={iniValue?.route_data}
+              routeData={iniValues?.route_data}
               date_created={state.date_created}
-              step={iniValue?.step}
+              step={iniValues?.step}
             >
               {/* Фрагмент antd дающую возможность устанавливать замещающего */}
               <SelectReplacementDialog
@@ -177,7 +179,7 @@ const Update5 = React.memo((props) => {
                 setRoutesList={setRoutesList}
                 routesList={routesList}
                 stepCount={stepCount}
-                routeData={iniValue?.route_data}
+                routeData={iniValues?.route_data}
                 form={props.form}
               />
             </FragmentStepViewerReplacementDialog>
@@ -190,7 +192,7 @@ const Update5 = React.memo((props) => {
       <Collapse>
         <Collapse.Panel header={<b>Замечание</b>}>
           {/* Фрагмент antd для вывода Замечаний по документу */}
-          <FragmentReasonsViewer Reason={iniValue?.reason} />
+          <FragmentReasonsViewer Reason={iniValues?.reason} />
           {/* /////////////////////////////////// */}
 
           <Divider type={"horizontal"} />
