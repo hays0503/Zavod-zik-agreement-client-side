@@ -23,7 +23,7 @@ import { FragmentStepViewer } from "./../../../fragments/FragmentStepViewer";
 import { FragmentTaskList } from "./../../../fragments/FragmentTaskList";
 
 import { GetIDNameTaskFile } from "./../../../api/CRU_Document";
-import { dict, DocumentTasks } from "./gql";
+import { dict, DocumentTasks } from "./../gql";
 import { FragmentTaskAndFileViewer } from "./../../../fragments/FragmentFileViewer";
 
 //Реализация готовой продукции

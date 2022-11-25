@@ -52,6 +52,7 @@ let Update3 = React.memo((props) => {
 				document_tasks_files: iniTask.document_tasks_files,
 				log_username: state.log_username,
 				task_statuses: iniTask.task_statuses,
+				document_tasks_id_file: iniTask.document_tasks_id_file, // Файлы которые уже добавили по поручению на предыдущих шагах
 			});
 		}
 	}, [props.initialValues]);

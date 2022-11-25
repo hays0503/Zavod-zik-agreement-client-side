@@ -21,7 +21,7 @@ import { FragmentTaskList } from "../../../fragments/FragmentTaskList";
 import FragmentCommentsViewer from "../../../fragments/FragmentCommentsViewer";
 import { FragmentAnyItems } from "../../../fragments/FragmentAnyItems";
 import { GetIDNameTaskFile } from "./../../../api/CRU_Document";
-import { dict, DocumentTasks } from "./gql";
+import { dict, DocumentTasks } from "./../gql";
 import { FragmentTaskAndFileViewer } from "./../../../fragments/FragmentFileViewer";
 
 const Update4 = React.memo((props) => {

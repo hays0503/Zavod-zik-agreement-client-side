@@ -36,6 +36,7 @@ export const DocumentTasks = {
 						filename
 						data_file
 						task_id
+						is_add_to_document
 					}
 				}
 			}
@@ -64,6 +65,7 @@ export const DocumentTasks = {
 						filename
 						data_file
 						task_id
+						is_add_to_document
 					}
 				}
 			}
@@ -85,6 +87,13 @@ export const DocumentTasks = {
 					user_id_receiver
 					fio_receiver
 					document_tasks_id_file
+					document_tasks_files {
+						id
+						filename
+						data_file
+						task_id
+						is_add_to_document
+					}
 				}
 			}
 		`,

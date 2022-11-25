@@ -1,26 +1,12 @@
-import { EyeOutlined, PlusOutlined } from "@ant-design/icons";
 import {
 	Button,
 	Form,
-	Typography,
-	Space,
 	Divider,
-	Row,
-	Col,
-	Steps,
-	Collapse,
-	Table,
-	Input,
-	message,
 } from "antd";
 import React, { useEffect, useState } from "react";
-import { useUser, formatDate } from "../../../../../../core/functions";
-import UploadFile from "../../../../modals/UploadFile";
-import constants from "../../../../../../config/constants";
-import { TaskFileDownload } from "../../../api/CRU_Document";
+import { useUser} from "../../../../../../core/functions";
 import { FormItem, FormWrap } from "../../../fragments/FragmentItemWrap";
 import {
-	FragmentFileViewer,
 	FragmentFileViewerReceiver,
 	FragmentTaskFileViewer,
 } from "../../../fragments/FragmentFileViewer";
@@ -29,7 +15,6 @@ import FragmentUploader from "../../../fragments/FragmentUploader";
 
 let Update3 = React.memo((props) => {
 	let user = useUser();
-	const { Link } = Typography;
 
 	const [state, setState] = useState({
 		log_username: user.username,
@@ -42,28 +27,6 @@ let Update3 = React.memo((props) => {
 	const result = props?.document?.files?.filter((i) =>
 		tasksFilesMap?.includes(i.id)
 	);
-
-	let download = async (e) => {
-		let id = e.target.dataset.fileid;
-		await fetch("/get-file", {
-			method: "POST",
-			body: JSON.stringify({ id: e.target.dataset.fileid }),
-			headers: {
-				"Content-Type": "application/json",
-			},
-		})
-			.then((response) => {
-				return response.json();
-			})
-			.then((response) => {
-				let result = response.result;
-				let link = document.createElement("a");
-				link.href =
-					result.data_file; /*result.data_file.slice(result.data_file.indexOf(',')+1) */
-				link.download = result.filename;
-				link.click();
-			});
-	};
 
 	useEffect(() => {
 		props.form.setFieldsValue(state);
@@ -199,9 +162,12 @@ let Update3 = React.memo((props) => {
 			<h3 className="marginTop">
 				<b>Файлы прикреплённые отправителем</b>
 			</h3>
+			{console.log("props.initialValues",props?.initialValues)}
+			{console.log("state?.document_tasks_id_file",state?.document_tasks_id_file)}
+			{console.log("props.initialValues.document_tasks[0].document_tasks_id_file",props?.initialValues?.document_tasks[0]?.document_tasks_id_file)}
 			<FragmentFileViewerReceiver
 				files={result}
-				document_tasks_id_file={state.document_tasks_id_file}
+				document_tasks_id_file={state?.document_tasks_id_file}
 			/>
 			{/* /////////////////////////////////// */}
 			<Divider type={"horizontal"} />

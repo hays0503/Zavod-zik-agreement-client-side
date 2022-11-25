@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useUser } from "../../../../../../core/functions";
 import {
 	FragmentFileViewerReceiver,
-	FragmentFileViewerOnClick
+	FragmentFileViewerOnClick,
 } from "../../../fragments/FragmentFileViewer";
 import { FormItem, FormWrap } from "./../../../fragments/FragmentItemWrap";
 
@@ -52,6 +52,7 @@ let Update4 = React.memo((props) => {
 				document_tasks_files: iniTask.document_tasks_files,
 				log_username: state.log_username,
 				task_statuses: iniTask.task_statuses,
+				document_tasks_id_file: iniTask.document_tasks_id_file, // Файлы которые уже добавили по поручению на предыдущих шагах
 			});
 		}
 	}, [props.initialValues]);

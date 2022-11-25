@@ -160,7 +160,7 @@ let Update2 = React.memo((props) => {
 			</h3>
 			<FragmentFileViewerReceiver
 				files={result}
-				document_tasks_id_file={state.document_tasks_id_file}
+				document_tasks_id_file={state?.document_tasks_id_file}
 			/>
 
 			<Divider type={"horizontal"} />

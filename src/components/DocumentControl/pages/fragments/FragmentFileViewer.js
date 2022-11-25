@@ -8,7 +8,7 @@ import {
 	TaskFileDownload,
 	TaskFileOpenDocument,
 } from "./../api/CRU_Document";
-import { SET_IS_ADD_TO_DOCUMENT } from "./../OnApprovalDocuments/forms/1/gql";
+import { SET_IS_ADD_TO_DOCUMENT } from "../OnApprovalDocuments/forms/gql";
 import { useMutation, gql, useQuery } from "@apollo/client";
 import { FragmentFilePreviewModal } from "./FragmentFilePreviewModal";
 
@@ -353,6 +353,8 @@ export const FragmentTaskAndFileViewer = (props) => {
  * @param files Массив из файлов для показа их на форме
  */
 export const FragmentFileViewerOnClick = (props) => {
+	console.log("FragmentFileViewerOnClick - console.log(props?.files);",props?.files);
+
 	//Предпросмотр файлов
 	const [refFilePreview, setRefFilePreview] = useState(null);
 	const [isLoadOpen, setIsModalLoad] = useState(false);
@@ -383,7 +385,7 @@ export const FragmentFileViewerOnClick = (props) => {
 								<>
 									<div className="document-view-wrap">
 										<Checkbox
-											defaultChecked={item.is_add_to_document} //отметить в интерфейсе был ли добавлен файл
+											defaultChecked={item?.is_add_to_document} //отметить в интерфейсе был ли добавлен файл
 											onChange={(e) => {
 												console.log(`${item.id} checked = ${e.target.checked}`);
 												set_is_add_to_document({
