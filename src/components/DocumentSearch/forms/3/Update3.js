@@ -289,22 +289,10 @@ let Update3 = React.memo((props) => {
 			<Row>
 				<Col span={24}>
 					<Divider type={"horizontal"} />
-					{/* <ApproveConfirm reasonText={reasonText} dataProps={props} setState={setState} user={user} />
-                    <Divider type={'vertical'} />
-                    <Space>
-                        <Divider type={'vertical'} />
-                        <ReturnToSenderConfirm reasonText={reasonText} dataProps={props} setState={setState} user={user} />
-                        <ReturnStepBackConfirm reasonText={reasonText} dataProps={props} setState={setState} user={user} />
-                        <Divider type={'vertical'} />
-                        <RejectConfirm reasonText={reasonText} dataProps={props} setState={setState} user={user} />
-                    </Space> */}
 				</Col>
 				<Col span={24} className="marginTop">
 					<Button onClick={props.modalCancelHandler}>Отменить</Button>
-					{/* <Divider type={'vertical'} />
-                    <Button onClick={props.modalEnableEditHandler}>
-                        Редактировать
-                    </Button> */}
+
 				</Col>
 			</Row>
 			<Divider type={"horizontal"} />
@@ -315,10 +303,7 @@ let Update3 = React.memo((props) => {
 				labelCol={{ span: 24 }}
 			></Form.Item>
 			<div>
-				{/* <Input
-                    disabled={props.disabled}
-                    onChange={ReasonInputChange}
-                    placeholder="Замечание" /> */}
+
 				{props?.initialValues3?.documents[0]?.reason?.map((item) => {
 					return (
 						<span>
