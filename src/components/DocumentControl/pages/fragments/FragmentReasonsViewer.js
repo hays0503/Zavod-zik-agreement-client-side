@@ -1,5 +1,9 @@
 import { Form, Input } from "antd";
-import { ExclamationCircleOutlined } from "@ant-design/icons";
+import {
+	ExclamationCircleOutlined,
+	LikeTwoTone,
+	SafetyCertificateTwoTone,
+} from "@ant-design/icons";
 
 /**
  * Фрагмент antd для вывода Замечаний по документу
@@ -25,19 +29,66 @@ export const FragmentReasonsViewer = (props) => {
 								disabled={props.disabled}
 								onChange={props.ReasonInputChange}
 								placeholder="Замечание"
-								style={{marginBottom: "15px"}}
+								style={{ marginBottom: "15px" }}
 							/>
 						)
 				}
-				{props?.Reason?.map((item) => {
-					return (
-						<span style={{ font: "1.2rem bold" }}>
-							<br/>
-							<span style={{ color: "red",font: "1.8rem bold" }}><ExclamationCircleOutlined  /></span>
-							{" " + item.text + " - " + item.userPosition}
-						</span>
-					);
-				})}
+
+				{console.log(
+					"console.log(props?.Reason.length)",
+					props?.Reason?.length
+				)}
+
+				{console.log(
+					"console.log(props?.Reason !== undefined)",
+					props?.Reason !== undefined
+				)}
+
+				{console.log(
+					"props?.Reason !== undefined && props?.Reason.length !== 0",
+					props?.Reason !== undefined && props?.Reason?.length !== undefined
+				)}
+
+				{console.log(
+					props?.Reason !== undefined && props?.Reason?.length !== undefined ? (
+						props?.Reason?.map((item) => {
+							return (
+								<span style={{ font: "1.2rem bold" }}>
+									<br />
+									<span style={{ color: "red", font: "1.8rem bold" }}>
+										<ExclamationCircleOutlined />
+									</span>
+									{" " + item.text + " - " + item.userPosition}
+								</span>
+							);
+						})
+					) : (
+						<>
+							Замечаний к текущему документу нет на данный момент.
+							<LikeTwoTone />
+						</>
+					)
+				)}
+
+				{props?.Reason !== undefined && props?.Reason?.length !== undefined ? (
+					props?.Reason?.map((item) => {
+						return (
+							<span style={{ font: "1.2rem bold" }}>
+								<br />
+								<span style={{ color: "red", font: "1.8rem bold" }}>
+									<ExclamationCircleOutlined />
+								</span>
+								{" " + item.text + " - " + item.userPosition}
+							</span>
+						);
+					})
+				) : (
+					<div style={{ fontSize: "1.3rem" }}>
+						<SafetyCertificateTwoTone twoToneColor={"rgb(10,180,10)"} />
+						Замечаний к текущему документу нет на данный момент.
+						<LikeTwoTone twoToneColor={"rgb(10,180,10)"} />
+					</div>
+				)}
 			</div>
 		</>
 	);
