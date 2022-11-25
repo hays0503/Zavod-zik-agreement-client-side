@@ -142,3 +142,12 @@ export const dict = [
 		width: "250px",
 	},
 ];
+
+export const SET_IS_ADD_TO_DOCUMENT = gql`
+	mutation set_is_add_to_document($ID: Int, $State: Boolean) {
+		set_is_add_to_document(ID: $ID, state: $State) {
+			type
+			message
+		}
+	}
+`;
