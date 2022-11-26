@@ -113,7 +113,7 @@ let Update1 = React.memo((props) => {
 				<b>Файл согласованного договора</b>
 			</h3>
 			{/* /////////////////////////////////// */}
-			<Print printData={iniValue?.id} documentData={props?.initialValues} />
+			<Print printData={iniValue} documentData={props?.initialValues} />
 			<Divider type={"horizontal"} />
 			{/* /////////////////////////////////// */}
 			<Form.Item

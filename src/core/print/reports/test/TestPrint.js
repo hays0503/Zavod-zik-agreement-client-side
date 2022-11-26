@@ -1,5 +1,5 @@
-﻿import React, { useEffect, useState } from "react"
-import { Card, Row, Col } from "antd"
+﻿import React, { useState } from "react"
+import { Row } from "antd"
 import "./TestPrint.css"
 import QRCode from "qrcode"
 import { printReasons } from './PrintComponents';
@@ -16,7 +16,7 @@ const TestPrint = React.forwardRef((props, ref) => {
             margin: 1,
         };
 
-        // let text = `Лист согласования от: ${props?.printData?.documentData?.documents[0]?.fio}`
+
         let text = `Тип договора: Лист согласования на реализацию готовой продукции
         Наименование ТРУ: ${props?.printData?.documentData?.documents[0]?.title},
         Поставщик ТРУ: ${props?.printData?.documentData?.documents[0]?.data_one[0]?.supllier},

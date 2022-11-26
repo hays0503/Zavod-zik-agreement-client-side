@@ -154,7 +154,6 @@ let Update3 = React.memo((props) => {
       autoComplete="off"
       onValuesChange={(changedValues, allValues) => {
         setState(Object.assign({}, state, { ...allValues }));
-        //console.log("UPDATE3 values", allValues);
       }}
     >
       {/* /////////////////////////////////// */}

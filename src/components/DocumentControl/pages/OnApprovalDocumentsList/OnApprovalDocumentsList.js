@@ -58,6 +58,18 @@ let OnApprovalDocumentsList = React.memo((props) => {
 						date_created
 						date_modified
 						status_id
+						mitwork_number
+						mitwork_data
+						comments {
+							id
+							comment
+							document_id
+							user_id
+							position
+							username
+							fio
+							date
+						}
 						document_logs {
 							id
 							document_id

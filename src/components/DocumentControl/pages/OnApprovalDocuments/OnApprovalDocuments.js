@@ -23,7 +23,6 @@ const { Step } = Steps;
 
 let OnApprovalDocuments = React.memo((props) => {
 	let user = useUser();
-	let userVariable = user.id;
 	let positionsVariable = user.positions.toString();
 
 	let documents = {
@@ -63,6 +62,16 @@ let OnApprovalDocuments = React.memo((props) => {
 						date_modified
 						status_id
 						reason
+						comments {
+							id
+							comment
+							document_id
+							user_id
+							position
+							username
+							fio
+							date
+						}
 						document_tasks {
 							id
 							document_id
@@ -157,6 +166,16 @@ let OnApprovalDocuments = React.memo((props) => {
 						date_modified
 						status_id
 						reason
+						comments {
+							id
+							comment
+							document_id
+							user_id
+							position
+							username
+							fio
+							date
+						}
 						data_one {
 							id
 							document_id
@@ -187,7 +206,6 @@ let OnApprovalDocuments = React.memo((props) => {
 							document_id
 							price
 							subject
-
 							currency_price
 							executor_name_division
 							sider_signatures_date
@@ -268,6 +286,16 @@ let OnApprovalDocuments = React.memo((props) => {
 							date_created
 							date_modified
 							status_id
+							comments {
+								id
+								comment
+								document_id
+								user_id
+								position
+								username
+								fio
+								date
+							}
 							document_logs {
 								id
 								document_id

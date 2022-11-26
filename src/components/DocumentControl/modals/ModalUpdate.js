@@ -8,9 +8,6 @@ import {
 	useUser,
 } from "../../../core/functions";
 
-
-import { async } from "./../../../core/print/reports/test/pdfConstruct";
-
 const insertComment = gql`
 	mutation insertComment($comment: JSON) {
 		insertComment(comment: $comment) {
@@ -362,6 +359,7 @@ let ModalUpdate = React.memo(
 				refetchComments(commentVariables);
 			}
 		}, [visible]);
+		
 		let commentsList =
 			dataComments && dataComments[Object.keys(dataComments)[0]] != null
 				? dataComments[Object.keys(dataComments)[0]].map((item) => {
