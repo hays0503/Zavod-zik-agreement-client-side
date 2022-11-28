@@ -68,7 +68,6 @@ let ApprovedPageUser = React.memo((props) => {
 							document_id
 							user_id
 							comment
-							date
 							username
 							position
 							fio
@@ -163,7 +162,6 @@ let ApprovedPageUser = React.memo((props) => {
 							position
 							username
 							fio
-							date
 						}
 						document_logs {
 							id
@@ -268,7 +266,6 @@ let ApprovedPageUser = React.memo((props) => {
 								position
 								username
 								fio
-								date
 							}
 							document_statuses {
 								id

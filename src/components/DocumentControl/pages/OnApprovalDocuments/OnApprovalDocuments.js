@@ -70,7 +70,6 @@ let OnApprovalDocuments = React.memo((props) => {
 							position
 							username
 							fio
-							date
 						}
 						document_tasks {
 							id
@@ -174,7 +173,6 @@ let OnApprovalDocuments = React.memo((props) => {
 							position
 							username
 							fio
-							date
 						}
 						data_one {
 							id
@@ -294,7 +292,6 @@ let OnApprovalDocuments = React.memo((props) => {
 								position
 								username
 								fio
-								date
 							}
 							document_logs {
 								id

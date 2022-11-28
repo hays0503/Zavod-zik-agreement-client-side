@@ -82,7 +82,6 @@ let ApprovedPage = React.memo((props) => {
 							position
 							username
 							fio
-							date
 						}
 						data_agreement_list {
 							id

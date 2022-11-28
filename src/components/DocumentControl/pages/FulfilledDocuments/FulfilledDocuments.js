@@ -64,7 +64,6 @@ let FulfilledDocuments = React.memo((props) => {
 							position
 							username
 							fio
-							date
 						}
 						document_tasks {
 							id

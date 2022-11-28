@@ -70,7 +70,6 @@ let RevisedPageUser = React.memo((props) => {
 							position
 							username
 							fio
-							date
 						}
 						document_logs {
 							id
