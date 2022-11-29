@@ -191,7 +191,7 @@ let TasksAddDialog2 = React.memo((props) => {
           <FragmentSwitchArea
             data={props?.document?.documents[0]?.data_agreement_list[0]?.price}
             name={"price"}
-            label={"Предмет договора: "}
+            label={"Общая сумма договора в валюте цены договора: "}
           />
 
           {/* `FragmentSwitchArea` 
