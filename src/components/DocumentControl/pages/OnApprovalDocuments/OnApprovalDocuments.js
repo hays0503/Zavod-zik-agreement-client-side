@@ -94,6 +94,8 @@ let OnApprovalDocuments = React.memo((props) => {
 							document_id
 							subject
 							remark
+							custom_area
+
 						}
 						data_one {
 							id
@@ -198,6 +200,8 @@ let OnApprovalDocuments = React.memo((props) => {
 							document_id
 							subject
 							remark
+							custom_area
+
 						}
 						data_agreement_list {
 							id
@@ -298,6 +302,14 @@ let OnApprovalDocuments = React.memo((props) => {
 								document_id
 								is_read
 								user_id
+							}
+							data_custom {
+								id
+								document_id
+								subject
+								remark
+								custom_area
+
 							}
 							document_tasks {
 								id
@@ -444,14 +456,17 @@ let OnApprovalDocuments = React.memo((props) => {
 	)();
 
 	const { loading, data, refetch } = handlerQuery(documents, "all")();
+
 	const {
 		loading: taskLoading,
 		data: taskData,
 		refetch: taskRefetch,
 	} = handlerQuery(DocumentTasks, "all")();
+
 	useEffect(() => {
 		taskRefetch();
 	}, []);
+
 	useEffect(() => {
 		refetch();
 	}, []);

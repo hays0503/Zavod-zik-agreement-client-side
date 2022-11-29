@@ -359,7 +359,7 @@ let ModalUpdate = React.memo(
 				refetchComments(commentVariables);
 			}
 		}, [visible]);
-		
+
 		let commentsList =
 			dataComments && dataComments[Object.keys(dataComments)[0]] != null
 				? dataComments[Object.keys(dataComments)[0]].map((item) => {
@@ -864,7 +864,6 @@ let ModalUpdate = React.memo(
 
 		const testRef = useRef();
 
-
 		return (
 			<>
 				<Button
@@ -927,7 +926,7 @@ let ModalUpdate = React.memo(
 							modalEnableEditHandler={modalEnableEditHandler}
 							form={form}
 							onFinish={async (values) => {
-								//console.log("Обновляю форму номер 1 ");
+								console.log("Обновляю форму номер 1 ");
 								let variables = {};
 								let base64 = [];
 								//console.log("values?.files?.fileList", values?.files?.fileList);
@@ -952,7 +951,7 @@ let ModalUpdate = React.memo(
 								values.route_id = 10;
 								variables[GQL.exemplar] = values;
 								console.log("variables-------", variables);
-								update({ variables });
+								//update({ variables });
 							}}
 							initialValues={data}
 							disabled={viewMode}
@@ -994,7 +993,7 @@ let ModalUpdate = React.memo(
 						modalEnableEditHandler={modalEnableEditHandler}
 						form2={form2}
 						onFinish2={async (values) => {
-							//console.log("Обновляю форму номер 2 ");
+							console.log("Обновляю форму номер 2 ");
 							let variables = {};
 							let base64 = [];
 							//console.log("values?.files?.fileList", values?.files?.fileList);
@@ -1017,7 +1016,8 @@ let ModalUpdate = React.memo(
 							}
 							values.route_id = 24;
 							variables[GQL2.exemplar] = values;
-							update({ variables });
+							console.log("variables-------", variables);
+							//update({ variables });
 						}}
 						initialValues2={data2}
 						disabled={viewMode}
@@ -1057,7 +1057,7 @@ let ModalUpdate = React.memo(
 						modalEnableEditHandler={modalEnableEditHandler}
 						form3={form3}
 						onFinish3={async (values) => {
-							//console.log("Обновляю форму номер 3 ");
+							console.log("Обновляю форму номер 3 ");
 							let variables = {};
 							let base64 = [];
 							//console.log("values?.files?.fileList", values?.files?.fileList);
@@ -1080,7 +1080,8 @@ let ModalUpdate = React.memo(
 							}
 							values.route_id = 26;
 							variables[GQL3.exemplar] = values;
-							update({ variables });
+							console.log("variables-------", variables);
+							//update({ variables });
 						}}
 						initialValues3={data3}
 						disabled={viewMode}
@@ -1120,7 +1121,7 @@ let ModalUpdate = React.memo(
 						modalEnableEditHandler={modalEnableEditHandler}
 						form4={form4}
 						onFinish4={async (values) => {
-							//console.log("Обновляю форму номер 4 ");
+							console.log("Обновляю форму номер 4 ");
 							let variables = {};
 							let base64 = [];
 							//console.log("onFinish4.fileList", values?.files?.fileList);
@@ -1143,7 +1144,8 @@ let ModalUpdate = React.memo(
 							}
 							values.route_id = 27;
 							variables[GQL.exemplar] = values;
-							update({ variables });
+							console.log("variables-------", variables);
+							//update({ variables });
 						}}
 						initialValues4={data4}
 						disabled={viewMode}
@@ -1183,7 +1185,7 @@ let ModalUpdate = React.memo(
 						modalEnableEditHandler={modalEnableEditHandler}
 						form5={form5}
 						onFinish5={async (values) => {
-							//console.log("Обновляю форму номер 5 ");
+							console.log("Обновляю форму номер 5 ");
 							let variables = {};
 							let base64 = [];
 							//console.log("values?.files?.fileList", values?.files?.fileList);
@@ -1206,7 +1208,8 @@ let ModalUpdate = React.memo(
 							}
 							values.route_id = 29;
 							variables[GQL.exemplar] = values;
-							update({ variables });
+							//update({ variables });
+							console.log("variables-------", variables);
 						}}
 						initialValues5={data5}
 						disabled={viewMode}

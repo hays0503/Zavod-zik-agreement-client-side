@@ -84,6 +84,8 @@ let AdminPageAll = React.memo((props) => {
 							document_id
 							subject
 							remark
+							custom_area
+
 						}
 						data_one {
 							id
@@ -179,6 +181,8 @@ let AdminPageAll = React.memo((props) => {
 							document_id
 							subject
 							remark
+							custom_area
+
 						}
 						data_agreement_list {
 							id

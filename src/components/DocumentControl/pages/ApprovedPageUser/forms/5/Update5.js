@@ -4,6 +4,7 @@ import { useUser } from "../../../../../../core/functions";
 import { GetIDNameTaskFile } from "../../../api/CRU_Document";
 import { FragmentAnyItems } from "../../../fragments/FragmentAnyItems";
 import FragmentCommentsViewer from "../../../fragments/FragmentCommentsViewer";
+import { FragmentCustomView } from "../../../fragments/FragmentCustomView";
 import { FragmentTaskAndFileViewer } from "../../../fragments/FragmentFileViewer";
 import { FormItem, FormWrap } from "../../../fragments/FragmentItemWrap";
 import { FragmentReasonsViewer } from "../../../fragments/FragmentReasonsViewer";
@@ -77,6 +78,7 @@ let Update5 = React.memo((props) => {
 
 				subject: iniValDataCustom.subject,
 				remark: iniValDataCustom.remark,
+				custom_area: iniValDataCustom.custom_area,
 
 				date_created: iniValue.date_created,
 				date_modified: iniValue.date_modified,
@@ -133,6 +135,8 @@ let Update5 = React.memo((props) => {
 			{/* /////////////////////////////////// */}
 			<FormWrap>{FormItem("Основание: ", state?.subject)}</FormWrap>
 			{/* /////////////////////////////////// */}
+			{/* //Кастомные поля */}
+			<FragmentCustomView custom_area={state?.custom_area} />
 			<Divider type={"horizontal"} />
 			{/* /////////////////////////////////// */}
 			{/*Фрагмент antd дающую возможность просматривать файлы*/}
