@@ -53,10 +53,7 @@ let TasksAddDialog3 = React.memo((props) => {
             title: values.title == undefined ? false : values.title,
             subject: values.subject == undefined ? false : values.subject,
             price: values.price == undefined ? false : values.price,
-            currency:
-              values.currency_price == undefined
-                ? false
-                : values.currency_price,
+            currency: values.currency == undefined ? false : values.currency,
             executor_name_division:
               values.executor_name_division == undefined
                 ? false
@@ -78,7 +75,8 @@ let TasksAddDialog3 = React.memo((props) => {
         },
       },
     };
-    console.log(taskData);
+    // console.log(values);
+    // console.log(taskData);
     insert(taskData);
     props.setVisible(false);
     window.location.reload();
