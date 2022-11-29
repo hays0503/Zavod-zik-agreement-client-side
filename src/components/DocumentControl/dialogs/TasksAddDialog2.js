@@ -81,6 +81,7 @@ let TasksAddDialog2 = React.memo((props) => {
     console.log(taskData);
     insert(taskData);
     props.setVisible(false);
+    window.location.reload();
   };
 
   const [form] = Form.useForm();
