@@ -2,15 +2,14 @@ import { Collapse, Divider, Form, Steps, Typography } from "antd";
 import React, { useEffect, useState } from "react";
 import { formatDate, useUser } from "../../../../../../core/functions";
 
-import Print from "../../../../../../core/print/Print";
 import { GetIDNameTaskFile } from "../../../api/CRU_Document";
 import { FragmentAnyItems } from "../../../fragments/FragmentAnyItems";
 import FragmentCommentsViewer from "../../../fragments/FragmentCommentsViewer";
 import { FragmentTaskAndFileViewer } from "../../../fragments/FragmentFileViewer";
 import { FormItem, FormWrap } from "../../../fragments/FragmentItemWrap";
 import { FragmentMitWork } from "../../../fragments/FragmentMitWork";
-import { FragmentStepViewerRaw } from "../../../fragments/FragmentStepViewer";
 import { FragmentReasonsViewer } from "./../../../fragments/FragmentReasonsViewer";
+import { PrintContainer } from "./../../../ApprovedPageUser/forms/1/PrintContainer";
 
 const { Title, Link } = Typography;
 const { Step } = Steps;
@@ -114,7 +113,7 @@ let Update1 = React.memo((props) => {
         <b>Файл согласованного договора</b>
       </h3>
       {/* /////////////////////////////////// */}
-      <Print printData={iniValue} documentData={iniValue} />
+      <PrintContainer printData={iniValue} documentData={iniValue} />
       <Divider type={"horizontal"} />
       {/* /////////////////////////////////// */}
       <Form.Item

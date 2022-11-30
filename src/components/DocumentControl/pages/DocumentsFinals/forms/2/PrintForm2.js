@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Card, Row, Col } from "antd";
+import { Row } from "antd";
 import "./TestPrint.css";
 import QRCode from "qrcode";
-import { printReasons } from "../../../../../../core/print/reports/test/PrintComponents";
+import { printReasons } from "./../../../../../../core/print/reports/test/PrintComponents";
 
 const PrintForm2 = React.forwardRef((props, ref) => {
-	let [qrCodeState, setQrCodeState] = useState("");
-
-	let generateQRCode = async () => {
+	const [QRCodeState, setQRCodeState] = useState();
+	const generateQRCode = async () => {
 		const opts = {
 			errorCorrectionLevel: "M",
 			type: "image/png",
@@ -15,21 +14,22 @@ const PrintForm2 = React.forwardRef((props, ref) => {
 			margin: 1,
 		};
 
-		let text = `Тип договора: Лист согласования на реализацию готовой продукции
-        Наименование контрагента: ${props?.printData?.documentData?.documents[0]?.title},
-        Предмет договора: ${props?.printData?.documentData?.documents[0]?.data_agreement_list[0]?.subject},
-        Общая сумма договора в валюте цены договора: ${props?.printData?.documentData?.documents[0]?.data_agreement_list[0]?.price},
-        Общая сумма договора в тенге, по курсу НБ РК: ${props?.printData?.documentData?.documents[0]?.data_agreement_list[0]?.currency_price},
-        Наименование подразделения, фамилия ответственного исполнителя: ${props?.printData?.documentData?.documents[0]?.data_agreement_list[0]?.executor_name_division},
-        Подписанный сторонами оригинал договора получен, дата, способ получения от контрагента: ${props?.printData?.documentData?.documents[0]?.data_agreement_list[0]?.sider_signatures_date}
-        Дата получение проекта договора, способ получения от контрагента: ${props?.printData?.documentData?.documents[0]?.data_agreement_list[0]?.received_from_counteragent_date}
+		const text = `Тип договора: Лист согласования на реализацию готовой продукции
+        Наименование контрагента: ${props?.printData?.documentData?.title},
+        Предмет договора: ${props?.printData?.documentData?.data_agreement_list[0]?.subject},
+        Общая сумма договора в валюте цены договора: ${props?.printData?.documentData?.data_agreement_list[0]?.price},
+        Общая сумма договора в тенге, по курсу НБ РК: ${props?.printData?.documentData?.data_agreement_list[0]?.currency_price},
+        Наименование подразделения, фамилия ответственного исполнителя: ${props?.printData?.documentData?.data_agreement_list[0]?.executor_name_division},
+        Подписанный сторонами оригинал договора получен, дата, способ получения от контрагента: ${props?.printData?.documentData?.data_agreement_list[0]?.sider_signatures_date}
+        Дата получение проекта договора, способ получения от контрагента: ${props?.printData?.documentData?.data_agreement_list[0]?.received_from_counteragent_date}
         `;
 
-		let qr = await QRCode.toDataURL(text, opts);
-		setQrCodeState(qr);
+		setQRCodeState(await QRCode.toDataURL(text, opts));
 	};
 
-	generateQRCode();
+	useEffect(() => {
+		generateQRCode();
+	}, []);
 
 	return (
 		<div ref={ref}>
@@ -48,57 +48,51 @@ const PrintForm2 = React.forwardRef((props, ref) => {
 							продукции
 						</div>
 						<div style={{ marginBottom: "10px" }}>
-							<b>Наименование контрагента:</b>
-							{props?.printData?.documentData?.documents[0]?.title}
+							<b>Наименование контрагента:</b>{" "}
+							{props?.printData?.documentData?.title}
 						</div>
 						<div style={{ marginBottom: "10px" }}>
-							<b>Предмет договора:</b>
-							{
-								props?.printData?.documentData?.documents[0]
-									?.data_agreement_list[0]?.subject
-							}
+							<b>Предмет договора:</b>{" "}
+							{props?.printData?.documentData?.data_agreement_list[0]?.subject}
 						</div>
 						<div style={{ marginBottom: "10px" }}>
-							<b>Общая сумма договора в валюте цены договора:</b>
-							{
-								props?.printData?.documentData?.documents[0]
-									?.data_agreement_list[0]?.price
-							}
+							<b>Общая сумма договора в валюте цены договора:</b>{" "}
+							{props?.printData?.documentData?.data_agreement_list[0]?.price}
 						</div>
 						<div style={{ marginBottom: "10px" }}>
-							<b>Общая сумма договора в тенге, по курсу НБ РК:</b>
+							<b>Общая сумма договора в тенге, по курсу НБ РК:</b>{" "}
 							{
-								props?.printData?.documentData?.documents[0]
-									?.data_agreement_list[0]?.currency_price
+								props?.printData?.documentData?.data_agreement_list[0]
+									?.currency_price
 							}
 						</div>
 						<div style={{ marginBottom: "10px" }}>
 							<b>
 								Наименование подразделения, фамилия ответственного исполнителя:
-							</b>
+							</b>{" "}
 							{
-								props?.printData?.documentData?.documents[0]
-									?.data_agreement_list[0]?.executor_name_division
+								props?.printData?.documentData?.data_agreement_list[0]
+									?.executor_name_division
 							}
 						</div>
 						<div style={{ marginBottom: "10px" }}>
 							<b>
 								Подписанный сторонами оригинал договора получен, дата, способ
 								получения от контрагента:
-							</b>
+							</b>{" "}
 							{
-								props?.printData?.documentData?.documents[0]
-									?.data_agreement_list[0]?.sider_signatures_date
+								props?.printData?.documentData?.data_agreement_list[0]
+									?.sider_signatures_date
 							}
 						</div>
 						<div style={{ marginBottom: "10px" }}>
 							<b>
 								Дата получение проекта договора, способ получения от
 								контрагента:
-							</b>
+							</b>{" "}
 							{
-								props?.printData?.documentData?.documents[0]
-									?.data_agreement_list[0]?.received_from_counteragent_date
+								props?.printData?.documentData?.data_agreement_list[0]
+									?.received_from_counteragent_date
 							}
 						</div>
 					</div>
@@ -125,42 +119,39 @@ const PrintForm2 = React.forwardRef((props, ref) => {
 										<b>Дата согласования</b>
 									</th>
 								</tr>
-								{props?.printData?.documentData?.documents[0].signatures?.map(
-									(item) => {
-										let date = item.date_signature.match(/.{10}/);
-										let date_signature = date[0];
-										return (
-											<>
-												<tr style={{ textAlign: "center" }}>
-													<td>{item.position}</td>
-													<td>Согласовано</td>
-													<td>{item.fio}</td>
-													<td>{date_signature}</td>
-												</tr>
-											</>
-										);
-									}
-								)}
+								{props?.printData?.documentData?.signatures?.map((item) => {
+									let date = item.date_signature.match(/.{10}/);
+									let date_signature = date[0];
+									return (
+										<>
+											<tr style={{ textAlign: "center" }}>
+												<td>{item.position}</td>
+												<td>Согласовано</td>
+												<td>{item.fio}</td>
+												<td>{date_signature}</td>
+											</tr>
+										</>
+									);
+								})}
 							</table>
 						</Row>
 						<div style={{ paddingTop: "20px" }}>
-							<b>Исполнитель:</b>
-							{props?.printData?.documentData?.documents[0]?.position},
-							{props?.printData?.documentData?.documents[0]?.fio} <br />
+							<b>Исполнитель:</b> {props?.printData?.documentData?.position},{" "}
+							{props?.printData?.documentData?.fio} <br />
 							<b>Телефоны исполнителя:</b> _________________ <br />
-							<b>Полученный сторонами оригинал договора получен:</b>
+							<b>Полученный сторонами оригинал договора получен:</b>{" "}
 							_________________
 						</div>
 					</div>
 				</div>
 				<div className="qr-container">
-					<img src={qrCodeState} className="qr-code" />
+					<img src={QRCodeState} className="qr-code" />
 				</div>
 			</div>
 			{/*Конец Лист Согласования */}
 
 			{/*Начало Лист Замечаний */}
-			{printReasons(props?.printData?.documentData?.documents[0])}
+			{printReasons(props?.printData?.documentData?.reason)}
 			{/*Конец Лист Замечаний */}
 		</div>
 	);

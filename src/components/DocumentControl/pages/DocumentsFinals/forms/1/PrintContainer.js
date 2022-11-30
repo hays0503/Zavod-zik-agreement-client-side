@@ -4,14 +4,13 @@ import { Button } from "antd";
 
 import "antd/dist/antd.css";
 
-import PrintForm4 from "./PrintForm4";
+import PrintForm from "./PrintForm";
 
-function PrintContainer4(documentData) {
+export function PrintContainer(documentData) {
 	let componentRef = useRef();
 	const [printData, setPrintData] = useState(documentData);
 	const [dataLoaded, setDataLoaded] = useState(false);
 	const onBeforeGetContentResolve = useRef();
-	//console.log('documentData', documentData)
 	const handleOnBeforeGetContent = () => {
 		return new Promise((resolve) => {
 			setTimeout(() => {
@@ -44,7 +43,7 @@ function PrintContainer4(documentData) {
 		<div>
 			{printData ? (
 				<span style={{ display: "none" }}>
-					<PrintForm4 ref={componentRef} printData={documentData} />
+					<PrintForm ref={componentRef} printData={documentData} />
 				</span>
 			) : null}
 			<Button onClick={handlePrint}>
@@ -54,4 +53,3 @@ function PrintContainer4(documentData) {
 	);
 }
 
-export default PrintContainer4;
