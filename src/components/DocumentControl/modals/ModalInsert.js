@@ -79,7 +79,7 @@ let positions = {
       variables: {
         positions: {
           global: {
-            is_boss: "=true",
+            id: "!=0",
           },
         },
       },
