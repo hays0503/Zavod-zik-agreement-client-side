@@ -2,14 +2,12 @@ import { Collapse, Divider, Form, Steps, Typography } from "antd";
 import React, { useEffect, useState } from "react";
 import { formatDate, useUser } from "../../../../../../core/functions";
 
-import Print from "../../../../../../core/print/Print";
 import { GetIDNameTaskFile } from "../../../api/CRU_Document";
 import { FragmentAnyItems } from "../../../fragments/FragmentAnyItems";
 import FragmentCommentsViewer from "../../../fragments/FragmentCommentsViewer";
 import { FragmentTaskAndFileViewer } from "../../../fragments/FragmentFileViewer";
 import { FormItem, FormWrap } from "../../../fragments/FragmentItemWrap";
 import { FragmentMitWork } from "../../../fragments/FragmentMitWork";
-import { FragmentStepViewerRaw } from "../../../fragments/FragmentStepViewer";
 import { FragmentReasonsViewer } from "./../../../fragments/FragmentReasonsViewer";
 import { PrintContainer } from "./../../../ApprovedPageUser/forms/1/PrintContainer";
 
