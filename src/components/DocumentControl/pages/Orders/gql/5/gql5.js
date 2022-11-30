@@ -33,7 +33,6 @@ let gql5 = {
 						subject
 						remark
 						custom_area
-
 					}
 					document_statuses {
 						id

@@ -951,7 +951,7 @@ let ModalUpdate = React.memo(
 								values.route_id = 10;
 								variables[GQL.exemplar] = values;
 								console.log("variables-------", variables);
-								//update({ variables });
+								update({ variables });
 							}}
 							initialValues={data}
 							disabled={viewMode}
@@ -1017,7 +1017,7 @@ let ModalUpdate = React.memo(
 							values.route_id = 24;
 							variables[GQL2.exemplar] = values;
 							console.log("variables-------", variables);
-							//update({ variables });
+							update({ variables });
 						}}
 						initialValues2={data2}
 						disabled={viewMode}
@@ -1081,7 +1081,7 @@ let ModalUpdate = React.memo(
 							values.route_id = 26;
 							variables[GQL3.exemplar] = values;
 							console.log("variables-------", variables);
-							//update({ variables });
+							update({ variables });
 						}}
 						initialValues3={data3}
 						disabled={viewMode}
@@ -1145,7 +1145,7 @@ let ModalUpdate = React.memo(
 							values.route_id = 27;
 							variables[GQL.exemplar] = values;
 							console.log("variables-------", variables);
-							//update({ variables });
+							update({ variables });
 						}}
 						initialValues4={data4}
 						disabled={viewMode}
@@ -1208,7 +1208,7 @@ let ModalUpdate = React.memo(
 							}
 							values.route_id = 29;
 							variables[GQL.exemplar] = values;
-							//update({ variables });
+							update({ variables });
 							console.log("variables-------", variables);
 						}}
 						initialValues5={data5}

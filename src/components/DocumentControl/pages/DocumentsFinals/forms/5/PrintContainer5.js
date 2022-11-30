@@ -8,14 +8,14 @@ import PrintForm5 from "./PrintForm5";
 
 function PrintContainer5(documentData) {
 	let componentRef = useRef();
-	const [printData, setPrintData] = useState(false);
+	const [printData, setPrintData] = useState(documentData);
 	const [dataLoaded, setDataLoaded] = useState(false);
 	const onBeforeGetContentResolve = useRef();
-	//console.log('documentData', documentData)
+
 	const handleOnBeforeGetContent = () => {
 		return new Promise((resolve) => {
 			setTimeout(() => {
-				setPrintData(documentData);
+				//setPrintData(documentData);
 				onBeforeGetContentResolve.current = resolve;
 				setDataLoaded(true);
 			}, 100);
@@ -26,12 +26,7 @@ function PrintContainer5(documentData) {
 		content: () => {
 			const extra = componentRef.current.cloneNode(true);
 			const PrintElem = document.createElement("div");
-			{
-				/*const header =
-                `<div class="page-header"><p>I'm The header</p></div>` +
-                `<div class="page-footer"><p>I'm The Footer</p></div>`;
-            PrintElem.innerHTML = header;*/
-			}
+
 			PrintElem.appendChild(extra);
 			return PrintElem;
 		},
@@ -48,9 +43,12 @@ function PrintContainer5(documentData) {
 
 	return (
 		<div>
-			<span style={{ display: "none" }}>
-				<PrintForm5 ref={componentRef} printData={printData} />
-			</span>
+			{printData ? (
+				<span style={{ display: "none" }}>
+					<PrintForm5 ref={componentRef} printData={documentData} />
+				</span>
+			) : null}
+
 			<Button onClick={handlePrint}>
 				Получить файл согласованного договора
 			</Button>

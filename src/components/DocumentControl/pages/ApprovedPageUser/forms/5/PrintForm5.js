@@ -6,6 +6,7 @@ import { printReasons } from "./../../../../../../core/print/reports/test/PrintC
 
 const PrintForm5 = React.forwardRef((props, ref) => {
 	const [QRCodeState, setQRCodeState] = useState();
+
 	const generateQRCode = async () => {
 		const opts = {
 			errorCorrectionLevel: "M",
@@ -15,9 +16,12 @@ const PrintForm5 = React.forwardRef((props, ref) => {
 		};
 
 		let text = `Тип договора: Другой
-        Наименование: ${props?.printData?.documentData?.title},
+		Наименование: ${props?.printData?.documentData?.title},
         Примечание: ${props?.printData?.documentData?.data_custom[0]?.remark},
         Основание: ${props?.printData?.documentData?.data_custom[0]?.subject},
+		${props?.printData?.documentData?.data_custom[0]?.custom_area?.map((item) => {
+			return `${item.key} ${item.data}`;
+		})}
         `;
 
 		setQRCodeState(await QRCode.toDataURL(text, opts));
@@ -29,7 +33,7 @@ const PrintForm5 = React.forwardRef((props, ref) => {
 
 	return (
 		<div ref={ref}>
-			<div className="page" style={{ margin: 20 }}>
+			<div className="page">
 				<div style={{ paddingLeft: "25px", paddingRight: "30px" }}>
 					<div style={{ textAlign: "center", marginBottom: "10px" }}>
 						<h2>
@@ -45,13 +49,25 @@ const PrintForm5 = React.forwardRef((props, ref) => {
 							<b>Наименование:</b> {props?.printData?.documentData?.title}
 						</div>
 						<div style={{ marginBottom: "10px" }}>
-							<b>Примечание:</b>{" "}
+							<b>Примечание:</b>
 							{props?.printData?.documentData?.data_custom[0]?.remark}
 						</div>
 						<div style={{ marginBottom: "10px" }}>
-							<b>Основание:</b>{" "}
+							<b>Основание:</b>
 							{props?.printData?.documentData?.data_custom[0]?.subject}
 						</div>
+						{props?.printData?.documentData?.data_custom[0]?.custom_area?.map(
+							(item) => {
+								return (
+									<>
+										<div style={{ marginBottom: "10px" }}>
+											<b>{`${item.key}: `}</b>
+											{`${item.data}`}
+										</div>
+									</>
+								);
+							}
+						)}
 					</div>
 					<div className="subpagepage">
 						<Row

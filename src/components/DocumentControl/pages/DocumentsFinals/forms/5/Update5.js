@@ -107,13 +107,16 @@ let Update5 = React.memo((props) => {
 			{/* //Кастомные поля */}
 			<FragmentCustomView custom_area={state?.custom_area} />
 			<Divider type={"horizontal"} />
-			<h3>
-				<b>Файл согласованного договора</b>
-			</h3>
-			<PrintContainer5
-				printData={props?.initialValues5?.documents[0].id}
-				documentData={props?.initialValues5}
-			/>
+			{iniValue?.data_custom !== undefined ? (
+				<>
+					<h3>
+						<b>Файл согласованного договора</b>
+					</h3>
+					<PrintContainer5 documentData={iniValue} />
+				</>
+			) : (
+				<h1>Загрузка</h1>
+			)}
 			<Divider type={"horizontal"} />
 			<Form.Item
 				className="font-form-header"

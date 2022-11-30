@@ -84,7 +84,6 @@ let RegistrationDocuments = React.memo((props) => {
 							subject
 							remark
 							custom_area
-
 						}
 						data_one {
 							id
@@ -185,7 +184,6 @@ let RegistrationDocuments = React.memo((props) => {
 							subject
 							remark
 							custom_area
-
 						}
 						data_agreement_list {
 							id
@@ -275,6 +273,13 @@ let RegistrationDocuments = React.memo((props) => {
 							status_id
 							mitwork_number
 							mitwork_data
+							data_custom {
+								id
+								document_id
+								subject
+								remark
+								custom_area
+							}
 							document_logs {
 								id
 								document_id
