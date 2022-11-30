@@ -19,6 +19,7 @@ const PrintForm = React.forwardRef((props, ref) => {
         Поставщик ТРУ: ${props?.printData?.documentData?.data_one[0].supllier},
         Основание: ${props?.printData?.documentData?.data_one[0].subject},
         Общая сумма договора: ${props?.printData?.documentData?.data_one[0].price},
+        Валюта платежа: ${props?.printData?.documentData?.data_one[0].currency},
         `;
 
     setQRCodeState(await QRCode.toDataURL(text, opts));
@@ -56,6 +57,10 @@ const PrintForm = React.forwardRef((props, ref) => {
             <div style={{ marginBottom: "10px" }}>
               <b>Общая сумма договора:</b>{" "}
               {props?.printData?.documentData?.data_one[0].price}
+            </div>
+            <div style={{ marginBottom: "10px" }}>
+              <b>Валюта платежа:</b>{" "}
+              {props?.printData?.documentData?.data_one[0].currency}
             </div>
           </div>
           <div className="subpagepage">

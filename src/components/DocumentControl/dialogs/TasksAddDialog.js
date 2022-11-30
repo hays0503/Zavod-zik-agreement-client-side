@@ -54,6 +54,7 @@ let TasksAddDialog = React.memo((props) => {
             subject: values.subject == undefined ? false : values.subject,
             supllier: values.supllier == undefined ? false : values.supllier,
             price: values.price == undefined ? false : values.price,
+            currency: values.currency == undefined ? false : values.currency,
           },
           task_files: `{${values.task_files.map((item) => parseInt(item))}}`,
           files: values.files,
@@ -182,6 +183,14 @@ let TasksAddDialog = React.memo((props) => {
             data={props?.document?.documents[0]?.data_one[0]?.price}
             name={"price"}
             label={"Общая стоимость: "}
+          />
+          {/* `FragmentSwitchArea` 
+					фрагмент antd дающий возможность выбрать через switch
+					какое поле будет в документе */}
+          <FragmentSwitchArea
+            data={props?.document?.documents[0]?.data_one[0]?.currency}
+            name={"currency"}
+            label={"Валюта платежа: "}
           />
 
           <Divider type={"horizontal"} />

@@ -77,6 +77,7 @@ let Update1 = React.memo((props) => {
         fio: iniValue.fio,
         price: iniValDataOne.price,
         supllier: iniValDataOne.supllier,
+        currency: iniValDataOne.currency,
         subject: iniValDataOne.subject,
         date_created: iniValue.date_created,
         date_modified: iniValue.date_modified,
@@ -132,6 +133,8 @@ let Update1 = React.memo((props) => {
       <FormWrap>{FormItem("Основание: ", state?.subject)}</FormWrap>
       {/* /////////////////////////////////// */}
       <FormWrap>{FormItem("Общая сумма договора: ", state?.price)}</FormWrap>
+      {/* /////////////////////////////////// */}
+      <FormWrap>{FormItem("Валюта платежа: ", state?.currency)}</FormWrap>
       {/* /////////////////////////////////// */}
       <Divider type={"horizontal"} />
       {/*Фрагмент antd дающую возможность просматривать файлы*/}

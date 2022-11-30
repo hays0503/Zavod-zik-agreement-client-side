@@ -61,6 +61,7 @@ const Update1 = React.memo((props) => {
         price: iniValue.data_one[0].price,
         supllier: iniValue.data_one[0].supllier,
         subject: iniValue.data_one[0].subject,
+        currency: iniValue.data_one[0].currency,
         date_created: iniValue.date_created,
         date_modified: iniValue.date_modified,
         route_id: iniValue.route_id.id,
@@ -111,6 +112,8 @@ const Update1 = React.memo((props) => {
       <FormWrap>{FormItem("Основание: ", state?.subject)}</FormWrap>
       {/* /////////////////////////////////// */}
       <FormWrap>{FormItem("Общая сумма договора: ", state?.price)}</FormWrap>
+      {/* /////////////////////////////////// */}
+      <FormWrap>{FormItem("Валюта платежа: ", state?.currency)}</FormWrap>
 
       <FragmentMitWorkEdit
         id={iniValue?.id}

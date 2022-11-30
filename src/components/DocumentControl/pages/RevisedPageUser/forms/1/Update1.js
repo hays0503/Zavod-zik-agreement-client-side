@@ -18,10 +18,10 @@ import { FragmentTaskAndFileViewer } from "../../../fragments/FragmentFileViewer
 import { FormItem, FormWrap } from "../../../fragments/FragmentItemWrap";
 import { FragmentReasonsViewer } from "../../../fragments/FragmentReasonsViewer";
 import { FragmentStepViewer } from "./../../../fragments/FragmentStepViewer";
-
 //pop confirm
 import FromUserEditToApproveConfirm from "./dialogs/FromUserEditToApproveConfirm";
 import FragmentUploader from "./../../../fragments/FragmentUploader";
+import { FragmentInputBoxCurrency } from "./../../../fragments/FragmentInputBox";
 
 const { Title, Link } = Typography;
 const { Step } = Steps;
@@ -39,9 +39,6 @@ let Update1 = React.memo((props) => {
    * Деструктаризация (начального значение из таблиц Route(движение документов))
    */
   const iniValRoute = props?.initialValues?.documents[0]?.route_id;
-  console.log(props);
-  console.log(iniValue);
-  console.log(iniValRoute);
   const [state, setState] = useState({
     log_username: user.username,
   });
@@ -65,6 +62,7 @@ let Update1 = React.memo((props) => {
         price: props.initialValues.documents[0].data_one[0].price,
         supllier: props.initialValues.documents[0].data_one[0].supllier,
         subject: props.initialValues.documents[0].data_one[0].subject,
+        currency: props.initialValues.documents[0].data_one[0].currency,
 
         date_created: props.initialValues.documents[0].date_created,
         date_modified: props.initialValues.documents[0].date_modified,
@@ -106,8 +104,8 @@ let Update1 = React.memo((props) => {
   //////////////////////////////////////////////////////////////////////////////////////////
 
   let onFinish = () => {
-    props.onFinish(state);
     // console.log("+++++++++++++++++++++++", state);
+    props.onFinish(state);
   };
 
   return (
@@ -189,6 +187,23 @@ let Update1 = React.memo((props) => {
         ]}
       >
         <Input disabled={props.disabled} placeholder="Общая сумма договора" />
+      </Form.Item>
+      <Form.Item
+        name="currency"
+        label="Валюта платежа"
+        labelCol={{ span: 24 }}
+        className="form-input-label"
+        rules={[
+          {
+            required: true,
+            message: "Необходимо для заполнения!",
+          },
+        ]}
+      >
+        <FragmentInputBoxCurrency
+          disabled={props.disabled}
+          placeholder={state?.currency}
+        />
       </Form.Item>
       <Divider type={"horizontal"} />
 

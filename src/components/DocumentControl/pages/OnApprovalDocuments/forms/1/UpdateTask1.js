@@ -114,6 +114,14 @@ let Update1 = React.memo((props) => {
         ""
       )}
       {/* /////////////////////////////////// */}
+      {state?.document_options?.currency === true ? (
+        <FormWrap>
+          {FormItem("Валюта платежа: ", props?.document?.data_one[0]?.currency)}
+        </FormWrap>
+      ) : (
+        ""
+      )}
+      {/* /////////////////////////////////// */}
 
       <Divider type={"horizontal"} />
 

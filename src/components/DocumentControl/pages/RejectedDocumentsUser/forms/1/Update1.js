@@ -59,6 +59,7 @@ let Update1 = React.memo((props) => {
         price: props.initialValues.documents[0].data_one[0].price,
         supllier: props.initialValues.documents[0].data_one[0].supllier,
         subject: props.initialValues.documents[0].data_one[0].subject,
+        currency: props.initialValues.documents[0].data_one[0].currency,
 
         date_created: props.initialValues.documents[0].date_created,
         date_modified: props.initialValues.documents[0].date_modified,
@@ -112,6 +113,8 @@ let Update1 = React.memo((props) => {
       <FormWrap>{FormItem("Основание: ", state?.subject)}</FormWrap>
       {/* /////////////////////////////////// */}
       <FormWrap>{FormItem("Общая сумма договора: ", state?.price)}</FormWrap>
+      {/* /////////////////////////////////// */}
+      <FormWrap>{FormItem("Валюта платежа: ", state?.currency)}</FormWrap>
       {/* /////////////////////////////////// */}
       <Divider type={"horizontal"} />
       <Form.Item
