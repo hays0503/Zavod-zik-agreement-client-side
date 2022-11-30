@@ -12,6 +12,7 @@ import {
 } from "antd";
 import React, { useEffect, useState } from "react";
 import { useUser, formatDate } from "../../../../../../core/functions";
+import { FragmentCustomView } from "../../../fragments/FragmentCustomView";
 
 let Update5 = React.memo((props) => {
 	let user = useUser();
@@ -51,6 +52,8 @@ let Update5 = React.memo((props) => {
 
 				subject: props.initialValues5.documents[0].data_custom[0].subject,
 				remark: props.initialValues5.documents[0].data_custom[0].remark,
+				custom_area:
+					props.initialValues5.documents[0].data_custom[0].custom_area,
 
 				date_created: props.initialValues5.documents[0].date_created,
 				date_modified: props.initialValues5.documents[0].date_modified,
@@ -155,6 +158,10 @@ let Update5 = React.memo((props) => {
 					<Col span={12}>Основание:</Col> <Col span={12}>{state.subject}</Col>
 				</Row>
 			</div>
+
+			{/* //Кастомные поля */}
+			<FragmentCustomView custom_area={state?.custom_area} />
+
 			<Divider type={"horizontal"} />
 			<Form.Item
 				name="files"

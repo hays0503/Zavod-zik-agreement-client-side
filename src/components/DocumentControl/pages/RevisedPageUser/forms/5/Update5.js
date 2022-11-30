@@ -21,6 +21,7 @@ import { FragmentReasonsViewer } from "../../../fragments/FragmentReasonsViewer"
 import { FragmentTaskAndFileViewer } from "./../../../fragments/FragmentFileViewer";
 import FragmentUploader from "./../../../fragments/FragmentUploader";
 import { FragmentStepViewer } from "./../../../fragments/FragmentStepViewer";
+import { FragmentCustomView } from "../../../fragments/FragmentCustomView";
 
 const { Title, Link } = Typography;
 
@@ -37,18 +38,18 @@ let Update5 = React.memo((props) => {
    */
   const iniValRoute = props?.initialValues5?.documents[0]?.route_id;
 
-  const stepsDirection = useRef("vertical");
-  useEffect(() => {
-    if (props?.initialValues5?.documents[0]?.route_data?.length > 1)
-      stepsDirection.current =
-        props?.initialValues5?.documents[0]?.route_data?.length <= 7
-          ? "horizontal"
-          : "vertical";
-  }, [props]);
+	const stepsDirection = useRef("vertical");
+	useEffect(() => {
+		if (props?.initialValues5?.documents[0]?.route_data?.length > 1)
+			stepsDirection.current =
+				props?.initialValues5?.documents[0]?.route_data?.length <= 7
+					? "horizontal"
+					: "vertical";
+	}, [props]);
 
-  const [state, setState] = useState({
-    log_username: user.username,
-  }); //console.log
+	const [state, setState] = useState({
+		log_username: user.username,
+	}); //console.log
 
   useEffect(() => {
     props.form5.setFieldsValue(state);
@@ -66,30 +67,31 @@ let Update5 = React.memo((props) => {
         username: props.initialValues5.documents[0].username,
         fio: props.initialValues5.documents[0].fio,
 
-        subject: props.initialValues5.documents[0].data_custom[0].subject,
-        remark: props.initialValues5.documents[0].data_custom[0].remark,
+				subject: props.initialValues5.documents[0].data_custom[0].subject,
+				remark: props.initialValues5.documents[0].data_custom[0].remark,
+				custom_area: props.initialValues5.documents[0].custom_area,
 
-        date_created: props.initialValues5.documents[0].date_created,
-        date_modified: props.initialValues5.documents[0].date_modified,
-        route_id: props.initialValues5.documents[0].route_id.id,
-        status_in_process:
-          props.initialValues5.documents[0].route_id.status_in_process,
-        status_cancelled:
-          props.initialValues5.documents[0].route_id.status_cancelled,
-        status_finished:
-          props.initialValues5.documents[0].route_id.status_finished,
-        status_id: props.initialValues5.documents[0].status_id,
-        route: props.initialValues5.documents[0].route_data,
-        step: props.initialValues5.documents[0].step,
-        comments: props.initialValues5.documents[0].comments,
-        signatures: props.initialValues5.documents[0].signatures,
-        files: props.initialValues5.documents[0].files,
-        log_username: state.log_username,
-      });
-      setStepCount({ step: props.initialValues5.documents[0].step });
-      setRoutesList(props.initialValues5.documents[0].route_data);
-    }
-  }, [props.initialValues5]);
+				date_created: props.initialValues5.documents[0].date_created,
+				date_modified: props.initialValues5.documents[0].date_modified,
+				route_id: props.initialValues5.documents[0].route_id.id,
+				status_in_process:
+					props.initialValues5.documents[0].route_id.status_in_process,
+				status_cancelled:
+					props.initialValues5.documents[0].route_id.status_cancelled,
+				status_finished:
+					props.initialValues5.documents[0].route_id.status_finished,
+				status_id: props.initialValues5.documents[0].status_id,
+				route: props.initialValues5.documents[0].route_data,
+				step: props.initialValues5.documents[0].step,
+				comments: props.initialValues5.documents[0].comments,
+				signatures: props.initialValues5.documents[0].signatures,
+				files: props.initialValues5.documents[0].files,
+				log_username: state.log_username,
+			});
+			setStepCount({ step: props.initialValues5.documents[0].step });
+			setRoutesList(props.initialValues5.documents[0].route_data);
+		}
+	}, [props.initialValues5]);
 
   let onFinish = () => {
     props.onFinish5(state);

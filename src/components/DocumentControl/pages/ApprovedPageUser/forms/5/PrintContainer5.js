@@ -11,7 +11,7 @@ function PrintContainer5(documentData) {
 	const [printData, setPrintData] = useState(documentData);
 	const [dataLoaded, setDataLoaded] = useState(false);
 	const onBeforeGetContentResolve = useRef();
-	//console.log('documentData', documentData)
+
 	const handleOnBeforeGetContent = () => {
 		return new Promise((resolve) => {
 			setTimeout(() => {
