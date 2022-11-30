@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Row } from "antd";
-import QRCode from "qrcode";
 import "./TestPrint.css";
-import { printReasons } from "./../../../../../../core/print/reports/test/PrintComponents";
+import QRCode from "qrcode";
+import { printReasons } from "../../../../../../core/print/reports/test/PrintComponents";
 
-const PrintForm5 = React.forwardRef((props, ref) => {
+const PrintForm = React.forwardRef((props, ref) => {
   const [QRCodeState, setQRCodeState] = useState();
   const generateQRCode = async () => {
     const opts = {
@@ -14,10 +14,11 @@ const PrintForm5 = React.forwardRef((props, ref) => {
       margin: 1,
     };
 
-    let text = `Тип договора: Другой
-        Наименование: ${props?.printData?.documentData?.title},
-        Примечание: ${props?.printData?.documentData?.data_custom[0]?.remark},
-        Основание: ${props?.printData?.documentData?.data_custom[0]?.subject},
+    let text = `Тип договора: Лист согласования на реализацию готовой продукции
+        Наименование ТРУ: ${props?.printData?.documentData?.title},
+        Поставщик ТРУ: ${props?.printData?.documentData?.data_one[0].supllier},
+        Основание: ${props?.printData?.documentData?.data_one[0].subject},
+        Общая сумма договора: ${props?.printData?.documentData?.data_one[0].price},
         `;
 
     setQRCodeState(await QRCode.toDataURL(text, opts));
@@ -26,9 +27,9 @@ const PrintForm5 = React.forwardRef((props, ref) => {
   useEffect(() => {
     generateQRCode();
   }, []);
-
   return (
     <div ref={ref}>
+      {/*Начало Лист Согласования */}
       <div className="page">
         <div style={{ paddingLeft: "25px", paddingRight: "30px" }}>
           <div style={{ textAlign: "center", marginBottom: "10px" }}>
@@ -39,18 +40,22 @@ const PrintForm5 = React.forwardRef((props, ref) => {
           </div>
           <div>
             <div style={{ marginBottom: "10px" }}>
-              <b>Тип договора:</b> Другой
+              <b>Предмет договора:</b> Закуп ТРУ
             </div>
             <div style={{ marginBottom: "10px" }}>
-              <b>Наименование:</b> {props?.printData?.documentData?.title}
+              <b>Поставщик ТРУ:</b>{" "}
+              {props?.printData?.documentData?.data_one[0].supllier}
             </div>
             <div style={{ marginBottom: "10px" }}>
-              <b>Примечание:</b>{" "}
-              {props?.printData?.documentData?.data_custom[0]?.remark}
+              <b>Наименование ТРУ:</b> {props?.printData?.documentData?.title}
             </div>
             <div style={{ marginBottom: "10px" }}>
               <b>Основание:</b>{" "}
-              {props?.printData?.documentData?.data_custom[0]?.subject}
+              {props?.printData?.documentData?.data_one[0].subject}
+            </div>
+            <div style={{ marginBottom: "10px" }}>
+              <b>Общая сумма договора:</b>{" "}
+              {props?.printData?.documentData?.data_one[0].price}
             </div>
           </div>
           <div className="subpagepage">
@@ -106,10 +111,11 @@ const PrintForm5 = React.forwardRef((props, ref) => {
         </div>
       </div>
       {/*Конец Лист Согласования */}
+
       {/*Начало Лист Замечаний */}
       {printReasons(props?.printData?.documentData?.reason)}
       {/*Конец Лист Замечаний */}
     </div>
   );
 });
-export default PrintForm5;
+export default PrintForm;

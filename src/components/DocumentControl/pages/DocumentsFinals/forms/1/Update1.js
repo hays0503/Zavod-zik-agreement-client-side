@@ -11,6 +11,7 @@ import { FormItem, FormWrap } from "../../../fragments/FragmentItemWrap";
 import { FragmentMitWork } from "../../../fragments/FragmentMitWork";
 import { FragmentStepViewerRaw } from "../../../fragments/FragmentStepViewer";
 import { FragmentReasonsViewer } from "./../../../fragments/FragmentReasonsViewer";
+import { PrintContainer } from "./../../../ApprovedPageUser/forms/1/PrintContainer";
 
 const { Title, Link } = Typography;
 const { Step } = Steps;
@@ -114,7 +115,7 @@ let Update1 = React.memo((props) => {
         <b>Файл согласованного договора</b>
       </h3>
       {/* /////////////////////////////////// */}
-      <Print printData={iniValue} documentData={iniValue} />
+      <PrintContainer printData={iniValue} documentData={iniValue} />
       <Divider type={"horizontal"} />
       {/* /////////////////////////////////// */}
       <Form.Item
