@@ -148,10 +148,7 @@ const Update4 = React.memo((props) => {
       </FormWrap>
       {/* /////////////////////////////////// */}
       <FormWrap>
-        {FormItem(
-          "Наименование подразделения, фамилия ответственного исполнителя: ",
-          state?.counteragent_contacts
-        )}
+        {FormItem("Контакты контрагента: ", state?.counteragent_contacts)}
       </FormWrap>
       {/* /////////////////////////////////// */}
       <Divider type={"horizontal"} />
