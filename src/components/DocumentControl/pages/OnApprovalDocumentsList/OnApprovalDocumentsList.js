@@ -87,6 +87,8 @@ let OnApprovalDocumentsList = React.memo((props) => {
 							document_id
 							subject
 							remark
+							custom_area
+
 						}
 						data_agreement_list {
 							id
@@ -164,6 +166,8 @@ let OnApprovalDocumentsList = React.memo((props) => {
 							document_id
 							subject
 							remark
+							custom_area
+
 						}
 						data_agreement_list {
 							id

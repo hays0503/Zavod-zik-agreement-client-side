@@ -23,6 +23,7 @@ import { FragmentAnyItems } from "../../../fragments/FragmentAnyItems";
 import { GetIDNameTaskFile } from "./../../../api/CRU_Document";
 import { dict, DocumentTasks } from "./../gql";
 import { FragmentTaskAndFileViewer } from "./../../../fragments/FragmentFileViewer";
+import { FragmentCustomView } from "../../../fragments/FragmentCustomView";
 
 const Update5 = React.memo((props) => {
 	/**
@@ -83,6 +84,7 @@ const Update5 = React.memo((props) => {
 
 				subject: iniValue.data_custom[0].subject,
 				remark: iniValue.data_custom[0].remark,
+				custom_area: iniValue.data_custom[0].custom_area,
 
 				date_created: iniValue.date_created,
 				date_modified: iniValue.date_modified,
@@ -174,6 +176,10 @@ const Update5 = React.memo((props) => {
 			{/* /////////////////////////////////// */}
 			<FormWrap>{FormItem("Основание: ", state?.subject)}</FormWrap>
 			{/* /////////////////////////////////// */}
+
+			{/* //Кастомные поля */}
+			<FragmentCustomView custom_area={state?.custom_area} />
+
 			<Divider type={"horizontal"} />
 
 			{/* Фрагмент antd дающую возможность загружать файлы */}

@@ -8,6 +8,7 @@ import {
 } from "../../../fragments/FragmentInputBox";
 import FragmentUploader from "../../../fragments/FragmentUploader";
 import { FragmentInputBoxSubject } from "./../../../fragments/FragmentInputBox";
+import { FragmentTableInput } from "./../../../fragments/FragmentTableInput";
 
 let Insert5 = React.memo((props) => {
 	/**
@@ -33,6 +34,7 @@ let Insert5 = React.memo((props) => {
 
 				subject: iniValue.data_custom[0].subject,
 				remark: iniValue.data_custom[0].remark,
+				custom_area: iniValue.data_custom[0].custom_area,
 
 				date_created: iniValue.date_created,
 				date_modified: iniValue.date_modified,
@@ -48,7 +50,14 @@ let Insert5 = React.memo((props) => {
 	}, [iniValue]);
 
 	let onFinish = (values) => {
-		props.onFinish5(state);
+		console.log("console.log(newState)", {
+			...state,
+			custom_area: values.custom_area,
+		});
+		props.onFinish5({
+			...state,
+			custom_area: values.custom_area,
+		});
 	};
 
 	return (
@@ -70,6 +79,8 @@ let Insert5 = React.memo((props) => {
 			<FragmentInputBoxRemark label={"Примечание"} placeholder={"Примечание"} />
 
 			<FragmentInputBoxSubject label={"Основание"} placeholder={"Основание"} />
+
+			<FragmentTableInput form={props.form5} />
 
 			<FragmentUploader url={"/document-control/orders"} />
 

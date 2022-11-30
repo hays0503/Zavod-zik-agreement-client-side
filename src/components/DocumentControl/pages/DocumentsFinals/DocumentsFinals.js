@@ -83,6 +83,7 @@ export const DocumentsFinals = React.memo((props) => {
 							document_id
 							subject
 							remark
+							custom_area
 						}
 						data_one {
 							id
@@ -168,6 +169,7 @@ export const DocumentsFinals = React.memo((props) => {
 							document_id
 							subject
 							remark
+							custom_area
 						}
 						data_one {
 							id

@@ -7,6 +7,7 @@ import FragmentCommentsViewer from "../../../fragments/FragmentCommentsViewer";
 import { FragmentTaskAndFileViewer } from "../../../fragments/FragmentFileViewer";
 import { FormItem, FormWrap } from "../../../fragments/FragmentItemWrap";
 import { FragmentReasonsViewer } from "../../../fragments/FragmentReasonsViewer";
+import { FragmentCustomView } from "../../../fragments/FragmentCustomView";
 
 let Update5 = React.memo((props) => {
   let user = useUser();
@@ -51,6 +52,8 @@ let Update5 = React.memo((props) => {
 
         subject: props.initialValues5.documents[0].data_custom[0].subject,
         remark: props.initialValues5.documents[0].data_custom[0].remark,
+        custom_area:
+          props.initialValues5.documents[0].data_custom[0].custom_area,
 
         date_created: props.initialValues5.documents[0].date_created,
         date_modified: props.initialValues5.documents[0].date_modified,
@@ -104,6 +107,10 @@ let Update5 = React.memo((props) => {
       {/* /////////////////////////////////// */}
       <FormWrap>{FormItem("Основание: ", state?.subject)}</FormWrap>
       {/* /////////////////////////////////// */}
+
+      {/* //Кастомные поля */}
+      <FragmentCustomView custom_area={state?.custom_area} />
+
       <Divider type={"horizontal"} />
 
       <Form.Item

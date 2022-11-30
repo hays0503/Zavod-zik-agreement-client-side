@@ -4,6 +4,7 @@ import { useUser } from "../../../../../../core/functions";
 import { GetIDNameTaskFile } from "../../../api/CRU_Document";
 import { FragmentAnyItems } from "../../../fragments/FragmentAnyItems";
 import FragmentCommentsViewer from "../../../fragments/FragmentCommentsViewer";
+import { FragmentCustomView } from "../../../fragments/FragmentCustomView";
 import { FragmentTaskAndFileViewer } from "../../../fragments/FragmentFileViewer";
 import { FormItem, FormWrap } from "../../../fragments/FragmentItemWrap";
 import { FragmentReasonsViewer } from "../../../fragments/FragmentReasonsViewer";
@@ -75,8 +76,9 @@ let Update5 = React.memo((props) => {
         username: iniValue.username,
         fio: iniValue.fio,
 
-        subject: iniValDataCustom.subject,
-        remark: iniValDataCustom.remark,
+				subject: iniValDataCustom.subject,
+				remark: iniValDataCustom.remark,
+				custom_area: iniValDataCustom.custom_area,
 
         date_created: iniValue.date_created,
         date_modified: iniValue.date_modified,
@@ -126,75 +128,77 @@ let Update5 = React.memo((props) => {
       </FormWrap>
       {/* /////////////////////////////////// */}
 
-      <Divider type={"horizontal"} />
-      {/* /////////////////////////////////// */}
-      <FormWrap>{FormItem("Наименование: ", state?.title)}</FormWrap>
-      {/* /////////////////////////////////// */}
-      <FormWrap>{FormItem("Примечание: ", state?.supllier)}</FormWrap>
-      {/* /////////////////////////////////// */}
-      <FormWrap>{FormItem("Основание: ", state?.subject)}</FormWrap>
-      {/* /////////////////////////////////// */}
-      <Divider type={"horizontal"} />
-      {/* /////////////////////////////////// */}
-      {/*Фрагмент antd дающую возможность просматривать файлы*/}
-      {iniValue?.files !== undefined && FileTask !== undefined ? (
-        <FragmentTaskAndFileViewer
-          files={iniValue?.files}
-          files_task={FileTask}
-          userId={user.id}
-        />
-      ) : (
-        <h1>Загрузка</h1>
-      )}
-      {/* /////////////////////////////////// */}
-      <Divider type={"horizontal"} />
-      {/* /////////////////////////////////// */}
-      {console.log(iniValue?.data_custom)}
-      {iniValue?.data_custom !== undefined ? (
-        <>
-          <h3>
-            <b>Файл согласованного договора</b>
-          </h3>
-          <PrintContainer5 documentData={iniValue} />
-        </>
-      ) : (
-        <h1>Загрузка</h1>
-      )}
-      {/* /////////////////////////////////// */}
-      <Divider type={"horizontal"} />
-      {/* /////////////////////////////////// */}
-      {/* Фрагмент antd дающую возможность просматривать состояние движений документов */}
-      {iniValue?.signatures !== undefined ? (
-        <FragmentStepViewer
-          signatures={iniValue?.signatures}
-          stepsDirection={stepsDirection.current}
-          step={stepCount.step - 1}
-          routesList={routesList}
-        />
-      ) : (
-        <h1>Загрузка</h1>
-      )}
-      {/* /////////////////////////////////// */}
-      <Divider type={"horizontal"} />
-      {/* ///////////Отправить на регистрацию////////////// */}
-      <Button type="primary" htmlType="submit">
-        Отправить на регистрацию
-      </Button>
-      {/* /////////////////////////////////// */}
-      <Divider type={"horizontal"} />
-      {/* /////////////////////////////////// */}
-      {/* Фрагмент antd для вывода Замечаний по документу */}
-      <FragmentReasonsViewer Reason={iniValue?.reason} />
-      {/* /////////////////////////////////// */}
-      <Divider type={"horizontal"} />
-      {/* Фрагмент antd дающую возможность просматривать комментарии к документам */}
-      <FragmentCommentsViewer commentsList={iniValue?.comments} />
-      {/* /////////////////////////////////// */}
-      {/* Фрагмент antd элементами для хранение данных (ну или типо того) */}
-      <FragmentAnyItems />
-      {/* /////////////////////////////////// */}
-    </Form>
-  );
+			<Divider type={"horizontal"} />
+			{/* /////////////////////////////////// */}
+			<FormWrap>{FormItem("Наименование: ", state?.title)}</FormWrap>
+			{/* /////////////////////////////////// */}
+			<FormWrap>{FormItem("Примечание: ", state?.supllier)}</FormWrap>
+			{/* /////////////////////////////////// */}
+			<FormWrap>{FormItem("Основание: ", state?.subject)}</FormWrap>
+			{/* /////////////////////////////////// */}
+			{/* //Кастомные поля */}
+			<FragmentCustomView custom_area={state?.custom_area} />
+			<Divider type={"horizontal"} />
+			{/* /////////////////////////////////// */}
+			{/*Фрагмент antd дающую возможность просматривать файлы*/}
+			{iniValue?.files !== undefined && FileTask !== undefined ? (
+				<FragmentTaskAndFileViewer
+					files={iniValue?.files}
+					files_task={FileTask}
+					userId={user.id}
+				/>
+			) : (
+				<h1>Загрузка</h1>
+			)}
+			{/* /////////////////////////////////// */}
+			<Divider type={"horizontal"} />
+			{/* /////////////////////////////////// */}
+			{console.log(iniValue?.data_custom)}
+			{iniValue?.data_custom !== undefined ? (
+				<>
+					<h3>
+						<b>Файл согласованного договора</b>
+					</h3>
+					<PrintContainer5 documentData={iniValue} />
+				</>
+			) : (
+				<h1>Загрузка</h1>
+			)}
+			{/* /////////////////////////////////// */}
+			<Divider type={"horizontal"} />
+			{/* /////////////////////////////////// */}
+			{/* Фрагмент antd дающую возможность просматривать состояние движений документов */}
+			{iniValue?.signatures !== undefined ? (
+				<FragmentStepViewer
+					signatures={iniValue?.signatures}
+					stepsDirection={stepsDirection.current}
+					step={stepCount.step - 1}
+					routesList={routesList}
+				/>
+			) : (
+				<h1>Загрузка</h1>
+			)}
+			{/* /////////////////////////////////// */}
+			<Divider type={"horizontal"} />
+			{/* ///////////Отправить на регистрацию////////////// */}
+			<Button type="primary" htmlType="submit">
+				Отправить на регистрацию
+			</Button>
+			{/* /////////////////////////////////// */}
+			<Divider type={"horizontal"} />
+			{/* /////////////////////////////////// */}
+			{/* Фрагмент antd для вывода Замечаний по документу */}
+			<FragmentReasonsViewer Reason={iniValue?.reason} />
+			{/* /////////////////////////////////// */}
+			<Divider type={"horizontal"} />
+			{/* Фрагмент antd дающую возможность просматривать комментарии к документам */}
+			<FragmentCommentsViewer commentsList={iniValue?.comments} />
+			{/* /////////////////////////////////// */}
+			{/* Фрагмент antd элементами для хранение данных (ну или типо того) */}
+			<FragmentAnyItems />
+			{/* /////////////////////////////////// */}
+		</Form>
+	);
 });
 
 export default Update5;

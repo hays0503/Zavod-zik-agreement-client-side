@@ -6,6 +6,7 @@ import SelectReplacementDialog from "../../../../dialogs/SelectReplacementDialog
 import { GetIDNameTaskFile } from "../../../api/CRU_Document";
 import { FragmentAnyItems } from "../../../fragments/FragmentAnyItems";
 import FragmentCommentsViewer from "../../../fragments/FragmentCommentsViewer";
+import { FragmentCustomView } from "../../../fragments/FragmentCustomView";
 import { FragmentTaskAndFileViewer } from "../../../fragments/FragmentFileViewer";
 import { FormItem, FormWrap } from "../../../fragments/FragmentItemWrap";
 import { FragmentReasonsViewer } from "../../../fragments/FragmentReasonsViewer";
@@ -64,6 +65,7 @@ let Update5 = React.memo((props) => {
 
 				subject: iniValue.data_custom[0].subject,
 				remark: iniValue.data_custom[0].remark,
+				custom_area: iniValue.data_custom[0].custom_area,
 
 				date_created: iniValue.date_created,
 				date_modified: iniValue.date_modified,
@@ -107,6 +109,10 @@ let Update5 = React.memo((props) => {
 			<FormWrap>{FormItem("Примечание: ", state?.remark)}</FormWrap>
 			{/* /////////////////////////////////// */}
 			<FormWrap>{FormItem("Основание: ", state?.subject)}</FormWrap>
+
+			{/* //Кастомные поля */}
+			{console.log("Кастомные поля", state?.custom_area)}
+			<FragmentCustomView custom_area={state?.custom_area} />
 
 			<Divider type={"horizontal"} />
 

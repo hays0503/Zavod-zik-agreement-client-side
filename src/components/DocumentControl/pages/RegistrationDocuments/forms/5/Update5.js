@@ -13,6 +13,7 @@ import { GetIDNameTaskFile } from "./../../../api/CRU_Document";
 import { FragmentTaskAndFileViewer } from "./../../../fragments/FragmentFileViewer";
 import SelectReplacementDialog from "../../../../dialogs/SelectReplacementDialog";
 import { FragmentMitWorkEdit } from "./../../../fragments/FragmentMitWork";
+import { FragmentCustomView } from "../../../fragments/FragmentCustomView";
 
 const Update5 = React.memo((props) => {
   /**
@@ -67,8 +68,9 @@ const Update5 = React.memo((props) => {
         username: iniValue.username,
         fio: iniValue.fio,
 
-        subject: iniValue.data_custom[0].subject,
-        remark: iniValue.data_custom[0].remark,
+				subject: iniValue.data_custom[0].subject,
+				remark: iniValue.data_custom[0].remark,
+				custom_area: iniValue.data_custom[0].custom_area,
 
         date_created: iniValue.date_created,
         date_modified: iniValue.date_modified,
@@ -116,15 +118,18 @@ const Update5 = React.memo((props) => {
       <FormWrap>{FormItem("Тип договора: ", "Другой")}</FormWrap>
       {/* /////////////////////////////////// */}
 
-      <Divider type={"horizontal"} />
-      {/* /////////////////////////////////// */}
-      <FormWrap>{FormItem("Наименование: ", state?.title)}</FormWrap>
-      {/* /////////////////////////////////// */}
-      <FormWrap>{FormItem("Примечание: ", state?.supllier)}</FormWrap>
-      {/* /////////////////////////////////// */}
-      <FormWrap>{FormItem("Основание: ", state?.subject)}</FormWrap>
-      {/* /////////////////////////////////// */}
-      <Divider type={"horizontal"} />
+			<Divider type={"horizontal"} />
+			{/* /////////////////////////////////// */}
+			<FormWrap>{FormItem("Наименование: ", state?.title)}</FormWrap>
+			{/* /////////////////////////////////// */}
+			<FormWrap>{FormItem("Примечание: ", state?.supllier)}</FormWrap>
+			{/* /////////////////////////////////// */}
+			<FormWrap>{FormItem("Основание: ", state?.subject)}</FormWrap>
+			{/* /////////////////////////////////// */}
+			{/* //Кастомные поля */}
+			<FragmentCustomView custom_area={state?.custom_area} />
+
+			<Divider type={"horizontal"} />
 
       <FragmentMitWorkEdit
         id={iniValue?.id}

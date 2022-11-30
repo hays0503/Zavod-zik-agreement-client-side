@@ -4,6 +4,7 @@ import { useUser, formatDate } from "../../../../../../core/functions";
 import { GetIDNameTaskFile } from "../../../api/CRU_Document";
 import { FragmentAnyItems } from "../../../fragments/FragmentAnyItems";
 import FragmentCommentsViewer from "../../../fragments/FragmentCommentsViewer";
+import { FragmentCustomView } from "../../../fragments/FragmentCustomView";
 import { FragmentTaskAndFileViewer } from "../../../fragments/FragmentFileViewer";
 import { FormItem, FormWrap } from "../../../fragments/FragmentItemWrap";
 import { FragmentMitWork } from "../../../fragments/FragmentMitWork";
@@ -55,6 +56,7 @@ let Update5 = React.memo((props) => {
 
         subject: AgreementList.subject,
         remark: AgreementList.remark,
+        custom_area: AgreementList.custom_area,
 
         date_created: iniValue.date_created,
         date_modified: iniValue.date_modified,
@@ -102,11 +104,19 @@ let Update5 = React.memo((props) => {
       {/* /////////////////////////////////// */}
       <FormWrap>{FormItem("Основание: ", state?.subject)}</FormWrap>
       {/* /////////////////////////////////// */}
+      {/* //Кастомные поля */}
+      <FragmentCustomView custom_area={state?.custom_area} />
       <Divider type={"horizontal"} />
-      <h3>
-        <b>Файл согласованного договора</b>
-      </h3>
-      <PrintContainer5 documentData={iniValue} />
+      {iniValue?.data_custom !== undefined ? (
+        <>
+          <h3>
+            <b>Файл согласованного договора</b>
+          </h3>
+          <PrintContainer5 documentData={iniValue} />
+        </>
+      ) : (
+        <h1>Загрузка</h1>
+      )}
       <Divider type={"horizontal"} />
       <Form.Item
         className="font-form-header"
