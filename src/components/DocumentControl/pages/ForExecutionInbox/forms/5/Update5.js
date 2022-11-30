@@ -1,8 +1,8 @@
 import { Button, Divider, Form } from "antd";
 import React, { useEffect, useState } from "react";
 import { useUser } from "../../../../../../core/functions";
+import { FragmentCustomView } from "../../../fragments/FragmentCustomView";
 import {
-	FragmentFileViewer,
 	FragmentFileViewerReceiver,
 	FragmentTaskFileViewer,
 } from "../../../fragments/FragmentFileViewer";
@@ -100,10 +100,22 @@ let Update5 = React.memo((props) => {
 			) : null}
 			{/* /////////////////////////////////// */}
 			{/*console.log(props?.document?.data_custom[0]?.remark)*/}
-			{state?.document_options?.remark ? ( /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+			{state?.document_options?.remark ? (
 				<FormWrap>
 					{FormItem("Примечание: ", props?.document?.data_custom[0]?.remark)}
 				</FormWrap>
+			) : null}
+			{/* /////////////////////////////////// */}
+			{console.log("state?.document_options", state?.document_options)}
+			{console.log("props?.document", props?.document)}
+			{console.log(
+				"props?.document?.data_custom[0]?.custom_area",
+				props?.document?.data_custom[0]?.custom_area
+			)}
+			{state?.document_options?.custom_area ? (
+				<FragmentCustomView
+					custom_area={props?.document?.data_custom[0]?.custom_area}
+				/>
 			) : null}
 			{/* /////////////////////////////////// */}
 			<Divider type={"horizontal"} />

@@ -1,6 +1,7 @@
 import { Button, Form, Typography, Divider } from "antd";
 import React, { useEffect, useState } from "react";
 import { useUser } from "../../../../../../core/functions";
+import { FragmentCustomView } from "../../../fragments/FragmentCustomView";
 import {
 	FragmentFileViewerReceiver,
 	FragmentFileViewerOnClick,
@@ -101,6 +102,13 @@ let Update5 = React.memo((props) => {
 				<FormWrap>
 					{FormItem("Примечание: ", props?.document?.data_custom[0]?.remark)}
 				</FormWrap>
+			) : (
+				""
+			)}
+
+			{/* /////////////////////////////////// */}
+			{state?.document_options?.custom_area === true ? (
+				<FragmentCustomView custom_area={props?.document?.data_custom[0]?.custom_area} />
 			) : (
 				""
 			)}
