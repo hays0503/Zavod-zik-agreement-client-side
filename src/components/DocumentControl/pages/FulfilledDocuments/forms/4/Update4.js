@@ -87,6 +87,7 @@ const Update4 = React.memo((props) => {
         log_username: state.log_username,
         mitwork_number: iniValues.mitwork_number,
         mitwork_data: iniValues.mitwork_data,
+        reason: iniValues.reason,
       });
       setStepCount({ step: iniValues.step });
       setRoutesList(iniValues.route_data);
@@ -149,12 +150,6 @@ const Update4 = React.memo((props) => {
         {FormItem("Контакты контрагента: ", state?.counteragent_contacts)}
       </FormWrap>
       {/* /////////////////////////////////// */}
-      <Divider type={"horizontal"} />
-
-      {/* Фрагмент antd дающую возможность загружать файлы */}
-      <FragmentUploader />
-      {/* /////////////////////////////////// */}
-
       <Divider type={"horizontal"} />
 
       <FragmentMitWork

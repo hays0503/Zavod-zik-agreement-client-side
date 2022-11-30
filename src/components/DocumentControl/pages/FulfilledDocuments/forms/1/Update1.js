@@ -78,6 +78,7 @@ const Update1 = React.memo((props) => {
         log_username: state.log_username,
         mitwork_number: iniValues.mitwork_number,
         mitwork_data: iniValues.mitwork_data,
+        reason: iniValues.reason,
       });
       setStepCount({ step: iniValues.step });
       setRoutesList(iniValues.route_data);
