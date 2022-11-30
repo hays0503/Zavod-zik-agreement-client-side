@@ -93,6 +93,7 @@ let Update1 = React.memo((props) => {
         files: iniValue.files,
         document_logs: { is_read: true },
         log_username: state.log_username,
+        reason: iniValue.reason,
       });
       setStepCount({ step: iniValue.step });
       setRoutesList(iniValue.route_data);
