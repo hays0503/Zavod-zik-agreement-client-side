@@ -368,10 +368,6 @@ export const FragmentInputBoxExecutorPhoneNumber = (props) => {
           required: true,
           message: "Необходимо для заполнения!",
         },
-        {
-          pattern: phone_pattern,
-          message: "Номер введен не корректно",
-        },
       ]}
     >
       <Input disabled={props.disabled} placeholder={props.placeholder} />
@@ -395,10 +391,6 @@ export const FragmentInputBoxCounteragentContacts = (props) => {
         {
           required: true,
           message: "Необходимо для заполнения!",
-        },
-        {
-          pattern: phone_pattern,
-          message: "Номер введен не корректно",
         },
       ]}
     >
