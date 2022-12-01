@@ -60,22 +60,26 @@ let Insert5 = React.memo((props) => {
 
 	let onFinish = (values) => {
 		if (values.custom_area != null) {
+			let error = false;
 			const custom_area = values.custom_area.filter((item) => {
 				if (item.key !== "" && item.data !== "") {
 					return true;
 				} else {
+					error = true;
 					openNotificationWithIcon("error");
 					return false;
 				}
 			});
-			console.log("console.log(newState)", {
-				...state,
-				custom_area: custom_area,
-			});
-			props.onFinish5({
-				...state,
-				custom_area: custom_area,
-			});
+			if (!error) {
+				console.log("console.log(newState)", {
+					...state,
+					custom_area: custom_area,
+				});
+				props.onFinish5({
+					...state,
+					custom_area: custom_area,
+				});
+			}
 		} else {
 			console.log("console.log(newState)", {
 				...state,
