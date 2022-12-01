@@ -1,4 +1,4 @@
-import { Form } from "antd";
+import { Alert, Form, Button, notification } from "antd";
 import React, { useEffect, useState } from "react";
 import { useUser } from "../../../../../../core/functions";
 import { FragmentAnyItems } from "../../../fragments/FragmentAnyItems";
@@ -21,6 +21,15 @@ let Insert5 = React.memo((props) => {
 	const [state, setState] = useState({
 		log_username: user.username,
 	});
+
+	// const [error, setError] = useState(false);
+	const [api, contextHolder] = notification.useNotification();
+	const openNotificationWithIcon = (type) => {
+		api[type]({
+			message: "Ошибка !",
+			description: "Одно из полей пустое...",
+		});
+	};
 
 	useEffect(() => {
 		props.form5.setFieldsValue(state);
@@ -50,14 +59,33 @@ let Insert5 = React.memo((props) => {
 	}, [iniValue]);
 
 	let onFinish = (values) => {
-		console.log("console.log(newState)", {
-			...state,
-			custom_area: values.custom_area,
-		});
-		props.onFinish5({
-			...state,
-			custom_area: values.custom_area,
-		});
+		if (values.custom_area != null) {
+			const custom_area = values.custom_area.filter((item) => {
+				if (item.key !== "" && item.data !== "") {
+					return true;
+				} else {
+					openNotificationWithIcon("error");
+					return false;
+				}
+			});
+			console.log("console.log(newState)", {
+				...state,
+				custom_area: custom_area,
+			});
+			props.onFinish5({
+				...state,
+				custom_area: custom_area,
+			});
+		} else {
+			console.log("console.log(newState)", {
+				...state,
+				custom_area: null,
+			});
+			props.onFinish5({
+				...state,
+				custom_area: null,
+			});
+		}
 	};
 
 	return (
@@ -71,6 +99,8 @@ let Insert5 = React.memo((props) => {
 				setState(Object.assign({}, state, { ...allValues }));
 			}}
 		>
+			{contextHolder}
+
 			<FragmentInputBoxTitle
 				label={"Наименование"}
 				placeholder={"Наименование"}
@@ -83,6 +113,27 @@ let Insert5 = React.memo((props) => {
 			<FragmentTableInput form={props.form5} />
 
 			<FragmentUploader url={"/document-control/orders"} />
+
+			{/* <Alert
+				message="Ошибка !"
+				description="Одно из полей пустое..."
+				type="error"
+				onClose={setError(false)}
+				
+			/> */}
+
+			{/* {error && (
+				<Alert
+					message="Ошибка !"
+					description="Одно из полей пустое..."
+					type="error"
+					action={
+						<Button size="small" danger onClick={setError(false)}>
+							Закрыть
+						</Button>
+					}
+				/>
+			)} */}
 
 			<FragmentAnyItems />
 		</Form>
