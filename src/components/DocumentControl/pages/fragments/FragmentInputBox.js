@@ -1,7 +1,7 @@
 import { Form, Input, Radio, Select } from "antd";
 import React, { useState } from "react";
 
-const price_pattern = /^\d+$/;
+const price_pattern = /^(\d)*(\.)*(\d)*$/;
 const price_max_count = /^.{1,15}$/;
 const phone_pattern = /^!*([0-9]!*){11,11}$/g;
 
@@ -177,7 +177,7 @@ export const FragmentInputBoxPrice = (props) => {
         },
         {
           pattern: price_pattern,
-          message: "Можно использовать только цифры!",
+          message: "Можно использовать только цифры и точку!",
         },
         {
           pattern: price_max_count,
