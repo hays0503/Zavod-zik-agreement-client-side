@@ -243,7 +243,6 @@ let ModalInsert = React.memo(
 					showModalForm4();
 				}
 				if (state.route_id == 29) {
-
 					if (state.routes && state.routes[0]) {
 						formRouteSelect.submit();
 						setVisible(false);
@@ -505,31 +504,33 @@ let ModalInsert = React.memo(
 								placeholder="Тип договора"
 								title="Выберите тип договора:"
 								query={document_routes}
-                cRef={cRef}
+								cRef={cRef}
 							/>
 						</Form.Item>
 						<Divider type={"horizontal"} />
+
 						<div className="font-form-header marginTop marginBottom">
 							<label>Маршрут:</label>
 						</div>
-						{/* <Steps size="small" current={0} direction="vertical">
-              {routesList.map((item) => {
-                if (routesList.length >= 4) {
-                  cRef.current = "displayBlock";
-                } else {
-                  cRef.current = "displayNone";
-                  return (
-                    <Step
-                      title={
-                        user.admin
-                          ? item.positionName + " - " + user.username
-                          : item.positionName
-                      }
-                    />
-                  );
-                }
-              })}
-            </Steps> */}
+
+						{cRef.current !== "displayBlock" && (
+							<>
+								<Steps size="small" current={0} direction="vertical">
+									{routesList.map((item) => {
+										return (
+											<Step
+												title={
+													user.admin
+														? item.positionName + " - " + user.username
+														: item.positionName
+												}
+											/>
+										);
+									})}
+								</Steps>
+							</>
+						)}
+
 						<div className={cRef.current}>
 							<span className="marginBottom displayBlock">
 								Для создания нового маршрута, укажите все необходимые должности
