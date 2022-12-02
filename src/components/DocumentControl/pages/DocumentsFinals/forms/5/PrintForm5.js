@@ -15,7 +15,7 @@ const PrintForm5 = React.forwardRef((props, ref) => {
       margin: 1,
     };
 
-    let text = `Тип договора: Другой
+    let text = `
 		Наименование: ${props?.printData?.documentData?.title},
         Примечание: ${props?.printData?.documentData?.data_custom[0]?.remark},
         Основание: ${props?.printData?.documentData?.data_custom[0]?.subject},
@@ -24,7 +24,7 @@ const PrintForm5 = React.forwardRef((props, ref) => {
     })}
         `;
 
-    setQRCodeState(await QRCode.toDataURL(text, opts));
+    setQRCodeState(await QRCode.toDataURL(text));
   };
 
   useEffect(() => {
@@ -42,9 +42,6 @@ const PrintForm5 = React.forwardRef((props, ref) => {
             <b>к договору No_____________ от ____________ 2022г.</b>
           </div>
           <div>
-            <div style={{ marginBottom: "10px" }}>
-              <b>Тип договора:</b> Другой
-            </div>
             <div style={{ marginBottom: "10px" }}>
               <b>Наименование:</b> {props?.printData?.documentData?.title}
             </div>
