@@ -24,7 +24,7 @@ const PrintForm3 = React.forwardRef((props, ref) => {
         Контакты контрагента: ${props?.printData?.documentData?.data_agreement_list_production[0]?.counteragent_contacts}
         `;
 
-    setQRCodeState(await QRCode.toDataURL(text, opts));
+    setQRCodeState(await QRCode.toDataURL(text));
   };
 
   useEffect(() => {

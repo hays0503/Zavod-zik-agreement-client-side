@@ -22,7 +22,7 @@ const PrintForm = React.forwardRef((props, ref) => {
         Валюта платежа: ${props?.printData?.documentData?.data_one[0].currency},
         `;
 
-    setQRCodeState(await QRCode.toDataURL(text, opts));
+    setQRCodeState(await QRCode.toDataURL(text));
   };
 
   useEffect(() => {

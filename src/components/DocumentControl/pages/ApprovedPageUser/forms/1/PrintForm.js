@@ -14,7 +14,7 @@ const PrintForm = React.forwardRef((props, ref) => {
       margin: 1,
     };
 
-    let text = `Тип договора: Лист согласования на реализацию готовой продукции
+    let text = `Тип договора: Закуп ТРУ
         Наименование ТРУ: ${props?.printData?.documentData?.title},
         Поставщик ТРУ: ${props?.printData?.documentData?.data_one[0].supllier},
         Основание: ${props?.printData?.documentData?.data_one[0].subject},
@@ -22,7 +22,7 @@ const PrintForm = React.forwardRef((props, ref) => {
         Валюта платежа: ${props?.printData?.documentData?.data_one[0].currency},
         `;
 
-    setQRCodeState(await QRCode.toDataURL(text, opts));
+    setQRCodeState(await QRCode.toDataURL(text));
   };
 
   useEffect(() => {
