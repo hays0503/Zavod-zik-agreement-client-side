@@ -10,7 +10,7 @@ import { FragmentStepViewerReplacementDialog } from "../../../fragments/Fragment
 
 import { GetIDNameTaskFile } from "../../../api/CRU_Document";
 import { FragmentTaskAndFileViewer } from "../../../fragments/FragmentFileViewer";
-import { FragmentMitWorkEdit } from './../../../fragments/FragmentMitWork';
+import { FragmentMitWorkEdit } from "./../../../fragments/FragmentMitWork";
 import SelectReplacementDialog from "../../../../dialogs/SelectReplacementDialog";
 
 //Реализация готовой продукции
@@ -113,10 +113,7 @@ const Update2 = React.memo((props) => {
 			<FormWrap>{FormItem("Должность: ", state?.position)}</FormWrap>
 			{/* /////////////////////////////////// */}
 			<FormWrap>
-				{FormItem(
-					"Тип договора: ",
-					"Лист согласования на реализацию готовой продукции"
-				)}
+				{FormItem("Тип договора: ", iniValue?.route_id?.name)}
 			</FormWrap>
 			{/* /////////////////////////////////// */}
 

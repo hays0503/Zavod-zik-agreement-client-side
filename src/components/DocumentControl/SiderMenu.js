@@ -255,7 +255,7 @@ let SiderMenu = (props) => {
 					{user.documentControl.revisedUser.select ? (
 						<Menu.Item key={"/document-control/reviseduser"}>
 							<NavLink to={"/document-control/reviseduser"}>
-								На доработку{" "}
+								На доработку
 								<sup>
 									<Badge count={con.revised} />
 								</sup>
@@ -265,7 +265,7 @@ let SiderMenu = (props) => {
 					{user.documentControl.approvedUser.select ? (
 						<Menu.Item key={"/document-control/approveduser"}>
 							<NavLink to={"/document-control/approveduser"}>
-								Согласованные{" "}
+								Согласованные
 								<sup>
 									<Badge count={con.approved} />
 								</sup>
@@ -273,21 +273,21 @@ let SiderMenu = (props) => {
 						</Menu.Item>
 					) : null}
 
-					{user.documentControl.documentsFinals.select ? (
-						<Menu.Item key={"/document-control/documents-finals"}>
-							<NavLink to={"/document-control/documents-finals"}>
-								Исполненные{" "}
-								<sup>
-									<Badge count={con.approved} />
-								</sup>
-							</NavLink>
-						</Menu.Item>
-					) : null}
+          {user.documentControl.documentsFinals.select ? (
+            <Menu.Item key={"/document-control/documents-finals"}>
+              <NavLink to={"/document-control/documents-finals"}>
+                Исполненные{" "}
+                <sup>
+                  <Badge count={con.finished} />
+                </sup>
+              </NavLink>
+            </Menu.Item>
+          ) : null}
 
 					{user.documentControl.rejectedUser.select ? (
 						<Menu.Item key={"/document-control/rejecteduser"}>
 							<Link to={"/document-control/rejecteduser"}>
-								Отклонённые{" "}
+								Отклонённые
 								<sup>
 									<Badge count={con.rejected} />
 								</sup>

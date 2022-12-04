@@ -28,20 +28,20 @@ const Update1 = React.memo((props) => {
 	});
 
 	//////////////////////////////////////////////////////////////////////////////////////////
-	/**																					                                          
-	 * Отобразить новое состояние компонентов после обновление (файлов / по поручению)	  
-	 */	
-	/**																					                                          
-	 * Cтейт для таблиц файлов по поручением											                        
-	 */ 
-	const [FileTask, setFileTask] = useState([]); 	
+	/**
+	 * Отобразить новое состояние компонентов после обновление (файлов / по поручению)
+	 */
+	/**
+	 * Cтейт для таблиц файлов по поручением
+	 */
+	const [FileTask, setFileTask] = useState([]);
 	useEffect(() => {
 		if (iniValue?.id) {
 			GetIDNameTaskFile(iniValue?.id).then((value) => {
 				setFileTask(value.result);
 			});
-		} 
-	}, [iniValue]); 
+		}
+	}, [iniValue]);
 	//////////////////////////////////////////////////////////////////////////////////////////
 
 	useEffect(() => {
@@ -93,8 +93,9 @@ const Update1 = React.memo((props) => {
 				setState(Object.assign({}, state, { ...allValues }));
 			}}
 		>
+			{/*Закуп ТРУ*/}
 			<h4>
-				<b>Тип договора:</b> Закуп ТРУ
+				<b>Тип договора:</b> {props?.initialValues?.documents[0].route_id.name}
 			</h4>
 
 			{/* /////////////////////////////////// */}

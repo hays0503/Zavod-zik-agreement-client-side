@@ -32,8 +32,9 @@ export const FragmentReasonsViewer = (props) => {
 				{props?.Reason?.map((item) => {
 					return (
 						<span style={{ font: "1.2rem bold" }}>
+							<br/>
 							<span style={{ color: "red",font: "1.8rem bold" }}><ExclamationCircleOutlined  /></span>
-							{" " + item.text + "-" + item.userPosition}
+							{" " + item.text + " - " + item.userPosition}
 						</span>
 					);
 				})}

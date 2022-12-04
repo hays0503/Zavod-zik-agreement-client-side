@@ -48,26 +48,26 @@ const Update1 = React.memo((props) => {
 	});
 
 	//////////////////////////////////////////////////////////////////////////////////////////
-	/**																					//
-	 * Отобразить новое состояние компонентов после обновление (файлов / по поручению)	//
-	 */ //
-	//
-	/**																					//
-	 * Cтейт для таблиц файлов по поручением											//
-	 */ //
-	const [FileTask, setFileTask] = useState([]); //
-	//
-	const [ReRender, setRerender] = useState(false); //
+	/**																			
+	 * Отобразить новое состояние компонентов после обновление (файлов / по поручению)
+	 */
+
+	/**																			
+	 * Cтейт для таблиц файлов по поручением									
+	 */ 
+	const [FileTask, setFileTask] = useState([]);
+
+	const [ReRender, setRerender] = useState(false);
 	useEffect(() => {
-		//
+
 		if (iniValue?.id) {
-			//
+	
 			GetIDNameTaskFile(iniValue?.id).then((value) => {
-				//
-				setFileTask(value.result); //
-			}); //
-		} //
-	}, [iniValue, ReRender]); //
+		
+				setFileTask(value.result);
+			}); 
+		} 
+	}, [iniValue, ReRender]); 
 	//////////////////////////////////////////////////////////////////////////////////////////
 	useEffect(() => {
 		if (iniValue?.route_data?.length > 1)
@@ -170,7 +170,8 @@ const Update1 = React.memo((props) => {
 			{/* /////////////////////////////////// */}
 			<FormWrap>{FormItem("Должность: ", state?.position)}</FormWrap>
 			{/* /////////////////////////////////// */}
-			<FormWrap>{FormItem("Тип договора: ", "Закуп ТРУ")}</FormWrap>
+			{/* //"Закуп ТРУ" */}
+			<FormWrap>{FormItem("Тип договора: ", iniValue?.route_id?.name)}</FormWrap>
 			{/* /////////////////////////////////// */}
 
 			<Divider type={"horizontal"} />

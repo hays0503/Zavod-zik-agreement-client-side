@@ -163,7 +163,6 @@ const Update2 = React.memo((props) => {
 			</FormWrap>
 
 			<FragmentMitWork
-				id={iniValue?.id}
 				mitwork_number={state?.mitwork_number}
 				mitwork_data={state?.mitwork_data}
 			/>

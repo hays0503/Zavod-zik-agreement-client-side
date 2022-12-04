@@ -69,7 +69,8 @@ let Update4 = React.memo((props) => {
 					props.initialValues4.documents[0]
 						?.data_agreement_list_internal_needs[0]?.executor_phone_number,
 				counteragent_contacts:
-					props?.data_agreement_list_internal_needs[0]?.counteragent_contacts, //console.logalues4.documents[0]
+					props?.initialValues4.documents[0]
+						.data_agreement_list_internal_needs[0]?.counteragent_contacts, //console.logalues4.documents[0]
 
 				date_created: props.initialValues4.documents[0].date_created,
 				date_modified: props.initialValues4.documents[0].date_modified,
@@ -159,29 +160,30 @@ let Update4 = React.memo((props) => {
 			}}
 		>
 			<h4>
-				<b>Тип договора:</b> Лист согласования на реализацию готовой продукции
+				{/*Лист согласования на реализацию готовой продукции*/}
+				<b>Тип договора:</b> {props?.initialValues4?.documents[0].route_id.name}
 			</h4>
 			<div className="form-item-wrap">
 				<Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-					<Col span={12}>Наименование контрагента:</Col>{" "}
+					<Col span={12}>Наименование контрагента:</Col>
 					<Col span={12}>{state.title}</Col>
 				</Row>
 			</div>
 			<div className="form-item-wrap">
 				<Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-					<Col span={12}>Предмет договора:</Col>{" "}
+					<Col span={12}>Предмет договора:</Col>
 					<Col span={12}>{state.subject}</Col>
 				</Row>
 			</div>
 			<div className="form-item-wrap">
 				<Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-					<Col span={12}>Общая сумма договора:</Col>{" "}
+					<Col span={12}>Общая сумма договора:</Col>
 					<Col span={12}>{state.price}</Col>
 				</Row>
 			</div>
 			<div className="form-item-wrap">
 				<Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-					<Col span={12}>Валюта платежа:</Col>{" "}
+					<Col span={12}>Валюта платежа:</Col>
 					<Col span={12}>{state.currency}</Col>
 				</Row>
 			</div>
@@ -189,19 +191,19 @@ let Update4 = React.memo((props) => {
 				<Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
 					<Col span={12}>
 						Наименование подразделения, фамилия ответственного исполнителя:
-					</Col>{" "}
+					</Col>
 					<Col span={12}>{state.executor_name_division}</Col>
 				</Row>
 			</div>
 			<div className="form-item-wrap">
 				<Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-					<Col span={12}>Телефон исполнителя:</Col>{" "}
+					<Col span={12}>Телефон исполнителя:</Col>
 					<Col span={12}>{state.executor_phone_number}</Col>
 				</Row>
 			</div>
 			<div className="form-item-wrap">
 				<Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-					<Col span={12}>Контакты контрагента:</Col>{" "}
+					<Col span={12}>Контакты контрагента:</Col>
 					<Col span={12}>{state.counteragent_contacts}</Col>
 				</Row>
 			</div>
@@ -220,14 +222,14 @@ let Update4 = React.memo((props) => {
 									<a data-fileid={item.id} onClick={download}>
 										{item.filename}
 									</a>
-								</Link>{" "}
+								</Link>
 								<Button
 									onClick={() => {
 										OpenDocument(item);
 									}}
 									shape="circle"
 									icon={<EyeOutlined />}
-								/>{" "}
+								/>
 								<br />
 							</div>
 						</>

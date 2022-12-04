@@ -109,7 +109,6 @@ let Update1 = React.memo((props) => {
 
 	let onFinish = (values) => {
 		props.onFinish(state);
-		//console.log("+++++++++++++++++++++++", values);
 	};
 
 	return (
@@ -126,18 +125,19 @@ let Update1 = React.memo((props) => {
 			<b>От:</b> {props?.initialValues?.documents[0].fio} <br />
 			<b>Должность:</b> {props?.initialValues?.documents[0].position}
 			<h4>
-				<b>Тип договора:</b> Закуп ТРУ
+				{/*Закуп ТРУ*/}
+				<b>Тип договора:</b> {props?.initialValues?.documents[0].route_id.name}
 			</h4>
 			<Divider type={"horizontal"} />
 			<div className="form-item-wrap">
 				<Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-					<Col span={12}>Наименование ТРУ: </Col>{" "}
+					<Col span={12}>Наименование ТРУ: </Col>
 					<Col span={12}>{state.title}</Col>
 				</Row>
 			</div>
 			<div className="form-item-wrap">
 				<Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-					<Col span={12}>Поставщик ТРУ: </Col>{" "}
+					<Col span={12}>Поставщик ТРУ: </Col>
 					<Col span={12}>{state.supllier}</Col>
 				</Row>
 			</div>
@@ -148,7 +148,7 @@ let Update1 = React.memo((props) => {
 			</div>
 			<div className="form-item-wrap">
 				<Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-					<Col span={12}>Общая сумма договора:</Col>{" "}
+					<Col span={12}>Общая сумма договора:</Col>
 					<Col span={12}>{state.price}</Col>
 				</Row>
 			</div>
@@ -167,14 +167,14 @@ let Update1 = React.memo((props) => {
 									<a data-fileid={item.id} onClick={download}>
 										{item.filename}
 									</a>
-								</Link>{" "}
+								</Link>
 								<Button
 									onClick={() => {
 										OpenDocument(item);
 									}}
 									shape="circle"
 									icon={<EyeOutlined />}
-								/>{" "}
+								/>
 								<br />
 							</div>
 						</>
@@ -230,17 +230,7 @@ let Update1 = React.memo((props) => {
 					);
 				})}
 			</div>
-			{/* <Row>
-                <Col span={24} className="marginTop">
-                    <Button onClick={props.modalCancelHandler}>
-                        Отменить
-                    </Button>
-                    <Divider type={'vertical'} />
-                    <Button onClick={props.modalEnableEditHandler}>
-                        Редактировать
-                    </Button>
-                </Col>
-            </Row> */}
+
 			<Divider type={"horizontal"} />
 			<Form.Item
 				className="font-form-header"

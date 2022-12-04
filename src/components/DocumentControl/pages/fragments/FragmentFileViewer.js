@@ -38,7 +38,7 @@ export const FragmentFileViewer = (props) => {
 										}}
 										shape="circle"
 										icon={<EyeOutlined />}
-									/>{" "}
+									/>
 									<br />
 								</div>
 							</>
@@ -57,6 +57,7 @@ export const FragmentFileViewer = (props) => {
 export const FragmentFileViewerReceiver = (props) => {
 	//Делаем запрос для отображения файлов которые прикрепил поручитель
 	//(эти файлы прикрепляли в прошлых поручениях и они хранятся в document_tasks_files по этому тут такой изврат)
+
 	const GET_TASK_FILE = gql`
 		query Task_files_in_id($taskFilesInId: JSON) {
 			task_files_in_id(task_files_in_id: $taskFilesInId) {
@@ -105,7 +106,7 @@ export const FragmentFileViewerReceiver = (props) => {
 										}}
 										shape="circle"
 										icon={<EyeOutlined />}
-									/>{" "}
+									/>
 									<br />
 								</div>
 							</>
@@ -128,7 +129,7 @@ export const FragmentFileViewerReceiver = (props) => {
 											}}
 											shape="circle"
 											icon={<EyeOutlined />}
-										/>{" "}
+										/>
 										<br />
 									</div>
 								</>
@@ -168,7 +169,7 @@ export const FragmentTaskFileViewer = (props) => {
 										}}
 										shape="circle"
 										icon={<EyeOutlined />}
-									/>{" "}
+									/>
 									<br />
 								</div>
 							</>
@@ -208,7 +209,7 @@ export const FragmentTaskAndFileViewer = (props) => {
 										}}
 										shape="circle"
 										icon={<EyeOutlined />}
-									/>{" "}
+									/>
 									<br />
 								</div>
 							</>
@@ -229,7 +230,7 @@ export const FragmentTaskAndFileViewer = (props) => {
 										}}
 										shape="circle"
 										icon={<EyeOutlined />}
-									/>{" "}
+									/>
 									<br />
 								</div>
 							</>

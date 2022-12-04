@@ -170,9 +170,10 @@ let Update3 = React.memo((props) => {
 		>
 			<b>От:</b> {props?.initialValues3?.documents[0].fio} <br />
 			<b>Должность:</b> {props?.initialValues3?.documents[0].position}
+			{/* ЛИСТ СОГЛАСОВАНИЯ НА ЗАКУП ТРУ ДЛЯ ПРОИЗВОДСТВА
+				ПРОДУКЦИИ */}
 			<h4>
-				<b>Тип договора:</b> ЛИСТ СОГЛАСОВАНИЯ НА ЗАКУП ТРУ ДЛЯ ПРОИЗВОДСТВА
-				ПРОДУКЦИИ
+				<b>Тип договора:</b> {props?.initialValues3?.documents[0].route_id.name}
 			</h4>
 			<Divider type={"horizontal"} />
 			<Form.Item
