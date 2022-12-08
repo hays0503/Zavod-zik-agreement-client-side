@@ -7,18 +7,20 @@ import { message, Form } from "antd";
  *
  */
 let FragmentUploader = (props) => {
+	let rules = {};
+	if (props.RulesRequired) {
+		rules = {
+			required: true,
+			message: "Необходимо загрузить хотя бы один файл.",
+		};
+	}
 	return (
 		<>
 			<Form.Item
 				name="files"
 				label="Файлы"
 				labelCol={{ span: 24 }}
-				rules={[
-					{
-						required: true,
-						message: "Необходимо загрузить хотя бы один файл.",
-					},
-				]}
+				rules={[rules]}
 			>
 				<UploadFile
 					showUploadList={true}

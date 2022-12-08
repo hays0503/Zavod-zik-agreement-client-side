@@ -1,4 +1,4 @@
-import { EyeTwoTone, FileTwoTone } from "@ant-design/icons";
+import { EyeTwoTone, FileTwoTone, FileUnknownTwoTone } from "@ant-design/icons";
 import { Button, Collapse, Typography, Form, Checkbox } from "antd";
 import React, { useState } from "react";
 
@@ -10,7 +10,10 @@ import {
 } from "./../api/CRU_Document";
 import { SET_IS_ADD_TO_DOCUMENT } from "../OnApprovalDocuments/forms/gql";
 import { useMutation, gql, useQuery } from "@apollo/client";
-import { FragmentFilePreviewModal } from "./FragmentFilePreviewModal";
+import {
+	FragmentFilePreviewModal,
+	FragmentFilePreviewModalPDF,
+} from "./FragmentFilePreviewModal";
 
 /**
  * Фрагмент antd дающую возможность просматривать файлы
@@ -62,10 +65,17 @@ export const FragmentFileViewer = (props) => {
 								</>
 							);
 						})}
+						{props?.files.length <= 0 && (
+							<>
+								{" "}
+								<FileUnknownTwoTone /> Похоже файлы не были прикреплены на
+								прошлых этапах....
+							</>
+						)}
 					</Panel>
 				</Collapse>
 			</Form.Item>
-			<FragmentFilePreviewModal
+			<FragmentFilePreviewModalPDF
 				refFilePreview={refFilePreview}
 				setRefFilePreview={setRefFilePreview}
 				isLoadOpen={isLoadOpen}
@@ -180,10 +190,17 @@ export const FragmentFileViewerReceiver = (props) => {
 									</>
 								);
 							})}
+						{props?.files.length <= 0 && data?.task_files_in_id.length <= 0 && (
+							<>
+								{" "}
+								<FileUnknownTwoTone /> Похоже файлы не были прикреплены на
+								прошлых этапах....
+							</>
+						)}
 					</Panel>
 				</Collapse>
 			</Form.Item>
-			<FragmentFilePreviewModal
+			<FragmentFilePreviewModalPDF
 				refFilePreview={refFilePreview}
 				setRefFilePreview={setRefFilePreview}
 				isLoadOpen={isLoadOpen}
@@ -245,10 +262,17 @@ export const FragmentTaskFileViewer = (props) => {
 								</>
 							);
 						})}
+						{props?.files.length <= 0 && (
+							<>
+								{" "}
+								<FileUnknownTwoTone /> Похоже файлы не были прикреплены на
+								прошлых этапах....
+							</>
+						)}
 					</Panel>
 				</Collapse>
 			</Form.Item>
-			<FragmentFilePreviewModal
+			<FragmentFilePreviewModalPDF
 				refFilePreview={refFilePreview}
 				setRefFilePreview={setRefFilePreview}
 				isLoadOpen={isLoadOpen}
@@ -333,10 +357,17 @@ export const FragmentTaskAndFileViewer = (props) => {
 								</>
 							);
 						})}
+						{props?.files.length <= 0 && props?.files_task.length <= 0 && (
+							<>
+								{" "}
+								<FileUnknownTwoTone /> Похоже файлы не были прикреплены на
+								прошлых этапах....
+							</>
+						)}
 					</Panel>
 				</Collapse>
 			</Form.Item>
-			<FragmentFilePreviewModal
+			<FragmentFilePreviewModalPDF
 				refFilePreview={refFilePreview}
 				setRefFilePreview={setRefFilePreview}
 				isLoadOpen={isLoadOpen}
@@ -353,7 +384,10 @@ export const FragmentTaskAndFileViewer = (props) => {
  * @param files Массив из файлов для показа их на форме
  */
 export const FragmentFileViewerOnClick = (props) => {
-	console.log("FragmentFileViewerOnClick - console.log(props?.files);",props?.files);
+	console.log(
+		"FragmentFileViewerOnClick - console.log(props?.files);",
+		props?.files
+	);
 
 	//Предпросмотр файлов
 	const [refFilePreview, setRefFilePreview] = useState(null);
@@ -416,10 +450,17 @@ export const FragmentFileViewerOnClick = (props) => {
 								</>
 							);
 						})}
+						{props?.files.length <= 0 && (
+							<>
+								{" "}
+								<FileUnknownTwoTone /> Похоже файлы не были прикреплены на
+								прошлых этапах....
+							</>
+						)}
 					</Panel>
 				</Collapse>
 			</Form.Item>
-			<FragmentFilePreviewModal
+			<FragmentFilePreviewModalPDF
 				refFilePreview={refFilePreview}
 				setRefFilePreview={setRefFilePreview}
 				isLoadOpen={isLoadOpen}
