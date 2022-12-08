@@ -67,7 +67,6 @@ export const FragmentFileViewer = (props) => {
 						})}
 						{props?.files.length <= 0 && (
 							<>
-								{" "}
 								<FileUnknownTwoTone /> Похоже файлы не были прикреплены на
 								прошлых этапах....
 							</>
@@ -192,7 +191,6 @@ export const FragmentFileViewerReceiver = (props) => {
 							})}
 						{props?.files.length <= 0 && data?.task_files_in_id.length <= 0 && (
 							<>
-								{" "}
 								<FileUnknownTwoTone /> Похоже файлы не были прикреплены на
 								прошлых этапах....
 							</>
@@ -264,7 +262,6 @@ export const FragmentTaskFileViewer = (props) => {
 						})}
 						{props?.files.length <= 0 && (
 							<>
-								{" "}
 								<FileUnknownTwoTone /> Похоже файлы не были прикреплены на
 								прошлых этапах....
 							</>
@@ -359,7 +356,6 @@ export const FragmentTaskAndFileViewer = (props) => {
 						})}
 						{props?.files.length <= 0 && props?.files_task.length <= 0 && (
 							<>
-								{" "}
 								<FileUnknownTwoTone /> Похоже файлы не были прикреплены на
 								прошлых этапах....
 							</>
@@ -452,7 +448,6 @@ export const FragmentFileViewerOnClick = (props) => {
 						})}
 						{props?.files.length <= 0 && (
 							<>
-								{" "}
 								<FileUnknownTwoTone /> Похоже файлы не были прикреплены на
 								прошлых этапах....
 							</>
