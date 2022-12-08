@@ -10,7 +10,7 @@ export const TaskFileOpenDocument = async (item) => {
 		headers: {
 			"Content-Type": "application/json",
 		},
-		body: JSON.stringify({ item: item.id }),
+		body: JSON.stringify({item: item.id }),
 	});
 	const content = await tmp.json();
 	if (content !== undefined) {
@@ -36,7 +36,8 @@ export const TaskFileDownload = async (e) => {
 		.then((response) => {
 			let result = response.result;
 			let link = document.createElement("a");
-			link.href = result.data_file;
+			link.href =
+				result.data_file; /*result.data_file.slice(result.data_file.indexOf(',')+1) */
 			link.download = result.filename;
 			link.click();
 		});

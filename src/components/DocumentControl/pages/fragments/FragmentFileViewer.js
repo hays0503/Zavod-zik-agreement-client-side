@@ -10,7 +10,7 @@ import {
 } from "./../api/CRU_Document";
 import { SET_IS_ADD_TO_DOCUMENT } from "../OnApprovalDocuments/forms/gql";
 import { useMutation, gql, useQuery } from "@apollo/client";
-import { FragmentFilePreviewModal,FragmentFilePreviewModalPDF } from "./FragmentFilePreviewModal";
+import { FragmentFilePreviewModal } from "./FragmentFilePreviewModal";
 
 /**
  * Фрагмент antd дающую возможность просматривать файлы
@@ -65,7 +65,7 @@ export const FragmentFileViewer = (props) => {
 					</Panel>
 				</Collapse>
 			</Form.Item>
-			<FragmentFilePreviewModalPDF
+			<FragmentFilePreviewModal
 				refFilePreview={refFilePreview}
 				setRefFilePreview={setRefFilePreview}
 				isLoadOpen={isLoadOpen}
@@ -183,7 +183,7 @@ export const FragmentFileViewerReceiver = (props) => {
 					</Panel>
 				</Collapse>
 			</Form.Item>
-			<FragmentFilePreviewModalPDF
+			<FragmentFilePreviewModal
 				refFilePreview={refFilePreview}
 				setRefFilePreview={setRefFilePreview}
 				isLoadOpen={isLoadOpen}
@@ -248,7 +248,7 @@ export const FragmentTaskFileViewer = (props) => {
 					</Panel>
 				</Collapse>
 			</Form.Item>
-			<FragmentFilePreviewModalPDF
+			<FragmentFilePreviewModal
 				refFilePreview={refFilePreview}
 				setRefFilePreview={setRefFilePreview}
 				isLoadOpen={isLoadOpen}
@@ -336,7 +336,7 @@ export const FragmentTaskAndFileViewer = (props) => {
 					</Panel>
 				</Collapse>
 			</Form.Item>
-			<FragmentFilePreviewModalPDF
+			<FragmentFilePreviewModal
 				refFilePreview={refFilePreview}
 				setRefFilePreview={setRefFilePreview}
 				isLoadOpen={isLoadOpen}
@@ -419,7 +419,7 @@ export const FragmentFileViewerOnClick = (props) => {
 					</Panel>
 				</Collapse>
 			</Form.Item>
-			<FragmentFilePreviewModalPDF
+			<FragmentFilePreviewModal
 				refFilePreview={refFilePreview}
 				setRefFilePreview={setRefFilePreview}
 				isLoadOpen={isLoadOpen}
