@@ -13,14 +13,44 @@ let FragmentUploader = (props) => {
 			required: true,
 			message: "Необходимо загрузить хотя бы один файл.",
 		};
-	}
-	return (
+		return (
 		<>
 			<Form.Item
 				name="files"
 				label="Файлы"
 				labelCol={{ span: 24 }}
 				rules={[rules]}
+			>
+				<UploadFile
+					showUploadList={true}
+					action={
+						"https://" + constants.host + ":" + constants.port + `${props.url}`
+					}
+					multiple={true}
+					maxCount={50}
+					/*accept={".doc,.docx,.xls,.xlsx,.ppt,.pptx,image/*,*.pdf"}*/
+					onChange={(info) => {
+						const { status } = info.file;
+						if (status !== "uploading") {
+							//console.log("info.file", info.file, info.fileList);
+						}
+						if (status === "done") {
+							message.success(`${info.file.name} - загружен успешно.`);
+						} else if (status === "error") {
+							message.error(`${info.file.name} - ошибка при загрузке.`);
+						}
+					}}
+				/>
+			</Form.Item>
+		</>
+	);
+	}
+	return (
+		<>
+			<Form.Item
+				name="files"
+				label="Файлы"
+				labelCol={{ span: 24 }}				
 			>
 				<UploadFile
 					showUploadList={true}
