@@ -72,7 +72,7 @@ let Insert3 = React.memo((props) => {
 				setState(Object.assign({}, state, { ...allValues }));
 			}}
 		>
-			<h4>Лист согласования на закуп ТРУ для производства и продукции</h4>
+			<h4>ЛИСТ СОГЛАСОВАНИЯ НА РЕАЛИЗАЦИЮ ГОТОВОЙ ПРОДУКЦИИ</h4>
 
 			<FragmentInputBoxTitle
 				label={"Наименование контрагента"}
